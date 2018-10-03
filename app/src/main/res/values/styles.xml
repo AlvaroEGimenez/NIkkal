@@ -1,11 +1,35 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="AppTheme.appBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+
+    <style name="nombreAlbum">
+        <item name="android:textColorPrimary">@color/album_titulo</item>
+        <item name="android:background">@color/album_background</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_marginLeft">@dimen/album_titulo_padding</item>
+        <item name="android:layout_marginRight">@dimen/album_titulo_padding</item>
+        <item name="android:layout_marginTop">@dimen/album_titulo_padding</item>
+        <item name="android:textSize">@dimen/tv_album_titulo</item>
+        <item name="android:textColor">@color/album_titulo</item>
+        <!--<item name="android:paddingTop">@dimen/tv_album_titulo_padding</item>-->
+    </style>
+
+    <style name="albumRecyclerView">
+        <item name="android:paddingLeft">@dimen/recyclerViewAlbumPaddingLeft</item>
+        <item name="android:paddingTop">@dimen/recyclerViewAlbumPaddingTop</item>
+        <item name="android:textSize">@dimen/tvRecyclerViewTitulo</item>
+        <item name="android:textColor">@color/album_titulo</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
 </resources>

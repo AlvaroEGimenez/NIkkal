@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="card_margen">15dp</dimen>
+    <dimen name="recyclerViewAlbumPaddingLeft">5dp</dimen>
+    <dimen name="recyclerViewAlbumPaddingTop">15dp</dimen>
+    <dimen name="card_elevasion">6dp</dimen>
+    <dimen name="card_album_radio">6dp</dimen>
+    <dimen name="card_imagen_wigth">140dp</dimen>
+    <dimen name="card_imagen_height">110dp</dimen>
+    <dimen name="album_titulo_padding">10dp</dimen>
+    <dimen name="tv_album_titulo">12sp</dimen>
+    <dimen name="tv_album_titulo_padding">6dp</dimen>
+    <dimen name="album_item_menu_width">20dp</dimen>
+    <dimen name="album_item_menu_height">30dp</dimen>
+    <dimen name="album_item_menu_margin_top">10dp</dimen>
+    <dimen name="tvRecyclerViewTitulo">15sp</dimen>
+    <dimen name="card_view_album_margin">7dp</dimen>
+</resources>

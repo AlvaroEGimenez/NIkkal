@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tabs>
+    <tab
+        icon="@drawable/icono_pantalla_principal"
+        id="@+id/pantallaPrincipalContenedorFragment"
+        title="Inicio" />
+
+    <tab
+        icon="@drawable/icono_buscar"
+        id="@+id/buscarFragment"
+        title="Buscar" />
+
+    <tab
+        icon="@drawable/icono_favorito"
+        id="@+id/favoritoFragment"
+        title="Favoritos" />
+
+</tabs>
