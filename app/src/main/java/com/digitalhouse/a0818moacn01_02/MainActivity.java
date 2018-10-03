@@ -13,12 +13,13 @@ import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
 
 public class MainActivity extends AppCompatActivity {
+
     private PantallaPrincipalContenedorFragment pantallaPrincipalContenedorFragment = new PantallaPrincipalContenedorFragment();
     private BuscarFragment buscarFragment = new BuscarFragment();
     private FavoritoFragment favoritoFragment = new FavoritoFragment();
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate( Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -32,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
                 switch (tabId) {
                     case R.id.pantallaPrincipalContenedorFragment:
                         reemplazarFragment(pantallaPrincipalContenedorFragment);
+
                         break;
                     case R.id.buscarFragment:
                         reemplazarFragment(buscarFragment);

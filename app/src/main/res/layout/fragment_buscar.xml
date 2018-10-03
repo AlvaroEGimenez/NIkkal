@@ -1,18 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".menuNavegacion.buscar.BuscarFragment">
+    tools:context=".menuNavegacion.buscar.BuscarFragment"
+    android:orientation="vertical"
+    android:background="#000000">
 
-    <!-- TODO: Update blank fragment layout -->
-    <!-- TODO: Update blank fragment layout -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/roundedbuttonbuscar"
+        android:orientation="horizontal">
+
+        <EditText
+            android:layout_width="300dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="16dp"
+            android:backgroundTint="@color/busqueda_fondo"
+            android:maxLines="1"/>
+
+        <ImageButton
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/roundedbuttonbuscar"
+            android:src="@drawable/ic_buscar"
+            android:clickable="true"
+            android:foreground="?attr/selectableItemBackground" />
+
+    </LinearLayout>
+
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Alvaro está construyendo la sección Buscar"
-        android:gravity="center"
-        android:textColor="@color/album_titulo"
-        android:textSize="50sp" />
+        android:layout_height="wrap_content"
+        android:text="Busquedas recientes"
+        android:textColor="#ffffff"
+        android:textAlignment="center"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="30dp"
+        android:textSize="18dp"/>
 
-</FrameLayout>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/busquedarecycleview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </android.support.v7.widget.RecyclerView>
+
+
+</LinearLayout>

@@ -6,6 +6,7 @@
     <color name="album_titulo">#e0e0e0</color>
     <color name="bar_bottom_background">#212121</color>
     <color name="album_background">#262626</color>
+    <color name="busqueda_fondo">#424242</color>
 
 
 </resources>

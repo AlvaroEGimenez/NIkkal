@@ -12,14 +12,17 @@
         android:layout_height="wrap_content"
         android:text="Rock Nacional"
         android:gravity="center"
+        android:layout_gravity="center_vertical"
+        android:textSize="20sp"
+        android:textStyle="bold"
         android:theme="@style/albumRecyclerView" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/albumRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+        android:layout_height="wrap_content">
+
+    </android.support.v7.widget.RecyclerView>
 
 
 </LinearLayout>
-
-    <!--android:alpha="40"-->
