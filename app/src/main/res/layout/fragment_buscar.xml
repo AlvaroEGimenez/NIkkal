@@ -14,22 +14,27 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:background="@drawable/roundedbuttonbuscar"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        >
 
         <EditText
-            android:layout_width="300dp"
+            android:id="@+id/edittextBusqueda"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginLeft="16dp"
             android:backgroundTint="@color/busqueda_fondo"
-            android:maxLines="1"/>
+            android:maxLines="1"
+            android:layout_weight="7"/>
 
         <ImageButton
-            android:layout_width="match_parent"
+            android:id="@+id/imagebuttonBusqueda"
+            android:layout_width="40dp"
             android:layout_height="match_parent"
             android:background="@drawable/roundedbuttonbuscar"
             android:src="@drawable/ic_buscar"
             android:clickable="true"
-            android:foreground="?attr/selectableItemBackground" />
+            android:foreground="?attr/selectableItemBackground"
+            android:layout_weight="1"/>
 
     </LinearLayout>
 
@@ -43,12 +48,11 @@
         android:layout_marginBottom="30dp"
         android:textSize="18dp"/>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/busquedarecycleview"
+    <ListView
+        android:id="@+id/listview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    </android.support.v7.widget.RecyclerView>
+        android:layout_height="match_parent"
+        android:background="#e0e0e0"/>
 
 
 </LinearLayout>

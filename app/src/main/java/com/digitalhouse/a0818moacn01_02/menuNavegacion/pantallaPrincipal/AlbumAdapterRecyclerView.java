@@ -52,6 +52,8 @@ public class AlbumAdapterRecyclerView extends RecyclerView.Adapter<AlbumAdapterR
         return albunes.size();
     }
 
+
+
     public class AlbumViewHolder extends RecyclerView.ViewHolder {
         private ImageView imagenAlbumCardView;
         private TextView tituloCardView;
