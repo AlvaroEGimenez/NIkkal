@@ -2,8 +2,9 @@
 <tabs>
     <tab
         icon="@drawable/icono_pantalla_principal"
-        id="@+id/pantallaPrincipalContenedorFragment"
-        title="Inicio" />
+        id="@+id/albumFragment"
+        title="Inicio"
+        />
 
     <tab
         icon="@drawable/icono_buscar"

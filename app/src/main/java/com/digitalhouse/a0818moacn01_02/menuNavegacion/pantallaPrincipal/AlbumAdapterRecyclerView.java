@@ -53,7 +53,6 @@ public class AlbumAdapterRecyclerView extends RecyclerView.Adapter<AlbumAdapterR
     }
 
 
-
     public class AlbumViewHolder extends RecyclerView.ViewHolder {
         private ImageView imagenAlbumCardView;
         private TextView tituloCardView;
@@ -72,6 +71,5 @@ public class AlbumAdapterRecyclerView extends RecyclerView.Adapter<AlbumAdapterR
         picasso.load(url).error(R.drawable.nikkal).into(imageView);
 
     }
-
 
 }

@@ -3,11 +3,13 @@ package com.digitalhouse.a0818moacn01_02.menuNavegacion.favoritos;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.digitalhouse.a0818moacn01_02.R;
+
 
 /**
  * A simple {@link Fragment} subclass.

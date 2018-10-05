@@ -1,28 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".menuNavegacion.pantallaPrincipal.AlbumFragment">
 
-    <TextView
-        android:id="@+id/categoriaRecyclerView"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Rock Nacional"
-        android:gravity="center"
-        android:layout_gravity="center_vertical"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:theme="@style/albumRecyclerView" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/albumRecyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tvGeneroRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:theme="@style/albumRecyclerView" />
 
-    </android.support.v7.widget.RecyclerView>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvGeneroRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </android.support.v7.widget.RecyclerView>
+
+        <TextView
+            android:id="@+id/tvSugerenciaRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:theme="@style/albumRecyclerView"
+            android:fontFamily="sans-serif"
+            />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvSugerenciaRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </android.support.v7.widget.RecyclerView>
 
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/tvMasEscuchadoRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:theme="@style/albumRecyclerView" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvMasEscuchadoRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </android.support.v7.widget.RecyclerView>
+
+
+        <TextView
+            android:id="@+id/tvFavoritoRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:theme="@style/albumRecyclerView" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvFavoritoRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </android.support.v7.widget.RecyclerView>
+    </LinearLayout>
+</ScrollView>

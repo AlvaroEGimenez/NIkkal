@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-        android:id="@+id/accion_agregar_favoritos"
-        android:orderInCategory="100"
-        android:title="@string/accion_agregar_favoritos" />
-</menu>

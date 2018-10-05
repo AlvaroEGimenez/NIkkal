@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#ffa929</color>
+    <color name="colorPrimary">#818181</color>
     <color name="colorPrimaryDark">#212121</color>
-    <color name="colorAccent">#FF4081</color>
-    <color name="album_titulo">#e0e0e0</color>
+    <color name="colorAccent">#f5f5f5</color>
+    <color name="album_titulo">#f5f5f5</color>
     <color name="bar_bottom_background">#212121</color>
     <color name="album_background">#262626</color>
-    <color name="busqueda_fondo">#424242</color>
+    <color name="busqueda_fondo">#100f0f</color>
+    <color name="mainBackground">#100f0f</color>
+    <color name="bottomBarIcon">#FF9800</color>
 
 
 </resources>

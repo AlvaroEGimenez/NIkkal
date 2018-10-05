@@ -9,8 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginLeft="@dimen/card_view_album_margin"
-        android:layout_marginRight="@dimen/card_view_album_margin"
-        card_view:cardCornerRadius="@dimen/card_album_radio">
+        android:layout_marginRight="@dimen/card_view_album_margin">
 
         <ImageView
             android:id="@+id/imagenAlbum"
