@@ -8,8 +8,11 @@ import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Handler;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Layout;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -19,6 +22,9 @@ public class InicioActivity extends AppCompatActivity {
     private ImageView imageView;
     long duracion=2000;
     public static int MILISEGUNDOS_ESPERA = 4000;
+    CoordinatorLayout coordinatorLayout;
+
+
 
 
     @Override
@@ -29,30 +35,29 @@ public class InicioActivity extends AppCompatActivity {
 
         imageView = findViewById(R.id.nikkal);
         final Button button = findViewById(R.id.botonoffline);
+        coordinatorLayout = findViewById(R.id.cordinator);
 
-        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
             handleAnimationVertical(imageView);
-        }
-        else {
+        } else {
             handleAnimationHorizontal(imageView);
         }
 
 
-
-        final Intent intent = new Intent(InicioActivity.this,MainActivity.class);
+        final Intent intent = new Intent(InicioActivity.this, MainActivity.class);
 
         if (isNetDisponible()) {
             esperarYCerrar(MILISEGUNDOS_ESPERA);
-        }
-        else {
-            Toast.makeText(InicioActivity.this,"Verificar la conexion a internet",Toast.LENGTH_LONG).show();
+        } else {
             button.setVisibility(View.VISIBLE);
+            Snackbar.make(coordinatorLayout, "Verificar la conexion a internet", Snackbar.LENGTH_LONG).show();
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View view) {
+                public void onClick(View v) {
                     startActivity(intent);
                 }
             });
+
         }
     }
 

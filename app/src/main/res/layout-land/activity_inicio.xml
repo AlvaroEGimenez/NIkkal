@@ -1,36 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal"
-    android:background="#000000"
-    tools:context=".InicioActivity">
+    android:orientation="vertical"
+    android:background="@color/colorPrimaryDark"
+    tools:context=".InicioActivity"
+    android:id="@+id/cordinator">
 
-    <ImageView
-        android:id="@+id/nikkal"
-        android:layout_width="160dp"
-        android:layout_height="140dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/nikkalnuevo2"/>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/botonoffline"
-        android:layout_width="189dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginBottom="25dp"
-        android:layout_marginEnd="25dp"
-        android:background="@drawable/roundedbutton"
-        android:text="Modo Offline"
-        android:textAlignment="center"
-        android:textColor="#ffffff"
-        android:textSize="20dp"
-        android:textStyle="bold"
-        android:visibility="invisible"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="25dp" />
+        <ImageView
+            android:id="@+id/nikkal"
+            android:layout_width="160dp"
+            android:layout_height="140dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/nikkalnuevo4"
+            android:focusableInTouchMode="true"
+            android:layout_gravity="center_horizontal"/>
 
-</RelativeLayout>
+        <Button
+            android:id="@+id/botonoffline"
+            android:layout_width="189dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/roundedbutton"
+            android:layout_gravity="bottom|right"
+            android:layout_marginBottom="50dp"
+            android:layout_marginRight="16dp"
+            android:text="Modo Offline"
+            android:textAlignment="center"
+            android:textColor="#ffffff"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:visibility="invisible" />
+
+    </FrameLayout>
+
+
+
+
+</android.support.design.widget.CoordinatorLayout>
