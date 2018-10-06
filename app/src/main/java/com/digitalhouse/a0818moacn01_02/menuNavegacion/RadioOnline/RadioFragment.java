@@ -53,7 +53,7 @@ public class RadioFragment extends Fragment {
         Radio laTribu = new Radio("La Tribu","88.7","http://vivo.fmlatribu.com:8000/latribu.mp3");
         Radio Malena = new Radio("Malena","89.1","http://vivo.radioam750.com.ar/vivofm.mp3");
         Radio arpeggio = new Radio("Arpeggio","89.5","http://14073.live.streamtheworld.com/ARPEGGIOAAC");
-        Radio radioConVos = new Radio("Radio Con Vos","89.9","www.google.com");
+        Radio radioConVos = new Radio("Radio Con Vos","89.9","http://server6.stweb.tv:1935/rcvos/live/chunklist.m3u8");
         Radio ESPN = new Radio("ESPN","107.9","http://apiradio.espn-la.com/64list.m3u8");
         Radio LaBoca = new Radio("La Boca","90.1","http://208.98.41.72:9304");
         Radio Metro = new Radio("Metro","95.1","http://mp3.metroaudio1.stream.avstreaming.net:7200/metro");
