@@ -54,9 +54,7 @@ public class BuscarFragment extends Fragment {
                 String busqueda = editTextBusqueda.getText().toString();
                 busquedas.add(busqueda);
                 editTextBusqueda.setText("");
-
-            }
-
+                }
         });
         adapter.notifyDataSetChanged();
         return view;

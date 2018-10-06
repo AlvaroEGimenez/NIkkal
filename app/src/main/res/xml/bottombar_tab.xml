@@ -15,5 +15,12 @@
         icon="@drawable/icono_favorito"
         id="@+id/favoritoFragment"
         title="Favoritos" />
-
+    <tab
+        icon="@drawable/ic_radio"
+        id="@+id/radioFragment"
+        title="Radio" />
+    <tab
+        icon="@drawable/ic_settings"
+        id="@+id/ajustesFragment"
+        title="Ajustes" />
 </tabs>
