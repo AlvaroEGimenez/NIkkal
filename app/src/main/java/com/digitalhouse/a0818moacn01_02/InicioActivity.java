@@ -12,14 +12,13 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Layout;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 public class InicioActivity extends AppCompatActivity {
-    private ImageView imageView;
+    private ImageView imageViewLogo;
+    private ImageView imageViewLetra;
     long duracion=2000;
     public static int MILISEGUNDOS_ESPERA = 4000;
     CoordinatorLayout coordinatorLayout;
@@ -33,14 +32,18 @@ public class InicioActivity extends AppCompatActivity {
         setContentView(R.layout.activity_inicio);
 
 
-        imageView = findViewById(R.id.nikkal);
+        imageViewLogo = findViewById(R.id.nikkal);
+        imageViewLetra = findViewById(R.id.nikkalLetra);
+
         final Button button = findViewById(R.id.botonoffline);
         coordinatorLayout = findViewById(R.id.cordinator);
 
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-            handleAnimationVertical(imageView);
+            handleAnimationVertical(imageViewLogo);
+            handleAnimationVerticalLetra(imageViewLetra);
         } else {
-            handleAnimationHorizontal(imageView);
+            handleAnimationHorizontal(imageViewLogo);
+            handleAnimationHorizontalLetra(imageViewLetra);
         }
 
 
@@ -82,24 +85,40 @@ public class InicioActivity extends AppCompatActivity {
     }
 
     public void handleAnimationVertical (View view){
-        ObjectAnimator animatorY = ObjectAnimator.ofFloat(imageView,"y",650f);
+        ObjectAnimator animatorY = ObjectAnimator.ofFloat(imageViewLogo,"y",650f);
         animatorY.setDuration(duracion);
-        ObjectAnimator alphaAnimation = ObjectAnimator.ofFloat(imageView,View.ALPHA,0.0f,1.0f);
+        ObjectAnimator alphaAnimation = ObjectAnimator.ofFloat(imageViewLogo,View.ALPHA,0.0f,1.0f);
         alphaAnimation.setDuration(duracion);
         AnimatorSet animatorSet = new AnimatorSet();
         animatorSet.playTogether(animatorY,alphaAnimation);
         animatorSet.start();
+        }
 
+        public void handleAnimationHorizontal (View view){
+        ObjectAnimator animatorY = ObjectAnimator.ofFloat(imageViewLogo,"y",300);
+        animatorY.setDuration(duracion);
+        ObjectAnimator alphaAnimation = ObjectAnimator.ofFloat(imageViewLogo,View.ALPHA,0.0f,1.0f);
+        alphaAnimation.setDuration(duracion);
+        AnimatorSet animatorSet = new AnimatorSet();
+        animatorSet.playTogether(animatorY,alphaAnimation);
+        animatorSet.start();
+        }
+
+    public void handleAnimationVerticalLetra(View view){
+
+        ObjectAnimator alphaAnimation = ObjectAnimator.ofFloat(imageViewLetra,View.ALPHA,0.0f,1.0f);
+        alphaAnimation.setDuration(duracion);
+        AnimatorSet animatorSet = new AnimatorSet();
+        animatorSet.playTogether(alphaAnimation);
+        animatorSet.start();
     }
-    public void handleAnimationHorizontal (View view){
-        ObjectAnimator animatorY = ObjectAnimator.ofFloat(imageView,"y",300);
-        animatorY.setDuration(duracion);
-        ObjectAnimator alphaAnimation = ObjectAnimator.ofFloat(imageView,View.ALPHA,0.0f,1.0f);
+
+    public void handleAnimationHorizontalLetra(View view){
+        ObjectAnimator alphaAnimation = ObjectAnimator.ofFloat(imageViewLogo,View.ALPHA,0.0f,1.0f);
         alphaAnimation.setDuration(duracion);
         AnimatorSet animatorSet = new AnimatorSet();
-        animatorSet.playTogether(animatorY,alphaAnimation);
+        animatorSet.playTogether(alphaAnimation);
         animatorSet.start();
-
     }
 }
 

@@ -11,16 +11,23 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="581dp"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
         <ImageView
             android:id="@+id/nikkal"
-            android:layout_width="160dp"
-            android:layout_height="140dp"
+            android:layout_width="140dp"
+            android:layout_height="130dp"
             android:layout_gravity="center_horizontal"
-            android:background="@drawable/nikkalnuevo4" />
+            android:background="@drawable/logonikkal"/>
 
+        <ImageView
+            android:id="@+id/nikkalLetra"
+            android:layout_width="180dp"
+            android:layout_height="160dp"
+            android:layout_gravity="bottom|center_horizontal"
+            android:src="@drawable/nikkalletra"
+            android:layout_marginBottom="140dp"/>
         <Button
             android:id="@+id/botonoffline"
             android:layout_width="189dp"
