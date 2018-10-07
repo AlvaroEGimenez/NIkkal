@@ -74,7 +74,7 @@ public class RadioFragment extends Fragment {
             public void onItemClick(int position) {
                 try {
                     final String url = radios.get(position).getUrl();
-                    if (!url.equals(radioEncendidaUrl)) {
+                    if (!mediaPlayer.isPlaying() || !url.equals(radioEncendidaUrl)) {
                         mediaPlayer.reset();
                         mediaPlayer.setDataSource(url);
                         mediaPlayer.prepareAsync();
