@@ -1,25 +1,16 @@
-package com.digitalhouse.a0818moacn01_02.menuNavegacion.pantallaPrincipal;
+package com.digitalhouse.a0818moacn01_02.menuNavegacion.Pantalla_Principal;
 
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.PopupMenu;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.digitalhouse.a0818moacn01_02.InicioActivity;
-import com.digitalhouse.a0818moacn01_02.MainActivity;
 import com.digitalhouse.a0818moacn01_02.R;
 import com.digitalhouse.a0818moacn01_02.categorias.GeneroActivity;
 import com.digitalhouse.a0818moacn01_02.categorias.MasEscuchado;

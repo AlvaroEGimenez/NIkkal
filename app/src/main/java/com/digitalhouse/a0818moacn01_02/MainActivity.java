@@ -6,10 +6,11 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import com.digitalhouse.a0818moacn01_02.menuNavegacion.RadioOnline.RadioFragment;
-import com.digitalhouse.a0818moacn01_02.menuNavegacion.buscar.BuscarFragment;
-import com.digitalhouse.a0818moacn01_02.menuNavegacion.favoritos.FavoritoFragment;
-import com.digitalhouse.a0818moacn01_02.menuNavegacion.pantallaPrincipal.AlbumFragment;
+import com.digitalhouse.a0818moacn01_02.menuNavegacion.Configuracion.ConfiguracionFragment;
+import com.digitalhouse.a0818moacn01_02.menuNavegacion.Radio_Online.RadioFragment;
+import com.digitalhouse.a0818moacn01_02.menuNavegacion.Buscar.BuscarFragment;
+import com.digitalhouse.a0818moacn01_02.menuNavegacion.Favoritos.FavoritoFragment;
+import com.digitalhouse.a0818moacn01_02.menuNavegacion.Pantalla_Principal.AlbumFragment;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
 
@@ -19,6 +20,8 @@ public class MainActivity extends AppCompatActivity {
     private BuscarFragment buscarFragment = new BuscarFragment();
     private FavoritoFragment favoritoFragment = new FavoritoFragment();
     private RadioFragment radioFragment = new RadioFragment();
+    private ConfiguracionFragment configuracionFragment = new ConfiguracionFragment();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +51,8 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.radioFragment:
                         reemplazarFragment(radioFragment);
                         break;
+                    case R.id.ajustesFragment:
+                        reemplazarFragment(configuracionFragment);
                 }
             }
         });

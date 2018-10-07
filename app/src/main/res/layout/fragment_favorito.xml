@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".menuNavegacion.favoritos.FavoritoFragment"
+    tools:context=".menuNavegacion.Favoritos.FavoritoFragment"
     >
 
     <!-- TODO: Update blank fragment layout -->

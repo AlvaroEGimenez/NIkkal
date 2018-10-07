@@ -1,4 +1,4 @@
-package com.digitalhouse.a0818moacn01_02.menuNavegacion.RadioOnline;
+package com.digitalhouse.a0818moacn01_02.menuNavegacion.Radio_Online;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;

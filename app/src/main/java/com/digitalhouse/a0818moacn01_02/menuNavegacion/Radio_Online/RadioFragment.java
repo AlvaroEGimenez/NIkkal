@@ -1,22 +1,18 @@
-package com.digitalhouse.a0818moacn01_02.menuNavegacion.RadioOnline;
+package com.digitalhouse.a0818moacn01_02.menuNavegacion.Radio_Online;
 
 
-import android.app.SearchManager;
-import android.content.Context;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.digitalhouse.a0818moacn01_02.R;
@@ -32,6 +28,7 @@ public class RadioFragment extends Fragment {
     private String radioEncendidaUrl = "";
 
 
+
     public RadioFragment() {
         // Required empty public constructor
     }
@@ -40,10 +37,16 @@ public class RadioFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_radio, container, false);
-        final MediaPlayer mediaPlayer = new MediaPlayer();
+        final MediaPlayer mediaPlayer= new MediaPlayer();
         final List<Radio> radios = new ArrayList<>();
+        final LinearLayout linearLayout = view.findViewById(R.id.llPlayStop);
+        final ImageButton imageButtonPlay = view.findViewById(R.id.ibPlayStop);
+        final TextView textViewRadio = view.findViewById(R.id.tvNombreRadioReprod);
+
+
 
 
         Radio laTribu = new Radio("La Tribu", "88.7", "http://vivo.fmlatribu.com:8000/latribu.mp3");
@@ -71,7 +74,7 @@ public class RadioFragment extends Fragment {
 
         adaptadorRadio.setRadioClickListener(new ItemClickListener() {
             @Override
-            public void onItemClick(int position) {
+            public void onItemClick(final int position) {
                 try {
                     final String url = radios.get(position).getUrl();
                     if (!mediaPlayer.isPlaying() || !url.equals(radioEncendidaUrl)) {
@@ -85,14 +88,27 @@ public class RadioFragment extends Fragment {
                             public void onPrepared(MediaPlayer mp) {
                                 mp.start();
                                 radioEncendidaUrl = url;
-                                Toast.makeText(getActivity(), "Start", Toast.LENGTH_SHORT).show();
+                                linearLayout.setVisibility(View.VISIBLE);
+                                imageButtonPlay.setImageResource(R.drawable.ic_stop);
+                                String reproduciendo =  "Escuchando " + radios.get(position).getNombre() + " "+ radios.get(position).getSintonia();
+                                textViewRadio.setText(reproduciendo);
                             }
                         });
 
+
                     } else {
                         mediaPlayer.stop();
+                        linearLayout.setVisibility(View.INVISIBLE);
                         Toast.makeText(getActivity(), "Stop", Toast.LENGTH_SHORT).show();
                     }
+                    imageButtonPlay.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            mediaPlayer.stop();
+                            linearLayout.setVisibility(View.INVISIBLE);
+                            Toast.makeText(getActivity(), "Stop", Toast.LENGTH_SHORT).show();
+                        }
+                    });
 
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -104,7 +120,6 @@ public class RadioFragment extends Fragment {
         recyclerView.setAdapter(adaptadorRadio);
         return view;
     }
-
 }
 
 

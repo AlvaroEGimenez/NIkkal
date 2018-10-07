@@ -1,7 +1,5 @@
-package com.digitalhouse.a0818moacn01_02.menuNavegacion.RadioOnline;
+package com.digitalhouse.a0818moacn01_02.menuNavegacion.Radio_Online;
 
-
-import android.widget.ImageView;
 
 public class Radio {
 
