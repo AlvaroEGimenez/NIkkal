@@ -3,10 +3,12 @@ package com.digitalhouse.a0818moacn01_02.model;
 public class Album {
     private String imagen;
     private String nombre;
+    private String genero;
 
-    public Album(String imagen, String nombre, String cantidadCanciones) {
+    public Album(String imagen, String nombre, String genero) {
         this.imagen = imagen;
         this.nombre = nombre;
+        this.genero = genero;
     }
 
     public String getImagen() {
@@ -25,4 +27,11 @@ public class Album {
         this.nombre = nombre;
     }
 
+    public String getGenero() {
+        return genero;
+    }
+
+    public void setGenero(String genero) {
+        this.genero = genero;
+    }
 }

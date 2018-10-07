@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.digitalhouse.a0818moacn01_02">
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -10,7 +12,8 @@
         android:roundIcon="@drawable/icononikkal"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".InicioActivity"
+        <activity
+            android:name=".InicioActivity"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -18,10 +21,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MainActivity" />
+        <activity android:name=".categorias.GeneroActivity" />
+        <activity android:name=".categorias.SugerenciaActivity" />
+        <activity android:name=".categorias.MasEscuchado"></activity>
     </application>
-
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>

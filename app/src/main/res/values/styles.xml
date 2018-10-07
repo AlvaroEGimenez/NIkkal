@@ -24,7 +24,9 @@
         <item name="android:layout_marginTop">@dimen/album_titulo_padding</item>
         <item name="android:textSize">@dimen/tv_album_titulo</item>
         <item name="android:textColor">@color/album_titulo</item>
-        <!--<item name="android:paddingTop">@dimen/tv_album_titulo_padding</item>-->
+        <item name="android:padding">8dp</item>
+        <item name="android:alpha">0.80</item>
+        <item name="android:maxLength">18</item>
     </style>
 
     <style name="albumRecyclerView">
