@@ -89,7 +89,6 @@ public class RadioFragment extends Fragment {
                                 mp.start();
                                 radioEncendidaUrl = url;
                                 linearLayout.setVisibility(View.VISIBLE);
-                                imageButtonPlay.setImageResource(R.drawable.ic_stop);
                                 String reproduciendo =  "Escuchando " + radios.get(position).getNombre() + " "+ radios.get(position).getSintonia();
                                 textViewRadio.setText(reproduciendo);
                             }

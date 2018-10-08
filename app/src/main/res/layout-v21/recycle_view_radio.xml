@@ -3,17 +3,21 @@
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="76dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="6dp"
     android:elevation="5dp"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?android:attr/selectableItemBackground">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="1dp"
-        android:background="@color/album_background"
         android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:background="#ffab40">
 
         <TextView
             android:id="@+id/tvNombreradio"
@@ -21,9 +25,10 @@
             android:layout_height="wrap_content"
             android:text="Nombre Radio"
             android:textAlignment="center"
-            android:textColor="@color/album_titulo"
+            android:textColor="@color/album_background"
             android:textSize="20sp"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/tvSintonia"
@@ -31,9 +36,10 @@
             android:layout_height="wrap_content"
             android:text="Sintonia"
             android:textAlignment="center"
-            android:textColor="@color/album_titulo"
+            android:textColor="@color/album_background"
             android:textSize="20sp"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:textStyle="bold"/>
 
 
     </LinearLayout>

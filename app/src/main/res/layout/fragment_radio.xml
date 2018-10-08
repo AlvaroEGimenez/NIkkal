@@ -23,9 +23,9 @@
         android:layout_gravity="bottom"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:background="@color/colorAccent"
+        android:background="@color/album_background"
         android:visibility="invisible"
-        android:layout_margin="6dp">
+        android:layout_margin="7dp">
         <TextView
             android:id="@+id/tvNombreRadioReprod"
             android:layout_width="0dp"
@@ -39,8 +39,8 @@
             android:id="@+id/ibPlayStop"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:background="@drawable/ic_play"
             android:layout_marginRight="16dp"
+            android:background="@drawable/ic_stop"
             android:focusable="true"
             android:clickable="true"
             android:foreground="?android:attr/selectableItemBackground"
