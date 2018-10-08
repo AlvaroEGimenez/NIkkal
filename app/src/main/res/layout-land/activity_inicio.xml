@@ -18,30 +18,35 @@
             android:layout_height="140dp"
             android:layout_gravity="center_horizontal"
             android:background="@drawable/logonikkal"
-            android:focusableInTouchMode="true" />
+            android:focusableInTouchMode="true"
+            tools:layout_editor_absoluteX="216dp"
+            tools:layout_editor_absoluteY="0dp" />
 
-        <ImageView
+        <TextView
             android:id="@+id/nikkalLetra"
-            android:layout_width="180dp"
-            android:layout_height="160dp"
-            android:layout_gravity="bottom|center_horizontal"
-            android:layout_marginBottom="20dp"
-            android:src="@drawable/nikkalletra" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_marginBottom="90dp"
+            android:text="NIKKAL"
+            android:textColor="@color/album_titulo"
+            android:textSize="60sp"
+            android:textStyle="bold"
+            android:visibility="invisible" />
 
         <Button
             android:id="@+id/botonoffline"
             android:layout_width="189dp"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|right"
-            android:layout_marginRight="16dp"
-            android:layout_marginBottom="50dp"
             android:background="@drawable/roundedbutton"
             android:text="Modo Offline"
             android:textAlignment="center"
             android:textColor="#ffffff"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:visibility="invisible" />
+            android:visibility="invisible"
+            android:layout_marginBottom="45dp"/>
 
     </FrameLayout>
 

@@ -21,13 +21,16 @@
             android:layout_gravity="center_horizontal"
             android:background="@drawable/logonikkal"/>
 
-        <ImageView
+        <TextView
             android:id="@+id/nikkalLetra"
-            android:layout_width="180dp"
-            android:layout_height="160dp"
-            android:layout_gravity="bottom|center_horizontal"
-            android:src="@drawable/nikkalletra"
-            android:layout_marginBottom="140dp"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:text="NIKKAL"
+            android:textSize="60sp"
+            android:textColor="@color/album_titulo"
+            android:textStyle="bold"
+            android:visibility="invisible"/>
         <Button
             android:id="@+id/botonoffline"
             android:layout_width="189dp"
