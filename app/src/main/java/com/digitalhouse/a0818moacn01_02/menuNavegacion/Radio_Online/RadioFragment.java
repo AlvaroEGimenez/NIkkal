@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -77,6 +78,10 @@ public class RadioFragment extends Fragment {
             public void onItemClick(final int position) {
                 try {
                     final String url = radios.get(position).getUrl();
+                    linearLayout.setVisibility(View.VISIBLE);
+                    final String cargando =  "Cargando..." ;
+                    textViewRadio.setText(cargando);
+
                     if (!mediaPlayer.isPlaying() || !url.equals(radioEncendidaUrl)) {
                         mediaPlayer.reset();
                         mediaPlayer.setDataSource(url);
@@ -88,9 +93,8 @@ public class RadioFragment extends Fragment {
                             public void onPrepared(MediaPlayer mp) {
                                 mp.start();
                                 radioEncendidaUrl = url;
-                                linearLayout.setVisibility(View.VISIBLE);
-                                String reproduciendo =  "Escuchando " + radios.get(position).getNombre() + " "+ radios.get(position).getSintonia();
-                                textViewRadio.setText(reproduciendo);
+                                String escuchando =  "Escuchando " + radios.get(position).getNombre() + " "+ radios.get(position).getSintonia();
+                                textViewRadio.setText(escuchando);
                             }
                         });
 
@@ -99,6 +103,7 @@ public class RadioFragment extends Fragment {
                         mediaPlayer.stop();
                         linearLayout.setVisibility(View.INVISIBLE);
                         Toast.makeText(getActivity(), "Stop", Toast.LENGTH_SHORT).show();
+                        textViewRadio.setText(cargando);
                     }
                     imageButtonPlay.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -106,6 +111,7 @@ public class RadioFragment extends Fragment {
                             mediaPlayer.stop();
                             linearLayout.setVisibility(View.INVISIBLE);
                             Toast.makeText(getActivity(), "Stop", Toast.LENGTH_SHORT).show();
+                            textViewRadio.setText(cargando);
                         }
                     });
 

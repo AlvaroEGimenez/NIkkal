@@ -10,8 +10,8 @@
         android:id="@+id/recyclerRadio"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:focusable="true"
         android:clickable="true"
+        android:focusable="true"
         android:foreground="?android:attr/selectableItemBackground">
 
     </android.support.v7.widget.RecyclerView>
@@ -21,29 +21,44 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_gravity="bottom"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
+        android:layout_margin="7dp"
         android:background="@color/album_background"
-        android:visibility="invisible"
-        android:layout_margin="7dp">
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        android:visibility="invisible">
+
+        <LinearLayout
+
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
         <TextView
             android:id="@+id/tvNombreRadioReprod"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="NombnreRadio"
             android:layout_weight="1"
+            android:text=""
+            android:textAlignment="center"
             android:textColor="@color/album_titulo"
-            android:textSize="18sp"
-            android:textAlignment="center"/>
+            android:textSize="18sp" />
+
         <ImageButton
             android:id="@+id/ibPlayStop"
             android:layout_width="40dp"
             android:layout_height="40dp"
+            android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
             android:background="@drawable/ic_stop"
-            android:focusable="true"
             android:clickable="true"
-            android:foreground="?android:attr/selectableItemBackground"
-            android:layout_marginEnd="16dp" />
+            android:focusable="true"
+            android:foreground="?android:attr/selectableItemBackground" />
+        </LinearLayout>
+
+
     </LinearLayout>
-</FrameLayout>
+
+
+
+    </FrameLayout>
