@@ -20,10 +20,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 public class InicioActivity extends AppCompatActivity {
-    private ImageView imageViewLogo;
-    long duracion = 2000;
-    public static int MILISEGUNDOS_ESPERA = 4000;
-    CoordinatorLayout coordinatorLayout;
 
 
     @Override
@@ -31,26 +27,27 @@ public class InicioActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inicio);
 
-        Animation animationSlice;
-        animationSlice = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slice_down);
-        imageViewLogo = findViewById(R.id.nikkal);
+
+        Animation animationRotate;
+        Animation animationBlink;
+
+        animationRotate = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.rotate);
+        animationBlink = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.blink);
+
+        ImageView imageViewLogo = findViewById(R.id.nikkal);
         TextView textViewLetra = findViewById(R.id.nikkalLetra);
 
         final Button button = findViewById(R.id.botonoffline);
-        coordinatorLayout = findViewById(R.id.cordinator);
+        CoordinatorLayout coordinatorLayout = findViewById(R.id.cordinator);
 
-        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-            AnimacionVertical(imageViewLogo);
-            textViewLetra.setAnimation(animationSlice);
-        } else {
-            animacionHorizontal(imageViewLogo);
-            textViewLetra.setAnimation(animationSlice);
-        }
-
+        //Animacion de Logo y Letra
+        imageViewLogo.setAnimation(animationRotate);
+        textViewLetra.setAnimation(animationBlink);
 
         final Intent intent = new Intent(InicioActivity.this, MainActivity.class);
 
         if (verificarConexion()) {
+            int MILISEGUNDOS_ESPERA = 4000;
             esperarYCerrar(MILISEGUNDOS_ESPERA);
         } else {
             button.setVisibility(View.VISIBLE);
@@ -84,25 +81,5 @@ public class InicioActivity extends AppCompatActivity {
 
             }
         }, milisegundos);
-    }
-
-    public void AnimacionVertical(View view) {
-        ObjectAnimator animatorY = ObjectAnimator.ofFloat(imageViewLogo, "y", 530f);
-        animatorY.setDuration(duracion);
-        ObjectAnimator alphaAnimation = ObjectAnimator.ofFloat(imageViewLogo, View.ALPHA, 0.0f, 1.0f);
-        alphaAnimation.setDuration(duracion);
-        AnimatorSet animatorSet = new AnimatorSet();
-        animatorSet.playTogether(animatorY, alphaAnimation);
-        animatorSet.start();
-    }
-
-    public void animacionHorizontal(View view) {
-        ObjectAnimator animatorY = ObjectAnimator.ofFloat(imageViewLogo, "y", 300);
-        animatorY.setDuration(duracion);
-        ObjectAnimator alphaAnimation = ObjectAnimator.ofFloat(imageViewLogo, View.ALPHA, 0.0f, 1.0f);
-        alphaAnimation.setDuration(duracion);
-        AnimatorSet animatorSet = new AnimatorSet();
-        animatorSet.playTogether(animatorY, alphaAnimation);
-        animatorSet.start();
     }
 }

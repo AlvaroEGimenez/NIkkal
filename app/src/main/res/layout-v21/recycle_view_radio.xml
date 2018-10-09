@@ -17,7 +17,7 @@
         android:layout_margin="1dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:background="#ffab40">
+        android:background="@color/album_background">
 
         <TextView
             android:id="@+id/tvNombreradio"
@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:text="Nombre Radio"
             android:textAlignment="center"
-            android:textColor="@color/album_background"
+            android:textColor="@color/album_titulo"
             android:textSize="20sp"
             android:layout_weight="1"
             android:textStyle="bold"/>
@@ -36,7 +36,7 @@
             android:layout_height="wrap_content"
             android:text="Sintonia"
             android:textAlignment="center"
-            android:textColor="@color/album_background"
+            android:textColor="@color/album_titulo"
             android:textSize="20sp"
             android:layout_weight="1"
             android:textStyle="bold"/>

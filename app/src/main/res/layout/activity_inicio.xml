@@ -16,22 +16,22 @@
 
         <ImageView
             android:id="@+id/nikkal"
-            android:layout_width="140dp"
-            android:layout_height="130dp"
-            android:layout_gravity="center_horizontal"
-            android:background="@drawable/logonikkal"/>
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:layout_marginBottom="110dp"
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:src="@drawable/logonikkal" />
 
         <TextView
             android:id="@+id/nikkalLetra"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal|bottom"
-            android:layout_marginBottom="170dp"
+            android:layout_gravity="center_vertical|center_horizontal"
             android:text="NIKKAL"
-            android:textSize="60sp"
             android:textColor="@color/album_titulo"
-            android:textStyle="bold"
-            android:visibility="invisible"/>
+            android:textSize="60sp"
+            android:textStyle="bold" />
+
         <Button
             android:id="@+id/botonoffline"
             android:layout_width="189dp"

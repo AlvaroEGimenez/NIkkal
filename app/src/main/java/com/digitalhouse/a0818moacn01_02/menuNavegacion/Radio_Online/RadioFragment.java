@@ -1,6 +1,8 @@
 package com.digitalhouse.a0818moacn01_02.menuNavegacion.Radio_Online;
 
 
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -29,7 +32,6 @@ public class RadioFragment extends Fragment {
     private String radioEncendidaUrl = "";
 
 
-
     public RadioFragment() {
         // Required empty public constructor
     }
@@ -41,13 +43,12 @@ public class RadioFragment extends Fragment {
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_radio, container, false);
-        final MediaPlayer mediaPlayer= new MediaPlayer();
+        final ProgressBar progressBar = view.findViewById(R.id.progressBar);
+        final MediaPlayer mediaPlayer = new MediaPlayer();
         final List<Radio> radios = new ArrayList<>();
-        final LinearLayout linearLayout = view.findViewById(R.id.llPlayStop);
+        final FrameLayout frameLayout = view.findViewById(R.id.llPlayStop);
         final ImageButton imageButtonPlay = view.findViewById(R.id.ibPlayStop);
         final TextView textViewRadio = view.findViewById(R.id.tvNombreRadioReprod);
-
-
 
 
         Radio laTribu = new Radio("La Tribu", "88.7", "http://vivo.fmlatribu.com:8000/latribu.mp3");
@@ -69,7 +70,6 @@ public class RadioFragment extends Fragment {
         RecyclerView recyclerView = view.findViewById(R.id.recyclerRadio);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
         AdaptadorRadio adaptadorRadio = new AdaptadorRadio(radios, getContext());
 
 
@@ -78,40 +78,45 @@ public class RadioFragment extends Fragment {
             public void onItemClick(final int position) {
                 try {
                     final String url = radios.get(position).getUrl();
-                    linearLayout.setVisibility(View.VISIBLE);
-                    final String cargando =  "Cargando..." ;
+                    frameLayout.setVisibility(View.VISIBLE);
+                    final String cargando = "Cargando...";
                     textViewRadio.setText(cargando);
+                    progressBar.setVisibility(View.VISIBLE);
+                    imageButtonPlay.setVisibility(View.INVISIBLE);
 
                     if (!mediaPlayer.isPlaying() || !url.equals(radioEncendidaUrl)) {
                         mediaPlayer.reset();
                         mediaPlayer.setDataSource(url);
                         mediaPlayer.prepareAsync();
-
                         mediaPlayer.setOnPreparedListener(new MediaPlayer.
                                 OnPreparedListener() {
                             @Override
                             public void onPrepared(MediaPlayer mp) {
                                 mp.start();
                                 radioEncendidaUrl = url;
-                                String escuchando =  "Escuchando " + radios.get(position).getNombre() + " "+ radios.get(position).getSintonia();
+                                String escuchando = "Escuchando " + radios.get(position).getNombre() + " " + radios.get(position).getSintonia();
                                 textViewRadio.setText(escuchando);
+                                progressBar.setVisibility(View.INVISIBLE);
+                                imageButtonPlay.setVisibility(View.VISIBLE);
                             }
                         });
 
 
                     } else {
                         mediaPlayer.stop();
-                        linearLayout.setVisibility(View.INVISIBLE);
-                        Toast.makeText(getActivity(), "Stop", Toast.LENGTH_SHORT).show();
+                        frameLayout.setVisibility(View.INVISIBLE);
                         textViewRadio.setText(cargando);
+                        progressBar.setVisibility(View.INVISIBLE);
+                        imageButtonPlay.setVisibility(View.INVISIBLE);
                     }
                     imageButtonPlay.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             mediaPlayer.stop();
-                            linearLayout.setVisibility(View.INVISIBLE);
-                            Toast.makeText(getActivity(), "Stop", Toast.LENGTH_SHORT).show();
+                            frameLayout.setVisibility(View.INVISIBLE);
                             textViewRadio.setText(cargando);
+                            progressBar.setVisibility(View.INVISIBLE);
+                            imageButtonPlay.setVisibility(View.INVISIBLE);
                         }
                     });
 

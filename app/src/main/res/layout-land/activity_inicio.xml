@@ -15,12 +15,10 @@
         <ImageView
             android:id="@+id/nikkal"
             android:layout_width="160dp"
-            android:layout_height="140dp"
-            android:layout_gravity="center_horizontal"
-            android:background="@drawable/logonikkal"
-            android:focusableInTouchMode="true"
-            tools:layout_editor_absoluteX="216dp"
-            tools:layout_editor_absoluteY="0dp" />
+            android:layout_height="160dp"
+            android:layout_marginBottom="75dp"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:background="@drawable/logonikkal" />
 
         <TextView
             android:id="@+id/nikkalLetra"
@@ -31,8 +29,7 @@
             android:text="NIKKAL"
             android:textColor="@color/album_titulo"
             android:textSize="60sp"
-            android:textStyle="bold"
-            android:visibility="invisible" />
+            android:textStyle="bold"/>
 
         <Button
             android:id="@+id/botonoffline"
