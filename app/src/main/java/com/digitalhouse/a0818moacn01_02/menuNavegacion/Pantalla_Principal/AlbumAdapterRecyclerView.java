@@ -1,6 +1,7 @@
 package com.digitalhouse.a0818moacn01_02.menuNavegacion.Pantalla_Principal;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -21,37 +22,31 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AlbumAdapterRecyclerView extends RecyclerView.Adapter<AlbumAdapterRecyclerView.AlbumViewHolder> {
+public class AlbumAdapterRecyclerView extends RecyclerView.Adapter {
     private List<Album> albunes;
     private Integer resources;
     private Activity activity;
+    private AdapterInterface escuchador;
 
-    public AlbumAdapterRecyclerView(ArrayList<Album> albunes, int resources, Activity activity) {
+    public AlbumAdapterRecyclerView(ArrayList<Album> albunes, int resources, Activity activity, AdapterInterface escuchador) {
         this.albunes = albunes;
         this.resources = resources;
         this.activity = activity;
+        this.escuchador = escuchador;
     }
 
     @NonNull
     @Override
-    public AlbumViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(resources, viewGroup, false);
+    public AlbumViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(resources, parent, false);
         return new AlbumViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final AlbumViewHolder albumViewHolder, int posicion) {
-        final Album album = albunes.get(posicion);
-        albumViewHolder.tituloCardView.setText(album.getNombre());
-
-        cargarImagen(albumViewHolder.imagenAlbumCardView, album.getImagen());
-        albumViewHolder.imagenAlbumCardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                llamarActividad(album);
-                Toast.makeText(activity, album.getNombre().toString(), Toast.LENGTH_SHORT).show();
-            }
-        });
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int posicion) {
+        Album album = albunes.get(posicion);
+        AlbumViewHolder albumViewHolder = (AlbumViewHolder) holder;
+        albumViewHolder.cargar(album);
     }
 
     @Override
@@ -59,16 +54,32 @@ public class AlbumAdapterRecyclerView extends RecyclerView.Adapter<AlbumAdapterR
         return albunes.size();
     }
 
+    public interface AdapterInterface {
+        void cambiarDeActividad(Album album);
+    }
 
     public class AlbumViewHolder extends RecyclerView.ViewHolder {
         private ImageView imagenAlbumCardView;
         private TextView tituloCardView;
 
-        public AlbumViewHolder(@NonNull View itemView) {
+        public AlbumViewHolder(@NonNull final View itemView) {
             super(itemView);
 
             imagenAlbumCardView = itemView.findViewById(R.id.imagenAlbum);
             tituloCardView = itemView.findViewById(R.id.titulo);
+
+            imagenAlbumCardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Album album = albunes.get(getAdapterPosition());
+                    escuchador.cambiarDeActividad(album);
+                }
+            });
+        }
+
+        public void cargar(Album album) {
+            tituloCardView.setText(album.getNombre());
+            cargarImagen(imagenAlbumCardView, album.getImagen());
         }
     }
 
@@ -78,25 +89,4 @@ public class AlbumAdapterRecyclerView extends RecyclerView.Adapter<AlbumAdapterR
         picasso.load(url).error(R.drawable.nikkal).into(imageView);
 
     }
-
-
-    private void llamarActividad( Album album ) {
-        String genero = album.getGenero();
-        Intent intent = null;
-
-        switch(genero){
-            case AlbumFragment.KEY_GENERO:
-                intent = new Intent(activity, GeneroActivity.class);
-                break;
-            case AlbumFragment.KEY_SUGERENCIA:
-                intent = new Intent(activity, SugerenciaActivity.class);
-                break;
-            case AlbumFragment.KEY_MAS_ESCUCHADO:
-                intent = new Intent(activity, MasEscuchado.class);
-        }
-
-        if(intent != null)
-        activity.startActivity(intent);
-    }
-
 }

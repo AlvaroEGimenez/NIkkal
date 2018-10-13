@@ -1,6 +1,7 @@
 package com.digitalhouse.a0818moacn01_02.menuNavegacion.Pantalla_Principal;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,16 +11,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.digitalhouse.a0818moacn01_02.R;
+import com.digitalhouse.a0818moacn01_02.categorias.GeneroActivity;
+import com.digitalhouse.a0818moacn01_02.categorias.MasEscuchado;
+import com.digitalhouse.a0818moacn01_02.categorias.SugerenciaActivity;
 import com.digitalhouse.a0818moacn01_02.model.Album;
 
 import java.util.ArrayList;
 
-/**
- * A simple {@link Fragment} subclass.
- */
-public class AlbumFragment extends Fragment {
+public class AlbumFragment extends Fragment implements AlbumAdapterRecyclerView.AdapterInterface{
     public final static String KEY_GENERO = "Géneros";
     public final static String KEY_SUGERENCIA = "Sugerencias";
     public final static String KEY_MAS_ESCUCHADO = "Lo Más Escuchado";
@@ -30,7 +32,6 @@ public class AlbumFragment extends Fragment {
     private TextView tvSugerencia;
     private TextView tvMasEscuchado;
     private TextView tvFavorito;
-    private AdapterView.OnItemClickListener listener;
 
     public AlbumFragment() {
     }
@@ -53,17 +54,42 @@ public class AlbumFragment extends Fragment {
 
     private void crearRecyclerView(Integer idLayout, String tvCategoria) {
         RecyclerView albumRecyclerView = view.findViewById(idLayout);
+        albumRecyclerView.setHasFixedSize(true);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
 
         albumRecyclerView.setLayoutManager(linearLayoutManager);
 
-        AlbumAdapterRecyclerView albumAdapterRecyclerView = new AlbumAdapterRecyclerView(cargarAlbunes(tvCategoria), R.layout.carcdview_album, getActivity());
+        AlbumAdapterRecyclerView albumAdapterRecyclerView = new AlbumAdapterRecyclerView(cargarAlbunes(tvCategoria), R.layout.carcdview_album, getActivity(), this);
 
         albumRecyclerView.setAdapter(albumAdapterRecyclerView);
     }
 
+    @Override
+    public void cambiarDeActividad(Album album) {
+        llamarActividad(album);
+        Toast.makeText(this.getContext(), album.getNombre().toString(), Toast.LENGTH_SHORT).show();
+    }
+
+    private void llamarActividad( Album album ) {
+        String genero = album.getGenero();
+        Intent intent = null;
+
+        switch(genero){
+            case AlbumFragment.KEY_GENERO:
+                intent = new Intent(getContext(), GeneroActivity.class);
+                break;
+            case AlbumFragment.KEY_SUGERENCIA:
+                intent = new Intent(getContext(), SugerenciaActivity.class);
+                break;
+            case AlbumFragment.KEY_MAS_ESCUCHADO:
+                intent = new Intent(getContext(), MasEscuchado.class);
+        }
+
+        if(intent != null)
+           startActivity(intent);
+    }
 
     private void setCategotia() {
         tvGeneros = view.findViewById(R.id.tvGeneroRecyclerView);
@@ -143,9 +169,7 @@ public class AlbumFragment extends Fragment {
                     "Killshot", KEY_FAVORITO));
 
         }
-
         return albunes;
     }
-
 
 }
