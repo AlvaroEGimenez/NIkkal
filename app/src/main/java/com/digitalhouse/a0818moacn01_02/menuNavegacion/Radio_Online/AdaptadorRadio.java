@@ -18,9 +18,8 @@ public class AdaptadorRadio extends RecyclerView.Adapter<MyViewHolder> {
     private Layout layout;
     private ItemClickListener radioClickListener;
 
-    public AdaptadorRadio(List<Radio> emisoras,Context c) {
+    public AdaptadorRadio(List<Radio> emisoras) {
         this.radios = emisoras;
-        this.context = c;
     }
 
     public void setRadioClickListener(ItemClickListener radioClickListener) {
@@ -29,8 +28,8 @@ public class AdaptadorRadio extends RecyclerView.Adapter<MyViewHolder> {
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
-        LayoutInflater mInflater = LayoutInflater.from(parent.getContext());
+        context = parent.getContext();
+        LayoutInflater mInflater = LayoutInflater.from(context);
         View v = mInflater.from(context).inflate(R.layout.recycle_view_radio, parent, false);
         return new MyViewHolder(v, radioClickListener);
     }

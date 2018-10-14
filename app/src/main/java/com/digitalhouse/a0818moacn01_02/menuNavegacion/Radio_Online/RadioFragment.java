@@ -70,7 +70,7 @@ public class RadioFragment extends Fragment {
         RecyclerView recyclerView = view.findViewById(R.id.recyclerRadio);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        AdaptadorRadio adaptadorRadio = new AdaptadorRadio(radios, getContext());
+        AdaptadorRadio adaptadorRadio = new AdaptadorRadio(radios);
 
 
         adaptadorRadio.setRadioClickListener(new ItemClickListener() {
