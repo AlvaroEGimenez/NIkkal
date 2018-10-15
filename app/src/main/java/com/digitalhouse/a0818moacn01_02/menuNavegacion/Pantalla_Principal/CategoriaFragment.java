@@ -9,19 +9,19 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.digitalhouse.a0818moacn01_02.R;
-import com.digitalhouse.a0818moacn01_02.categorias.GeneroActivity;
+import com.digitalhouse.a0818moacn01_02.categorias.genero.GeneroActivity;
 import com.digitalhouse.a0818moacn01_02.categorias.MasEscuchado;
 import com.digitalhouse.a0818moacn01_02.categorias.SugerenciaActivity;
 import com.digitalhouse.a0818moacn01_02.model.Album;
+import com.digitalhouse.a0818moacn01_02.recyclerView.CategoriaAdapterRecyclerView;
 
 import java.util.ArrayList;
 
-public class AlbumFragment extends Fragment implements AlbumAdapterRecyclerView.AdapterInterface{
+public class CategoriaFragment extends Fragment implements CategoriaAdapterRecyclerView.AdapterInterface{
     public final static String KEY_GENERO = "Géneros";
     public final static String KEY_SUGERENCIA = "Sugerencias";
     public final static String KEY_MAS_ESCUCHADO = "Lo Más Escuchado";
@@ -33,14 +33,14 @@ public class AlbumFragment extends Fragment implements AlbumAdapterRecyclerView.
     private TextView tvMasEscuchado;
     private TextView tvFavorito;
 
-    public AlbumFragment() {
+    public CategoriaFragment() {
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_album, container, false);
+        View view = inflater.inflate(R.layout.categoria_album, container, false);
         this.view = view;
 
         setCategotia();
@@ -61,9 +61,9 @@ public class AlbumFragment extends Fragment implements AlbumAdapterRecyclerView.
 
         albumRecyclerView.setLayoutManager(linearLayoutManager);
 
-        AlbumAdapterRecyclerView albumAdapterRecyclerView = new AlbumAdapterRecyclerView(cargarAlbunes(tvCategoria), R.layout.carcdview_album, getActivity(), this);
+        CategoriaAdapterRecyclerView categoriaAdapterRecyclerView = new CategoriaAdapterRecyclerView(cargarAlbunes(tvCategoria), R.layout.carcdview_categoria, getActivity(), this);
 
-        albumRecyclerView.setAdapter(albumAdapterRecyclerView);
+        albumRecyclerView.setAdapter(categoriaAdapterRecyclerView);
     }
 
     @Override
@@ -77,13 +77,17 @@ public class AlbumFragment extends Fragment implements AlbumAdapterRecyclerView.
         Intent intent = null;
 
         switch(genero){
-            case AlbumFragment.KEY_GENERO:
+            case CategoriaFragment.KEY_GENERO:
                 intent = new Intent(getContext(), GeneroActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString(GeneroActivity.KEY_IMAGEN_GENERO, album.getImagen());
+                bundle.putString(GeneroActivity.KEY_NOMBRE_GENERO, album.getNombre());
+                intent.putExtras(bundle);
                 break;
-            case AlbumFragment.KEY_SUGERENCIA:
+            case CategoriaFragment.KEY_SUGERENCIA:
                 intent = new Intent(getContext(), SugerenciaActivity.class);
                 break;
-            case AlbumFragment.KEY_MAS_ESCUCHADO:
+            case CategoriaFragment.KEY_MAS_ESCUCHADO:
                 intent = new Intent(getContext(), MasEscuchado.class);
         }
 

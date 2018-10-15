@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/card_view_album_margin"
+    android:layout_marginTop="@dimen/card_view_album_margin_top"
+    android:layout_marginRight="@dimen/card_view_album_margin"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/imagenAlbum"
+            android:layout_width="@dimen/card_imagen_album_wigth"
+            android:layout_height="@dimen/card_imagen_album_higth"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:scaleType="fitXY" />
+
+    </android.support.v7.widget.CardView>
+
+    <TextView
+        android:id="@+id/tituloAlbum"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:gravity="center"
+        android:theme="@style/nombreAlbum" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/fanAlbum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1210 Seguidores"
+            android:theme="@style/fanYduracionAlbum" />
+
+        <TextView
+            android:id="@+id/duracionAlbum"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:text="325 Mín"
+            android:theme="@style/fanYduracionAlbum" />
+
+    </LinearLayout>
+
+</LinearLayout>
+

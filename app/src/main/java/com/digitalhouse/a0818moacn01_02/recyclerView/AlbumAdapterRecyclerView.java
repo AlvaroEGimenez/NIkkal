@@ -1,8 +1,6 @@
-package com.digitalhouse.a0818moacn01_02.menuNavegacion.Pantalla_Principal;
+package com.digitalhouse.a0818moacn01_02.recyclerView;
 
 import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,12 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.digitalhouse.a0818moacn01_02.R;
-import com.digitalhouse.a0818moacn01_02.categorias.GeneroActivity;
-import com.digitalhouse.a0818moacn01_02.categorias.MasEscuchado;
-import com.digitalhouse.a0818moacn01_02.categorias.SugerenciaActivity;
 import com.digitalhouse.a0818moacn01_02.model.Album;
 import com.squareup.picasso.Picasso;
 
@@ -26,9 +20,9 @@ public class AlbumAdapterRecyclerView extends RecyclerView.Adapter {
     private List<Album> albunes;
     private Integer resources;
     private Activity activity;
-    private AdapterInterface escuchador;
+    private AlbumAdapterInterface escuchador;
 
-    public AlbumAdapterRecyclerView(ArrayList<Album> albunes, int resources, Activity activity, AdapterInterface escuchador) {
+    public AlbumAdapterRecyclerView(ArrayList<Album> albunes, int resources, Activity activity, AlbumAdapterInterface escuchador) {
         this.albunes = albunes;
         this.resources = resources;
         this.activity = activity;
@@ -54,7 +48,7 @@ public class AlbumAdapterRecyclerView extends RecyclerView.Adapter {
         return albunes.size();
     }
 
-    public interface AdapterInterface {
+    public interface AlbumAdapterInterface {
         void cambiarDeActividad(Album album);
     }
 
@@ -66,7 +60,7 @@ public class AlbumAdapterRecyclerView extends RecyclerView.Adapter {
             super(itemView);
 
             imagenAlbumCardView = itemView.findViewById(R.id.imagenAlbum);
-            tituloCardView = itemView.findViewById(R.id.titulo);
+            tituloCardView = itemView.findViewById(R.id.tituloAlbum);
 
             imagenAlbumCardView.setOnClickListener(new View.OnClickListener() {
                 @Override

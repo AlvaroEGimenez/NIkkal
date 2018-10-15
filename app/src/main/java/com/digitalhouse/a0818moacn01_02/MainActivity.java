@@ -10,13 +10,13 @@ import com.digitalhouse.a0818moacn01_02.menuNavegacion.Configuracion.Configuraci
 import com.digitalhouse.a0818moacn01_02.menuNavegacion.Radio_Online.RadioFragment;
 import com.digitalhouse.a0818moacn01_02.menuNavegacion.Buscar.BuscarFragment;
 import com.digitalhouse.a0818moacn01_02.menuNavegacion.Favoritos.FavoritoFragment;
-import com.digitalhouse.a0818moacn01_02.menuNavegacion.Pantalla_Principal.AlbumFragment;
+import com.digitalhouse.a0818moacn01_02.menuNavegacion.Pantalla_Principal.CategoriaFragment;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
 
 public class MainActivity extends AppCompatActivity {
 
-    private AlbumFragment albumFragment = new AlbumFragment();
+    private CategoriaFragment categoriaFragment = new CategoriaFragment();
     private BuscarFragment buscarFragment = new BuscarFragment();
     private FavoritoFragment favoritoFragment = new FavoritoFragment();
     private RadioFragment radioFragment = new RadioFragment();
@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
             public void onTabSelected(int tabId) {
                 switch (tabId) {
                     case R.id.albumFragment:
-                        reemplazarFragment(albumFragment);
+                        reemplazarFragment(categoriaFragment);
 
                         break;
                     case R.id.buscarFragment:

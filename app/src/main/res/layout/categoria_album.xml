@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".menuNavegacion.Pantalla_Principal.AlbumFragment">
+    tools:context=".menuNavegacion.Pantalla_Principal.CategoriaFragment">
 
     <LinearLayout
         android:layout_width="match_parent"

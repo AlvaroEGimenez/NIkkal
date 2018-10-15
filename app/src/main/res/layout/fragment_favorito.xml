@@ -3,14 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".menuNavegacion.Favoritos.FavoritoFragment"
+    tools:context=".menuNavegacion.favoritos.FavoritoFragment"
     >
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Lady está construyendo la sección favoritos"
+        android:text="Próximamente"
         android:gravity="center"
         android:textColor="@color/album_titulo"
         android:textSize="50sp" />

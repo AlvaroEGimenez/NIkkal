@@ -15,14 +15,14 @@
 
     </style>
 
-    <style name="nombreAlbum">
+    <style name="nombreCategoria">
         <item name="android:textColorPrimary">@color/album_titulo</item>
         <item name="android:background">@color/album_background</item>
         <item name="android:gravity">center</item>
-        <item name="android:layout_marginLeft">@dimen/album_titulo_padding</item>
-        <item name="android:layout_marginRight">@dimen/album_titulo_padding</item>
-        <item name="android:layout_marginTop">@dimen/album_titulo_padding</item>
-        <item name="android:textSize">@dimen/tv_album_titulo</item>
+        <item name="android:layout_marginLeft">@dimen/categoria_titulo_padding</item>
+        <item name="android:layout_marginRight">@dimen/categoria_titulo_padding</item>
+        <item name="android:layout_marginTop">@dimen/categoria_titulo_padding</item>
+        <item name="android:textSize">@dimen/tv_categoria_titulo</item>
         <item name="android:textColor">@color/album_titulo</item>
         <item name="android:padding">8dp</item>
         <item name="android:alpha">0.80</item>
@@ -36,5 +36,21 @@
         <item name="android:textColor">@color/album_titulo</item>
         <item name="android:textStyle">bold</item>
     </style>
+
+    <style name="nombreAlbum">
+        <item name="android:textColorPrimary">@color/album_titulo</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">@dimen/tv_album_titulo</item>
+        <item name="android:textColor">@color/album_titulo</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:maxLength">18</item>
+    </style>
+
+    <style name="fanYduracionAlbum">
+        <item name="android:textColorPrimary">@color/album_titulo</item>
+        <item name="android:textSize">@dimen/tv_album_titulo</item>
+        <item name="android:textColor">@color/album_titulo</item>
+    </style>
+
 
 </resources>
