@@ -59,10 +59,12 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void reemplazarFragment(Fragment fragment) {
+    public void  reemplazarFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.container, fragment);
-        fragmentTransaction.commit();
+        fragmentTransaction.addToBackStack(null).commit();
+
     }
+
 }

@@ -1,9 +1,12 @@
 package com.digitalhouse.a0818moacn01_02.menuNavegacion.Pantalla_Principal;
 
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,10 +15,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.digitalhouse.a0818moacn01_02.MainActivity;
 import com.digitalhouse.a0818moacn01_02.R;
-import com.digitalhouse.a0818moacn01_02.categorias.genero.GeneroActivity;
 import com.digitalhouse.a0818moacn01_02.categorias.MasEscuchado;
 import com.digitalhouse.a0818moacn01_02.categorias.SugerenciaActivity;
+import com.digitalhouse.a0818moacn01_02.categorias.genero.GeneroFragment;
 import com.digitalhouse.a0818moacn01_02.model.Album;
 import com.digitalhouse.a0818moacn01_02.recyclerView.CategoriaAdapterRecyclerView;
 
@@ -27,11 +31,16 @@ public class CategoriaFragment extends Fragment implements CategoriaAdapterRecyc
     public final static String KEY_MAS_ESCUCHADO = "Lo Más Escuchado";
     public final static String KEY_FAVORITO = "Favoritos";
 
+    private GeneroFragment generoFragment = new GeneroFragment();
+
+
     private View view;
     private TextView tvGeneros;
     private TextView tvSugerencia;
     private TextView tvMasEscuchado;
     private TextView tvFavorito;
+
+    private MainActivity parent;
 
     public CategoriaFragment() {
     }
@@ -42,7 +51,7 @@ public class CategoriaFragment extends Fragment implements CategoriaAdapterRecyc
 
         View view = inflater.inflate(R.layout.categoria_album, container, false);
         this.view = view;
-
+        parent = (MainActivity) getActivity();
         setCategotia();
         crearRecyclerView(R.id.rvGeneroRecyclerView, tvGeneros.getText().toString());
         crearRecyclerView(R.id.rvSugerenciaRecyclerView, tvSugerencia.getText().toString());
@@ -69,7 +78,6 @@ public class CategoriaFragment extends Fragment implements CategoriaAdapterRecyc
     @Override
     public void cambiarDeActividad(Album album) {
         llamarActividad(album);
-        Toast.makeText(this.getContext(), album.getNombre().toString(), Toast.LENGTH_SHORT).show();
     }
 
     private void llamarActividad( Album album ) {
@@ -78,11 +86,13 @@ public class CategoriaFragment extends Fragment implements CategoriaAdapterRecyc
 
         switch(genero){
             case CategoriaFragment.KEY_GENERO:
-                intent = new Intent(getContext(), GeneroActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putString(GeneroActivity.KEY_IMAGEN_GENERO, album.getImagen());
-                bundle.putString(GeneroActivity.KEY_NOMBRE_GENERO, album.getNombre());
-                intent.putExtras(bundle);
+                bundle.putString(GeneroFragment.KEY_IMAGEN_GENERO, album.getImagen());
+                bundle.putString(GeneroFragment.KEY_NOMBRE_GENERO, album.getNombre());
+
+                generoFragment.setArguments(bundle);
+
+                parent.reemplazarFragment(generoFragment);
                 break;
             case CategoriaFragment.KEY_SUGERENCIA:
                 intent = new Intent(getContext(), SugerenciaActivity.class);
