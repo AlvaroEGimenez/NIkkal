@@ -54,11 +54,14 @@ public class AdapatadorBusqueda extends RecyclerView.Adapter{
 
     public class ViewHolderBusqueda extends RecyclerView.ViewHolder {
         private TextView textViewBusqueda;
+        private TextView textViewBusquedaArtista;
 
 
         public ViewHolderBusqueda(@NonNull View itemView) {
             super(itemView);
             textViewBusqueda = itemView.findViewById(R.id.tvBusquedaReciente);
+            textViewBusquedaArtista = itemView.findViewById(R.id.tvBusquedaArtista);
+
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -70,7 +73,8 @@ public class AdapatadorBusqueda extends RecyclerView.Adapter{
         }
 
         public void  bind (Busqueda busqueda){
-            textViewBusqueda.setText(busqueda.getBusqueda());
+            textViewBusqueda.setText(busqueda.getBusqueda()+" - ");
+            textViewBusquedaArtista.setText(busqueda.getArtista());
         }
     }
 }

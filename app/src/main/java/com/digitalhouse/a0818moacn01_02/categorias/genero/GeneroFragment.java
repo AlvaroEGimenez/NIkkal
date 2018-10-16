@@ -23,7 +23,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class GeneroFragment extends Fragment implements AlbumAdapterRecyclerView.AlbumAdapterInterface, ArtistaAdapterRecyclerView.ArtistaAdapterInterface{
+public class  GeneroFragment extends Fragment implements AlbumAdapterRecyclerView.AlbumAdapterInterface{
     public static final String KEY_IMAGEN_GENERO = "imagenGenero";
     public static final String KEY_NOMBRE_GENERO = "nombreGenero";
 

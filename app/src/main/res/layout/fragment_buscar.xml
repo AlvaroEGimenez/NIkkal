@@ -23,11 +23,16 @@
             android:layout_marginLeft="16dp"
             android:layout_weight="1.7"
             android:backgroundTint="@color/album_background"
-            android:inputType="textPersonName"
+            android:hint="Buscar"
+            android:imeOptions="actionSearch"
+            android:inputType="text"
             android:maxLines="1"
             android:textColor="@color/album_titulo"
-            android:hint="Buscar..."
-            android:textColorHint="@color/album_titulo"/>
+            android:textColorHint="@color/album_background">
+
+            <requestFocus />
+        </EditText>
+
 
         <ImageButton
             android:id="@+id/imagebuttonBusqueda"
@@ -69,47 +74,66 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_gravity="bottom"
-        android:visibility="invisible"
         android:background="@color/busqueda_fondo"
         android:clickable="true"
-        android:focusable="true">
+        android:focusable="true"
+        android:visibility="invisible">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginRight="10dp"
+            android:layout_gravity="center_vertical"
             android:layout_marginLeft="10dp"
-            android:layout_gravity="center_vertical">
+            android:layout_marginRight="10dp"
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/tvNombreTrack"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="NOMBRE"
-                android:gravity="center_horizontal"
-                android:textColor="@color/album_titulo"
-                android:layout_weight="1.4"
-                android:textSize="18sp"
-                android:maxLength="30"/>
-            <ImageView
-                android:id="@+id/btnPlay_Pause"
-                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:src="@drawable/ic_pause"
-                android:layout_weight="0.6"/>
+                android:layout_weight="1.7"
+                android:ellipsize="marquee"
+                android:textAlignment="center"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
+                android:textColor="@color/album_titulo"
+                android:textSize="18sp"/>
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="0.3">
+
+                <ImageView
+                    android:id="@+id/btnPause"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_pause" />
+
+                <ImageView
+                    android:id="@+id/btnPlay"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_play"
+                    android:visibility="invisible" />
+
+            </FrameLayout>
+
 
         </LinearLayout>
 
         <ProgressBar
             android:id="@+id/progress_horizontal"
+            style="@android:style/Widget.ProgressBar.Horizontal"
             android:layout_width="match_parent"
             android:layout_height="2dp"
-            style="@android:style/Widget.ProgressBar.Horizontal"
             android:layout_gravity="bottom"
-            android:layout_marginBottom="10dp"
             android:layout_margin="20sp"
+            android:layout_marginBottom="10dp"
             android:max="99"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
 
     </FrameLayout>
