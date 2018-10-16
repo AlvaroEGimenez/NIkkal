@@ -47,7 +47,7 @@
         android:layout_height="match_parent"
         android:layout_weight="10"
         android:layout_margin="5dp"
-        android:src="@drawable/ic_favorite_no_seleccion"
+        android:src="@drawable/ic_play"
         />
 
     <ImageView
