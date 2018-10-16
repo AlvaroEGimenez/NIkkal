@@ -15,9 +15,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:gravity="center"
-            android:textSize="20sp"
-            android:textStyle="bold"
             android:theme="@style/albumRecyclerView" />
 
         <android.support.v7.widget.RecyclerView
@@ -32,9 +29,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:gravity="center"
-            android:textSize="20sp"
-            android:textStyle="bold"
             android:theme="@style/albumRecyclerView"
             android:fontFamily="sans-serif"
             />
@@ -52,9 +46,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:gravity="center"
-            android:textSize="20sp"
-            android:textStyle="bold"
             android:theme="@style/albumRecyclerView" />
 
         <android.support.v7.widget.RecyclerView
@@ -70,9 +61,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:gravity="center"
-            android:textSize="20sp"
-            android:textStyle="bold"
             android:theme="@style/albumRecyclerView" />
 
         <android.support.v7.widget.RecyclerView

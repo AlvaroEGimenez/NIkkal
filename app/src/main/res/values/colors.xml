@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#fd9701</color>
+    <color name="colorPrimary">#818181</color>
     <color name="colorPrimaryDark">#212121</color>
     <color name="colorAccent">#fd9701</color>
     <color name="album_titulo">#f5f5f5</color>

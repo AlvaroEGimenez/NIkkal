@@ -5,15 +5,12 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.digitalhouse.a0818moacn01_02.MainActivity;
 import com.digitalhouse.a0818moacn01_02.R;
@@ -25,14 +22,13 @@ import com.digitalhouse.a0818moacn01_02.recyclerView.CategoriaAdapterRecyclerVie
 
 import java.util.ArrayList;
 
-public class CategoriaFragment extends Fragment implements CategoriaAdapterRecyclerView.AdapterInterface{
+public class CategoriaFragment extends Fragment implements CategoriaAdapterRecyclerView.AdapterInterface {
     public final static String KEY_GENERO = "Géneros";
     public final static String KEY_SUGERENCIA = "Sugerencias";
     public final static String KEY_MAS_ESCUCHADO = "Lo Más Escuchado";
     public final static String KEY_FAVORITO = "Favoritos";
 
     private GeneroFragment generoFragment = new GeneroFragment();
-
 
     private View view;
     private TextView tvGeneros;
@@ -80,11 +76,11 @@ public class CategoriaFragment extends Fragment implements CategoriaAdapterRecyc
         llamarActividad(album);
     }
 
-    private void llamarActividad( Album album ) {
+    private void llamarActividad(Album album) {
         String genero = album.getGenero();
         Intent intent = null;
 
-        switch(genero){
+        switch (genero) {
             case CategoriaFragment.KEY_GENERO:
                 Bundle bundle = new Bundle();
                 bundle.putString(GeneroFragment.KEY_IMAGEN_GENERO, album.getImagen());
@@ -101,8 +97,8 @@ public class CategoriaFragment extends Fragment implements CategoriaAdapterRecyc
                 intent = new Intent(getContext(), MasEscuchado.class);
         }
 
-        if(intent != null)
-           startActivity(intent);
+        if (intent != null)
+            startActivity(intent);
     }
 
     private void setCategotia() {

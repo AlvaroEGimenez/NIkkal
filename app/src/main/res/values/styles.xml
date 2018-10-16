@@ -34,6 +34,7 @@
         <item name="android:paddingTop">@dimen/recyclerViewAlbumPaddingTop</item>
         <item name="android:textSize">@dimen/tvRecyclerViewTitulo</item>
         <item name="android:textColor">@color/album_titulo</item>
+        <item name="android:gravity">center</item>
         <item name="android:textStyle">bold</item>
     </style>
 

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/card_view_album_margin"
+    android:layout_marginTop="@dimen/card_view_album_margin_top"
+    android:layout_marginRight="@dimen/card_view_album_margin"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.CardView
+
+        android:layout_width="@dimen/card_imagen_artista_wigth"
+        android:layout_height="@dimen/card_imagen_artista_higth"
+        card_view:cardCornerRadius="70dp"
+        >
+
+        <ImageView
+            android:id="@+id/imagenArtistaCardView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:src="@drawable/apu"
+            android:scaleType="centerCrop"
+            />
+
+    </android.support.v7.widget.CardView>
+
+    <TextView
+        android:id="@+id/nombreArtistaCardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:gravity="center"
+        android:theme="@style/nombreAlbum" />
+
+        <TextView
+            android:id="@+id/fanArtista"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="1210 Seguidores"
+            android:gravity="center"
+            android:theme="@style/fanYduracionAlbum" />
+
+</LinearLayout>
+

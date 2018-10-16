@@ -7,8 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/mainBackground"
     android:fitsSystemWindows="true"
-    tools:context=".categorias.genero.GeneroFragment">
-
+    tools:context=".categorias.PistaAlbumFragment">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/main.appbar"
@@ -28,7 +27,7 @@
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <ImageView
-                android:id="@+id/imgGenero"
+                android:id="@+id/imgCabeceraAlbumPista"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:fitsSystemWindows="true"
@@ -36,12 +35,13 @@
                 app:layout_collapseMode="parallax" />
 
             <android.support.v7.widget.Toolbar
-                android:id="@+id/tvCabeceraGenero"
+                android:id="@+id/toolbaarNombreCabeceraAlbumPista"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-                app:title="pepeepp" />
+                app:title="titulo"
+               />
 
         </android.support.design.widget.CollapsingToolbarLayout>
 
@@ -59,30 +59,12 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Albunes"
-                android:theme="@style/albumRecyclerView"
-                android:layout_marginTop="10dp"/>
-            />
-
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/rvGeneroAlbum"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
-
-            <TextView
+                android:id="@+id/rvPistaAlbum"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Artitas"
-                android:theme="@style/albumRecyclerView"
-                android:layout_marginTop="30dp"/>
+                android:layout_height="wrap_content">
+            </android.support.v7.widget.RecyclerView>
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rvGeneroArtista"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 
