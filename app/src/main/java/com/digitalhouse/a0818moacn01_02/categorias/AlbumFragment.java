@@ -1,4 +1,5 @@
-package com.digitalhouse.a0818moacn01_02.categorias.genero;
+package com.digitalhouse.a0818moacn01_02.categorias;
+
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,8 +14,7 @@ import android.widget.ImageView;
 
 import com.digitalhouse.a0818moacn01_02.MainActivity;
 import com.digitalhouse.a0818moacn01_02.R;
-import com.digitalhouse.a0818moacn01_02.categorias.AlbumFragment;
-import com.digitalhouse.a0818moacn01_02.categorias.PistaAlbumFragment;
+import com.digitalhouse.a0818moacn01_02.categorias.genero.GeneroFragment;
 import com.digitalhouse.a0818moacn01_02.model.Album;
 import com.digitalhouse.a0818moacn01_02.model.Artista;
 import com.digitalhouse.a0818moacn01_02.recyclerView.AlbumAdapterRecyclerView;
@@ -23,38 +23,34 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class  GeneroFragment extends Fragment implements AlbumAdapterRecyclerView.AlbumAdapterInterface{
-    public static final String KEY_IMAGEN_GENERO = "imagenGenero";
-    public static final String KEY_NOMBRE_GENERO = "nombreGenero";
+public class AlbumFragment extends Fragment implements AlbumAdapterRecyclerView.AlbumAdapterInterface {
+    public static final String KEY_IMAGEN_ARTISTA = "imagenArtista";
+    public static final String KEY_NOMBRE_ARTISTA = "nombreArtista";
 
-    private ImageView imgGenero;
-    private Toolbar tvCabeceraGenero;
-
-    private AlbumFragment albumFragment = new AlbumFragment();
+    private ImageView imagenArtista;
+    private Toolbar tvCabeceraArtista;
     PistaAlbumFragment pistaAlbumFragment = new PistaAlbumFragment();
 
-    public GeneroFragment() {
+    public AlbumFragment() {
     }
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view =  inflater.inflate(R.layout.fragment_genero, container, false);
+        View view = inflater.inflate(R.layout.fragment_album, container, false);
 
-        imgGenero = view.findViewById(R.id.imgGenero);
-        tvCabeceraGenero = view.findViewById(R.id.tvCabeceraGenero);
-        view.findViewById(R.id.rvGeneroAlbum);
+        imagenArtista = view.findViewById(R.id.imagenArtista);
+        tvCabeceraArtista = view.findViewById(R.id.tvCabeceraArtista);
+        view.findViewById(R.id.rvAlbum);
 
-        Bundle bundle =  getArguments();
-        String urlImagenCabecera = bundle.getString(KEY_IMAGEN_GENERO);
-        String nombreGenero = bundle.getString(KEY_NOMBRE_GENERO);
+        Bundle bundle = getArguments();
+        String urlImagenCabecera = bundle.getString(KEY_IMAGEN_ARTISTA);
+        String nombreGenero = bundle.getString(KEY_NOMBRE_ARTISTA);
 
-        cargarImagen(imgGenero, urlImagenCabecera);
-        tvCabeceraGenero.setTitle(nombreGenero);
-        crearAlbumRecyclerView(view, R.id.rvGeneroAlbum);
-
-        crearArtistaRecyclerView(view, R.id.rvGeneroArtista);
+        cargarImagen(imagenArtista, urlImagenCabecera);
+        tvCabeceraArtista.setTitle(nombreGenero);
+        crearAlbumRecyclerView(view, R.id.rvAlbum);
 
         return view;
     }
@@ -67,32 +63,19 @@ public class  GeneroFragment extends Fragment implements AlbumAdapterRecyclerVie
     }
 
     private void crearAlbumRecyclerView(View view, Integer idLayout) {
-        RecyclerView generoRecyclerView = view.findViewById(idLayout);
-        generoRecyclerView.setHasFixedSize(true);
+        RecyclerView recyclerView = view.findViewById(idLayout);
+        recyclerView.setHasFixedSize(true);
 
         LinearLayoutManager linearLayoutManager = new GridLayoutManager(getContext(), 2);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 
-        generoRecyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setLayoutManager(linearLayoutManager);
 
-        AlbumAdapterRecyclerView categoriaAdapterRecyclerView = new AlbumAdapterRecyclerView(cargarAlbunes(), R.layout.cardview_album, getActivity(), this);
+        AlbumAdapterRecyclerView albumAdapterRecyclerView = new AlbumAdapterRecyclerView(cargarAlbunes(), R.layout.cardview_album, getActivity(), this);
 
-        generoRecyclerView.setAdapter(categoriaAdapterRecyclerView);
+        recyclerView.setAdapter(albumAdapterRecyclerView);
     }
 
-    private void crearArtistaRecyclerView(View view, Integer idLayout) {
-        RecyclerView generoRecyclerView = view.findViewById(idLayout);
-        generoRecyclerView.setHasFixedSize(true);
-
-        LinearLayoutManager linearLayoutManager = new GridLayoutManager(getContext(), 2);
-        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-
-        generoRecyclerView.setLayoutManager(linearLayoutManager);
-
-        ArtistaAdapterRecyclerView categoriaAdapterRecyclerView = new ArtistaAdapterRecyclerView(cargarArtistas(), R.layout.cardview_artista, getActivity(), this);
-
-        generoRecyclerView.setAdapter(categoriaAdapterRecyclerView);
-    }
 
     public ArrayList<Album> cargarAlbunes() {
         ArrayList<Album> albunes = new ArrayList<>();
@@ -147,19 +130,6 @@ public class  GeneroFragment extends Fragment implements AlbumAdapterRecyclerVie
     }
 
 
-    public ArrayList<Artista> cargarArtistas() {
-        ArrayList<Artista> artistas = new ArrayList<>();
-        artistas.add(new Artista("https://e-cdns-images.dzcdn.net/images/artist/f2bc007e9133c946ac3c3907ddc5d2ea/250x250-000000-80-0-0.jpg", "Daft Punk", "Custaro", 1236 ));
-        artistas.add(new Artista("https://cdns-images.dzcdn.net/images/artist/0707267475580b1b82f4da20a1b295c6/500x500-000000-80-0-0.jpg", "Eminem", "Custaro", 1236 ));
-        artistas.add(new Artista("https://e-cdns-images.dzcdn.net/images/artist/b4719bc7a0ddb4a5be41277f37856ae6/250x250-000000-80-0-0.jpg", "Metallica", "Metal", 1236 ));
-        artistas.add(new Artista("https://e-cdns-images.dzcdn.net/images/artist//250x250-000000-80-0-0.jpg", "Tete", "Custaro", 1236 ));
-        artistas.add(new Artista("https://cdns-images.dzcdn.net/images/cover/9a3364528159f8377d3b1b5310f40dae/500x500-000000-80-0-0.jpg", "Tete", "Custaro", 1236 ));
-        artistas.add(new Artista("https://e-cdns-images.dzcdn.net/images/artist/7c8fb9b4135ea113a18d7380686bc764/250x250-000000-80-0-0.jpg", "Soda Stereo", "Custaro", 1236 ));
-        artistas.add(new Artista("https://cdns-images.dzcdn.net/images/cover/9a3364528159f8377d3b1b5310f40dae/500x500-000000-80-0-0.jpg", "Tete", "Custaro", 1236 ));
-
-        return artistas;
-    }
-
     @Override
     public void cambiarDeActividad(Album album) {
         MainActivity mainActivity = (MainActivity) getActivity();
@@ -168,15 +138,5 @@ public class  GeneroFragment extends Fragment implements AlbumAdapterRecyclerVie
         bundle.putString(PistaAlbumFragment.KEY_NOMBRE_CABECERA_ALBUM_PISTA, album.getNombre());
         pistaAlbumFragment.setArguments(bundle);
         mainActivity.reemplazarFragment(pistaAlbumFragment);
-    }
-
-    @Override
-    public void cambiarDeActividad(Artista artista) {
-        MainActivity mainActivity = (MainActivity) getActivity();
-        Bundle bundle = new Bundle();
-        bundle.putString(AlbumFragment.KEY_IMAGEN_ARTISTA, artista.getImagen());
-        bundle.putString(AlbumFragment.KEY_NOMBRE_ARTISTA, artista.getNombre());
-        albumFragment.setArguments(bundle);
-        mainActivity.reemplazarFragment(albumFragment);
     }
 }

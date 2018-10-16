@@ -22,7 +22,6 @@ public class MainActivity extends AppCompatActivity {
     private RadioFragment radioFragment = new RadioFragment();
     private ConfiguracionFragment configuracionFragment = new ConfiguracionFragment();
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

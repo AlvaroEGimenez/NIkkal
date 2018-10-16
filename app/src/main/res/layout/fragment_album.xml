@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/mainBackground"
     android:fitsSystemWindows="true"
-    tools:context=".categorias.genero.GeneroFragment">
+    tools:context=".categorias.AlbumFragment">
 
 
     <android.support.design.widget.AppBarLayout
@@ -28,7 +28,7 @@
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <ImageView
-                android:id="@+id/imgGenero"
+                android:id="@+id/imagenArtista"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:fitsSystemWindows="true"
@@ -36,7 +36,7 @@
                 app:layout_collapseMode="parallax" />
 
             <android.support.v7.widget.Toolbar
-                android:id="@+id/tvCabeceraGenero"
+                android:id="@+id/tvCabeceraArtista"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin"
@@ -59,30 +59,12 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Albunes"
-                android:theme="@style/albumRecyclerView"
-                android:layout_marginTop="10dp"/>
-            />
-
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/rvGeneroAlbum"
+                android:id="@+id/rvAlbum"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
+                android:layout_height="wrap_content">
+            </android.support.v7.widget.RecyclerView>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Artitas"
-                android:theme="@style/albumRecyclerView"
-                android:layout_marginTop="30dp"/>
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rvGeneroArtista"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 

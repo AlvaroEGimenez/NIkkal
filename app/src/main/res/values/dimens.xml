@@ -13,11 +13,13 @@
     <dimen name="album_item_menu_width">20dp</dimen>
     <dimen name="album_item_menu_height">30dp</dimen>
     <dimen name="album_item_menu_margin_top">10dp</dimen>
-    <dimen name="tvRecyclerViewTitulo">15sp</dimen>
+    <dimen name="tvRecyclerViewTitulo">18sp</dimen>
     <dimen name="card_view_categoria_margin">7dp</dimen>
     <dimen name="tv_album_titulo">12sp</dimen>
     <dimen name="card_imagen_album_wigth">150dp</dimen>
     <dimen name="card_imagen_album_higth">130dp</dimen>
     <dimen name="card_view_album_margin">8dp</dimen>
     <dimen name="card_view_album_margin_top">20dp</dimen>
+    <dimen name="card_imagen_artista_wigth">140dp</dimen>
+    <dimen name="card_imagen_artista_higth">140dp</dimen>
 </resources>
