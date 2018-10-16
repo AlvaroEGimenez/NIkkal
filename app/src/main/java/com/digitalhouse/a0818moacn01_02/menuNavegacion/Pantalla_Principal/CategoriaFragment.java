@@ -103,21 +103,21 @@ public class CategoriaFragment extends Fragment implements CategoriaAdapterRecyc
 
     private void setCategotia() {
         tvGeneros = view.findViewById(R.id.tvGeneroRecyclerView);
-        tvGeneros.setText("Géneros");
+        tvGeneros.setText(R.string.tv_genero);
 
         tvSugerencia = view.findViewById(R.id.tvSugerenciaRecyclerView);
-        tvSugerencia.setText("Sugerencias");
+        tvSugerencia.setText(R.string.tv_sugerencia);
 
         tvMasEscuchado = view.findViewById(R.id.tvMasEscuchadoRecyclerView);
-        tvMasEscuchado.setText("Lo Más Escuchado");
+        tvMasEscuchado.setText(R.string.tv_mas_escuchado);
 
         tvFavorito = view.findViewById(R.id.tvFavoritoRecyclerView);
-        tvFavorito.setText("Favoritos");
+        tvFavorito.setText(R.string.tv_favorito);
     }
 
     public ArrayList<Album> cargarAlbunes(String categoria) {
         ArrayList<Album> albunes = new ArrayList<>();
-        if (KEY_GENERO.equals(categoria)) {
+        if (KEY_GENERO.equals(categoria) || "Genders".equals(categoria)) {
             albunes.add(new Album("https://e-cdns-images.dzcdn.net/images/misc/b36ca681666d617edd0dcb5ab389a6ac/250x250-000000-80-0-0.jpg",
                     "Rock", KEY_GENERO));
             albunes.add(new Album("https://e-cdns-images.dzcdn.net/images/misc/f14f9fde9feb38ca6d61960f00681860/250x250-000000-80-0-0.jpg",
@@ -139,7 +139,7 @@ public class CategoriaFragment extends Fragment implements CategoriaAdapterRecyc
                     "Niños", KEY_GENERO));
         }
 
-        if (KEY_SUGERENCIA.equals(categoria)) {
+        if (KEY_SUGERENCIA.equals(categoria) || "Suggestions".equals(categoria)) {
             albunes.add(new Album("https://e-cdns-images.dzcdn.net/images/artist/4f4ee0a2edcebdb115910bc39fb57f56/250x250-000000-80-0-0.jpg",
                     "La Máqiona de ser Feliz", KEY_SUGERENCIA));
 
@@ -155,7 +155,7 @@ public class CategoriaFragment extends Fragment implements CategoriaAdapterRecyc
                     "Californication ", KEY_SUGERENCIA));
         }
 
-        if (KEY_MAS_ESCUCHADO.equals(categoria)) {
+        if (KEY_MAS_ESCUCHADO.equals(categoria) || "The Most Listened".equals(categoria)) {
             albunes.add(new Album("https://cdns-images.dzcdn.net/images/cover/d493314dc2ba6d5bad6d6893913c3a9b/500x500-000000-80-0-0.jpg",
                     "Cumbia Peposa", KEY_MAS_ESCUCHADO));
 
@@ -171,7 +171,7 @@ public class CategoriaFragment extends Fragment implements CategoriaAdapterRecyc
                     "Night Visions", KEY_MAS_ESCUCHADO));
         }
 
-        if (KEY_FAVORITO.equals(categoria)) {
+        if (KEY_FAVORITO.equals(categoria) || "Favorites".equals(categoria)) {
             albunes.add(new Album("https://cdns-images.dzcdn.net/images/cover/7e8314f4280cffde363547a495a260bc/250x250-000000-80-0-0.jpg",
                     "Night Visions", KEY_FAVORITO));
 

@@ -5,4 +5,22 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="accion_agregar_favoritos">Agregar a Favoritos</string>
+    <string name="tv_genero">Géneros</string>
+    <string name="tv_sugerencia">Sugerencias</string>
+    <string name="tv_mas_escuchado">Lo Más Escuchado</string>
+    <string name="tv_favorito">Favoritos</string>
+    <string name="btnbar_inicio">Inicio</string>
+    <string name="btnbar_buscar">Buscar</string>
+    <string name="btnbar_favorito">Favoritos</string>
+    <string name="btnbar_radio">Radio</string>
+    <string name="btnbar_ajuste">Ajuste</string>
+
+    <string name="tv_busqueda_reciente">Busquedas recientes</string>
+    <string name="hint_buscar">Buscar...</string>
+
+
+
+
+
+
 </resources>
