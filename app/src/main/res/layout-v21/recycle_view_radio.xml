@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<android.support.v7.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="30dp"
+    android:layout_height="45dp"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="horizontal"
+    android:layout_marginTop="2dp"
+    android:layout_marginBottom="2dp"
     android:clickable="true"
     android:focusable="true"
     android:foreground="?attr/selectableItemBackground">
@@ -13,29 +15,30 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/album_background"
-        android:gravity="center_vertical"
         android:orientation="horizontal">
 
         <TextView
             android:id="@+id/tvNombreradio"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Nombre Radio"
-            android:textAlignment="center"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            tools:text="Nombre Radio"
+            android:layout_marginStart="10dp"
             android:textColor="@color/album_titulo"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:gravity="center_vertical"/>
 
         <TextView
             android:id="@+id/tvSintonia"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Sintonia"
             android:textAlignment="center"
             android:textColor="@color/album_titulo"
             android:textSize="20sp"
             android:layout_weight="1"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:gravity="center_vertical"/>
 
 
     </LinearLayout>

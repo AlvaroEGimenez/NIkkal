@@ -4,8 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/album_background"
+    android:background="@color/mainBackground"
     tools:context=".menuNavegacion.Radio_Online.RadioFragment">
+
+
 
 
     <android.support.v7.widget.RecyclerView
@@ -71,6 +73,13 @@
             android:layout_marginRight="16dp"/>
 
     </FrameLayout>
+
+    <ProgressBar
+        android:id="@+id/progressBarRadio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:visibility="invisible"/>
 
 
 </FrameLayout>

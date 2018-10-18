@@ -12,13 +12,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.digitalhouse.a0818moacn01_02.MainActivity;
 import com.digitalhouse.a0818moacn01_02.R;
 import com.digitalhouse.a0818moacn01_02.categorias.MasEscuchado;
 import com.digitalhouse.a0818moacn01_02.categorias.SugerenciaActivity;
 import com.digitalhouse.a0818moacn01_02.categorias.genero.GeneroFragment;
+import com.digitalhouse.a0818moacn01_02.menuNavegacion.Buscar.AdapatadorBusqueda;
+import com.digitalhouse.a0818moacn01_02.menuNavegacion.Buscar.BuscarFragment;
+import com.digitalhouse.a0818moacn01_02.menuNavegacion.Buscar.Busqueda;
 import com.digitalhouse.a0818moacn01_02.model.Album;
 import com.digitalhouse.a0818moacn01_02.recyclerView.CategoriaAdapterRecyclerView;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -37,6 +49,8 @@ public class CategoriaFragment extends Fragment implements CategoriaAdapterRecyc
     private TextView tvFavorito;
 
     private MainActivity parent;
+
+    private RequestQueue requestQueue;
 
     public CategoriaFragment() {
     }
@@ -169,6 +183,10 @@ public class CategoriaFragment extends Fragment implements CategoriaAdapterRecyc
                     "In My Mind", KEY_MAS_ESCUCHADO));
             albunes.add(new Album("https://cdns-images.dzcdn.net/images/cover/7e8314f4280cffde363547a495a260bc/250x250-000000-80-0-0.jpg",
                     "Night Visions", KEY_MAS_ESCUCHADO));
+
+            //analizarJSONMasEscuchados(albunes);
+
+
         }
 
         if (KEY_FAVORITO.equals(categoria) || "Favorites".equals(categoria)) {
@@ -180,6 +198,43 @@ public class CategoriaFragment extends Fragment implements CategoriaAdapterRecyc
 
         }
         return albunes;
+    }
+
+    private void analizarJSONMasEscuchados(final ArrayList<Album>  album) {
+
+        String url = "https://api.deezer.com/chart";
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                        try {
+                            JSONArray jsonArray = response.getJSONArray("tracks");
+
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                JSONObject hit = jsonArray.getJSONObject(i);
+
+                                Object artista = hit.getJSONObject("artist");
+                                Object datos = hit.getJSONObject("data");
+                                String imagen = ((JSONObject) artista).getString("picture_big");
+                                String titulo = ((JSONObject) datos).getString("name");
+                                album.add(new Album(imagen,titulo , "Top Chart"));
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+
+            }
+        });
+
+        requestQueue.add(request);
     }
 
 }

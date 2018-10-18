@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cordinator"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/colorPrimaryDark"
-    tools:context=".InicioActivity"
-    android:id="@+id/cordinator">
+    android:orientation="vertical"
+    tools:context=".InicioActivity">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -18,8 +17,8 @@
             android:id="@+id/nikkal"
             android:layout_width="160dp"
             android:layout_height="160dp"
-            android:layout_marginBottom="110dp"
             android:layout_gravity="center_vertical|center_horizontal"
+            android:layout_marginBottom="110dp"
             android:src="@drawable/logonikkal" />
 
         <TextView
@@ -27,6 +26,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|center_horizontal"
+            android:layout_marginStart="7dp"
+            android:layout_marginLeft="7dp"
+            android:layout_marginTop="11dp"
             android:text="NIKKAL"
             android:textColor="@color/album_titulo"
             android:textSize="60sp"
