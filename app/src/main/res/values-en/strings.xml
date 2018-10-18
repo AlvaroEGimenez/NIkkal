@@ -16,6 +16,6 @@
     <string name="btnbar_ajuste">Setting</string>
 
     <string name="tv_busqueda_reciente">Recent searches</string>
-    <string name="hint_buscar">Search...</string>
+    <string name="hint_buscar">Search</string>
 
 </resources>

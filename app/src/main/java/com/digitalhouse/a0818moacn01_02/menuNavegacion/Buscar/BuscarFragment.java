@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,9 +16,9 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -28,11 +27,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.deezer.sdk.network.connect.DeezerConnect;
-import com.deezer.sdk.network.request.event.DeezerError;
-import com.deezer.sdk.player.AlbumPlayer;
-import com.deezer.sdk.player.exception.TooManyPlayersExceptions;
-import com.deezer.sdk.player.networkcheck.WifiAndMobileNetworkStateChecker;
 import com.digitalhouse.a0818moacn01_02.R;
 
 import org.json.JSONArray;
@@ -55,12 +49,7 @@ public class BuscarFragment extends Fragment implements AdapatadorBusqueda.Busqu
     private RequestQueue requestQueue;
     private String busqueda;
     private MediaPlayer mediaPlayer;
-    private FrameLayout frameLayout;
-    private ImageView imageViewPlay;
-    private ImageView imageViewPause;
-    private TextView textViewNombreTrack;
     private String applicationID = "302884";
-    private DeezerConnect deezerConnect;
 
 
     public BuscarFragment() {
@@ -80,8 +69,6 @@ public class BuscarFragment extends Fragment implements AdapatadorBusqueda.Busqu
         mostrarTeclado();
 
 
-        deezerConnect = new DeezerConnect(getActivity(), applicationID);
-
         imageButtonBusqueda = view.findViewById(R.id.imagebuttonBusqueda);
         requestQueue = Volley.newRequestQueue(getActivity());
         recyclerView = view.findViewById(R.id.rvBusqueda);
@@ -90,12 +77,6 @@ public class BuscarFragment extends Fragment implements AdapatadorBusqueda.Busqu
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setHasFixedSize(true);
 
-
-        frameLayout = view.findViewById(R.id.framePlayer);
-        imageViewPlay = view.findViewById(R.id.btnPlay);
-        imageViewPause = view.findViewById(R.id.btnPause);
-        textViewNombreTrack = view.findViewById(R.id.tvNombreTrack);
-        textViewNombreTrack.setSelected(true);
 
         mediaPlayer = new MediaPlayer();
 
@@ -148,7 +129,7 @@ public class BuscarFragment extends Fragment implements AdapatadorBusqueda.Busqu
                                 String urlMp3 = hit.getString("preview");
                                 Object artista = hit.getJSONObject("artist");
                                 String nombreArtista = ((JSONObject) artista).getString("name");
-                                listaBusquedas.add(new Busqueda(titulo, urlMp3,nombreArtista));
+                                listaBusquedas.add(new Busqueda(titulo, urlMp3, nombreArtista));
                             }
 
                             adapatadorBusqueda = new AdapatadorBusqueda(listaBusquedas, BuscarFragment.this);
@@ -170,19 +151,27 @@ public class BuscarFragment extends Fragment implements AdapatadorBusqueda.Busqu
         requestQueue.add(request);
     }
 
+
     @Override
     public void busquedaClick(Busqueda busqueda) {
+        LinearLayout linearLayout = getActivity().findViewById(R.id.layoutPlayer);
+        TextView textViewNombrePista = getActivity().findViewById(R.id.tvNombreReproductor);
+        textViewNombrePista.setSelected(true);
+
+
+        linearLayout.setVisibility(View.VISIBLE);
         String url = busqueda.getMp3();
         reproducirMp3(url, mediaPlayer);
-        textViewNombreTrack.setText(busqueda.getBusqueda()+" - "+busqueda.getArtista());
-        textViewNombreTrack.setTextColor(Color.parseColor("#FD9701"));
-
+        textViewNombrePista.setText(busqueda.getBusqueda() + " - " + busqueda.getArtista());
+        textViewNombrePista.setTextColor(Color.parseColor("#FD9701"));
 
 
     }
 
 
     private void reproducirMp3(final String url, final MediaPlayer mediaPlayer) {
+        final ImageView imageViewPlay = getActivity().findViewById(R.id.btnRepoductorPlay);
+        final ImageView imageViewPause = getActivity().findViewById(R.id.btnReproductorPause);
 
         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
 
@@ -193,7 +182,6 @@ public class BuscarFragment extends Fragment implements AdapatadorBusqueda.Busqu
                 mediaPlayer.setDataSource(url);
                 mediaPlayer.prepare();
                 mediaPlayer.start();
-                frameLayout.setVisibility(View.VISIBLE);
                 imageViewPause.setVisibility(View.VISIBLE);
 
             } else {
@@ -218,7 +206,7 @@ public class BuscarFragment extends Fragment implements AdapatadorBusqueda.Busqu
                 @Override
                 public void onClick(View v) {
 
-                    if (mediaPlayer != null) {
+                    if (mediaPlayer != null && !mediaPlayer.isPlaying()) {
 
                         mediaPlayer.start();
                         imageViewPause.setVisibility(View.VISIBLE);

@@ -1,11 +1,21 @@
 package com.digitalhouse.a0818moacn01_02;
 
+import android.graphics.Color;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import com.digitalhouse.a0818moacn01_02.menuNavegacion.Buscar.AdapatadorBusqueda;
+import com.digitalhouse.a0818moacn01_02.menuNavegacion.Buscar.Busqueda;
 import com.digitalhouse.a0818moacn01_02.menuNavegacion.Configuracion.ConfiguracionFragment;
 import com.digitalhouse.a0818moacn01_02.menuNavegacion.Radio_Online.RadioFragment;
 import com.digitalhouse.a0818moacn01_02.menuNavegacion.Buscar.BuscarFragment;
@@ -14,18 +24,32 @@ import com.digitalhouse.a0818moacn01_02.menuNavegacion.Pantalla_Principal.Catego
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
 
-public class MainActivity extends AppCompatActivity {
+import java.io.IOException;
+
+public class MainActivity extends AppCompatActivity implements AdapatadorBusqueda.BusquedaInterface {
 
     private CategoriaFragment categoriaFragment = new CategoriaFragment();
     private BuscarFragment buscarFragment = new BuscarFragment();
     private FavoritoFragment favoritoFragment = new FavoritoFragment();
     private RadioFragment radioFragment = new RadioFragment();
     private ConfiguracionFragment configuracionFragment = new ConfiguracionFragment();
+    private TextView textViewNombrePista;
+    private ImageView imageViewPlay;
+    private ImageView imageViewPause;
+    private LinearLayout linearLayoutReproductor;
+    private MediaPlayer mediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        textViewNombrePista = findViewById(R.id.tvNombreReproductor);
+        imageViewPlay = findViewById(R.id.btnRepoductorPlay);
+        imageViewPause = findViewById(R.id.btnReproductorPause);
+        linearLayoutReproductor = findViewById(R.id.layoutPlayer);
+
+        mediaPlayer = new MediaPlayer();
 
         final BottomBar bottomBar = findViewById(R.id.bottombar);
 
@@ -66,4 +90,84 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void busquedaClick(Busqueda busqueda) {
+        linearLayoutReproductor.setVisibility(View.VISIBLE);
+        textViewNombrePista.setText(busqueda.getBusqueda()+" - "+busqueda.getArtista());
+        textViewNombrePista.setTextColor(Color.parseColor("#FD9701"));
+        String urlMp3 = busqueda.getMp3();
+        reproducirMp3(urlMp3,mediaPlayer);
+
+
+    }
+
+    private void reproducirMp3(final String url, final MediaPlayer mediaPlayer) {
+
+        mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+
+
+        try {
+            if (!mediaPlayer.isPlaying()) {
+
+                mediaPlayer.setDataSource(url);
+                mediaPlayer.prepare();
+                mediaPlayer.start();
+                imageViewPause.setVisibility(View.VISIBLE);
+
+
+            } else {
+                mediaPlayer.stop();
+                mediaPlayer.reset();
+                mediaPlayer.setDataSource(url);
+                mediaPlayer.prepare();
+                mediaPlayer.start();
+            }
+
+            imageViewPause.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mediaPlayer.pause();
+                    imageViewPlay.setVisibility(View.VISIBLE);
+                    imageViewPause.setVisibility(View.INVISIBLE);
+                }
+            });
+
+
+            imageViewPlay.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    if (mediaPlayer != null) {
+
+                        mediaPlayer.start();
+                        imageViewPause.setVisibility(View.VISIBLE);
+                        imageViewPlay.setVisibility(View.INVISIBLE);
+                    }
+                }
+            });
+
+
+        } catch (
+                IOException e)
+
+        {
+
+            e.printStackTrace();
+        } catch (
+                IllegalArgumentException e)
+
+        {
+            e.printStackTrace();
+        } catch (
+                SecurityException e)
+
+        {
+            e.printStackTrace();
+        } catch (
+                IllegalStateException e)
+
+        {
+            e.printStackTrace();
+        }
+    }
 }

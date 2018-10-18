@@ -9,24 +9,89 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <LinearLayout
-        android:id="@+id/container"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_gravity="top"
-        android:layout_marginTop="5dp"
-        android:layout_weight="92"
-        android:orientation="vertical"
-        android:paddingBottom="4dp"></LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_gravity="top"
+            android:layout_marginTop="5dp"
+            android:layout_weight="92"
+            android:orientation="vertical"
+            android:paddingBottom="4dp">
+
+        </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/layoutPlayer"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_gravity="bottom"
-        android:layout_weight="8"
-        android:background="@android:color/black"
-        android:orientation="vertical">
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:visibility="gone">
+        <ImageView
+            android:id="@+id/btnActivityReproductor"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_unfold_more"
+            android:layout_weight="0.3"/>
+        <TextView
+            android:id="@+id/tvNombreReproductor"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            tools:text="nombre de la pista"
+            android:textColor="@color/album_titulo"
+            android:layout_weight="1.2"
+            android:textAlignment="center"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:ellipsize="marquee"
+            android:scrollHorizontally="true"
+            android:singleLine="true"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.3"
+            android:layout_gravity="center_vertical">
 
-        <include layout="@layout/bottombar"></include>
+            <ImageView
+                android:id="@+id/btnRepoductorPlay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_play"
+                android:layout_gravity="center_horizontal"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"
+                android:visibility="invisible"/>
+            <ImageView
+                android:id="@+id/btnReproductorPause"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_pause"
+                android:layout_gravity="center_horizontal"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"
+                android:visibility="invisible"/>
+
+        </FrameLayout>
+
     </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_gravity="bottom"
+            android:layout_weight="8"
+            android:background="@android:color/black"
+            android:orientation="vertical">
+
+            <include layout="@layout/bottombar"/>
+
+        </LinearLayout>
+
+
+
+
 </LinearLayout>

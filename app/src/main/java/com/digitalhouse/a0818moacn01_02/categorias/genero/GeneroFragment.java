@@ -11,15 +11,28 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.digitalhouse.a0818moacn01_02.MainActivity;
 import com.digitalhouse.a0818moacn01_02.R;
 import com.digitalhouse.a0818moacn01_02.categorias.AlbumFragment;
 import com.digitalhouse.a0818moacn01_02.categorias.PistaAlbumFragment;
+import com.digitalhouse.a0818moacn01_02.menuNavegacion.Buscar.AdapatadorBusqueda;
+import com.digitalhouse.a0818moacn01_02.menuNavegacion.Buscar.BuscarFragment;
+import com.digitalhouse.a0818moacn01_02.menuNavegacion.Buscar.Busqueda;
 import com.digitalhouse.a0818moacn01_02.model.Album;
 import com.digitalhouse.a0818moacn01_02.model.Artista;
 import com.digitalhouse.a0818moacn01_02.recyclerView.AlbumAdapterRecyclerView;
 import com.digitalhouse.a0818moacn01_02.recyclerView.ArtistaAdapterRecyclerView;
 import com.squareup.picasso.Picasso;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -29,6 +42,9 @@ public class  GeneroFragment extends Fragment implements AlbumAdapterRecyclerVie
 
     private ImageView imgGenero;
     private Toolbar tvCabeceraGenero;
+    private ArrayList<Album> albunes = new ArrayList<>();
+    private View view;
+    private RequestQueue requestQueue;
 
     private AlbumFragment albumFragment = new AlbumFragment();
     PistaAlbumFragment pistaAlbumFragment = new PistaAlbumFragment();
@@ -40,11 +56,13 @@ public class  GeneroFragment extends Fragment implements AlbumAdapterRecyclerVie
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view =  inflater.inflate(R.layout.fragment_genero, container, false);
+        view =  inflater.inflate(R.layout.fragment_genero, container, false);
 
         imgGenero = view.findViewById(R.id.imgGenero);
         tvCabeceraGenero = view.findViewById(R.id.tvCabeceraGenero);
         view.findViewById(R.id.rvGeneroAlbum);
+
+        requestQueue = Volley.newRequestQueue(getActivity());
 
         Bundle bundle =  getArguments();
         String urlImagenCabecera = bundle.getString(KEY_IMAGEN_GENERO);
@@ -94,7 +112,53 @@ public class  GeneroFragment extends Fragment implements AlbumAdapterRecyclerVie
         generoRecyclerView.setAdapter(categoriaAdapterRecyclerView);
     }
 
+
+    /*private void analizarJSON() {
+
+        String url = "https://api.deezer.com/search/playlist?q=rock";
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                        try {
+                            JSONArray jsonArray = response.getJSONArray("data");
+
+                            for (int i = 0; i < 10; i++) {
+                                JSONObject hit = jsonArray.getJSONObject(i);
+
+                                String nombre = hit.getString("title");
+                                String imagen = hit.getString("picture_medium");
+                                String tipo = hit.getString("type");
+
+                                albunes.add(new Album(imagen, nombre,tipo));
+                            }
+
+                            crearAlbumRecyclerView(view, R.id.rvGeneroArtista);
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+
+            }
+        });
+
+        requestQueue.add(request);
+    }*/
+
+
+
+
     public ArrayList<Album> cargarAlbunes() {
+
+       // analizarJSON();
         ArrayList<Album> albunes = new ArrayList<>();
         albunes.add(new Album("https://e-cdns-images.dzcdn.net/images/misc/b36ca681666d617edd0dcb5ab389a6ac/250x250-000000-80-0-0.jpg",
                 "Rock", ""));
