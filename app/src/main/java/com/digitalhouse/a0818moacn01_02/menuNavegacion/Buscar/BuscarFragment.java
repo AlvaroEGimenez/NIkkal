@@ -183,20 +183,15 @@ public class BuscarFragment extends Fragment implements AdapatadorBusqueda.Busqu
 
 
     private void reproducirMp3(final String url, final MediaPlayer mediaPlayer) {
-        // Set the media player audio stream type
+
         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-        //Try to play music/audio from url
-        int currPlayPosition = mediaPlayer.getCurrentPosition();
-        int totalTime = mediaPlayer.getDuration();
-        int currProgress = (currPlayPosition * 1000) / totalTime;
+
 
         try {
             if (!mediaPlayer.isPlaying()) {
-                // Set the audio data source
+
                 mediaPlayer.setDataSource(url);
-                // Prepare the media player
                 mediaPlayer.prepare();
-                // Start playing audio from http url
                 mediaPlayer.start();
                 frameLayout.setVisibility(View.VISIBLE);
                 imageViewPause.setVisibility(View.VISIBLE);
@@ -213,7 +208,6 @@ public class BuscarFragment extends Fragment implements AdapatadorBusqueda.Busqu
                 @Override
                 public void onClick(View v) {
                     mediaPlayer.pause();
-                    // mediaPlayer.reset();
                     imageViewPlay.setVisibility(View.VISIBLE);
                     imageViewPause.setVisibility(View.INVISIBLE);
                 }
@@ -223,10 +217,9 @@ public class BuscarFragment extends Fragment implements AdapatadorBusqueda.Busqu
             imageViewPlay.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //mediaPlayer.setDataSource(url);
-                    // Prepare the media player
+
                     if (mediaPlayer != null) {
-                        // Start playing audio from http url
+
                         mediaPlayer.start();
                         imageViewPause.setVisibility(View.VISIBLE);
                         imageViewPlay.setVisibility(View.INVISIBLE);
@@ -239,7 +232,7 @@ public class BuscarFragment extends Fragment implements AdapatadorBusqueda.Busqu
                 IOException e)
 
         {
-            // Catch the exception
+
             e.printStackTrace();
         } catch (
                 IllegalArgumentException e)

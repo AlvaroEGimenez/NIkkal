@@ -23,7 +23,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class  GeneroFragment extends Fragment implements AlbumAdapterRecyclerView.AlbumAdapterInterface, ArtistaAdapterRecyclerView.ArtistaAdapterInterface{
+public class  GeneroFragment extends Fragment implements AlbumAdapterRecyclerView.AlbumAdapterInterface, ArtistaAdapterRecyclerView.ArtistaAdapterInterface {
     public static final String KEY_IMAGEN_GENERO = "imagenGenero";
     public static final String KEY_NOMBRE_GENERO = "nombreGenero";
 
@@ -89,7 +89,7 @@ public class  GeneroFragment extends Fragment implements AlbumAdapterRecyclerVie
 
         generoRecyclerView.setLayoutManager(linearLayoutManager);
 
-        ArtistaAdapterRecyclerView categoriaAdapterRecyclerView = new ArtistaAdapterRecyclerView(cargarArtistas(), R.layout.cardview_artista, getActivity(), this);
+        ArtistaAdapterRecyclerView categoriaAdapterRecyclerView = new ArtistaAdapterRecyclerView(cargarArtistas(), R.layout.cardview_artista, getActivity(),  this);
 
         generoRecyclerView.setAdapter(categoriaAdapterRecyclerView);
     }
@@ -170,7 +170,7 @@ public class  GeneroFragment extends Fragment implements AlbumAdapterRecyclerVie
         mainActivity.reemplazarFragment(pistaAlbumFragment);
     }
 
-    @Override
+   @Override
     public void cambiarDeActividad(Artista artista) {
         MainActivity mainActivity = (MainActivity) getActivity();
         Bundle bundle = new Bundle();
