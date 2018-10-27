@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/album_background"
     android:orientation="vertical"
-    tools:context=".menuNavegacion.Buscar.BuscarFragment">
+    tools:context=".view.menuNavegacion.Buscar.BuscarFragment">
 
     <LinearLayout
         android:layout_width="match_parent"

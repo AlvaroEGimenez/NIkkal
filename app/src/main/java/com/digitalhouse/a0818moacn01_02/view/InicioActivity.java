@@ -1,10 +1,7 @@
-package com.digitalhouse.a0818moacn01_02;
+package com.digitalhouse.a0818moacn01_02.view;
 
-import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Handler;
@@ -18,6 +15,8 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.digitalhouse.a0818moacn01_02.R;
 
 public class InicioActivity extends AppCompatActivity {
 

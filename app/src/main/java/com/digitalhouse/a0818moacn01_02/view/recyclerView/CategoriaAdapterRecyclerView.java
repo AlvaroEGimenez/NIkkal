@@ -1,4 +1,4 @@
-package com.digitalhouse.a0818moacn01_02.recyclerView;
+package com.digitalhouse.a0818moacn01_02.view.recyclerView;
 
 import android.app.Activity;
 import android.support.annotation.NonNull;

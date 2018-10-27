@@ -1,4 +1,4 @@
-package com.digitalhouse.a0818moacn01_02;
+package com.digitalhouse.a0818moacn01_02.view;
 
 import android.graphics.Color;
 import android.media.AudioManager;
@@ -9,18 +9,18 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.digitalhouse.a0818moacn01_02.menuNavegacion.Buscar.AdapatadorBusqueda;
-import com.digitalhouse.a0818moacn01_02.menuNavegacion.Buscar.Busqueda;
-import com.digitalhouse.a0818moacn01_02.menuNavegacion.Configuracion.ConfiguracionFragment;
-import com.digitalhouse.a0818moacn01_02.menuNavegacion.Radio_Online.RadioFragment;
-import com.digitalhouse.a0818moacn01_02.menuNavegacion.Buscar.BuscarFragment;
-import com.digitalhouse.a0818moacn01_02.menuNavegacion.Favoritos.FavoritoFragment;
-import com.digitalhouse.a0818moacn01_02.menuNavegacion.Pantalla_Principal.CategoriaFragment;
+import com.digitalhouse.a0818moacn01_02.R;
+import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Buscar.AdapatadorBusqueda;
+import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Buscar.Busqueda;
+import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Configuracion.ConfiguracionFragment;
+import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Radio_Online.RadioFragment;
+import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Buscar.BuscarFragment;
+import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Favoritos.FavoritoFragment;
+import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Pantalla_Principal.CategoriaFragment;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
 

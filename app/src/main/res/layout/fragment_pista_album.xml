@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/mainBackground"
     android:fitsSystemWindows="true"
-    tools:context=".categorias.PistaAlbumFragment">
+    tools:context=".view.categorias.PistaAlbumFragment">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/main.appbar"

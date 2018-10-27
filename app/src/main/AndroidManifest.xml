@@ -13,17 +13,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".InicioActivity">
+            android:name=".view.InicioActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"
+        <activity android:name=".view.MainActivity"
             android:windowSoftInputMode="adjustPan"/>
-        <activity android:name=".categorias.SugerenciaActivity" />
-        <activity android:name=".categorias.MasEscuchado">
+        <activity android:name=".view.categorias.SugerenciaActivity" />
+        <activity android:name=".view.categorias.MasEscuchado">
 
         </activity>
     </application>

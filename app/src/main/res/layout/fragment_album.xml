@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/mainBackground"
     android:fitsSystemWindows="true"
-    tools:context=".categorias.AlbumFragment">
+    tools:context=".view.categorias.AlbumFragment">
 
 
     <android.support.design.widget.AppBarLayout

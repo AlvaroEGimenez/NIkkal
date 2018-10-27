@@ -1,7 +1,6 @@
-package com.digitalhouse.a0818moacn01_02.menuNavegacion.Pantalla_Principal;
+package com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Pantalla_Principal;
 
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,29 +9,35 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.TextSwitcher;
 import android.widget.TextView;
+import android.widget.ViewSwitcher;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.digitalhouse.a0818moacn01_02.MainActivity;
+import com.digitalhouse.a0818moacn01_02.model.TopChart;
+import com.digitalhouse.a0818moacn01_02.view.MainActivity;
 import com.digitalhouse.a0818moacn01_02.R;
-import com.digitalhouse.a0818moacn01_02.categorias.MasEscuchado;
-import com.digitalhouse.a0818moacn01_02.categorias.SugerenciaActivity;
-import com.digitalhouse.a0818moacn01_02.categorias.genero.GeneroFragment;
-import com.digitalhouse.a0818moacn01_02.menuNavegacion.Buscar.AdapatadorBusqueda;
-import com.digitalhouse.a0818moacn01_02.menuNavegacion.Buscar.BuscarFragment;
-import com.digitalhouse.a0818moacn01_02.menuNavegacion.Buscar.Busqueda;
+import com.digitalhouse.a0818moacn01_02.view.categorias.MasEscuchado;
+import com.digitalhouse.a0818moacn01_02.view.categorias.SugerenciaActivity;
+import com.digitalhouse.a0818moacn01_02.view.categorias.genero.GeneroFragment;
 import com.digitalhouse.a0818moacn01_02.model.Album;
-import com.digitalhouse.a0818moacn01_02.recyclerView.CategoriaAdapterRecyclerView;
+import com.digitalhouse.a0818moacn01_02.view.recyclerView.AdaptadorTopChart;
+import com.digitalhouse.a0818moacn01_02.view.recyclerView.CategoriaAdapterRecyclerView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import it.moondroid.coverflow.components.ui.containers.FeatureCoverFlow;
 
 public class CategoriaFragment extends Fragment implements CategoriaAdapterRecyclerView.AdapterInterface {
     public final static String KEY_GENERO = "Géneros";
@@ -42,11 +47,17 @@ public class CategoriaFragment extends Fragment implements CategoriaAdapterRecyc
 
     private GeneroFragment generoFragment = new GeneroFragment();
 
+    private FeatureCoverFlow featureCoverFlow;
+    private AdaptadorTopChart adaptadorTopChart;
+    private List<TopChart> topChartList = new ArrayList<>();
+    private TextSwitcher mTitle;
+
     private View view;
     private TextView tvGeneros;
     private TextView tvSugerencia;
     private TextView tvMasEscuchado;
     private TextView tvFavorito;
+    private TextView tvTopChart;
 
     private MainActivity parent;
 
@@ -56,10 +67,11 @@ public class CategoriaFragment extends Fragment implements CategoriaAdapterRecyc
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.categoria_album, container, false);
+
         this.view = view;
         parent = (MainActivity) getActivity();
         setCategotia();
@@ -67,7 +79,53 @@ public class CategoriaFragment extends Fragment implements CategoriaAdapterRecyc
         crearRecyclerView(R.id.rvSugerenciaRecyclerView, tvSugerencia.getText().toString());
         crearRecyclerView(R.id.rvMasEscuchadoRecyclerView, tvMasEscuchado.getText().toString());
         crearRecyclerView(R.id.rvFavoritoRecyclerView, tvFavorito.getText().toString());
+
+        CargarTopChart(topChartList);
+        mTitle = view.findViewById(R.id.tituloTopChart);
+        mTitle.setFactory(new ViewSwitcher.ViewFactory() {
+            @Override
+            public View makeView() {
+                LayoutInflater layoutInflater = LayoutInflater.from(getContext());
+                TextView txt = (TextView) layoutInflater.inflate(R.layout.layout_title,null);
+                return txt;
+            }
+        });
+
+        Animation in = AnimationUtils.loadAnimation(getActivity(),R.anim.slide_in_top);
+        Animation out = AnimationUtils.loadAnimation(getActivity(),R.anim.slide_out_bottom);
+        mTitle.setAnimation(in);
+        mTitle.setOutAnimation(out);
+
+        adaptadorTopChart = new AdaptadorTopChart(topChartList,getContext());
+        featureCoverFlow = view.findViewById(R.id.coverFlow);
+        featureCoverFlow.setAdapter(adaptadorTopChart);
+
+        featureCoverFlow.setOnScrollPositionListener(new FeatureCoverFlow.OnScrollPositionListener() {
+            @Override
+            public void onScrolledToPosition(int position) {
+                mTitle.setText(topChartList.get(position).getNombreTrack()+" - "+ topChartList.get(position).getNombreArtista());
+            }
+
+            @Override
+            public void onScrolling() {
+
+            }
+        });
+
+
+
         return view;
+    }
+
+    private void CargarTopChart(List<TopChart> topCharts) {
+        topCharts.add(new TopChart("Taki Taki","DJ Snake",1,"https://e-cdns-images.dzcdn.net/images/artist/1e3a9ab40ba66aff8e658db39322af9e/250x250-000000-80-0-0.jpg","https://cdns-preview-5.dzcdn.net/stream/c-597646b1472e1d377afedb9800c4d891-4.mp3"));
+        topCharts.add(new TopChart("Cuando Te Besé","Becky G",2,"https://e-cdns-images.dzcdn.net/images/artist/5f13fa4a863ddbeab35ad44c1b1cc45c/250x250-000000-80-0-0.jpg","https://cdns-preview-1.dzcdn.net/stream/c-19ec692b09d6ace41831e3c38860fbdb-3.mp3"));
+        topCharts.add(new TopChart("Ya No Tiene Novio","Sebastian Yatra",3,"https://e-cdns-images.dzcdn.net/images/artist/e46c5bee56d1ca6fed8242f7a691adb5/250x250-000000-80-0-0.jpg","https://cdns-preview-5.dzcdn.net/stream/c-597646b1472e1d377afedb9800c4d891-4.mp3"));
+        topCharts.add(new TopChart("MIA (feat. Drake)","Bad Bunny",4,"https://e-cdns-images.dzcdn.net/images/artist/5015c15f95821f3954ce89bc35be1809/250x250-000000-80-0-0.jpg","https://cdns-preview-5.dzcdn.net/stream/c-597646b1472e1d377afedb9800c4d891-4.mp3"));
+        topCharts.add(new TopChart("Sin Pijama","Becky G",5,"https://e-cdns-images.dzcdn.net/images/artist/5f13fa4a863ddbeab35ad44c1b1cc45c/250x250-000000-80-0-0.jpg","https://cdns-preview-5.dzcdn.net/stream/c-597646b1472e1d377afedb9800c4d891-4.mp3"));
+        topCharts.add(new TopChart("Amigos Con Derechos","Reik",6,"https://e-cdns-images.dzcdn.net/images/artist/1effdd48644f6a44ef4c3cfca9c25446/250x250-000000-80-0-0.jpg","https://cdns-preview-5.dzcdn.net/stream/c-597646b1472e1d377afedb9800c4d891-4.mp3"));
+
+
     }
 
 
@@ -116,6 +174,7 @@ public class CategoriaFragment extends Fragment implements CategoriaAdapterRecyc
     }
 
     private void setCategotia() {
+
         tvGeneros = view.findViewById(R.id.tvGeneroRecyclerView);
         tvGeneros.setText(R.string.tv_genero);
 

@@ -7,7 +7,7 @@
     android:layout_weight="100"
     android:background="@android:color/black"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".view.MainActivity">
 
 
         <LinearLayout
@@ -15,7 +15,6 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_gravity="top"
-            android:layout_marginTop="5dp"
             android:layout_weight="92"
             android:orientation="vertical"
             android:paddingBottom="4dp">

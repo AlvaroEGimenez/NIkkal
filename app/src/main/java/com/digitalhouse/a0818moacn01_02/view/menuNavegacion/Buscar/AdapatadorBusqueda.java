@@ -1,4 +1,4 @@
-package com.digitalhouse.a0818moacn01_02.menuNavegacion.Buscar;
+package com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Buscar;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
