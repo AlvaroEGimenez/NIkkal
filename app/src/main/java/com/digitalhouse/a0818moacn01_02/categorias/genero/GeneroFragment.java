@@ -2,6 +2,8 @@ package com.digitalhouse.a0818moacn01_02.categorias.genero;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,39 +13,26 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.digitalhouse.a0818moacn01_02.MainActivity;
 import com.digitalhouse.a0818moacn01_02.R;
 import com.digitalhouse.a0818moacn01_02.categorias.AlbumFragment;
 import com.digitalhouse.a0818moacn01_02.categorias.PistaAlbumFragment;
-import com.digitalhouse.a0818moacn01_02.menuNavegacion.Buscar.AdapatadorBusqueda;
-import com.digitalhouse.a0818moacn01_02.menuNavegacion.Buscar.BuscarFragment;
-import com.digitalhouse.a0818moacn01_02.menuNavegacion.Buscar.Busqueda;
+import com.digitalhouse.a0818moacn01_02.menuNavegacion.Pantalla_Principal.CategoriaFragment;
 import com.digitalhouse.a0818moacn01_02.model.Album;
 import com.digitalhouse.a0818moacn01_02.model.Artista;
 import com.digitalhouse.a0818moacn01_02.recyclerView.AlbumAdapterRecyclerView;
 import com.digitalhouse.a0818moacn01_02.recyclerView.ArtistaAdapterRecyclerView;
 import com.squareup.picasso.Picasso;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 
-public class  GeneroFragment extends Fragment implements AlbumAdapterRecyclerView.AlbumAdapterInterface, ArtistaAdapterRecyclerView.ArtistaAdapterInterface {
+public class GeneroFragment extends Fragment implements AlbumAdapterRecyclerView.AlbumAdapterInterface, ArtistaAdapterRecyclerView.ArtistaAdapterInterface {
     public static final String KEY_IMAGEN_GENERO = "imagenGenero";
     public static final String KEY_NOMBRE_GENERO = "nombreGenero";
 
-    private ImageView imgGenero;
-    private Toolbar tvCabeceraGenero;
     private ArrayList<Album> albunes = new ArrayList<>();
-    private View view;
     private RequestQueue requestQueue;
 
     private AlbumFragment albumFragment = new AlbumFragment();
@@ -54,17 +43,29 @@ public class  GeneroFragment extends Fragment implements AlbumAdapterRecyclerVie
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
-        view =  inflater.inflate(R.layout.fragment_genero, container, false);
+        View view = inflater.inflate(R.layout.fragment_genero, container, false);
 
-        imgGenero = view.findViewById(R.id.imgGenero);
-        tvCabeceraGenero = view.findViewById(R.id.tvCabeceraGenero);
+        ImageView imgGenero = view.findViewById(R.id.imgGenero);
+        Toolbar tvCabeceraGenero = view.findViewById(R.id.tvCabeceraGenero);
         view.findViewById(R.id.rvGeneroAlbum);
+
+        tvCabeceraGenero.setNavigationIcon(R.drawable.ic_arrow_back_24dp);
+        tvCabeceraGenero.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CategoriaFragment categoriaFragment = new CategoriaFragment();
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.container, categoriaFragment);
+                fragmentTransaction.commit();
+            }
+        });
 
         requestQueue = Volley.newRequestQueue(getActivity());
 
-        Bundle bundle =  getArguments();
+        Bundle bundle = getArguments();
         String urlImagenCabecera = bundle.getString(KEY_IMAGEN_GENERO);
         String nombreGenero = bundle.getString(KEY_NOMBRE_GENERO);
 
@@ -107,7 +108,7 @@ public class  GeneroFragment extends Fragment implements AlbumAdapterRecyclerVie
 
         generoRecyclerView.setLayoutManager(linearLayoutManager);
 
-        ArtistaAdapterRecyclerView categoriaAdapterRecyclerView = new ArtistaAdapterRecyclerView(cargarArtistas(), R.layout.cardview_artista, getActivity(),  this);
+        ArtistaAdapterRecyclerView categoriaAdapterRecyclerView = new ArtistaAdapterRecyclerView(cargarArtistas(), R.layout.cardview_artista, getActivity(), this);
 
         generoRecyclerView.setAdapter(categoriaAdapterRecyclerView);
     }
@@ -154,11 +155,9 @@ public class  GeneroFragment extends Fragment implements AlbumAdapterRecyclerVie
     }*/
 
 
-
-
     public ArrayList<Album> cargarAlbunes() {
 
-       // analizarJSON();
+        // analizarJSON();
         ArrayList<Album> albunes = new ArrayList<>();
         albunes.add(new Album("https://e-cdns-images.dzcdn.net/images/misc/b36ca681666d617edd0dcb5ab389a6ac/250x250-000000-80-0-0.jpg",
                 "Rock", ""));
@@ -213,13 +212,13 @@ public class  GeneroFragment extends Fragment implements AlbumAdapterRecyclerVie
 
     public ArrayList<Artista> cargarArtistas() {
         ArrayList<Artista> artistas = new ArrayList<>();
-        artistas.add(new Artista("https://e-cdns-images.dzcdn.net/images/artist/f2bc007e9133c946ac3c3907ddc5d2ea/250x250-000000-80-0-0.jpg", "Daft Punk", "Custaro", 1236 ));
-        artistas.add(new Artista("https://cdns-images.dzcdn.net/images/artist/0707267475580b1b82f4da20a1b295c6/500x500-000000-80-0-0.jpg", "Eminem", "Custaro", 1236 ));
-        artistas.add(new Artista("https://e-cdns-images.dzcdn.net/images/artist/b4719bc7a0ddb4a5be41277f37856ae6/250x250-000000-80-0-0.jpg", "Metallica", "Metal", 1236 ));
-        artistas.add(new Artista("https://e-cdns-images.dzcdn.net/images/artist//250x250-000000-80-0-0.jpg", "Tete", "Custaro", 1236 ));
-        artistas.add(new Artista("https://cdns-images.dzcdn.net/images/cover/9a3364528159f8377d3b1b5310f40dae/500x500-000000-80-0-0.jpg", "Tete", "Custaro", 1236 ));
-        artistas.add(new Artista("https://e-cdns-images.dzcdn.net/images/artist/7c8fb9b4135ea113a18d7380686bc764/250x250-000000-80-0-0.jpg", "Soda Stereo", "Custaro", 1236 ));
-        artistas.add(new Artista("https://cdns-images.dzcdn.net/images/cover/9a3364528159f8377d3b1b5310f40dae/500x500-000000-80-0-0.jpg", "Tete", "Custaro", 1236 ));
+        artistas.add(new Artista("https://e-cdns-images.dzcdn.net/images/artist/f2bc007e9133c946ac3c3907ddc5d2ea/250x250-000000-80-0-0.jpg", "Daft Punk", "Custaro", 1236));
+        artistas.add(new Artista("https://cdns-images.dzcdn.net/images/artist/0707267475580b1b82f4da20a1b295c6/500x500-000000-80-0-0.jpg", "Eminem", "Custaro", 1236));
+        artistas.add(new Artista("https://e-cdns-images.dzcdn.net/images/artist/b4719bc7a0ddb4a5be41277f37856ae6/250x250-000000-80-0-0.jpg", "Metallica", "Metal", 1236));
+        artistas.add(new Artista("https://e-cdns-images.dzcdn.net/images/artist//250x250-000000-80-0-0.jpg", "Tete", "Custaro", 1236));
+        artistas.add(new Artista("https://cdns-images.dzcdn.net/images/cover/9a3364528159f8377d3b1b5310f40dae/500x500-000000-80-0-0.jpg", "Tete", "Custaro", 1236));
+        artistas.add(new Artista("https://e-cdns-images.dzcdn.net/images/artist/7c8fb9b4135ea113a18d7380686bc764/250x250-000000-80-0-0.jpg", "Soda Stereo", "Custaro", 1236));
+        artistas.add(new Artista("https://cdns-images.dzcdn.net/images/cover/9a3364528159f8377d3b1b5310f40dae/500x500-000000-80-0-0.jpg", "Tete", "Custaro", 1236));
 
         return artistas;
     }
@@ -234,7 +233,7 @@ public class  GeneroFragment extends Fragment implements AlbumAdapterRecyclerVie
         mainActivity.reemplazarFragment(pistaAlbumFragment);
     }
 
-   @Override
+    @Override
     public void cambiarDeActividad(Artista artista) {
         MainActivity mainActivity = (MainActivity) getActivity();
         Bundle bundle = new Bundle();
