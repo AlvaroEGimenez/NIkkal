@@ -1,4 +1,4 @@
-package com.digitalhouse.a0818moacn01_02.categorias;
+package com.digitalhouse.a0818moacn01_02.view.categorias;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

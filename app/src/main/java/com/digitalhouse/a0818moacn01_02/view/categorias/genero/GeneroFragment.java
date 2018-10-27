@@ -1,4 +1,4 @@
-package com.digitalhouse.a0818moacn01_02.categorias.genero;
+package com.digitalhouse.a0818moacn01_02.view.categorias.genero;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -15,15 +15,15 @@ import android.widget.ImageView;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
-import com.digitalhouse.a0818moacn01_02.MainActivity;
+import com.digitalhouse.a0818moacn01_02.view.MainActivity;
 import com.digitalhouse.a0818moacn01_02.R;
-import com.digitalhouse.a0818moacn01_02.categorias.AlbumFragment;
-import com.digitalhouse.a0818moacn01_02.categorias.PistaAlbumFragment;
-import com.digitalhouse.a0818moacn01_02.menuNavegacion.Pantalla_Principal.CategoriaFragment;
+import com.digitalhouse.a0818moacn01_02.view.categorias.AlbumFragment;
+import com.digitalhouse.a0818moacn01_02.view.categorias.PistaAlbumFragment;
+import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Pantalla_Principal.CategoriaFragment;
 import com.digitalhouse.a0818moacn01_02.model.Album;
 import com.digitalhouse.a0818moacn01_02.model.Artista;
-import com.digitalhouse.a0818moacn01_02.recyclerView.AlbumAdapterRecyclerView;
-import com.digitalhouse.a0818moacn01_02.recyclerView.ArtistaAdapterRecyclerView;
+import com.digitalhouse.a0818moacn01_02.view.recyclerView.AlbumAdapterRecyclerView;
+import com.digitalhouse.a0818moacn01_02.view.recyclerView.ArtistaAdapterRecyclerView;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;

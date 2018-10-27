@@ -1,4 +1,4 @@
-package com.digitalhouse.a0818moacn01_02.categorias;
+package com.digitalhouse.a0818moacn01_02.view.categorias;
 
 
 import android.os.Bundle;
@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 import com.digitalhouse.a0818moacn01_02.R;
 import com.digitalhouse.a0818moacn01_02.model.Pista;
-import com.digitalhouse.a0818moacn01_02.recyclerView.PistaAlbumRecyclerView;
+import com.digitalhouse.a0818moacn01_02.view.recyclerView.PistaAlbumRecyclerView;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;

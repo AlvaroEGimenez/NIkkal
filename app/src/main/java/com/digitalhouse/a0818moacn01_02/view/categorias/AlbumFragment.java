@@ -1,4 +1,4 @@
-package com.digitalhouse.a0818moacn01_02.categorias;
+package com.digitalhouse.a0818moacn01_02.view.categorias;
 
 
 import android.os.Bundle;
@@ -12,13 +12,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.digitalhouse.a0818moacn01_02.MainActivity;
+import com.digitalhouse.a0818moacn01_02.view.MainActivity;
 import com.digitalhouse.a0818moacn01_02.R;
-import com.digitalhouse.a0818moacn01_02.categorias.genero.GeneroFragment;
 import com.digitalhouse.a0818moacn01_02.model.Album;
-import com.digitalhouse.a0818moacn01_02.model.Artista;
-import com.digitalhouse.a0818moacn01_02.recyclerView.AlbumAdapterRecyclerView;
-import com.digitalhouse.a0818moacn01_02.recyclerView.ArtistaAdapterRecyclerView;
+import com.digitalhouse.a0818moacn01_02.view.recyclerView.AlbumAdapterRecyclerView;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
