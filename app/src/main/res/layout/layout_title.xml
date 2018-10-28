@@ -6,7 +6,7 @@
     android:gravity="center"
     android:layout_alignParentBottom="true"
     android:visibility="gone"
-    android:background="@drawable/label_bg"
+    android:background="@drawable/selector_bg"
     android:textAppearance="?android:attr/textAppearanceMediumInverse" />
 
 

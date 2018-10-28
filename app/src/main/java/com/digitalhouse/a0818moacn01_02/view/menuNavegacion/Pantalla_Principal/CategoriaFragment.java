@@ -20,7 +20,9 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.digitalhouse.a0818moacn01_02.DAOLocal;
 import com.digitalhouse.a0818moacn01_02.model.TopChart;
+import com.digitalhouse.a0818moacn01_02.model.TopChartLocal;
 import com.digitalhouse.a0818moacn01_02.view.MainActivity;
 import com.digitalhouse.a0818moacn01_02.R;
 import com.digitalhouse.a0818moacn01_02.view.categorias.MasEscuchado;
@@ -51,7 +53,7 @@ public class CategoriaFragment extends Fragment implements CategoriaAdapterRecyc
 
     private FeatureCoverFlow featureCoverFlow;
     private AdaptadorTopChart adaptadorTopChart;
-    private List<TopChart> topChartList = new ArrayList<>();
+    private List<TopChartLocal> topChartList = new ArrayList<>();
     private TextSwitcher mTitle;
 
     private View view;
@@ -82,7 +84,10 @@ public class CategoriaFragment extends Fragment implements CategoriaAdapterRecyc
         crearRecyclerView(R.id.rvMasEscuchadoRecyclerView, tvMasEscuchado.getText().toString());
         crearRecyclerView(R.id.rvFavoritoRecyclerView, tvFavorito.getText().toString());
 
-        CargarTopChart(topChartList);
+
+        DAOLocal daoLocal = new DAOLocal();
+        daoLocal.ObtenerTopChar(topChartList);
+
         mTitle = view.findViewById(R.id.tituloTopChart);
         mTitle.setFactory(new ViewSwitcher.ViewFactory() {
             @Override
@@ -97,6 +102,8 @@ public class CategoriaFragment extends Fragment implements CategoriaAdapterRecyc
         Animation out = AnimationUtils.loadAnimation(getActivity(),R.anim.slide_out_bottom);
         mTitle.setAnimation(in);
         mTitle.setOutAnimation(out);
+
+
 
         adaptadorTopChart = new AdaptadorTopChart(topChartList,getContext());
         featureCoverFlow = view.findViewById(R.id.coverFlow);
@@ -118,18 +125,6 @@ public class CategoriaFragment extends Fragment implements CategoriaAdapterRecyc
 
         return view;
     }
-
-    private void CargarTopChart(List<TopChart> topCharts) {
-        topCharts.add(new TopChart("Taki Taki","DJ Snake",1,"https://e-cdns-images.dzcdn.net/images/artist/1e3a9ab40ba66aff8e658db39322af9e/250x250-000000-80-0-0.jpg","https://cdns-preview-5.dzcdn.net/stream/c-597646b1472e1d377afedb9800c4d891-4.mp3"));
-        topCharts.add(new TopChart("Cuando Te Besé","Becky G",2,"https://e-cdns-images.dzcdn.net/images/artist/5f13fa4a863ddbeab35ad44c1b1cc45c/250x250-000000-80-0-0.jpg","https://cdns-preview-1.dzcdn.net/stream/c-19ec692b09d6ace41831e3c38860fbdb-3.mp3"));
-        topCharts.add(new TopChart("Ya No Tiene Novio","Sebastian Yatra",3,"https://e-cdns-images.dzcdn.net/images/artist/e46c5bee56d1ca6fed8242f7a691adb5/250x250-000000-80-0-0.jpg","https://cdns-preview-5.dzcdn.net/stream/c-597646b1472e1d377afedb9800c4d891-4.mp3"));
-        topCharts.add(new TopChart("MIA (feat. Drake)","Bad Bunny",4,"https://e-cdns-images.dzcdn.net/images/artist/5015c15f95821f3954ce89bc35be1809/250x250-000000-80-0-0.jpg","https://cdns-preview-5.dzcdn.net/stream/c-597646b1472e1d377afedb9800c4d891-4.mp3"));
-        topCharts.add(new TopChart("Sin Pijama","Becky G",5,"https://e-cdns-images.dzcdn.net/images/artist/5f13fa4a863ddbeab35ad44c1b1cc45c/250x250-000000-80-0-0.jpg","https://cdns-preview-5.dzcdn.net/stream/c-597646b1472e1d377afedb9800c4d891-4.mp3"));
-        topCharts.add(new TopChart("Amigos Con Derechos","Reik",6,"https://e-cdns-images.dzcdn.net/images/artist/1effdd48644f6a44ef4c3cfca9c25446/250x250-000000-80-0-0.jpg","https://cdns-preview-5.dzcdn.net/stream/c-597646b1472e1d377afedb9800c4d891-4.mp3"));
-
-
-    }
-
 
     private void crearRecyclerView(Integer idLayout, String tvCategoria) {
          RecyclerView  albumRecyclerView = view.findViewById(idLayout);

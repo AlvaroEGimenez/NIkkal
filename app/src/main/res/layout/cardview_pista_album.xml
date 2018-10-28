@@ -10,14 +10,41 @@
     android:alpha="0.86"
     >
 
+    <RelativeLayout
+        android:id="@+id/view_background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#66bb6a">
+
+    <ImageView
+        android:id="@+id/delete_icon"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="10dp"
+        android:src="@drawable/ic_add_white" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="10dp"
+        android:layout_toLeftOf="@id/delete_icon"
+        android:text="Playlist"
+        android:textColor="#fff"
+        android:textSize="20sp" />
+
+    </RelativeLayout>
+
     <LinearLayout
+        android:id="@+id/linealForeground"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:weightSum="100"
         android:background="@color/bar_bottom_background"
-        android:padding="10dp"
-      >
+        android:padding="10dp">
 
     <LinearLayout
         android:layout_width="0dp"
@@ -46,27 +73,18 @@
         android:id="@+id/favoritoPista"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="10"
-        android:layout_margin="5dp"
-        android:src="@drawable/ic_play"
+        android:layout_weight="15"
+        android:layout_margin="3dp"
+        android:src="@drawable/ic_favorite_no_seleccion"
         />
 
     <ImageView
-        android:id="@+id/agregarPistaPlayList"
-    android:layout_width="0dp"
-    android:layout_height="match_parent"
-    android:layout_weight="10"
-    android:layout_margin="5dp"
-    android:src="@drawable/ic_agregar_play_list"
-    />
-
-    <ImageView
-        android:id="@+id/compartirPista"
+        android:id="@+id/masOpciones"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="10"
-        android:layout_margin="7dp"
-        android:src="@drawable/ic_compartir"
+        android:layout_weight="15"
+        android:layout_margin="3dp"
+        android:src="@drawable/ic_more"
         />
 
     </LinearLayout>

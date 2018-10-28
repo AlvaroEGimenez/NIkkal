@@ -13,16 +13,17 @@ import android.widget.TextView;
 
 import com.digitalhouse.a0818moacn01_02.R;
 import com.digitalhouse.a0818moacn01_02.model.Pista;
+import com.digitalhouse.a0818moacn01_02.model.TopChartLocal;
 
 import java.util.List;
 
 public class PistaAdapterViewPage extends PagerAdapter {
-    private List<Pista> pistas;
+    private List<TopChartLocal> pistas;
     private Context context;
     private LayoutInflater layoutInflater;
     PistaViewPageInterface escuchador;
 
-    public PistaAdapterViewPage( List<Pista> pistas, Context context, PistaViewPageInterface escuchador) {
+    public PistaAdapterViewPage(List<TopChartLocal> pistas, Context context, PistaViewPageInterface escuchador) {
         this.pistas = pistas;
         this.context = context;
         layoutInflater = ((Activity)context).getLayoutInflater();
@@ -52,8 +53,8 @@ public class PistaAdapterViewPage extends PagerAdapter {
         final ProgressBar progressBar = view.findViewById(R.id.progrerssBarPistaViewPage);
 
         container.addView(view);
-        final  Pista pista = pistas.get(position);
-        textView.setText(pista.getNombre());
+        final  TopChartLocal pista = pistas.get(position);
+        textView.setText(pista.getNombreTrack());
 
         final  Integer  posicion = position;
         btnPistaAnterior.setOnClickListener(new View.OnClickListener() {
@@ -100,7 +101,7 @@ public class PistaAdapterViewPage extends PagerAdapter {
     public interface PistaViewPageInterface {
         void pistaAnterior(Integer position);
         void pistaSiguiente(Integer position);
-        void pistaPlayPause( Pista pista, ProgressBar progressBar);
+        void pistaPlayPause( TopChartLocal pista, ProgressBar progressBar);
 
     }
 

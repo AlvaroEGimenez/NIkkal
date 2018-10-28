@@ -11,14 +11,15 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.digitalhouse.a0818moacn01_02.R;
 import com.digitalhouse.a0818moacn01_02.model.TopChart;
+import com.digitalhouse.a0818moacn01_02.model.TopChartLocal;
 
 import java.util.List;
 
 public class AdaptadorTopChart extends BaseAdapter {
-    private List<TopChart> topChartList;
+    private List<TopChartLocal> topChartList;
     private Context context;
 
-    public AdaptadorTopChart(List<TopChart> topChartList, Context context) {
+    public AdaptadorTopChart(List<TopChartLocal> topChartList, Context context) {
         this.topChartList = topChartList;
         this.context = context;
     }
