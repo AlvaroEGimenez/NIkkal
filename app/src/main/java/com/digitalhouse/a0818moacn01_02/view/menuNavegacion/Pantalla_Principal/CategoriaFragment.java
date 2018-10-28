@@ -45,6 +45,8 @@ public class CategoriaFragment extends Fragment implements CategoriaAdapterRecyc
     public final static String KEY_MAS_ESCUCHADO = "Lo Más Escuchado";
     public final static String KEY_FAVORITO = "Favoritos";
 
+    RecyclerView recyclerView;
+
     private GeneroFragment generoFragment = new GeneroFragment();
 
     private FeatureCoverFlow featureCoverFlow;
@@ -130,7 +132,7 @@ public class CategoriaFragment extends Fragment implements CategoriaAdapterRecyc
 
 
     private void crearRecyclerView(Integer idLayout, String tvCategoria) {
-        RecyclerView albumRecyclerView = view.findViewById(idLayout);
+         RecyclerView  albumRecyclerView = view.findViewById(idLayout);
         albumRecyclerView.setHasFixedSize(true);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
@@ -138,9 +140,9 @@ public class CategoriaFragment extends Fragment implements CategoriaAdapterRecyc
 
         albumRecyclerView.setLayoutManager(linearLayoutManager);
 
-        CategoriaAdapterRecyclerView categoriaAdapterRecyclerView = new CategoriaAdapterRecyclerView(cargarAlbunes(tvCategoria), R.layout.carcdview_categoria, getActivity(), this);
+        CategoriaAdapterRecyclerView adapter = new CategoriaAdapterRecyclerView(cargarAlbunes(tvCategoria), R.layout.carcdview_categoria, getActivity(), this);
 
-        albumRecyclerView.setAdapter(categoriaAdapterRecyclerView);
+        albumRecyclerView.setAdapter(adapter);
     }
 
     @Override
@@ -296,4 +298,8 @@ public class CategoriaFragment extends Fragment implements CategoriaAdapterRecyc
         requestQueue.add(request);
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
 }

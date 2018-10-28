@@ -51,6 +51,19 @@
         <item name="android:textColorPrimary">@color/album_titulo</item>
         <item name="android:textSize">@dimen/tv_album_titulo</item>
         <item name="android:textColor">@color/album_titulo</item>
+    </style>parent="@android:style/Theme.Material.Dialog"
+
+    <style name="pistaViewPage" parent="Base.Theme.AppCompat.Dialog">
+        <item name="windowFixedWidthMajor">50%</item>
+        <item name="windowFixedWidthMinor">50%</item>
+        <item name="android:textColor">@color/album_titulo</item>
+        <item name="android:colorBackground">@color/mainBackground</item>
+        <item name="android:alpha">0.95</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+        <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowBackground">@drawable/background_view_page_pista</item>
+
     </style>
 
 

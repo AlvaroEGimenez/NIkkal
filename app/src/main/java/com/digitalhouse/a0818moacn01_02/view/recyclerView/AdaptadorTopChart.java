@@ -8,9 +8,9 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.digitalhouse.a0818moacn01_02.R;
 import com.digitalhouse.a0818moacn01_02.model.TopChart;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -47,8 +47,7 @@ public class AdaptadorTopChart extends BaseAdapter {
             TextView nombre = rootView.findViewById(R.id.labelTopChart);
             ImageView imagen = rootView.findViewById(R.id.imagenTopChart);
 
-            Picasso.get().load(topChartList.get(position).getUrlImagen())
-                    .into(imagen);
+            Glide.with(context).load(topChartList.get(position).getUrlImagen()).into(imagen);
 
             nombre.setText(topChartList.get(position).getNombreTrack());
         }

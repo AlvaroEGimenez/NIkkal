@@ -12,7 +12,7 @@
         android:id="@+id/imagenTopChart"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:scaleType="centerCrop" />
+        android:scaleType="fitXY" />
 
     <TextView
         android:id="@+id/labelTopChart"

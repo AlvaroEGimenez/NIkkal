@@ -9,9 +9,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.digitalhouse.a0818moacn01_02.R;
 import com.digitalhouse.a0818moacn01_02.model.Album;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -78,9 +78,6 @@ public class AlbumAdapterRecyclerView extends RecyclerView.Adapter {
     }
 
     private void cargarImagen(ImageView imageView, String url) {
-        Picasso.Builder picassoBuilder = new Picasso.Builder(activity);
-        Picasso picasso = picassoBuilder.build();
-        picasso.load(url).error(R.drawable.nikkal).into(imageView);
-
+        Glide.with(activity).load(url).into(imageView);
     }
 }

@@ -1,6 +1,7 @@
 package com.digitalhouse.a0818moacn01_02.view.categorias;
 
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,22 +11,28 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.digitalhouse.a0818moacn01_02.R;
 import com.digitalhouse.a0818moacn01_02.model.Pista;
+import com.digitalhouse.a0818moacn01_02.view.recyclerView.PistaAdapterViewPage;
 import com.digitalhouse.a0818moacn01_02.view.recyclerView.PistaAlbumRecyclerView;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerView.PistaAdapterInterface {
+import me.angeldevil.autoscrollviewpager.AutoScrollViewPager;
+
+public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerView.PistaAdapterInterface, PistaAdapterViewPage.PistaViewPageInterface {
     public static final String KEY_IMAGEN_CABECERA_ALBUM_PISTA = "imgCabeceraAlbumPista";
     public static final String KEY_NOMBRE_CABECERA_ALBUM_PISTA = "nombreCabeceraAlbumPista";
 
     private ImageView imgCabeceraAlbumPista;
     private Toolbar toolbaarNombreCabeceraAlbumPista;
 
+    private ArrayList<Pista> pistas;
+    AutoScrollViewPager autoScrollViewPager;
     public PistaAlbumFragment() {
     }
 
@@ -50,9 +57,7 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
     }
 
     private void cargarImagen(ImageView imageView, String url) {
-        Picasso.Builder picassoBuilder = new Picasso.Builder(getContext());
-        Picasso picasso = picassoBuilder.build();
-        picasso.load(url).error(R.drawable.nikkal).into(imageView);
+        Glide.with(getContext()).load(url).into(imageView);
     }
 
     private void crearAlbumRecyclerView(View view, Integer idLayout) {
@@ -63,13 +68,13 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 
         recyclerView.setLayoutManager(linearLayoutManager);
-
-        PistaAlbumRecyclerView pistaAlbumRecyclerView = new PistaAlbumRecyclerView(cargarPista(), R.layout.cardview_pista_album, getActivity(), this);
+        cargarPista();
+        PistaAlbumRecyclerView pistaAlbumRecyclerView = new PistaAlbumRecyclerView(this.pistas, R.layout.cardview_pista_album, getActivity(), this);
 
         recyclerView.setAdapter(pistaAlbumRecyclerView);
     }
 
-    public ArrayList<Pista> cargarPista() {
+    public void cargarPista() {
         ArrayList<Pista> pistas = new ArrayList<>();
         pistas.add(new Pista("Yalalalala", 132, Boolean.FALSE));
         pistas.add(new Pista("yololo", 132, Boolean.FALSE));
@@ -81,7 +86,7 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
         pistas.add(new Pista("titititt", 132, Boolean.FALSE));
         pistas.add(new Pista("lelelelel", 132, Boolean.TRUE));
 
-        return pistas;
+        this.pistas =  pistas;
     }
 
 
@@ -105,9 +110,36 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
         Toast.makeText(getContext(), "Compartir pista", Toast.LENGTH_SHORT).show();
     }
 
+    @Override
+    public void pistaViewPageListener(Integer posicion) {
+        Dialog dialog = new Dialog(getContext(), R.style.pistaViewPage);
+        dialog.setContentView(R.layout.pista_view_page_content);
+
+        PistaAdapterViewPage pistaAdapterViewPage = new PistaAdapterViewPage(pistas, getContext(), this);
+        autoScrollViewPager = dialog.findViewById(R.id.pistaViewPagerScroll);
+        autoScrollViewPager.setAdapter(pistaAdapterViewPage);
+        autoScrollViewPager.setCurrentItem(posicion);
+        dialog.show();
+
+
+    }
+
     private void cargarImagen(ImageView imageView, Integer idDrawable) {
-        Picasso.Builder picassoBuilder = new Picasso.Builder(getContext());
-        Picasso picasso = picassoBuilder.build();
-        picasso.load(idDrawable).into(imageView);
+        Glide.with(getContext()).load(idDrawable).into(imageView);
+    }
+
+    @Override
+    public void pistaAnterior(Integer position) {
+        autoScrollViewPager.setCurrentItem(position);
+    }
+
+    @Override
+    public void pistaSiguiente(Integer position) {
+        autoScrollViewPager.setCurrentItem(position);
+    }
+
+    @Override
+    public void pistaPlayPause(Pista pista, ProgressBar progressBar) {
+
     }
 }

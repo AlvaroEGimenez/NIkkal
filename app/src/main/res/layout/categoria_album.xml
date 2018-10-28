@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#212121"
+    android:background="@android:color/black"
     tools:context=".view.menuNavegacion.Pantalla_Principal.CategoriaFragment">
 
     <LinearLayout
@@ -66,12 +66,15 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:textAppearance="@style/TextAppearance.AppCompat.Small"
-            android:theme="@style/albumRecyclerView" />
+            android:theme="@style/albumRecyclerView"
+            android:layout_marginTop="20dp"
+            />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rvGeneroRecyclerView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            >
 
         </android.support.v7.widget.RecyclerView>
 

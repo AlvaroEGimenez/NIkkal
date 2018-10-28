@@ -8,9 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 import com.digitalhouse.a0818moacn01_02.R;
 import com.digitalhouse.a0818moacn01_02.model.Pista;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -51,6 +52,7 @@ public class PistaAlbumRecyclerView extends RecyclerView.Adapter {
         void favoritoListener(Pista pista, ImageView favoritoPista);
         void playListListener(Pista pista);
         void compartirListener(Pista pista);
+        void pistaViewPageListener(Integer posicion);
     }
 
     public class PistaViewHolder extends RecyclerView.ViewHolder {
@@ -93,6 +95,14 @@ public class PistaAlbumRecyclerView extends RecyclerView.Adapter {
                     escuchador.compartirListener(pista);
                 }
             });
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    escuchador.pistaViewPageListener(getAdapterPosition());
+                }
+            });
+
         }
 
         public void cargar(Pista pista) {
@@ -111,8 +121,6 @@ public class PistaAlbumRecyclerView extends RecyclerView.Adapter {
     }
 
     private void cargarImagen(ImageView imageView, Integer idDrawable) {
-        Picasso.Builder picassoBuilder = new Picasso.Builder(activity);
-        Picasso picasso = picassoBuilder.build();
-        picasso.load(idDrawable).into(imageView);
+        Glide.with(activity).load(idDrawable).into(imageView);
     }
 }
