@@ -1,4 +1,4 @@
-package com.digitalhouse.a0818moacn01_02.view.recyclerView;
+package com.digitalhouse.a0818moacn01_02.view.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;

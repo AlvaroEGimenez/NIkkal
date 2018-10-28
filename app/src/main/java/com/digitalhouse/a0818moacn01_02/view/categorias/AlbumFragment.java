@@ -16,7 +16,7 @@ import com.bumptech.glide.Glide;
 import com.digitalhouse.a0818moacn01_02.view.MainActivity;
 import com.digitalhouse.a0818moacn01_02.R;
 import com.digitalhouse.a0818moacn01_02.model.Album;
-import com.digitalhouse.a0818moacn01_02.view.recyclerView.AlbumAdapterRecyclerView;
+import com.digitalhouse.a0818moacn01_02.view.adapter.AlbumAdapterRecyclerView;
 
 import java.util.ArrayList;
 

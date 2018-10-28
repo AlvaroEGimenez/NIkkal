@@ -1,4 +1,4 @@
-package com.digitalhouse.a0818moacn01_02.view.recyclerView;
+package com.digitalhouse.a0818moacn01_02.view.adapter.pista;
 
 import android.app.Activity;
 import android.support.annotation.NonNull;
@@ -15,6 +15,7 @@ import com.digitalhouse.a0818moacn01_02.R;
 import com.digitalhouse.a0818moacn01_02.model.Pista;
 import com.digitalhouse.a0818moacn01_02.model.TopChartLocal;
 
+import java.util.Collections;
 import java.util.List;
 
 public class PistaAlbumRecyclerView extends RecyclerView.Adapter {
@@ -61,7 +62,6 @@ public class PistaAlbumRecyclerView extends RecyclerView.Adapter {
         private TextView tvNombreAlbumTemaPista;
         private TextView tvNombreArtistaTemaPista;
         private ImageView favoritoPista;
-        private ImageView agregarPistaPlayList;
         private ImageView compartirPista;
         public LinearLayout linearLayout;
 
@@ -72,7 +72,6 @@ public class PistaAlbumRecyclerView extends RecyclerView.Adapter {
             tvNombreAlbumTemaPista = itemView.findViewById(R.id.tvNombreAlbumTemaPista);
             tvNombreArtistaTemaPista = itemView.findViewById(R.id.tvNombreArtistaTemaPista);
             favoritoPista = itemView.findViewById(R.id.favoritoPista);
-            //agregarPistaPlayList = itemView.findViewById(R.id.agregarPistaPlayList);
             compartirPista = itemView.findViewById(R.id.masOpciones);
             linearLayout = itemView.findViewById(R.id.linealForeground);
 
@@ -84,14 +83,6 @@ public class PistaAlbumRecyclerView extends RecyclerView.Adapter {
                 }
             });
 
-            /*favoritoPista.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    TopChartLocal pista = pistas.get(getAdapterPosition());
-                    escuchador.playListListener(pista);
-                }
-            });
-*/
             compartirPista.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -113,18 +104,7 @@ public class PistaAlbumRecyclerView extends RecyclerView.Adapter {
             tvNombreAlbumTemaPista.setText(pista.getNombreTrack());
             tvNombreArtistaTemaPista.setText(pista.getNombreArtista()); //pista.getAlbum().getNombre()
 
-          /*  if(!pista.getFavorito()){
-                cargarImagen(favoritoPista, R.drawable.ic_favorite_seleccionado);
-            }else{
-                cargarImagen(favoritoPista, R.drawable.ic_favorite_no_seleccion);
-            }*/
-
-            /*cargarImagen(agregarPistaPlayList, R.drawable.ic_agregar_play_list);
-            cargarImagen(compartirPista, R.drawable.ic_compartir);*/
         }
     }
 
-    private void cargarImagen(ImageView imageView, Integer idDrawable) {
-        Glide.with(activity).load(idDrawable).into(imageView);
-    }
 }

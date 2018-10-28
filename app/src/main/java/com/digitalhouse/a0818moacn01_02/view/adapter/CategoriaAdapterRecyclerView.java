@@ -1,4 +1,4 @@
-package com.digitalhouse.a0818moacn01_02.view.recyclerView;
+package com.digitalhouse.a0818moacn01_02.view.adapter;
 
 import android.app.Activity;
 import android.support.annotation.NonNull;
@@ -16,13 +16,13 @@ import com.digitalhouse.a0818moacn01_02.model.Album;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AlbumAdapterRecyclerView extends RecyclerView.Adapter {
+public class CategoriaAdapterRecyclerView extends RecyclerView.Adapter {
     private List<Album> albunes;
     private Integer resources;
     private Activity activity;
-    private AlbumAdapterInterface escuchador;
+    private AdapterInterface escuchador;
 
-    public AlbumAdapterRecyclerView(ArrayList<Album> albunes, int resources, Activity activity, AlbumAdapterInterface escuchador) {
+    public CategoriaAdapterRecyclerView(ArrayList<Album> albunes, int resources, Activity activity, AdapterInterface escuchador) {
         this.albunes = albunes;
         this.resources = resources;
         this.activity = activity;
@@ -48,21 +48,21 @@ public class AlbumAdapterRecyclerView extends RecyclerView.Adapter {
         return albunes.size();
     }
 
-    public interface AlbumAdapterInterface {
+    public interface AdapterInterface {
         void cambiarDeActividad(Album album);
     }
 
     public class AlbumViewHolder extends RecyclerView.ViewHolder {
-        private ImageView imagenAlbumCardView;
+        private ImageView imagenCategoriaCardView;
         private TextView tituloCardView;
 
         public AlbumViewHolder(@NonNull final View itemView) {
             super(itemView);
 
-            imagenAlbumCardView = itemView.findViewById(R.id.imagenAlbum);
-            tituloCardView = itemView.findViewById(R.id.tituloAlbum);
+            imagenCategoriaCardView = itemView.findViewById(R.id.imagenCategoria);
+            tituloCardView = itemView.findViewById(R.id.tituloCategoria);
 
-            imagenAlbumCardView.setOnClickListener(new View.OnClickListener() {
+            imagenCategoriaCardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Album album = albunes.get(getAdapterPosition());
@@ -73,11 +73,12 @@ public class AlbumAdapterRecyclerView extends RecyclerView.Adapter {
 
         public void cargar(Album album) {
             tituloCardView.setText(album.getNombre());
-            cargarImagen(imagenAlbumCardView, album.getImagen());
+            cargarImagen(imagenCategoriaCardView, album.getImagen());
         }
     }
 
     private void cargarImagen(ImageView imageView, String url) {
         Glide.with(activity).load(url).into(imageView);
     }
+
 }

@@ -19,8 +19,9 @@ import com.bumptech.glide.Glide;
 import com.digitalhouse.a0818moacn01_02.DAOLocal;
 import com.digitalhouse.a0818moacn01_02.R;
 import com.digitalhouse.a0818moacn01_02.model.TopChartLocal;
-import com.digitalhouse.a0818moacn01_02.view.recyclerView.PistaAdapterViewPage;
-import com.digitalhouse.a0818moacn01_02.view.recyclerView.PistaAlbumRecyclerView;
+
+import com.digitalhouse.a0818moacn01_02.view.adapter.pista.PistaAdapterViewPage;
+import com.digitalhouse.a0818moacn01_02.view.adapter.pista.PistaAlbumRecyclerView;
 import com.digitalhouse.a0818moacn01_02.view.recyclerView.RecyclerItemTouchHelper;
 
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package com.digitalhouse.a0818moacn01_02.view.recyclerView;
+package com.digitalhouse.a0818moacn01_02.view.adapter.pista;
 
 import android.app.Activity;
 import android.content.Context;
@@ -12,7 +12,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.digitalhouse.a0818moacn01_02.R;
-import com.digitalhouse.a0818moacn01_02.model.Pista;
 import com.digitalhouse.a0818moacn01_02.model.TopChartLocal;
 
 import java.util.List;
@@ -46,6 +45,7 @@ public class PistaAdapterViewPage extends PagerAdapter {
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
         View view = layoutInflater.inflate(R.layout.pista_view_page, container, false);
         TextView textView = view.findViewById(R.id.tvTituloPistaViewPage);
+        textView.setSelected(true);
         final ImageButton btnPistaAnterior = view.findViewById(R.id.ic_play_antrior_pista);
         final ImageButton btnPistaSiguiente = view.findViewById(R.id.ic_play_siguiente_pista);
         final ImageButton btnPlay = view.findViewById(R.id.ic_play_pista);

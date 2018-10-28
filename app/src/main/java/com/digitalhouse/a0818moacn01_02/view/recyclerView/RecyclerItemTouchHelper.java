@@ -6,6 +6,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 
+import com.digitalhouse.a0818moacn01_02.view.adapter.pista.PistaAlbumRecyclerView;
+
 
 public class RecyclerItemTouchHelper extends ItemTouchHelper.SimpleCallback {
 

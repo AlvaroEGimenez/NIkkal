@@ -21,11 +21,17 @@
 
     <TextView
         android:id="@+id/tvTituloPistaViewPage"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/hello_blank_fragment"
         android:textColor="@android:color/white"
-        android:textSize="40sp" />
+        android:textSize="30sp"
+        android:padding="5dp"
+        android:textAlignment="center"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:singleLine="true"
+        android:ellipsize="marquee"
+        android:scrollHorizontally="true"
+        />
 
     <LinearLayout
         android:layout_width="match_parent"

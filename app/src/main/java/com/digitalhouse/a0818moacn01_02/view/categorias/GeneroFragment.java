@@ -1,4 +1,4 @@
-package com.digitalhouse.a0818moacn01_02.view.categorias.genero;
+package com.digitalhouse.a0818moacn01_02.view.categorias;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -18,13 +18,14 @@ import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.digitalhouse.a0818moacn01_02.view.MainActivity;
 import com.digitalhouse.a0818moacn01_02.R;
+import com.digitalhouse.a0818moacn01_02.view.adapter.AlbumAdapterRecyclerView;
+import com.digitalhouse.a0818moacn01_02.view.adapter.ArtistaAdapterRecyclerView;
 import com.digitalhouse.a0818moacn01_02.view.categorias.AlbumFragment;
 import com.digitalhouse.a0818moacn01_02.view.categorias.PistaAlbumFragment;
 import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Pantalla_Principal.CategoriaFragment;
 import com.digitalhouse.a0818moacn01_02.model.Album;
 import com.digitalhouse.a0818moacn01_02.model.Artista;
-import com.digitalhouse.a0818moacn01_02.view.recyclerView.AlbumAdapterRecyclerView;
-import com.digitalhouse.a0818moacn01_02.view.recyclerView.ArtistaAdapterRecyclerView;
+
 
 import java.util.ArrayList;
 
