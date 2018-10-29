@@ -1,4 +1,4 @@
-package com.digitalhouse.a0818moacn01_02.view.recyclerView;
+package com.digitalhouse.a0818moacn01_02.view.adapter;
 
 import android.app.Activity;
 import android.support.annotation.NonNull;
@@ -8,9 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 import com.digitalhouse.a0818moacn01_02.R;
 import com.digitalhouse.a0818moacn01_02.model.Artista;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -79,9 +80,6 @@ public class ArtistaAdapterRecyclerView  extends RecyclerView.Adapter {
     }
 
     private void cargarImagen(ImageView imageView, String url) {
-        Picasso.Builder picassoBuilder = new Picasso.Builder(activity);
-        Picasso picasso = picassoBuilder.build();
-        picasso.load(url).error(R.drawable.nikkal).into(imageView);
-
+        Glide.with(activity).load(url).into(imageView);
     }
 }

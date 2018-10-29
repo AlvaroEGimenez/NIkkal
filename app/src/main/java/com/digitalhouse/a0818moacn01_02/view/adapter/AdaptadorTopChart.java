@@ -1,4 +1,4 @@
-package com.digitalhouse.a0818moacn01_02.view.recyclerView;
+package com.digitalhouse.a0818moacn01_02.view.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,17 +8,18 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.digitalhouse.a0818moacn01_02.R;
 import com.digitalhouse.a0818moacn01_02.model.TopChart;
-import com.squareup.picasso.Picasso;
+import com.digitalhouse.a0818moacn01_02.model.TopChartLocal;
 
 import java.util.List;
 
 public class AdaptadorTopChart extends BaseAdapter {
-    private List<TopChart> topChartList;
+    private List<TopChartLocal> topChartList;
     private Context context;
 
-    public AdaptadorTopChart(List<TopChart> topChartList, Context context) {
+    public AdaptadorTopChart(List<TopChartLocal> topChartList, Context context) {
         this.topChartList = topChartList;
         this.context = context;
     }
@@ -47,8 +48,7 @@ public class AdaptadorTopChart extends BaseAdapter {
             TextView nombre = rootView.findViewById(R.id.labelTopChart);
             ImageView imagen = rootView.findViewById(R.id.imagenTopChart);
 
-            Picasso.get().load(topChartList.get(position).getUrlImagen())
-                    .into(imagen);
+            Glide.with(context).load(topChartList.get(position).getUrlImagen()).into(imagen);
 
             nombre.setText(topChartList.get(position).getNombreTrack());
         }

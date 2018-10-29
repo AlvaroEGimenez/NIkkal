@@ -1,4 +1,4 @@
-package com.digitalhouse.a0818moacn01_02.view.categorias.genero;
+package com.digitalhouse.a0818moacn01_02.view.categorias;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -15,16 +15,17 @@ import android.widget.ImageView;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 import com.digitalhouse.a0818moacn01_02.view.MainActivity;
 import com.digitalhouse.a0818moacn01_02.R;
+import com.digitalhouse.a0818moacn01_02.view.adapter.AlbumAdapterRecyclerView;
+import com.digitalhouse.a0818moacn01_02.view.adapter.ArtistaAdapterRecyclerView;
 import com.digitalhouse.a0818moacn01_02.view.categorias.AlbumFragment;
 import com.digitalhouse.a0818moacn01_02.view.categorias.PistaAlbumFragment;
 import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Pantalla_Principal.CategoriaFragment;
 import com.digitalhouse.a0818moacn01_02.model.Album;
 import com.digitalhouse.a0818moacn01_02.model.Artista;
-import com.digitalhouse.a0818moacn01_02.view.recyclerView.AlbumAdapterRecyclerView;
-import com.digitalhouse.a0818moacn01_02.view.recyclerView.ArtistaAdapterRecyclerView;
-import com.squareup.picasso.Picasso;
+
 
 import java.util.ArrayList;
 
@@ -80,9 +81,7 @@ public class GeneroFragment extends Fragment implements AlbumAdapterRecyclerView
 
 
     private void cargarImagen(ImageView imageView, String url) {
-        Picasso.Builder picassoBuilder = new Picasso.Builder(getContext());
-        Picasso picasso = picassoBuilder.build();
-        picasso.load(url).error(R.drawable.nikkal).into(imageView);
+        Glide.with(getContext()).load(url).into(imageView);
     }
 
     private void crearAlbumRecyclerView(View view, Integer idLayout) {

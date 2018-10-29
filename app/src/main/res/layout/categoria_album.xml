@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#212121"
+    android:background="@drawable/background_bg"
     tools:context=".view.menuNavegacion.Pantalla_Principal.CategoriaFragment">
 
     <LinearLayout
@@ -21,8 +21,7 @@
             <FrameLayout
                 android:id="@+id/frameCoverFlow"
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:background="@color/busqueda_fondo">
+                android:layout_height="70dp">
 
                 <TextView
                     android:id="@+id/titleTopChart"
@@ -31,8 +30,9 @@
                     android:text="NIKKAL"
                     android:textAlignment="center"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                    android:textColor="@color/album_titulo"
-                    android:textSize="40sp"/>
+                    android:textColor="@color/colorAccent"
+                    android:textSize="50sp"
+                    android:textStyle="bold"/>
             </FrameLayout>
 
             <it.moondroid.coverflow.components.ui.containers.FeatureCoverFlow
@@ -47,14 +47,14 @@
                 app:reflectionGap="0px"
                 app:rotationThreshold="0.5"
                 app:spacing="0.6"
-                android:layout_marginTop="20dp"/>
+                android:layout_marginTop="30dp"/>
 
 
             <TextSwitcher
                 android:id="@+id/tituloTopChart"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/coverFlow" />
+                android:layout_below="@+id/coverFlow"/>
 
 
         </RelativeLayout>
@@ -66,12 +66,14 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:textAppearance="@style/TextAppearance.AppCompat.Small"
-            android:theme="@style/albumRecyclerView" />
+            android:theme="@style/albumRecyclerView"
+            />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rvGeneroRecyclerView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            >
 
         </android.support.v7.widget.RecyclerView>
 

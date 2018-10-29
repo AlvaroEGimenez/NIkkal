@@ -1,4 +1,4 @@
-package com.digitalhouse.a0818moacn01_02.view.recyclerView;
+package com.digitalhouse.a0818moacn01_02.view.adapter;
 
 import android.app.Activity;
 import android.support.annotation.NonNull;
@@ -9,20 +9,20 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.digitalhouse.a0818moacn01_02.R;
 import com.digitalhouse.a0818moacn01_02.model.Album;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CategoriaAdapterRecyclerView extends RecyclerView.Adapter {
+public class AlbumAdapterRecyclerView extends RecyclerView.Adapter {
     private List<Album> albunes;
     private Integer resources;
     private Activity activity;
-    private AdapterInterface escuchador;
+    private AlbumAdapterInterface escuchador;
 
-    public CategoriaAdapterRecyclerView(ArrayList<Album> albunes, int resources, Activity activity, AdapterInterface escuchador) {
+    public AlbumAdapterRecyclerView(ArrayList<Album> albunes, int resources, Activity activity, AlbumAdapterInterface escuchador) {
         this.albunes = albunes;
         this.resources = resources;
         this.activity = activity;
@@ -48,21 +48,21 @@ public class CategoriaAdapterRecyclerView extends RecyclerView.Adapter {
         return albunes.size();
     }
 
-    public interface AdapterInterface {
+    public interface AlbumAdapterInterface {
         void cambiarDeActividad(Album album);
     }
 
     public class AlbumViewHolder extends RecyclerView.ViewHolder {
-        private ImageView imagenCategoriaCardView;
+        private ImageView imagenAlbumCardView;
         private TextView tituloCardView;
 
         public AlbumViewHolder(@NonNull final View itemView) {
             super(itemView);
 
-            imagenCategoriaCardView = itemView.findViewById(R.id.imagenCategoria);
-            tituloCardView = itemView.findViewById(R.id.tituloCategoria);
+            imagenAlbumCardView = itemView.findViewById(R.id.imagenAlbum);
+            tituloCardView = itemView.findViewById(R.id.tituloAlbum);
 
-            imagenCategoriaCardView.setOnClickListener(new View.OnClickListener() {
+            imagenAlbumCardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Album album = albunes.get(getAdapterPosition());
@@ -73,14 +73,11 @@ public class CategoriaAdapterRecyclerView extends RecyclerView.Adapter {
 
         public void cargar(Album album) {
             tituloCardView.setText(album.getNombre());
-            cargarImagen(imagenCategoriaCardView, album.getImagen());
+            cargarImagen(imagenAlbumCardView, album.getImagen());
         }
     }
 
     private void cargarImagen(ImageView imageView, String url) {
-        Picasso.Builder picassoBuilder = new Picasso.Builder(activity);
-        Picasso picasso = picassoBuilder.build();
-        picasso.load(url).error(R.drawable.nikkal).into(imageView);
-
+        Glide.with(activity).load(url).into(imageView);
     }
 }
