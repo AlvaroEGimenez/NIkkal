@@ -2,6 +2,8 @@ package com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Pantalla_Principal;
 
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -21,6 +23,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.digitalhouse.a0818moacn01_02.DAOLocal;
+import com.digitalhouse.a0818moacn01_02.ReproducirMp3;
 import com.digitalhouse.a0818moacn01_02.model.TopChartLocal;
 import com.digitalhouse.a0818moacn01_02.view.MainActivity;
 import com.digitalhouse.a0818moacn01_02.R;
@@ -40,7 +43,7 @@ import java.util.List;
 
 import it.moondroid.coverflow.components.ui.containers.FeatureCoverFlow;
 
-public class CategoriaFragment extends Fragment implements CategoriaAdapterRecyclerView.AdapterInterface {
+public class CategoriaFragment extends Fragment implements CategoriaAdapterRecyclerView.AdapterInterface, AdaptadorTopChart.onItemClickTopChart {
     public final static String KEY_GENERO = "Géneros";
     public final static String KEY_SUGERENCIA = "Sugerencias";
     public final static String KEY_MAS_ESCUCHADO = "Lo Más Escuchado";
@@ -61,6 +64,8 @@ public class CategoriaFragment extends Fragment implements CategoriaAdapterRecyc
     private TextView tvMasEscuchado;
     private TextView tvFavorito;
     private TextView tvTopChart;
+
+    MediaPlayer mediaPlayer = new MediaPlayer();
 
     private MainActivity parent;
 
@@ -104,7 +109,7 @@ public class CategoriaFragment extends Fragment implements CategoriaAdapterRecyc
 
 
 
-        adaptadorTopChart = new AdaptadorTopChart(topChartList,getContext());
+        adaptadorTopChart = new AdaptadorTopChart(topChartList,getContext(),this);
         featureCoverFlow = view.findViewById(R.id.coverFlow);
         featureCoverFlow.setAdapter(adaptadorTopChart);
 
@@ -295,5 +300,17 @@ public class CategoriaFragment extends Fragment implements CategoriaAdapterRecyc
     @Override
     public void onDestroy() {
         super.onDestroy();
+    }
+
+    @Override
+    public void onClickTopChart(TopChartLocal topChartLocal) {
+        TextView textViewNombrePista = getActivity().findViewById(R.id.tvNombreReproductor);
+        textViewNombrePista.setSelected(true);
+
+        ReproducirMp3 reproducirMp3 = new ReproducirMp3();
+        reproducirMp3.reproducirMp3(topChartLocal.getUrlMp3(),mediaPlayer,parent);
+        textViewNombrePista.setText(topChartLocal.getNombreTrack() + " - " + topChartLocal.getNombreArtista());
+        textViewNombrePista.setTextColor(Color.parseColor("#FD9701"));
+
     }
 }

@@ -1,4 +1,4 @@
-package com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Buscar;
+package com.digitalhouse.a0818moacn01_02.model;
 
 public class Busqueda {
     private String busqueda;

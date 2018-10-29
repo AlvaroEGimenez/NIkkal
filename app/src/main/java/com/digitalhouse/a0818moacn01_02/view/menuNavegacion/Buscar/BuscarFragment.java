@@ -3,7 +3,6 @@ package com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Buscar;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -17,7 +16,6 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -28,12 +26,13 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.digitalhouse.a0818moacn01_02.R;
+import com.digitalhouse.a0818moacn01_02.ReproducirMp3;
+import com.digitalhouse.a0818moacn01_02.model.Busqueda;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -161,84 +160,16 @@ public class BuscarFragment extends Fragment implements AdapatadorBusqueda.Busqu
 
         linearLayout.setVisibility(View.VISIBLE);
         String url = busqueda.getMp3();
-        reproducirMp3(url, mediaPlayer);
+
+        ReproducirMp3 reproducirMp3 = new ReproducirMp3();
+        reproducirMp3.reproducirMp3(url, mediaPlayer, getActivity());
+
         textViewNombrePista.setText(busqueda.getBusqueda() + " - " + busqueda.getArtista());
         textViewNombrePista.setTextColor(Color.parseColor("#FD9701"));
 
 
     }
 
-
-    private void reproducirMp3(final String url, final MediaPlayer mediaPlayer) {
-        final ImageView imageViewPlay = getActivity().findViewById(R.id.btnRepoductorPlay);
-        final ImageView imageViewPause = getActivity().findViewById(R.id.btnReproductorPause);
-
-        mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-
-
-        try {
-            if (!mediaPlayer.isPlaying()) {
-
-                mediaPlayer.setDataSource(url);
-                mediaPlayer.prepare();
-                mediaPlayer.start();
-                imageViewPause.setVisibility(View.VISIBLE);
-
-            } else {
-                mediaPlayer.stop();
-                mediaPlayer.reset();
-                mediaPlayer.setDataSource(url);
-                mediaPlayer.prepare();
-                mediaPlayer.start();
-            }
-
-            imageViewPause.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mediaPlayer.pause();
-                    imageViewPlay.setVisibility(View.VISIBLE);
-                    imageViewPause.setVisibility(View.INVISIBLE);
-                }
-            });
-
-
-            imageViewPlay.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    if (mediaPlayer != null && !mediaPlayer.isPlaying()) {
-
-                        mediaPlayer.start();
-                        imageViewPause.setVisibility(View.VISIBLE);
-                        imageViewPlay.setVisibility(View.INVISIBLE);
-                    }
-                }
-            });
-
-
-        } catch (
-                IOException e)
-
-        {
-
-            e.printStackTrace();
-        } catch (
-                IllegalArgumentException e)
-
-        {
-            e.printStackTrace();
-        } catch (
-                SecurityException e)
-
-        {
-            e.printStackTrace();
-        } catch (
-                IllegalStateException e)
-
-        {
-            e.printStackTrace();
-        }
-    }
 
     private void ocultarTeclado() {
         View view = this.getActivity().getCurrentFocus();

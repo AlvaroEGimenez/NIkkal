@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import com.digitalhouse.a0818moacn01_02.R;
 import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Buscar.AdapatadorBusqueda;
-import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Buscar.Busqueda;
+import com.digitalhouse.a0818moacn01_02.model.Busqueda;
 import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Configuracion.ConfiguracionFragment;
 import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Radio_Online.RadioFragment;
 import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Buscar.BuscarFragment;

@@ -19,7 +19,6 @@ import com.bumptech.glide.Glide;
 import com.digitalhouse.a0818moacn01_02.DAOLocal;
 import com.digitalhouse.a0818moacn01_02.R;
 import com.digitalhouse.a0818moacn01_02.model.TopChartLocal;
-
 import com.digitalhouse.a0818moacn01_02.view.adapter.pista.PistaAdapterViewPage;
 import com.digitalhouse.a0818moacn01_02.view.adapter.pista.PistaAlbumRecyclerView;
 import com.digitalhouse.a0818moacn01_02.view.adapter.pista.RecyclerItemTouchHelper;
@@ -81,12 +80,12 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
         recyclerView.setLayoutManager(linearLayoutManager);
         PistaAlbumRecyclerView pistaAlbumRecyclerView = new PistaAlbumRecyclerView(this.pistas, R.layout.cardview_pista_album, getActivity(), this);
 
-        ItemTouchHelper.SimpleCallback itemTouchHelperCallback = new RecyclerItemTouchHelper(0, ItemTouchHelper.LEFT, this);
+        ItemTouchHelper.SimpleCallback itemTouchHelperCallback = new RecyclerItemTouchHelper(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT, this);
         new ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(recyclerView);
         recyclerView.setAdapter(pistaAlbumRecyclerView);
     }
 
-    private void setFavoritoPista(TopChartLocal pista, ImageView favoritoPista){
+    private void setFavoritoPista(TopChartLocal pista, ImageView favoritoPista) {
         if (!pista.getFavorito()) {
             pista.setFavorito(true);
         } else {
@@ -150,6 +149,7 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
     public void pistaPlayPause(TopChartLocal pista, ProgressBar progressBar) {
 
     }
+
     @Override
     public void favoritoListenerPista(Integer posicion, ImageView favoritoPistaReproductor) {
         recyclerView.setAdapter(null);
@@ -163,14 +163,17 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
 
     @Override
     public boolean onItemMove(int fromPosition, int toPosition) {
+
         return false;
     }
 
     @Override
     public void onItemDismiss(int position) {
+        TopChartLocal pista = pistas.get(position);
+        Toast.makeText(getContext(), "Ingrese nombre del playList ", Toast.LENGTH_SHORT).show();
         recyclerView.getAdapter().notifyItemRemoved(position);
         recyclerView.getAdapter().notifyItemInserted(position);
-        TopChartLocal pista =  pistas.get(position);
-        Toast.makeText(getContext(), "Agragado a favoritos + " + pista.getNombreTrack(), Toast.LENGTH_SHORT).show();
+
+
     }
 }

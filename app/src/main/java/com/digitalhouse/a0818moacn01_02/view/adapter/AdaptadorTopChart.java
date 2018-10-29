@@ -18,10 +18,12 @@ import java.util.List;
 public class AdaptadorTopChart extends BaseAdapter {
     private List<TopChartLocal> topChartList;
     private Context context;
+    private onItemClickTopChart onItemClickTopChart;
 
-    public AdaptadorTopChart(List<TopChartLocal> topChartList, Context context) {
+    public AdaptadorTopChart(List<TopChartLocal> topChartList, Context context, onItemClickTopChart onItemClickTopChart) {
         this.topChartList = topChartList;
         this.context = context;
+        this.onItemClickTopChart = onItemClickTopChart;
     }
 
     @Override
@@ -40,7 +42,7 @@ public class AdaptadorTopChart extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         View rootView = convertView;
         if (rootView == null){
             rootView = LayoutInflater.from(context).inflate(R.layout.layout_item,null);
@@ -51,8 +53,20 @@ public class AdaptadorTopChart extends BaseAdapter {
             Glide.with(context).load(topChartList.get(position).getUrlImagen()).into(imagen);
 
             nombre.setText(topChartList.get(position).getNombreTrack());
+
+            imagen.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onItemClickTopChart.onClickTopChart(topChartList.get(position));
+                }
+            });
+
         }
 
         return rootView;
+    }
+
+    public interface onItemClickTopChart{
+        void onClickTopChart(TopChartLocal topChartLocal);
     }
 }
