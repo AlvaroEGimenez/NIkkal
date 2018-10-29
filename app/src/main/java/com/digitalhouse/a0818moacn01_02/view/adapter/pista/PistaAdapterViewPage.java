@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -42,10 +43,11 @@ public class PistaAdapterViewPage extends PagerAdapter {
 
     @NonNull
     @Override
-    public Object instantiateItem(@NonNull ViewGroup container, int position) {
+    public Object instantiateItem(@NonNull ViewGroup container, final int position) {
         View view = layoutInflater.inflate(R.layout.pista_view_page, container, false);
         TextView textView = view.findViewById(R.id.tvTituloPistaViewPage);
         textView.setSelected(true);
+        final ImageView favoritoPista = view.findViewById(R.id.imgFavoritoViewPage);
         final ImageButton btnPistaAnterior = view.findViewById(R.id.ic_play_antrior_pista);
         final ImageButton btnPistaSiguiente = view.findViewById(R.id.ic_play_siguiente_pista);
         final ImageButton btnPlay = view.findViewById(R.id.ic_play_pista);
@@ -54,6 +56,15 @@ public class PistaAdapterViewPage extends PagerAdapter {
 
         container.addView(view);
         final  TopChartLocal pista = pistas.get(position);
+        favoritoPista.setImageResource(pista.getFavorito() ? R.drawable.ic_favorite_seleccionado : R.drawable.ic_favorite_no_seleccion);
+
+        favoritoPista.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                escuchador.favoritoListenerPista(position, favoritoPista);
+            }
+        });
+
         textView.setText(pista.getNombreTrack());
 
         final  Integer  posicion = position;
@@ -102,6 +113,7 @@ public class PistaAdapterViewPage extends PagerAdapter {
         void pistaAnterior(Integer position);
         void pistaSiguiente(Integer position);
         void pistaPlayPause( TopChartLocal pista, ProgressBar progressBar);
+        void favoritoListenerPista(Integer position, ImageView favoritoPista);
 
     }
 

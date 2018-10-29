@@ -22,7 +22,7 @@ import com.digitalhouse.a0818moacn01_02.model.TopChartLocal;
 
 import com.digitalhouse.a0818moacn01_02.view.adapter.pista.PistaAdapterViewPage;
 import com.digitalhouse.a0818moacn01_02.view.adapter.pista.PistaAlbumRecyclerView;
-import com.digitalhouse.a0818moacn01_02.view.recyclerView.RecyclerItemTouchHelper;
+import com.digitalhouse.a0818moacn01_02.view.adapter.pista.RecyclerItemTouchHelper;
 
 import java.util.ArrayList;
 
@@ -34,6 +34,8 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
 
     private ImageView imgCabeceraAlbumPista;
     private Toolbar toolbaarNombreCabeceraAlbumPista;
+    private RecyclerView recyclerView;
+    private View view;
 
     private ArrayList<TopChartLocal> pistas = new ArrayList<>();
     AutoScrollViewPager autoScrollViewPager;
@@ -45,7 +47,7 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_pista_album, container, false);
+        view = inflater.inflate(R.layout.fragment_pista_album, container, false);
 
         imgCabeceraAlbumPista = view.findViewById(R.id.imgCabeceraAlbumPista);
         toolbaarNombreCabeceraAlbumPista = view.findViewById(R.id.toolbaarNombreCabeceraAlbumPista);
@@ -57,7 +59,7 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
         cargarImagen(imgCabeceraAlbumPista, urlImagenCabecera);
         toolbaarNombreCabeceraAlbumPista.setTitle(nombreCabeceraPistaAlbum);
 
-        crearAlbumRecyclerView(view, R.id.rvPistaAlbum);
+        crearAlbumRecyclerView(R.id.rvPistaAlbum);
 
         DAOLocal daoLocal = new DAOLocal();
         daoLocal.ObtenerTopChar(pistas);
@@ -70,10 +72,9 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
         Glide.with(getContext()).load(url).into(imageView);
     }
 
-    private void crearAlbumRecyclerView(View view, Integer idLayout) {
-        RecyclerView recyclerView = view.findViewById(idLayout);
+    private void crearAlbumRecyclerView(Integer idLayout) {
+        recyclerView = view.findViewById(idLayout);
         recyclerView.setHasFixedSize(true);
-
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 
@@ -81,28 +82,27 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
         PistaAlbumRecyclerView pistaAlbumRecyclerView = new PistaAlbumRecyclerView(this.pistas, R.layout.cardview_pista_album, getActivity(), this);
 
         ItemTouchHelper.SimpleCallback itemTouchHelperCallback = new RecyclerItemTouchHelper(0, ItemTouchHelper.LEFT, this);
-
         new ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(recyclerView);
-        recyclerView.setAdapter(pistaAlbumRecyclerView);
-
         recyclerView.setAdapter(pistaAlbumRecyclerView);
     }
 
-
-    @Override
-    public void favoritoListener(TopChartLocal pista, ImageView favoritoPista) {
+    private void setFavoritoPista(TopChartLocal pista, ImageView favoritoPista){
         if (!pista.getFavorito()) {
             pista.setFavorito(true);
         } else {
             pista.setFavorito(false);
         }
+
         if (pista.getFavorito()) {
             cargarImagen(favoritoPista, R.drawable.ic_favorite_seleccionado);
-            Toast.makeText(getContext(), "Se ha agregado: " + pista.getNombreTrack() + " a Favoritos", Toast.LENGTH_SHORT).show();
         } else {
             cargarImagen(favoritoPista, R.drawable.ic_favorite_no_seleccion);
-            Toast.makeText(getContext(), "Se ha eleminado: " + pista.getNombreTrack() + " de Favoritos", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    public void favoritoListener(TopChartLocal pista, ImageView favoritoPista) {
+        setFavoritoPista(pista, favoritoPista);
     }
 
     @Override
@@ -117,7 +117,7 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
     }
 
     @Override
-    public void pistaViewPageListener(Integer posicion) {
+    public void pistaViewPageListener(Integer posicion, View itemViewSelected) {
         Dialog dialog = new Dialog(getContext(), R.style.pistaViewPage);
         dialog.setContentView(R.layout.pista_view_page_content);
 
@@ -142,22 +142,35 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
     @Override
     public void pistaSiguiente(Integer position) {
         autoScrollViewPager.setCurrentItem(position);
+        long itemId = recyclerView.getAdapter().getItemId(position);
+
     }
 
     @Override
     public void pistaPlayPause(TopChartLocal pista, ProgressBar progressBar) {
 
     }
+    @Override
+    public void favoritoListenerPista(Integer posicion, ImageView favoritoPistaReproductor) {
+        recyclerView.setAdapter(null);
+        TopChartLocal pista = pistas.get(posicion);
+        setFavoritoPista(pista, favoritoPistaReproductor);
+        PistaAlbumRecyclerView pistaAlbumRecyclerView = new PistaAlbumRecyclerView(this.pistas, R.layout.cardview_pista_album, getActivity(), this);
+        recyclerView.setAdapter(pistaAlbumRecyclerView);
+
+    }
+
 
     @Override
-    public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction, int position) {
-        if (viewHolder instanceof PistaAlbumRecyclerView.PistaViewHolder) {
+    public boolean onItemMove(int fromPosition, int toPosition) {
+        return false;
+    }
 
-
-            final TopChartLocal topChartLocal = pistas.get(viewHolder.getAdapterPosition());
-            final Integer deleteindex = viewHolder.getAdapterPosition();
-
-
-        }
+    @Override
+    public void onItemDismiss(int position) {
+        recyclerView.getAdapter().notifyItemRemoved(position);
+        recyclerView.getAdapter().notifyItemInserted(position);
+        TopChartLocal pista =  pistas.get(position);
+        Toast.makeText(getContext(), "Agragado a favoritos + " + pista.getNombreTrack(), Toast.LENGTH_SHORT).show();
     }
 }

@@ -1,4 +1,4 @@
-package com.digitalhouse.a0818moacn01_02.view.recyclerView;
+package com.digitalhouse.a0818moacn01_02.view.adapter.pista;
 
 
 import android.graphics.Canvas;
@@ -59,7 +59,7 @@ public class RecyclerItemTouchHelper extends ItemTouchHelper.SimpleCallback {
 
     @Override
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-        listener.onSwiped(viewHolder, direction, viewHolder.getAdapterPosition());
+        listener.onItemDismiss(viewHolder.getAdapterPosition());
     }
 
     @Override
@@ -70,7 +70,8 @@ public class RecyclerItemTouchHelper extends ItemTouchHelper.SimpleCallback {
 
 
     public interface RecyclerItemTouchHelperListener {
-        void onSwiped(RecyclerView.ViewHolder viewHolder, int direction, int position);
+        boolean onItemMove(int fromPosition, int toPosition);
+        void onItemDismiss(int position);
     }
 }
 
