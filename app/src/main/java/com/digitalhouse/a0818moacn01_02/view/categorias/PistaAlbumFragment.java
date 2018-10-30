@@ -157,6 +157,8 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
     public void pistaPlayPause(TopChartLocal pista, final ProgressBar progressBar) {
         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
 
+        final ImageButton btnPlay = view.findViewById(R.id.ic_play_pista);
+        final ImageButton btnPause = view.findViewById(R.id.ic_pause_pista);
 
         final Handler mSeekbarUpdateHandler = new Handler();
         final Runnable mUpdateSeekbar = new Runnable() {
@@ -184,9 +186,10 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
             mediaPlayer.start();
             progressBar.setMax(mediaPlayer.getDuration());
             mSeekbarUpdateHandler.postDelayed(mUpdateSeekbar, 0);
+            }
 
         }
-    }
+
 
     @Override
     public void favoritoListenerPista(Integer posicion, ImageView favoritoPistaReproductor) {

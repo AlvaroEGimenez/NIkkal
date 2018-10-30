@@ -53,9 +53,9 @@ public class PistaAdapterViewPage extends PagerAdapter {
         final ImageView favoritoPista = view.findViewById(R.id.imgFavoritoViewPage);
         final ImageButton btnPistaAnterior = view.findViewById(R.id.ic_play_antrior_pista);
         final ImageButton btnPistaSiguiente = view.findViewById(R.id.ic_play_siguiente_pista);
+        final ProgressBar progressBar = view.findViewById(R.id.progrerssBarPistaViewPage);
         final ImageButton btnPlay = view.findViewById(R.id.ic_play_pista);
         final ImageButton btnPause = view.findViewById(R.id.ic_pause_pista);
-        final ProgressBar progressBar = view.findViewById(R.id.progrerssBarPistaViewPage);
 
         container.addView(view);
         final  TopChartLocal pista = pistas.get(position);
@@ -89,20 +89,20 @@ public class PistaAdapterViewPage extends PagerAdapter {
         btnPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                escuchador.pistaPlayPause( pista, progressBar);
                 btnPlay.setVisibility(View.INVISIBLE);
                 btnPause.setVisibility(View.VISIBLE);
-                escuchador.pistaPlayPause( pista, progressBar);
             }
         });
 
-        btnPause.setOnClickListener(new View.OnClickListener() {
+        /*btnPause.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 btnPause.setVisibility(View.INVISIBLE);
                 btnPlay.setVisibility(View.VISIBLE);
                 escuchador.pistaPlayPause( pista, progressBar);
             }
-        });
+        });*/
 
 
         return view;
