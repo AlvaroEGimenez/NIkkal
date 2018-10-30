@@ -15,7 +15,7 @@ public class ReproducirMp3 {
         final ImageView imageViewPlay = activity.findViewById(R.id.btnRepoductorPlay);
         final ImageView imageViewPause = activity.findViewById(R.id.btnReproductorPause);
         final LinearLayout linearLayout = activity.findViewById(R.id.layoutPlayer);
-        linearLayout.setVisibility(View.VISIBLE);
+
 
         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
 
@@ -26,7 +26,9 @@ public class ReproducirMp3 {
                 mediaPlayer.setDataSource(url);
                 mediaPlayer.prepare();
                 mediaPlayer.start();
+                linearLayout.setVisibility(View.VISIBLE);
                 imageViewPause.setVisibility(View.VISIBLE);
+                imageViewPlay.setVisibility(View.INVISIBLE);
 
             } else {
                 mediaPlayer.stop();
