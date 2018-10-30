@@ -94,11 +94,12 @@
 
         <ImageView
             android:id="@+id/favoritoPista"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_margin="3dp"
             android:layout_weight="0.2"
-            android:src="@drawable/ic_favorite_no_seleccion" />
+            android:src="@drawable/ic_favorite_no_seleccion"
+            android:layout_gravity="center_vertical"/>
 
         <ImageView
             android:id="@+id/masOpciones"

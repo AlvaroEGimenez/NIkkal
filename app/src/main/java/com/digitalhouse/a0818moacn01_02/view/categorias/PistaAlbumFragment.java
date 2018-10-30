@@ -2,7 +2,10 @@ package com.digitalhouse.a0818moacn01_02.view.categorias;
 
 
 import android.app.Dialog;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,6 +14,7 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -23,6 +27,7 @@ import com.digitalhouse.a0818moacn01_02.view.adapter.pista.PistaAdapterViewPage;
 import com.digitalhouse.a0818moacn01_02.view.adapter.pista.PistaAlbumRecyclerView;
 import com.digitalhouse.a0818moacn01_02.view.adapter.pista.RecyclerItemTouchHelper;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import me.angeldevil.autoscrollviewpager.AutoScrollViewPager;
@@ -35,6 +40,9 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
     private Toolbar toolbaarNombreCabeceraAlbumPista;
     private RecyclerView recyclerView;
     private View view;
+    private MediaPlayer mediaPlayer = new MediaPlayer();
+    private ImageButton btnPlay;
+    private ImageButton btnPause;
 
     private ArrayList<TopChartLocal> pistas = new ArrayList<>();
     AutoScrollViewPager autoScrollViewPager;
@@ -146,8 +154,38 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
     }
 
     @Override
-    public void pistaPlayPause(TopChartLocal pista, ProgressBar progressBar) {
+    public void pistaPlayPause(TopChartLocal pista, final ProgressBar progressBar) {
+        mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
 
+
+        final Handler mSeekbarUpdateHandler = new Handler();
+        final Runnable mUpdateSeekbar = new Runnable() {
+            @Override
+            public void run() {
+                progressBar.setProgress(mediaPlayer.getCurrentPosition());
+                mSeekbarUpdateHandler.postDelayed(this, 50);
+            }
+        };
+
+        final String url = pista.getUrlMp3();
+
+
+        if (!mediaPlayer.isPlaying()) {
+            try {
+                mediaPlayer.setDataSource(url);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            try {
+                mediaPlayer.prepare();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            mediaPlayer.start();
+            progressBar.setMax(mediaPlayer.getDuration());
+            mSeekbarUpdateHandler.postDelayed(mUpdateSeekbar, 0);
+
+        }
     }
 
     @Override
