@@ -1,93 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:layout_gravity="center"
     android:background="@android:color/black"
-    android:gravity="center"
-    android:orientation="vertical"
     tools:context=".view.categorias.PistaViewPageFragment">
-
-
-    <ImageButton
-        android:id="@+id/imgFavoritoViewPage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:padding="10dp"
-        android:background="@android:color/transparent"
-        android:src="@drawable/ic_favorite_no_seleccion" />
-
-    <TextView
-        android:id="@+id/tvTituloPistaViewPage"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@android:color/white"
-        android:textSize="30sp"
-        android:padding="5dp"
-        android:textAlignment="center"
-        android:marqueeRepeatLimit="marquee_forever"
-        android:singleLine="true"
-        android:ellipsize="marquee"
-        android:scrollHorizontally="true"
-        />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center_vertical|center_horizontal"
-        android:orientation="horizontal"
-        android:layout_marginTop="50dp"
-        >
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
 
         <ImageButton
-            android:id="@+id/ic_play_antrior_pista"
+            android:id="@+id/imgFavoritoViewPage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingRight="10dp"
+            android:layout_gravity="center"
             android:background="@android:color/transparent"
-            android:src="@drawable/ic_anterior_pista" />
+            android:src="@drawable/ic_favorite_no_seleccion" />
 
-        <ImageButton
-            android:id="@+id/ic_play_pista"
-            android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/tvTituloPistaViewPage"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_play_icon"
-            android:background="@android:color/transparent"/>
-
-        <ImageButton
-            android:id="@+id/ic_pause_pista"
-            android:layout_width="wrap_content"
+            android:ellipsize="marquee"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:padding="5dp"
+            android:scrollHorizontally="true"
+            android:singleLine="true"
+            android:textAlignment="center"
+            android:textColor="@android:color/white"
+            android:textSize="30sp" />
+.
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_pausa_pista"
-            android:visibility="gone"
-            android:background="@android:color/transparent"/>
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:gravity="center_vertical|center_horizontal"
+            android:orientation="horizontal">
 
-        <ImageButton
-            android:id="@+id/ic_play_siguiente_pista"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="10dp"
-            android:background="@android:color/transparent"
-            android:src="@drawable/ic_siguiente_pista" />
+            <ImageButton
+                android:id="@+id/ic_play_antrior_pista"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:paddingRight="10dp"
+                android:src="@drawable/ic_anterior_pista" />
 
-        >
+            <ImageButton
+                android:id="@+id/ic_play_pista"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_play_icon" />
+
+            <ImageButton
+                android:id="@+id/ic_pause_pista"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_pausa_pista"
+                android:visibility="gone" />
+
+            <ImageButton
+                android:id="@+id/ic_play_siguiente_pista"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:paddingLeft="10dp"
+                android:src="@drawable/ic_siguiente_pista" />
+
+            >
+
+        </LinearLayout>
 
     </LinearLayout>
 
     <ProgressBar
         android:id="@+id/progrerssBarPistaViewPage"
         style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:indeterminateOnly="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/circle_shape"
         android:scaleWidth="100%"
-        android:useIntrinsicSizeAsMinimum="true"
-        android:layout_margin="25dp"
-        />
-
-
-</LinearLayout>
+        android:max="100"
+        android:progress="65"
+        android:progressDrawable="@drawable/circular_progress_bar" />
+</FrameLayout>
