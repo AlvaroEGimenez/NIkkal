@@ -17,5 +17,11 @@
 
     <string name="tv_busqueda_reciente">Recent searches</string>
     <string name="hint_buscar">Search</string>
+    <string name="tv_canciones_favoritas">Favorite Songs</string>
+    <string name="tv_artistas_favoritos">Favorite Artist</string>
+    <string name="tv_almbum_favoritos">Favorite albums</string>
+    <string name="tv_mis_playlist">My Playlist</string>
+    <string name="tv_titulo_favoritos">Favorites</string>
+
 
 </resources>
