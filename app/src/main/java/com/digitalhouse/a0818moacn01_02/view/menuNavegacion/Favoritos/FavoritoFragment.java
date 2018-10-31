@@ -34,11 +34,16 @@ public class FavoritoFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_favorito, container, false);
 
         // Inflate the layout for this fragment
+        //todo esto iría en una clase recycler que despues se comunica a traves del adapter con el fragment y el fragment con la activity :S
         List<Favoritos> listaDeFavoritos = new ArrayList<>();
-        listaDeFavoritos.add(new Favoritos(getResources().getString(R.string.tv_almbum_favoritos),R.drawable.ic_album_24dp));
-        listaDeFavoritos.add(new Favoritos(getResources().getString(R.string.tv_artistas_favoritos),R.drawable.ic_artista));
-        listaDeFavoritos.add(new Favoritos(getResources().getString(R.string.tv_canciones_favoritas),R.drawable.ic_pista));
-        listaDeFavoritos.add(new Favoritos(getResources().getString(R.string.tv_mis_playlist),R.drawable.ic_listas_de_reproduccion));
+        listaDeFavoritos.add(new Favoritos(getResources().getString(R.string.tv_titulo_escuchadas_recientemente),R.drawable.fondo_pista,getResources().getString(R.string.tv_subtitulo_escuchadas_recientemente)));
+        listaDeFavoritos.add(new Favoritos(getResources().getString(R.string.tv_titulo_escuchadas_recientemente),R.drawable.fondo_pista,getResources().getString(R.string.tv_subtitulo_escuchadas_recientemente)));
+        listaDeFavoritos.add(new Favoritos(getResources().getString(R.string.tv_titulo_escuchadas_recientemente),R.drawable.fondo_pista,getResources().getString(R.string.tv_subtitulo_escuchadas_recientemente)));
+        listaDeFavoritos.add(new Favoritos(getResources().getString(R.string.tv_titulo_escuchadas_recientemente),R.drawable.fondo_pista,getResources().getString(R.string.tv_subtitulo_escuchadas_recientemente)));
+        listaDeFavoritos.add(new Favoritos(getResources().getString(R.string.tv_titulo_escuchadas_recientemente),R.drawable.fondo_pista,getResources().getString(R.string.tv_subtitulo_escuchadas_recientemente)));
+        listaDeFavoritos.add(new Favoritos(getResources().getString(R.string.tv_titulo_escuchadas_recientemente),R.drawable.fondo_pista,getResources().getString(R.string.tv_subtitulo_escuchadas_recientemente)));
+        listaDeFavoritos.add(new Favoritos(getResources().getString(R.string.tv_titulo_escuchadas_recientemente),R.drawable.fondo_pista,getResources().getString(R.string.tv_subtitulo_escuchadas_recientemente)));
+        listaDeFavoritos.add(new Favoritos(getResources().getString(R.string.tv_titulo_escuchadas_recientemente),R.drawable.fondo_pista,getResources().getString(R.string.tv_subtitulo_escuchadas_recientemente)));
         RecyclerView recyclerView = view.findViewById(R.id.recyclerFavoritos);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext(),LinearLayoutManager.VERTICAL,false));
         recyclerView.setHasFixedSize(true);
