@@ -21,7 +21,7 @@ public class PistaAdapterViewPage extends PagerAdapter {
     private List<TopChartLocal> pistas;
     private Context context;
     private LayoutInflater layoutInflater;
-    PistaViewPageInterface escuchador;
+    private PistaViewPageInterface escuchador;
 
     public PistaAdapterViewPage(List<TopChartLocal> pistas, Context context, PistaViewPageInterface escuchador) {
         this.pistas = pistas;
@@ -45,14 +45,17 @@ public class PistaAdapterViewPage extends PagerAdapter {
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, final int position) {
         View view = layoutInflater.inflate(R.layout.pista_view_page, container, false);
-        TextView textView = view.findViewById(R.id.tvTituloPistaViewPage);
+
+        TextView textView = view.findViewById(R.id.tvTitulo_PistaViewPage);
+        TextView textViewArtista = view.findViewById(R.id.Artista_PistaViewPage);
         textView.setSelected(true);
+
         final ImageView favoritoPista = view.findViewById(R.id.imgFavoritoViewPage);
         final ImageButton btnPistaAnterior = view.findViewById(R.id.ic_play_antrior_pista);
         final ImageButton btnPistaSiguiente = view.findViewById(R.id.ic_play_siguiente_pista);
+        final ProgressBar progressBar = view.findViewById(R.id.progrerssBarPistaViewPage);
         final ImageButton btnPlay = view.findViewById(R.id.ic_play_pista);
         final ImageButton btnPause = view.findViewById(R.id.ic_pause_pista);
-        final ProgressBar progressBar = view.findViewById(R.id.progrerssBarPistaViewPage);
 
         container.addView(view);
         final  TopChartLocal pista = pistas.get(position);
@@ -66,8 +69,9 @@ public class PistaAdapterViewPage extends PagerAdapter {
         });
 
         textView.setText(pista.getNombreTrack());
+        textViewArtista.setText(pista.getNombreArtista());
 
-        final  Integer  posicion = position;
+       final  Integer  posicion = position;
         btnPistaAnterior.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -85,20 +89,20 @@ public class PistaAdapterViewPage extends PagerAdapter {
         btnPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                btnPlay.setVisibility(View.GONE);
-                btnPause.setVisibility(View.VISIBLE);
                 escuchador.pistaPlayPause( pista, progressBar);
+                btnPlay.setVisibility(View.INVISIBLE);
+                btnPause.setVisibility(View.VISIBLE);
             }
         });
 
-        btnPause.setOnClickListener(new View.OnClickListener() {
+        /*btnPause.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                btnPause.setVisibility(View.GONE);
+                btnPause.setVisibility(View.INVISIBLE);
                 btnPlay.setVisibility(View.VISIBLE);
                 escuchador.pistaPlayPause( pista, progressBar);
             }
-        });
+        });*/
 
 
         return view;
