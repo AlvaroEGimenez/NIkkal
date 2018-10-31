@@ -38,7 +38,7 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
 
     private ImageView imgCabeceraAlbumPista;
     private Toolbar toolbaarNombreCabeceraAlbumPista;
-    private RecyclerView recyclerView;
+    PistaAlbumRecyclerView pistaAlbumRecyclerView;
     private View view;
     private MediaPlayer mediaPlayer = new MediaPlayer();
     private ImageButton btnPlay;
@@ -80,13 +80,13 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
     }
 
     private void crearAlbumRecyclerView(Integer idLayout) {
-        recyclerView = view.findViewById(idLayout);
+        RecyclerView recyclerView = view.findViewById(idLayout);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 
         recyclerView.setLayoutManager(linearLayoutManager);
-        PistaAlbumRecyclerView pistaAlbumRecyclerView = new PistaAlbumRecyclerView(this.pistas, R.layout.cardview_pista_album, getActivity(), this);
+        pistaAlbumRecyclerView = new PistaAlbumRecyclerView(this.pistas, R.layout.cardview_pista_album, getActivity(), this);
 
         ItemTouchHelper.SimpleCallback itemTouchHelperCallback = new RecyclerItemTouchHelper(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT, this);
         new ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(recyclerView);
@@ -149,7 +149,7 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
     @Override
     public void pistaSiguiente(Integer position) {
         autoScrollViewPager.setCurrentItem(position);
-        long itemId = recyclerView.getAdapter().getItemId(position);
+        long itemId = pistaAlbumRecyclerView.getItemId(position);
 
     }
 
@@ -193,11 +193,9 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
 
     @Override
     public void favoritoListenerPista(Integer posicion, ImageView favoritoPistaReproductor) {
-        recyclerView.setAdapter(null);
         TopChartLocal pista = pistas.get(posicion);
         setFavoritoPista(pista, favoritoPistaReproductor);
-        PistaAlbumRecyclerView pistaAlbumRecyclerView = new PistaAlbumRecyclerView(this.pistas, R.layout.cardview_pista_album, getActivity(), this);
-        recyclerView.setAdapter(pistaAlbumRecyclerView);
+        pistaAlbumRecyclerView.notifyDataSetChanged();
 
     }
 
@@ -212,8 +210,8 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
     public void onItemDismiss(int position) {
         TopChartLocal pista = pistas.get(position);
         Toast.makeText(getContext(), "Ingrese nombre del playList ", Toast.LENGTH_SHORT).show();
-        recyclerView.getAdapter().notifyItemRemoved(position);
-        recyclerView.getAdapter().notifyItemInserted(position);
+        pistaAlbumRecyclerView.notifyItemRemoved(position);
+        pistaAlbumRecyclerView.notifyItemInserted(position);
 
 
     }
