@@ -2,6 +2,7 @@ package com.digitalhouse.a0818moacn01_02.view.categorias;
 
 
 import android.app.Dialog;
+import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -20,6 +21,11 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.deezer.sdk.network.connect.DeezerConnect;
+import com.deezer.sdk.player.AlbumPlayer;
+import com.deezer.sdk.player.TrackPlayer;
+import com.deezer.sdk.player.networkcheck.NetworkStateChecker;
+import com.deezer.sdk.player.networkcheck.NetworkStateListener;
 import com.digitalhouse.a0818moacn01_02.DAOLocal;
 import com.digitalhouse.a0818moacn01_02.R;
 import com.digitalhouse.a0818moacn01_02.model.TopChartLocal;
@@ -42,7 +48,7 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
     private PistaAlbumRecyclerView pistaAlbumRecyclerView;
     private PistaAdapterViewPage pistaAdapterViewPage;
     private AutoScrollViewPager autoScrollViewPager;
-    private  RecyclerView recyclerView;
+    private RecyclerView recyclerView;
     private View view;
     private MediaPlayer mediaPlayer = new MediaPlayer();
     private ImageButton btnPlay;
@@ -156,7 +162,7 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
     }
 
     @Override
-    public void pistaPlay(TopChartLocal pista, final ProgressBar progressBar, Integer posicion) {
+    public void pistaPlay(final TopChartLocal pista, final ProgressBar progressBar, Integer posicion) {
         pistaAdapterViewPage.notifyDataSetChanged();
         recyclerView.smoothScrollToPosition(posicion);
         pistaAdapterViewPage.notifyDataSetChanged();
@@ -166,16 +172,15 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
         final Runnable mUpdateSeekbar = new Runnable() {
             @Override
             public void run() {
-                progressBar.setProgress(mediaPlayer.getCurrentPosition());
+                progressBar.setProgress(mediaPlayer.getDuration());
                 mSeekbarUpdateHandler.postDelayed(this, 50);
-
-            }
+                }
         };
 
         final String url = pista.getUrlMp3();
 
+        if (!mediaPlayer.isPlaying()) {
 
-        if ( mediaPlayer.getCurrentPosition() <= 0){
             try {
                 mediaPlayer.setDataSource(url);
             } catch (IOException e) {
@@ -186,12 +191,10 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            mediaPlayer.start();
+            progressBar.setMax(mediaPlayer.getDuration());
+            mSeekbarUpdateHandler.postDelayed(mUpdateSeekbar, 0);
         }
-
-        mediaPlayer.start();
-        progressBar.setMax(mediaPlayer.getDuration());
-        mSeekbarUpdateHandler.postDelayed(mUpdateSeekbar, 0);
-
     }
 
     @Override
@@ -201,6 +204,7 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
         pistaAdapterViewPage.notifyDataSetChanged();
         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
         mediaPlayer.pause();
+        mediaPlayer.release();
     }
 
 
@@ -216,7 +220,7 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
     @Override
     public boolean onItemMove(int fromPosition, int toPosition) {
         Collections.swap(pistas, fromPosition, toPosition);
-        pistaAlbumRecyclerView.notifyItemMoved( fromPosition,  toPosition);
+        pistaAlbumRecyclerView.notifyItemMoved(fromPosition, toPosition);
         return true;
     }
 

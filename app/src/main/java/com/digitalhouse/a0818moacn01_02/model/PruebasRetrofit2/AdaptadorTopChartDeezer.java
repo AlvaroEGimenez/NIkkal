@@ -1,4 +1,4 @@
-package com.digitalhouse.a0818moacn01_02.view.adapter;
+package com.digitalhouse.a0818moacn01_02.model.PruebasRetrofit2;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,18 +10,16 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.digitalhouse.a0818moacn01_02.R;
-import com.digitalhouse.a0818moacn01_02.model.PruebasRetrofit2.Track;
-import com.digitalhouse.a0818moacn01_02.model.TopChart;
 import com.digitalhouse.a0818moacn01_02.model.TopChartLocal;
 
 import java.util.List;
 
-public class AdaptadorTopChart extends BaseAdapter {
-    private List<TopChartLocal> topChartList;
+public class AdaptadorTopChartDeezer extends BaseAdapter {
+    private List<Track> topChartList;
     private Context context;
     private onItemClickTopChart onItemClickTopChart;
 
-    public AdaptadorTopChart(List<TopChartLocal> topChartList, Context context, onItemClickTopChart onItemClickTopChart) {
+    public AdaptadorTopChartDeezer(List<Track> topChartList, Context context, onItemClickTopChart onItemClickTopChart) {
         this.topChartList = topChartList;
         this.context = context;
         this.onItemClickTopChart = onItemClickTopChart;
@@ -51,9 +49,9 @@ public class AdaptadorTopChart extends BaseAdapter {
             TextView nombre = rootView.findViewById(R.id.labelTopChart);
             ImageView imagen = rootView.findViewById(R.id.imagenTopChart);
 
-            Glide.with(context).load(topChartList.get(position).getUrlImagen()).into(imagen);
+            Glide.with(context).load(topChartList.get(position).getArtist().getPictureMedium()).into(imagen);
 
-            nombre.setText(topChartList.get(position).getNombreArtista());
+            nombre.setText(topChartList.get(position).getArtist().getName());
 
             imagen.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -68,6 +66,6 @@ public class AdaptadorTopChart extends BaseAdapter {
     }
 
     public interface onItemClickTopChart{
-        void onClickTopChart(TopChartLocal topChartLocal);
+        void onClickTopChart(Track topChartLocal);
     }
 }

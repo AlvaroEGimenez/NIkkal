@@ -15,6 +15,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextSwitcher;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
 import com.android.volley.Request;
@@ -24,6 +25,11 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.digitalhouse.a0818moacn01_02.DAOLocal;
 import com.digitalhouse.a0818moacn01_02.ReproducirMp3;
+import com.digitalhouse.a0818moacn01_02.model.PruebasRetrofit2.APIInterface;
+import com.digitalhouse.a0818moacn01_02.model.PruebasRetrofit2.ApiClient;
+import com.digitalhouse.a0818moacn01_02.model.PruebasRetrofit2.ModeloRespuesta;
+import com.digitalhouse.a0818moacn01_02.model.PruebasRetrofit2.Track;
+import com.digitalhouse.a0818moacn01_02.model.TopChart;
 import com.digitalhouse.a0818moacn01_02.model.TopChartLocal;
 import com.digitalhouse.a0818moacn01_02.view.MainActivity;
 import com.digitalhouse.a0818moacn01_02.R;
@@ -42,6 +48,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import it.moondroid.coverflow.components.ui.containers.FeatureCoverFlow;
+import retrofit2.Call;
+import retrofit2.Callback;
 
 public class CategoriaFragment extends Fragment implements CategoriaAdapterRecyclerView.AdapterInterface, AdaptadorTopChart.onItemClickTopChart {
     public final static String KEY_GENERO = "Géneros";
@@ -55,7 +63,8 @@ public class CategoriaFragment extends Fragment implements CategoriaAdapterRecyc
 
     private FeatureCoverFlow featureCoverFlow;
     private AdaptadorTopChart adaptadorTopChart;
-    private List<TopChartLocal> topChartList = new ArrayList<>();
+    private List<TopChartLocal> topChartListLocal = new ArrayList<>();
+    private List<Track> topChartListDeezer = new ArrayList<>();
     private TextSwitcher mTitle;
 
     private View view;
@@ -64,6 +73,7 @@ public class CategoriaFragment extends Fragment implements CategoriaAdapterRecyc
     private TextView tvMasEscuchado;
     private TextView tvFavorito;
     private TextView tvTopChart;
+    private Call<ModeloRespuesta> call;
 
     MediaPlayer mediaPlayer = new MediaPlayer();
 
@@ -90,7 +100,24 @@ public class CategoriaFragment extends Fragment implements CategoriaAdapterRecyc
 
 
         DAOLocal daoLocal = new DAOLocal();
-        daoLocal.ObtenerTopChar(topChartList);
+        daoLocal.ObtenerTopChar(topChartListLocal);
+
+        APIInterface apiInterface = ApiClient.getClient().create(APIInterface.class);
+        call = apiInterface.getTopChart();
+
+        call.enqueue(new Callback<ModeloRespuesta>() {
+            @Override
+            public void onResponse(Call<ModeloRespuesta> call, retrofit2.Response<ModeloRespuesta> response) {
+                 topChartListDeezer = response.body().getTrackList();
+
+            }
+
+            @Override
+            public void onFailure(Call<ModeloRespuesta> call, Throwable t) {
+                Toast.makeText(getActivity(),"ERROR",Toast.LENGTH_LONG).show();
+            }
+        });
+
 
         mTitle = view.findViewById(R.id.tituloTopChart);
         mTitle.setFactory(new ViewSwitcher.ViewFactory() {
@@ -109,14 +136,14 @@ public class CategoriaFragment extends Fragment implements CategoriaAdapterRecyc
 
 
 
-        adaptadorTopChart = new AdaptadorTopChart(topChartList,getContext(),this);
+        adaptadorTopChart = new AdaptadorTopChart(topChartListLocal,getContext(),this);
         featureCoverFlow = view.findViewById(R.id.coverFlow);
         featureCoverFlow.setAdapter(adaptadorTopChart);
 
         featureCoverFlow.setOnScrollPositionListener(new FeatureCoverFlow.OnScrollPositionListener() {
             @Override
             public void onScrolledToPosition(int position) {
-                mTitle.setText(topChartList.get(position).getNombreTrack()+" - "+ topChartList.get(position).getNombreArtista());
+                mTitle.setText(topChartListLocal.get(position).getNombreTrack()+" - "+ topChartListLocal.get(position).getNombreArtista());
             }
 
             @Override
@@ -258,43 +285,6 @@ public class CategoriaFragment extends Fragment implements CategoriaAdapterRecyc
 
         }
         return albunes;
-    }
-
-    private void analizarJSONMasEscuchados(final ArrayList<Album>  album) {
-
-        String url = "https://api.deezer.com/chart";
-
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-
-                        try {
-                            JSONArray jsonArray = response.getJSONArray("tracks");
-
-                            for (int i = 0; i < jsonArray.length(); i++) {
-                                JSONObject hit = jsonArray.getJSONObject(i);
-
-                                Object artista = hit.getJSONObject("artist");
-                                Object datos = hit.getJSONObject("data");
-                                String imagen = ((JSONObject) artista).getString("picture_big");
-                                String titulo = ((JSONObject) datos).getString("name");
-                                album.add(new Album(imagen,titulo , "Top Chart"));
-                            }
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-
-            }
-        });
-
-        requestQueue.add(request);
     }
 
     @Override
