@@ -1,6 +1,7 @@
 package com.digitalhouse.a0818moacn01_02.view.adapter.pista;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -80,6 +81,7 @@ public class PistaAlbumRecyclerView extends RecyclerView.Adapter implements  Rec
 
         public PistaViewHolder(@NonNull final View itemView) {
             super(itemView);
+
 
             tvNombreAlbumTemaPista = itemView.findViewById(R.id.tvNombreAlbumTemaPista);
             tvNombreArtistaTemaPista = itemView.findViewById(R.id.tvNombreArtistaTemaPista);

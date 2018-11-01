@@ -29,6 +29,7 @@ import com.digitalhouse.a0818moacn01_02.view.adapter.pista.RecyclerItemTouchHelp
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import me.angeldevil.autoscrollviewpager.AutoScrollViewPager;
 
@@ -38,14 +39,17 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
 
     private ImageView imgCabeceraAlbumPista;
     private Toolbar toolbaarNombreCabeceraAlbumPista;
-    PistaAlbumRecyclerView pistaAlbumRecyclerView;
+    private PistaAlbumRecyclerView pistaAlbumRecyclerView;
+    private PistaAdapterViewPage pistaAdapterViewPage;
+    private AutoScrollViewPager autoScrollViewPager;
+    private  RecyclerView recyclerView;
     private View view;
     private MediaPlayer mediaPlayer = new MediaPlayer();
     private ImageButton btnPlay;
     private ImageButton btnPause;
 
     private ArrayList<TopChartLocal> pistas = new ArrayList<>();
-    AutoScrollViewPager autoScrollViewPager;
+
 
     public PistaAlbumFragment() {
     }
@@ -80,11 +84,10 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
     }
 
     private void crearAlbumRecyclerView(Integer idLayout) {
-        RecyclerView recyclerView = view.findViewById(idLayout);
+        recyclerView = view.findViewById(idLayout);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-
         recyclerView.setLayoutManager(linearLayoutManager);
         pistaAlbumRecyclerView = new PistaAlbumRecyclerView(this.pistas, R.layout.cardview_pista_album, getActivity(), this);
 
@@ -128,13 +131,12 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
         Dialog dialog = new Dialog(getContext(), R.style.pistaViewPage);
         dialog.setContentView(R.layout.pista_view_page_content);
 
-        PistaAdapterViewPage pistaAdapterViewPage = new PistaAdapterViewPage(pistas, getContext(), this);
+        pistaAdapterViewPage = new PistaAdapterViewPage(pistas, getContext(), this);
         autoScrollViewPager = dialog.findViewById(R.id.pistaViewPagerScroll);
         autoScrollViewPager.setAdapter(pistaAdapterViewPage);
+
         autoScrollViewPager.setCurrentItem(posicion);
         dialog.show();
-
-
     }
 
     private void cargarImagen(ImageView imageView, Integer idDrawable) {
@@ -154,11 +156,11 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
     }
 
     @Override
-    public void pistaPlayPause(TopChartLocal pista, final ProgressBar progressBar) {
+    public void pistaPlay(TopChartLocal pista, final ProgressBar progressBar, Integer posicion) {
+        pistaAdapterViewPage.notifyDataSetChanged();
+        recyclerView.smoothScrollToPosition(posicion);
+        pistaAdapterViewPage.notifyDataSetChanged();
         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-
-        final ImageButton btnPlay = view.findViewById(R.id.ic_play_pista);
-        final ImageButton btnPause = view.findViewById(R.id.ic_pause_pista);
 
         final Handler mSeekbarUpdateHandler = new Handler();
         final Runnable mUpdateSeekbar = new Runnable() {
@@ -166,13 +168,14 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
             public void run() {
                 progressBar.setProgress(mediaPlayer.getCurrentPosition());
                 mSeekbarUpdateHandler.postDelayed(this, 50);
+
             }
         };
 
         final String url = pista.getUrlMp3();
 
 
-        if (!mediaPlayer.isPlaying()) {
+        if ( mediaPlayer.getCurrentPosition() <= 0){
             try {
                 mediaPlayer.setDataSource(url);
             } catch (IOException e) {
@@ -183,12 +186,22 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            mediaPlayer.start();
-            progressBar.setMax(mediaPlayer.getDuration());
-            mSeekbarUpdateHandler.postDelayed(mUpdateSeekbar, 0);
-            }
-
         }
+
+        mediaPlayer.start();
+        progressBar.setMax(mediaPlayer.getDuration());
+        mSeekbarUpdateHandler.postDelayed(mUpdateSeekbar, 0);
+
+    }
+
+    @Override
+    public void pistaPause(TopChartLocal pista, ProgressBar progressBar, Integer posicion) {
+        progressBar.clearAnimation();
+        recyclerView.smoothScrollToPosition(posicion);
+        pistaAdapterViewPage.notifyDataSetChanged();
+        mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+        mediaPlayer.pause();
+    }
 
 
     @Override
@@ -202,8 +215,9 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
 
     @Override
     public boolean onItemMove(int fromPosition, int toPosition) {
-
-        return false;
+        Collections.swap(pistas, fromPosition, toPosition);
+        pistaAlbumRecyclerView.notifyItemMoved( fromPosition,  toPosition);
+        return true;
     }
 
     @Override
@@ -212,7 +226,5 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
         Toast.makeText(getContext(), "Ingrese nombre del playList ", Toast.LENGTH_SHORT).show();
         pistaAlbumRecyclerView.notifyItemRemoved(position);
         pistaAlbumRecyclerView.notifyItemInserted(position);
-
-
     }
 }

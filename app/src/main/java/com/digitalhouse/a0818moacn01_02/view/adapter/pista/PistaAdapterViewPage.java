@@ -30,7 +30,9 @@ public class PistaAdapterViewPage extends PagerAdapter {
         this.escuchador = escuchador;
     }
 
-
+    public void setDatos(List<TopChartLocal> pistas){
+            this.pistas = pistas;
+    }
     @Override
     public int getCount() {
         return pistas.size();
@@ -89,21 +91,21 @@ public class PistaAdapterViewPage extends PagerAdapter {
         btnPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                escuchador.pistaPlayPause( pista, progressBar);
+                escuchador.pistaPlay( pista, progressBar, posicion);
                 btnPlay.setVisibility(View.INVISIBLE);
                 btnPause.setVisibility(View.VISIBLE);
             }
         });
 
-        /*btnPause.setOnClickListener(new View.OnClickListener() {
+
+        btnPause.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                btnPause.setVisibility(View.INVISIBLE);
+                escuchador.pistaPause( pista, progressBar, posicion);
                 btnPlay.setVisibility(View.VISIBLE);
-                escuchador.pistaPlayPause( pista, progressBar);
+                btnPause.setVisibility(View.INVISIBLE);
             }
-        });*/
-
+        });
 
         return view;
     }
@@ -113,10 +115,12 @@ public class PistaAdapterViewPage extends PagerAdapter {
         container.removeView((View)object);
     }
 
+
     public interface PistaViewPageInterface {
         void pistaAnterior(Integer position);
         void pistaSiguiente(Integer position);
-        void pistaPlayPause( TopChartLocal pista, ProgressBar progressBar);
+        void pistaPlay( TopChartLocal pista, final ProgressBar progressBar, Integer posicion);
+        void pistaPause( TopChartLocal pista, final ProgressBar progressBar, Integer posicion);
         void favoritoListenerPista(Integer position, ImageView favoritoPista);
 
     }

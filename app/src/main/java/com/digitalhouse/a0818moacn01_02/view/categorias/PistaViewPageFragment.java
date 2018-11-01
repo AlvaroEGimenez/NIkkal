@@ -48,10 +48,15 @@ public class PistaViewPageFragment extends Fragment implements PistaAdapterViewP
     }
 
     @Override
-    public void pistaPlayPause(TopChartLocal pista, final ProgressBar progressBar) {
-
+    public void pistaPlay(TopChartLocal pista, ProgressBar progressBar, Integer posicion) {
 
     }
+
+    @Override
+    public void pistaPause(TopChartLocal pista, ProgressBar progressBar, Integer posicion) {
+
+    }
+
 
     @Override
     public void favoritoListenerPista(Integer position, ImageView favoritoPista) {
