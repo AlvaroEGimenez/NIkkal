@@ -17,13 +17,15 @@
 
     <string name="tv_busqueda_reciente">Busquedas recientes</string>
     <string name="hint_buscar">Buscar</string>
-    <string name="tv_canciones_favoritas">Canciones Favoritas</string>
-    <string name="tv_artistas_favoritos">Artistas Favoritos</string>
-    <string name="tv_almbum_favoritos">Álbumes Favoritos</string>
+    <string name="tv_canciones_favoritas">Canciones</string>
+    <string name="tv_artistas_favoritos">Artistas</string>
+    <string name="tv_almbum_favoritos">Álbumes</string>
     <string name="tv_mis_playlist">Mis Listas de Reproducción</string>
     <string name="tv_titulo_favoritos">Favoritos</string>
-
     <string name="tv_escuchadas_recientemente">Escuchadas Recientemente</string>
+    <string name="tv_titulo_escuchadas_recientemente">Escuchadas Recientemente</string>
+    <string name="tv_subtitulo_escuchadas_recientemente">Subtitulo Escuchadas Recientemente</string>
+
 
 
 

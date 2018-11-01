@@ -6,6 +6,7 @@ public class Favoritos  {
 
     private String favoritoTexto;
     private Integer favoritoImagen;
+    private String favoritoTextoSubtitulo;
 
     /*private String favoritoAlbum;
     private String favoritoArtista;
@@ -16,12 +17,10 @@ public class Favoritos  {
     private List<Artista> artistasFavoritos;
     private List<Pista> pistasFavoritas;*/
 
-    public Favoritos(String favoritoTexto, Integer favoritoImagen)/* List<Album> albumesFavoritos, List<Artista> artistasFavoritos, List<Pista> pistasFavoritas*/ {
+    public Favoritos(String favoritoTexto, Integer favoritoImagen, String favoritoTextoSubtitulo) {
         this.favoritoTexto = favoritoTexto;
         this.favoritoImagen = favoritoImagen;
-        /*this.albumesFavoritos = albumesFavoritos;
-        this.artistasFavoritos = artistasFavoritos;
-        this.pistasFavoritas = pistasFavoritas;*/
+        this.favoritoTextoSubtitulo = favoritoTextoSubtitulo;
     }
 
     public String getFavoritoTexto() {
@@ -32,15 +31,7 @@ public class Favoritos  {
         return favoritoImagen;
     }
 
-    /*public List<Album> getAlbumesFavoritos() {
-        return albumesFavoritos;
+    public String getFavoritoTextoSubtitulo() {
+        return favoritoTextoSubtitulo;
     }
-
-    public List<Artista> getArtistasFavoritos() {
-        return artistasFavoritos;
-    }
-
-    public List<Pista> getPistasFavoritas() {
-        return pistasFavoritas;
-    }*/
 }
