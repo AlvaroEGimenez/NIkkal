@@ -53,7 +53,7 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
     private MediaPlayer mediaPlayer = new MediaPlayer();
     private ImageButton btnPlay;
     private ImageButton btnPause;
-
+Integer  positionActual=0;
     private ArrayList<TopChartLocal> pistas = new ArrayList<>();
 
 
@@ -163,7 +163,14 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
 
     @Override
     public void pistaPlay(final TopChartLocal pista, final ProgressBar progressBar, Integer posicion) {
+
+       if(mediaPlayer.getCurrentPosition()>0 && positionActual == posicion){
+           mediaPlayer.start();
+            return;
+       }
+
         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+
 
         final Handler mSeekbarUpdateHandler = new Handler();
 
@@ -177,9 +184,7 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
 
         final String url = pista.getUrlMp3();
 
-        if(mediaPlayer.isPlaying()){
-            mediaPlayer.reset();
-        }
+        mediaPlayer.reset();
 
         try {
             mediaPlayer.setDataSource(url);
@@ -191,6 +196,7 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
         progressBar.setMax(mediaPlayer.getDuration());
         mSeekbarUpdateHandler.postDelayed(mUpdateSeekbar, 0);
 
+        positionActual = posicion;
     }
 
     @Override
