@@ -31,7 +31,7 @@ public class PistaAdapterViewPage extends PagerAdapter {
     }
 
     public void setDatos(List<TopChartLocal> pistas){
-            this.pistas = pistas;
+        this.pistas = pistas;
     }
     @Override
     public int getCount() {
@@ -47,7 +47,7 @@ public class PistaAdapterViewPage extends PagerAdapter {
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, final int position) {
         View view = layoutInflater.inflate(R.layout.pista_view_page, container, false);
-
+        View view2 = layoutInflater.inflate(R.layout.pista_view_page_content, container, false);
         TextView textView = view.findViewById(R.id.tvTitulo_PistaViewPage);
         TextView textViewArtista = view.findViewById(R.id.Artista_PistaViewPage);
         textView.setSelected(true);
@@ -73,7 +73,7 @@ public class PistaAdapterViewPage extends PagerAdapter {
         textView.setText(pista.getNombreTrack());
         textViewArtista.setText(pista.getNombreArtista());
 
-       final  Integer  posicion = position;
+        final  Integer  posicion = position;
         btnPistaAnterior.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -18,7 +18,7 @@ import com.digitalhouse.a0818moacn01_02.view.adapter.pista.PistaAdapterViewPage;
 
 import java.io.IOException;
 
-public class PistaViewPageFragment extends Fragment implements PistaAdapterViewPage.PistaViewPageInterface {
+public class PistaViewPageFragment extends Fragment  {
 
 
 
@@ -37,29 +37,4 @@ public class PistaViewPageFragment extends Fragment implements PistaAdapterViewP
     }
 
 
-    @Override
-    public void pistaAnterior(Integer position) {
-
-    }
-
-    @Override
-    public void pistaSiguiente(Integer position) {
-
-    }
-
-    @Override
-    public void pistaPlay(TopChartLocal pista, ProgressBar progressBar, Integer posicion) {
-
-    }
-
-    @Override
-    public void pistaPause(TopChartLocal pista, ProgressBar progressBar, Integer posicion) {
-
-    }
-
-
-    @Override
-    public void favoritoListenerPista(Integer position, ImageView favoritoPista) {
-
-    }
 }

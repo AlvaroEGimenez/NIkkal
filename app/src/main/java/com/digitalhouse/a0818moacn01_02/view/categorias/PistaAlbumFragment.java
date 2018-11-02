@@ -39,7 +39,7 @@ import java.util.Collections;
 
 import me.angeldevil.autoscrollviewpager.AutoScrollViewPager;
 
-public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerView.PistaAdapterInterface, PistaAdapterViewPage.PistaViewPageInterface, RecyclerItemTouchHelper.RecyclerItemTouchHelperListener {
+public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerView.PistaAdapterInterface, PistaAdapterViewPage.PistaViewPageInterface, RecyclerItemTouchHelper.RecyclerItemTouchHelperListener{
     public static final String KEY_IMAGEN_CABECERA_ALBUM_PISTA = "imgCabeceraAlbumPista";
     public static final String KEY_NOMBRE_CABECERA_ALBUM_PISTA = "nombreCabeceraAlbumPista";
 
@@ -163,48 +163,39 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
 
     @Override
     public void pistaPlay(final TopChartLocal pista, final ProgressBar progressBar, Integer posicion) {
-        pistaAdapterViewPage.notifyDataSetChanged();
-        recyclerView.smoothScrollToPosition(posicion);
-        pistaAdapterViewPage.notifyDataSetChanged();
         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
 
         final Handler mSeekbarUpdateHandler = new Handler();
+
         final Runnable mUpdateSeekbar = new Runnable() {
             @Override
             public void run() {
-                progressBar.setProgress(mediaPlayer.getDuration());
+                progressBar.setProgress(mediaPlayer.getCurrentPosition());
                 mSeekbarUpdateHandler.postDelayed(this, 50);
-                }
+            }
         };
 
         final String url = pista.getUrlMp3();
 
-        if (!mediaPlayer.isPlaying()) {
-
-            try {
-                mediaPlayer.setDataSource(url);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            try {
-                mediaPlayer.prepare();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            mediaPlayer.start();
-            progressBar.setMax(mediaPlayer.getDuration());
-            mSeekbarUpdateHandler.postDelayed(mUpdateSeekbar, 0);
+        if(mediaPlayer.isPlaying()){
+            mediaPlayer.reset();
         }
+
+        try {
+            mediaPlayer.setDataSource(url);
+            mediaPlayer.prepare();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        mediaPlayer.start();
+        progressBar.setMax(mediaPlayer.getDuration());
+        mSeekbarUpdateHandler.postDelayed(mUpdateSeekbar, 0);
+
     }
 
     @Override
     public void pistaPause(TopChartLocal pista, ProgressBar progressBar, Integer posicion) {
-        progressBar.clearAnimation();
-        recyclerView.smoothScrollToPosition(posicion);
-        pistaAdapterViewPage.notifyDataSetChanged();
-        mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
         mediaPlayer.pause();
-        mediaPlayer.release();
     }
 
 
@@ -213,6 +204,7 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
         TopChartLocal pista = pistas.get(posicion);
         setFavoritoPista(pista, favoritoPistaReproductor);
         pistaAlbumRecyclerView.notifyDataSetChanged();
+        pistaAdapterViewPage.notifyDataSetChanged();
 
     }
 
