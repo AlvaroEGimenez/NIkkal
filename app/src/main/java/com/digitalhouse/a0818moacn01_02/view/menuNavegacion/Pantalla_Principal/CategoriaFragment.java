@@ -18,31 +18,26 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.digitalhouse.a0818moacn01_02.DAOLocal;
+import com.digitalhouse.a0818moacn01_02.R;
 import com.digitalhouse.a0818moacn01_02.ReproducirMp3;
-import com.digitalhouse.a0818moacn01_02.model.PruebasRetrofit2.APIInterface;
-import com.digitalhouse.a0818moacn01_02.model.PruebasRetrofit2.ApiClient;
+import com.digitalhouse.a0818moacn01_02.model.Album;
+import com.digitalhouse.a0818moacn01_02.model.PruebasRetrofit2.ArtistDeezer;
+import com.digitalhouse.a0818moacn01_02.model.PruebasRetrofit2.ResultListener;
+import com.digitalhouse.a0818moacn01_02.model.PruebasRetrofit2.ServiceTopChart;
+import com.digitalhouse.a0818moacn01_02.model.PruebasRetrofit2.TopChartController;
+import com.digitalhouse.a0818moacn01_02.model.PruebasRetrofit2.TopChartDAO;
 import com.digitalhouse.a0818moacn01_02.model.PruebasRetrofit2.ModeloRespuesta;
 import com.digitalhouse.a0818moacn01_02.model.PruebasRetrofit2.Track;
-import com.digitalhouse.a0818moacn01_02.model.TopChart;
 import com.digitalhouse.a0818moacn01_02.model.TopChartLocal;
 import com.digitalhouse.a0818moacn01_02.view.MainActivity;
-import com.digitalhouse.a0818moacn01_02.R;
 import com.digitalhouse.a0818moacn01_02.view.adapter.AdaptadorTopChart;
 import com.digitalhouse.a0818moacn01_02.view.adapter.CategoriaAdapterRecyclerView;
+import com.digitalhouse.a0818moacn01_02.view.categorias.GeneroFragment;
 import com.digitalhouse.a0818moacn01_02.view.categorias.MasEscuchado;
 import com.digitalhouse.a0818moacn01_02.view.categorias.SugerenciaActivity;
-import com.digitalhouse.a0818moacn01_02.view.categorias.GeneroFragment;
-import com.digitalhouse.a0818moacn01_02.model.Album;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,7 +52,7 @@ public class CategoriaFragment extends Fragment implements CategoriaAdapterRecyc
     public final static String KEY_MAS_ESCUCHADO = "Lo Más Escuchado";
     public final static String KEY_FAVORITO = "Favoritos";
 
-    RecyclerView recyclerView;
+    private RecyclerView recyclerView;
 
     private GeneroFragment generoFragment = new GeneroFragment();
 
@@ -102,48 +97,42 @@ public class CategoriaFragment extends Fragment implements CategoriaAdapterRecyc
         DAOLocal daoLocal = new DAOLocal();
         daoLocal.ObtenerTopChar(topChartListLocal);
 
-        APIInterface apiInterface = ApiClient.getClient().create(APIInterface.class);
-        call = apiInterface.getTopChart();
-
-        call.enqueue(new Callback<ModeloRespuesta>() {
+        TopChartController topChartController = new TopChartController();
+        topChartController.getTopChart(new ResultListener<List<Track>>() {
             @Override
-            public void onResponse(Call<ModeloRespuesta> call, retrofit2.Response<ModeloRespuesta> response) {
-                 topChartListDeezer = response.body().getTrackList();
-
+            public void finish(List<Track> resultado) {
+                topChartListDeezer = resultado;
             }
+        },getContext());
 
-            @Override
-            public void onFailure(Call<ModeloRespuesta> call, Throwable t) {
-                Toast.makeText(getActivity(),"ERROR",Toast.LENGTH_LONG).show();
-            }
-        });
-
+        ArtistDeezer artista = topChartListDeezer.get(0).getArtist();
+        String nombreArtista = artista.getName();
+        Toast.makeText(getActivity(),nombreArtista,Toast.LENGTH_LONG).show();
 
         mTitle = view.findViewById(R.id.tituloTopChart);
         mTitle.setFactory(new ViewSwitcher.ViewFactory() {
             @Override
             public View makeView() {
                 LayoutInflater layoutInflater = LayoutInflater.from(getContext());
-                TextView txt = (TextView) layoutInflater.inflate(R.layout.layout_title,null);
+                TextView txt = (TextView) layoutInflater.inflate(R.layout.layout_title, null);
                 return txt;
             }
         });
 
-        Animation in = AnimationUtils.loadAnimation(getActivity(),R.anim.slide_in_top);
-        Animation out = AnimationUtils.loadAnimation(getActivity(),R.anim.slide_out_bottom);
+        Animation in = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_in_top);
+        Animation out = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_out_bottom);
         mTitle.setAnimation(in);
         mTitle.setOutAnimation(out);
 
 
-
-        adaptadorTopChart = new AdaptadorTopChart(topChartListLocal,getContext(),this);
+        adaptadorTopChart = new AdaptadorTopChart(topChartListLocal, getContext(), this);
         featureCoverFlow = view.findViewById(R.id.coverFlow);
         featureCoverFlow.setAdapter(adaptadorTopChart);
 
         featureCoverFlow.setOnScrollPositionListener(new FeatureCoverFlow.OnScrollPositionListener() {
             @Override
             public void onScrolledToPosition(int position) {
-                mTitle.setText(topChartListLocal.get(position).getNombreTrack()+" - "+ topChartListLocal.get(position).getNombreArtista());
+                mTitle.setText(topChartListLocal.get(position).getNombreTrack() + " - " + topChartListLocal.get(position).getNombreArtista());
             }
 
             @Override
@@ -153,12 +142,11 @@ public class CategoriaFragment extends Fragment implements CategoriaAdapterRecyc
         });
 
 
-
         return view;
     }
 
     private void crearRecyclerView(Integer idLayout, String tvCategoria) {
-         RecyclerView  albumRecyclerView = view.findViewById(idLayout);
+        RecyclerView albumRecyclerView = view.findViewById(idLayout);
         albumRecyclerView.setHasFixedSize(true);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
@@ -298,7 +286,7 @@ public class CategoriaFragment extends Fragment implements CategoriaAdapterRecyc
         textViewNombrePista.setSelected(true);
 
         ReproducirMp3 reproducirMp3 = new ReproducirMp3();
-        reproducirMp3.reproducirMp3(topChartLocal.getUrlMp3(),mediaPlayer,parent);
+        reproducirMp3.reproducirMp3(topChartLocal.getUrlMp3(), mediaPlayer, parent);
         textViewNombrePista.setText(topChartLocal.getNombreTrack() + " - " + topChartLocal.getNombreArtista());
         textViewNombrePista.setTextColor(Color.parseColor("#FD9701"));
 

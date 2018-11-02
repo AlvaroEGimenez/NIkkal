@@ -6,12 +6,21 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class ModeloRespuesta {
+
     @SerializedName("data")
     @Expose
-    private List<Track> trackList = null;
+
+    private List<Track> trackList;
+
+
     @SerializedName("total")
     @Expose
     private Integer total;
+
+    public ModeloRespuesta(List<Track> trackList, Integer total) {
+        this.trackList = trackList;
+        this.total = total;
+    }
 
     public List<Track> getTrackList() {
         return trackList;
