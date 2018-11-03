@@ -8,6 +8,9 @@ public class Track {
     @SerializedName("id")
     @Expose
     private Integer id;
+    @SerializedName("readable")
+    @Expose
+    private Boolean readable;
     @SerializedName("title")
     @Expose
     private String title;
@@ -17,24 +20,42 @@ public class Track {
     @SerializedName("title_version")
     @Expose
     private String titleVersion;
+    @SerializedName("isrc")
+    @Expose
+    private String isrc;
     @SerializedName("link")
     @Expose
     private String link;
+    @SerializedName("share")
+    @Expose
+    private String share;
     @SerializedName("duration")
     @Expose
     private Integer duration;
+    @SerializedName("track_position")
+    @Expose
+    private Integer trackPosition;
+    @SerializedName("disk_number")
+    @Expose
+    private Integer diskNumber;
     @SerializedName("rank")
     @Expose
     private Integer rank;
+    @SerializedName("release_date")
+    @Expose
+    private String releaseDate;
     @SerializedName("explicit_lyrics")
     @Expose
     private Boolean explicitLyrics;
     @SerializedName("preview")
     @Expose
     private String preview;
-    @SerializedName("position")
+    @SerializedName("bpm")
     @Expose
-    private Integer position;
+    private Integer bpm;
+    @SerializedName("gain")
+    @Expose
+    private Double gain;
     @SerializedName("artist")
     @Expose
     private ArtistDeezer artist;
@@ -51,6 +72,14 @@ public class Track {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Boolean getReadable() {
+        return readable;
+    }
+
+    public void setReadable(Boolean readable) {
+        this.readable = readable;
     }
 
     public String getTitle() {
@@ -77,12 +106,28 @@ public class Track {
         this.titleVersion = titleVersion;
     }
 
+    public String getIsrc() {
+        return isrc;
+    }
+
+    public void setIsrc(String isrc) {
+        this.isrc = isrc;
+    }
+
     public String getLink() {
         return link;
     }
 
     public void setLink(String link) {
         this.link = link;
+    }
+
+    public String getShare() {
+        return share;
+    }
+
+    public void setShare(String share) {
+        this.share = share;
     }
 
     public Integer getDuration() {
@@ -93,12 +138,36 @@ public class Track {
         this.duration = duration;
     }
 
+    public Integer getTrackPosition() {
+        return trackPosition;
+    }
+
+    public void setTrackPosition(Integer trackPosition) {
+        this.trackPosition = trackPosition;
+    }
+
+    public Integer getDiskNumber() {
+        return diskNumber;
+    }
+
+    public void setDiskNumber(Integer diskNumber) {
+        this.diskNumber = diskNumber;
+    }
+
     public Integer getRank() {
         return rank;
     }
 
     public void setRank(Integer rank) {
         this.rank = rank;
+    }
+
+    public String getReleaseDate() {
+        return releaseDate;
+    }
+
+    public void setReleaseDate(String releaseDate) {
+        this.releaseDate = releaseDate;
     }
 
     public Boolean getExplicitLyrics() {
@@ -117,12 +186,20 @@ public class Track {
         this.preview = preview;
     }
 
-    public Integer getPosition() {
-        return position;
+    public Integer getBpm() {
+        return bpm;
     }
 
-    public void setPosition(Integer position) {
-        this.position = position;
+    public void setBpm(Integer bpm) {
+        this.bpm = bpm;
+    }
+
+    public Double getGain() {
+        return gain;
+    }
+
+    public void setGain(Double gain) {
+        this.gain = gain;
     }
 
     public ArtistDeezer getArtist() {

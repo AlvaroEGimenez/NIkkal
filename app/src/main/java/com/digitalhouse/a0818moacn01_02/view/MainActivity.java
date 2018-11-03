@@ -38,11 +38,20 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
     private ImageView imageViewPause;
     private LinearLayout linearLayoutReproductor;
     private MediaPlayer mediaPlayer;
+    private Fragment mContent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        if (savedInstanceState != null) {
+                //Restore the fragment's instance
+                mContent = getSupportFragmentManager().getFragment(savedInstanceState, "CategoriaFragment");
+
+            }
+
+
 
         textViewNombrePista = findViewById(R.id.tvNombreReproductor);
         imageViewPlay = findViewById(R.id.btnRepoductorPlay);
@@ -169,5 +178,16 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
         {
             e.printStackTrace();
         }
+    }
+
+
+
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        //Save the fragment's instance
+        getSupportFragmentManager().putFragment(outState, "CategoriaFragment", mContent);
     }
 }

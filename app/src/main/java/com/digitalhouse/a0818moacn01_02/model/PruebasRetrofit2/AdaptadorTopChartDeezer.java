@@ -17,9 +17,9 @@ import java.util.List;
 public class AdaptadorTopChartDeezer extends BaseAdapter {
     private List<Track> topChartList;
     private Context context;
-    private onItemClickTopChart onItemClickTopChart;
+    private onItemClickTopChartDeezer onItemClickTopChart;
 
-    public AdaptadorTopChartDeezer(List<Track> topChartList, Context context, onItemClickTopChart onItemClickTopChart) {
+    public AdaptadorTopChartDeezer(List<Track> topChartList, Context context, onItemClickTopChartDeezer onItemClickTopChart) {
         this.topChartList = topChartList;
         this.context = context;
         this.onItemClickTopChart = onItemClickTopChart;
@@ -56,7 +56,7 @@ public class AdaptadorTopChartDeezer extends BaseAdapter {
             imagen.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    onItemClickTopChart.onClickTopChart(topChartList.get(position));
+                    onItemClickTopChart.onClickTopChartDeezer(topChartList.get(position));
                 }
             });
 
@@ -65,7 +65,7 @@ public class AdaptadorTopChartDeezer extends BaseAdapter {
         return rootView;
     }
 
-    public interface onItemClickTopChart{
-        void onClickTopChart(Track topChartLocal);
+    public interface onItemClickTopChartDeezer{
+        void onClickTopChartDeezer(Track topChartLocalDeezer);
     }
 }

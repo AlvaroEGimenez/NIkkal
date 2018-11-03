@@ -19,17 +19,14 @@ import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
 import com.digitalhouse.a0818moacn01_02.DAOLocal;
 import com.digitalhouse.a0818moacn01_02.R;
 import com.digitalhouse.a0818moacn01_02.ReproducirMp3;
 import com.digitalhouse.a0818moacn01_02.model.Album;
-import com.digitalhouse.a0818moacn01_02.model.PruebasRetrofit2.ArtistDeezer;
-import com.digitalhouse.a0818moacn01_02.model.PruebasRetrofit2.ResultListener;
-import com.digitalhouse.a0818moacn01_02.model.PruebasRetrofit2.ServiceTopChart;
-import com.digitalhouse.a0818moacn01_02.model.PruebasRetrofit2.TopChartController;
-import com.digitalhouse.a0818moacn01_02.model.PruebasRetrofit2.TopChartDAO;
+import com.digitalhouse.a0818moacn01_02.model.PruebasRetrofit2.AdaptadorTopChartDeezer;
 import com.digitalhouse.a0818moacn01_02.model.PruebasRetrofit2.ModeloRespuesta;
+import com.digitalhouse.a0818moacn01_02.model.PruebasRetrofit2.ResultListener;
+import com.digitalhouse.a0818moacn01_02.model.PruebasRetrofit2.TopChartController;
 import com.digitalhouse.a0818moacn01_02.model.PruebasRetrofit2.Track;
 import com.digitalhouse.a0818moacn01_02.model.TopChartLocal;
 import com.digitalhouse.a0818moacn01_02.view.MainActivity;
@@ -44,9 +41,8 @@ import java.util.List;
 
 import it.moondroid.coverflow.components.ui.containers.FeatureCoverFlow;
 import retrofit2.Call;
-import retrofit2.Callback;
 
-public class CategoriaFragment extends Fragment implements CategoriaAdapterRecyclerView.AdapterInterface, AdaptadorTopChart.onItemClickTopChart {
+public class CategoriaFragment extends Fragment implements CategoriaAdapterRecyclerView.AdapterInterface, AdaptadorTopChartDeezer.onItemClickTopChartDeezer, AdaptadorTopChart.onItemClickTopChart {
     public final static String KEY_GENERO = "Géneros";
     public final static String KEY_SUGERENCIA = "Sugerencias";
     public final static String KEY_MAS_ESCUCHADO = "Lo Más Escuchado";
@@ -58,8 +54,8 @@ public class CategoriaFragment extends Fragment implements CategoriaAdapterRecyc
 
     private FeatureCoverFlow featureCoverFlow;
     private AdaptadorTopChart adaptadorTopChart;
-    private List<TopChartLocal> topChartListLocal = new ArrayList<>();
     private List<Track> topChartListDeezer = new ArrayList<>();
+    private List<TopChartLocal> topChartListLocal = new ArrayList<>();
     private TextSwitcher mTitle;
 
     private View view;
@@ -83,7 +79,7 @@ public class CategoriaFragment extends Fragment implements CategoriaAdapterRecyc
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.categoria_album, container, false);
+        final View view = inflater.inflate(R.layout.categoria_album, container, false);
 
         this.view = view;
         parent = (MainActivity) getActivity();
@@ -93,21 +89,31 @@ public class CategoriaFragment extends Fragment implements CategoriaAdapterRecyc
         crearRecyclerView(R.id.rvMasEscuchadoRecyclerView, tvMasEscuchado.getText().toString());
         crearRecyclerView(R.id.rvFavoritoRecyclerView, tvFavorito.getText().toString());
 
-
         DAOLocal daoLocal = new DAOLocal();
         daoLocal.ObtenerTopChar(topChartListLocal);
 
-        TopChartController topChartController = new TopChartController();
-        topChartController.getTopChart(new ResultListener<List<Track>>() {
-            @Override
-            public void finish(List<Track> resultado) {
-                topChartListDeezer = resultado;
-            }
-        },getContext());
+        if (savedInstanceState == null){
+            TopChartController topChartController = new TopChartController();
+            topChartController.getTraks(new ResultListener<List<Track>>() {
+                @Override
+                public void finish(List<Track> resultado) {
+                    if (resultado.size() > 0) {
+                        topChartListDeezer = resultado;
+                        AdaptadorTopChartDeezer adaptadorTopChartDeezer = new AdaptadorTopChartDeezer(topChartListDeezer, getContext(), CategoriaFragment.this);
+                        featureCoverFlow = view.findViewById(R.id.coverFlow);
+                        featureCoverFlow.setAdapter(adaptadorTopChartDeezer);
+                    }
+                }
+            }, getContext());
+        }
 
-        ArtistDeezer artista = topChartListDeezer.get(0).getArtist();
-        String nombreArtista = artista.getName();
-        Toast.makeText(getActivity(),nombreArtista,Toast.LENGTH_LONG).show();
+
+        if (topChartListDeezer.size() <= 0) {
+            adaptadorTopChart = new AdaptadorTopChart(topChartListLocal, getContext(), CategoriaFragment.this);
+            featureCoverFlow = view.findViewById(R.id.coverFlow);
+            featureCoverFlow.setAdapter(adaptadorTopChart);
+        }
+
 
         mTitle = view.findViewById(R.id.tituloTopChart);
         mTitle.setFactory(new ViewSwitcher.ViewFactory() {
@@ -125,14 +131,15 @@ public class CategoriaFragment extends Fragment implements CategoriaAdapterRecyc
         mTitle.setOutAnimation(out);
 
 
-        adaptadorTopChart = new AdaptadorTopChart(topChartListLocal, getContext(), this);
-        featureCoverFlow = view.findViewById(R.id.coverFlow);
-        featureCoverFlow.setAdapter(adaptadorTopChart);
-
         featureCoverFlow.setOnScrollPositionListener(new FeatureCoverFlow.OnScrollPositionListener() {
             @Override
             public void onScrolledToPosition(int position) {
-                mTitle.setText(topChartListLocal.get(position).getNombreTrack() + " - " + topChartListLocal.get(position).getNombreArtista());
+                if (topChartListDeezer.isEmpty()) {
+                    mTitle.setText(topChartListLocal.get(position).getNombreTrack() + " - " + topChartListLocal.get(position).getNombreArtista());
+                } else {
+                    mTitle.setText(topChartListDeezer.get(position).getTitle() + " - " + topChartListDeezer.get(position).getArtist().getName());
+                }
+
             }
 
             @Override
@@ -275,10 +282,18 @@ public class CategoriaFragment extends Fragment implements CategoriaAdapterRecyc
         return albunes;
     }
 
+
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void onClickTopChartDeezer(Track topChartLocalDeezer) {
+        TextView textViewNombrePista = getActivity().findViewById(R.id.tvNombreReproductor);
+        textViewNombrePista.setSelected(true);
+
+        ReproducirMp3 reproducirMp3 = new ReproducirMp3();
+        reproducirMp3.reproducirMp3(topChartLocalDeezer.getPreview(), mediaPlayer, parent);
+        textViewNombrePista.setText(topChartLocalDeezer.getTitle() + " - " + topChartLocalDeezer.getArtist().getName());
+        textViewNombrePista.setTextColor(Color.parseColor("#FD9701"));
     }
+
 
     @Override
     public void onClickTopChart(TopChartLocal topChartLocal) {
@@ -289,6 +304,25 @@ public class CategoriaFragment extends Fragment implements CategoriaAdapterRecyc
         reproducirMp3.reproducirMp3(topChartLocal.getUrlMp3(), mediaPlayer, parent);
         textViewNombrePista.setText(topChartLocal.getNombreTrack() + " - " + topChartLocal.getNombreArtista());
         textViewNombrePista.setTextColor(Color.parseColor("#FD9701"));
+    }
 
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        if (savedInstanceState != null) {
+            AdaptadorTopChartDeezer adaptadorTopChartDeezer = new AdaptadorTopChartDeezer(topChartListDeezer, getContext(), CategoriaFragment.this);
+            featureCoverFlow = view.findViewById(R.id.coverFlow);
+            featureCoverFlow.setAdapter(adaptadorTopChartDeezer);
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        AdaptadorTopChartDeezer adaptadorTopChartDeezer = new AdaptadorTopChartDeezer(topChartListDeezer, getContext(), CategoriaFragment.this);
+        featureCoverFlow = view.findViewById(R.id.coverFlow);
+        featureCoverFlow.setAdapter(adaptadorTopChartDeezer);
     }
 }

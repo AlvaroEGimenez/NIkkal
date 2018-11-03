@@ -21,7 +21,7 @@ public class TopChartDAO extends DaoHelper{
     }
 
 
-    public void getTopChart(final ResultListener<List<Track>> listenerDelController){
+    public void getTracks(final ResultListener<List<Track>> listenerDelController){
         Call<ContenedorTracks> call = serviceTopChart.getTopChart();
 
         call.enqueue(new Callback<ContenedorTracks>() {

@@ -11,7 +11,7 @@ public class TopChartController {
     public void getTraks (final ResultListener<List<Track>> listenerView, Context context){
         if (Util.hayInternet(context)){
             TopChartDAO topChartDAO = new TopChartDAO();
-            topChartDAO.getTopChart(new ResultListener<List<Track>>() {
+            topChartDAO.getTracks(new ResultListener<List<Track>>() {
                 @Override
                 public void finish(List<Track> resultado) {
                     listenerView.finish(resultado);
