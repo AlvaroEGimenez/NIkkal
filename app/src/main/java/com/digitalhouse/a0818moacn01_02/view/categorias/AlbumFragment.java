@@ -13,12 +13,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.digitalhouse.a0818moacn01_02.model.ArtistDeezer;
+import com.digitalhouse.a0818moacn01_02.Utils.ResultListener;
+import com.digitalhouse.a0818moacn01_02.model.PruebasRetrofit2.Controller.RockController;
 import com.digitalhouse.a0818moacn01_02.view.MainActivity;
 import com.digitalhouse.a0818moacn01_02.R;
-import com.digitalhouse.a0818moacn01_02.model.Album;
 import com.digitalhouse.a0818moacn01_02.view.adapter.AlbumAdapterRecyclerView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class AlbumFragment extends Fragment implements AlbumAdapterRecyclerView.AlbumAdapterInterface {
     public static final String KEY_IMAGEN_ARTISTA = "imagenArtista";
@@ -26,7 +29,8 @@ public class AlbumFragment extends Fragment implements AlbumAdapterRecyclerView.
 
     private ImageView imagenArtista;
     private Toolbar tvCabeceraArtista;
-    PistaAlbumFragment pistaAlbumFragment = new PistaAlbumFragment();
+    private PistaAlbumFragment pistaAlbumFragment = new PistaAlbumFragment();
+    private List<ArtistDeezer> artistDeezersRock = new ArrayList<>();
 
     public AlbumFragment() {
     }
@@ -44,6 +48,8 @@ public class AlbumFragment extends Fragment implements AlbumAdapterRecyclerView.
         Bundle bundle = getArguments();
         String urlImagenCabecera = bundle.getString(KEY_IMAGEN_ARTISTA);
         String nombreGenero = bundle.getString(KEY_NOMBRE_ARTISTA);
+
+
 
         cargarImagen(imagenArtista, urlImagenCabecera);
         tvCabeceraArtista.setTitle(nombreGenero);
@@ -72,8 +78,33 @@ public class AlbumFragment extends Fragment implements AlbumAdapterRecyclerView.
     }
 
 
-    public ArrayList<Album> cargarAlbunes() {
-        ArrayList<Album> albunes = new ArrayList<>();
+    public List<ArtistDeezer> cargarAlbunes() {
+
+        RockController rockController = new RockController();
+        rockController.getArtistasRock(new ResultListener<List<ArtistDeezer>>() {
+            @Override
+            public void finish(List<ArtistDeezer> resultado) {
+                if (!resultado.isEmpty()){
+                    artistDeezersRock = resultado;
+                }
+                else {
+                    artistDeezersRock.add(new ArtistDeezer("https://e-cdns-images.dzcdn.net/images/misc/b36ca681666d617edd0dcb5ab389a6ac/250x250-000000-80-0-0.jpg",
+                            "Rock", ""));
+                    artistDeezersRock.add(new ArtistDeezer("https://e-cdns-images.dzcdn.net/images/misc/f14f9fde9feb38ca6d61960f00681860/250x250-000000-80-0-0.jpg",
+                            "Metal", ""));
+                    artistDeezersRock.add(new ArtistDeezer("https://e-cdns-images.dzcdn.net/images/misc/ffd77feba2c8fda79b18183861e4e69f/250x250-000000-80-0-0.jpg",
+                            "Cumbia", ""));
+
+                    artistDeezersRock.add(new ArtistDeezer("https://e-cdns-images.dzcdn.net/images/misc/f53d298e46c4722edc245f3b7232343a/250x250-000000-80-0-0.jpg",
+                            "Folklore Argentino", ""));
+
+                    artistDeezersRock.add(new ArtistDeezer("https://e-cdns-images.dzcdn.net/images/misc/1abb6810098d4015bdc860c91bcfd2b6/250x250-000000-80-0-0.jpg",
+                            "Blues", ""));
+                }
+
+            }
+        },getContext());
+       /* ArrayList<Album> albunes = new ArrayList<>();
         albunes.add(new Album("https://e-cdns-images.dzcdn.net/images/misc/b36ca681666d617edd0dcb5ab389a6ac/250x250-000000-80-0-0.jpg",
                 "Rock", ""));
         albunes.add(new Album("https://e-cdns-images.dzcdn.net/images/misc/f14f9fde9feb38ca6d61960f00681860/250x250-000000-80-0-0.jpg",
@@ -119,18 +150,18 @@ public class AlbumFragment extends Fragment implements AlbumAdapterRecyclerView.
         albunes.add(new Album("https://cdns-images.dzcdn.net/images/cover/27170198c97ac7e37f8a62cf5cae4299/500x500-000000-80-0-0.jpg",
                 "In My Mind", ""));
         albunes.add(new Album("https://cdns-images.dzcdn.net/images/cover/7e8314f4280cffde363547a495a260bc/250x250-000000-80-0-0.jpg",
-                "Night Visions", ""));
+                "Night Visions", ""));*/
 
-        return albunes;
+        return artistDeezersRock;
     }
 
 
     @Override
-    public void cambiarDeActividad(Album album) {
+    public void cambiarDeActividad(ArtistDeezer album) {
         MainActivity mainActivity = (MainActivity) getActivity();
         Bundle bundle = new Bundle();
-        bundle.putString(PistaAlbumFragment.KEY_IMAGEN_CABECERA_ALBUM_PISTA, album.getImagen());
-        bundle.putString(PistaAlbumFragment.KEY_NOMBRE_CABECERA_ALBUM_PISTA, album.getNombre());
+        bundle.putString(PistaAlbumFragment.KEY_IMAGEN_CABECERA_ALBUM_PISTA, album.getPictureMedium());
+        bundle.putString(PistaAlbumFragment.KEY_NOMBRE_CABECERA_ALBUM_PISTA, album.getName());
         pistaAlbumFragment.setArguments(bundle);
         mainActivity.reemplazarFragment(pistaAlbumFragment);
     }

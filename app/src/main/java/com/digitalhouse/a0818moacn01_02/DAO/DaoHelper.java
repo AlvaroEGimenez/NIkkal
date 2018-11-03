@@ -1,4 +1,4 @@
-package com.digitalhouse.a0818moacn01_02.model.PruebasRetrofit2;
+package com.digitalhouse.a0818moacn01_02.DAO;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;

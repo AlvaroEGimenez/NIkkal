@@ -14,20 +14,21 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.digitalhouse.a0818moacn01_02.model.ArtistDeezer;
+import com.digitalhouse.a0818moacn01_02.Utils.ResultListener;
+import com.digitalhouse.a0818moacn01_02.model.PruebasRetrofit2.Controller.RockController;
 import com.digitalhouse.a0818moacn01_02.view.MainActivity;
 import com.digitalhouse.a0818moacn01_02.R;
 import com.digitalhouse.a0818moacn01_02.view.adapter.AlbumAdapterRecyclerView;
 import com.digitalhouse.a0818moacn01_02.view.adapter.ArtistaAdapterRecyclerView;
-import com.digitalhouse.a0818moacn01_02.view.categorias.AlbumFragment;
-import com.digitalhouse.a0818moacn01_02.view.categorias.PistaAlbumFragment;
 import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Pantalla_Principal.CategoriaFragment;
 import com.digitalhouse.a0818moacn01_02.model.Album;
 import com.digitalhouse.a0818moacn01_02.model.Artista;
 
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class GeneroFragment extends Fragment implements AlbumAdapterRecyclerView.AlbumAdapterInterface, ArtistaAdapterRecyclerView.ArtistaAdapterInterface {
     public static final String KEY_IMAGEN_GENERO = "imagenGenero";
@@ -35,6 +36,7 @@ public class GeneroFragment extends Fragment implements AlbumAdapterRecyclerView
 
     private ArrayList<Album> albunes = new ArrayList<>();
     private RequestQueue requestQueue;
+    private List<ArtistDeezer> artistDeezersRock = new ArrayList<>();
 
     private AlbumFragment albumFragment = new AlbumFragment();
     PistaAlbumFragment pistaAlbumFragment = new PistaAlbumFragment();
@@ -48,9 +50,12 @@ public class GeneroFragment extends Fragment implements AlbumAdapterRecyclerView
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_genero, container, false);
 
+
         ImageView imgGenero = view.findViewById(R.id.imgGenero);
         Toolbar tvCabeceraGenero = view.findViewById(R.id.tvCabeceraGenero);
         view.findViewById(R.id.rvGeneroAlbum);
+
+
 
         tvCabeceraGenero.setNavigationIcon(R.drawable.ic_arrow_back_24dp);
         tvCabeceraGenero.setNavigationOnClickListener(new View.OnClickListener() {
@@ -64,7 +69,6 @@ public class GeneroFragment extends Fragment implements AlbumAdapterRecyclerView
             }
         });
 
-        requestQueue = Volley.newRequestQueue(getActivity());
 
         Bundle bundle = getArguments();
         String urlImagenCabecera = bundle.getString(KEY_IMAGEN_GENERO);
@@ -75,6 +79,8 @@ public class GeneroFragment extends Fragment implements AlbumAdapterRecyclerView
         crearAlbumRecyclerView(view, R.id.rvGeneroAlbum);
 
         crearArtistaRecyclerView(view, R.id.rvGeneroArtista);
+
+
 
         return view;
     }
@@ -113,66 +119,40 @@ public class GeneroFragment extends Fragment implements AlbumAdapterRecyclerView
     }
 
 
-    /*private void analizarJSON() {
-
-        String url = "https://api.deezer.com/search/playlist?q=rock";
-
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-
-                        try {
-                            JSONArray jsonArray = response.getJSONArray("data");
-
-                            for (int i = 0; i < 10; i++) {
-                                JSONObject hit = jsonArray.getJSONObject(i);
-
-                                String nombre = hit.getString("title");
-                                String imagen = hit.getString("picture_medium");
-                                String tipo = hit.getString("type");
-
-                                albunes.add(new Album(imagen, nombre,tipo));
-                            }
-
-                            crearAlbumRecyclerView(view, R.id.rvGeneroArtista);
 
 
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }, new Response.ErrorListener() {
+    public List<ArtistDeezer> cargarAlbunes() {
+
+        RockController rockController = new RockController();
+        rockController.getArtistasRock(new ResultListener<List<ArtistDeezer>>() {
             @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-
-            }
-        });
-
-        requestQueue.add(request);
-    }*/
-
-
-    public ArrayList<Album> cargarAlbunes() {
-
-        // analizarJSON();
-        ArrayList<Album> albunes = new ArrayList<>();
-        albunes.add(new Album("https://e-cdns-images.dzcdn.net/images/misc/b36ca681666d617edd0dcb5ab389a6ac/250x250-000000-80-0-0.jpg",
+            public void finish(List<ArtistDeezer> resultado) {
+                if (!resultado.isEmpty()){
+                    artistDeezersRock = resultado;
+                }
+                else {
+                     artistDeezersRock.add(new ArtistDeezer("https://e-cdns-images.dzcdn.net/images/misc/b36ca681666d617edd0dcb5ab389a6ac/250x250-000000-80-0-0.jpg",
                 "Rock", ""));
-        albunes.add(new Album("https://e-cdns-images.dzcdn.net/images/misc/f14f9fde9feb38ca6d61960f00681860/250x250-000000-80-0-0.jpg",
+        artistDeezersRock.add(new ArtistDeezer("https://e-cdns-images.dzcdn.net/images/misc/f14f9fde9feb38ca6d61960f00681860/250x250-000000-80-0-0.jpg",
                 "Metal", ""));
-        albunes.add(new Album("https://e-cdns-images.dzcdn.net/images/misc/ffd77feba2c8fda79b18183861e4e69f/250x250-000000-80-0-0.jpg",
+        artistDeezersRock.add(new ArtistDeezer("https://e-cdns-images.dzcdn.net/images/misc/ffd77feba2c8fda79b18183861e4e69f/250x250-000000-80-0-0.jpg",
                 "Cumbia", ""));
 
-        albunes.add(new Album("https://e-cdns-images.dzcdn.net/images/misc/f53d298e46c4722edc245f3b7232343a/250x250-000000-80-0-0.jpg",
+        artistDeezersRock.add(new ArtistDeezer("https://e-cdns-images.dzcdn.net/images/misc/f53d298e46c4722edc245f3b7232343a/250x250-000000-80-0-0.jpg",
                 "Folklore Argentino", ""));
 
-        albunes.add(new Album("https://e-cdns-images.dzcdn.net/images/misc/1abb6810098d4015bdc860c91bcfd2b6/250x250-000000-80-0-0.jpg",
+        artistDeezersRock.add(new ArtistDeezer("https://e-cdns-images.dzcdn.net/images/misc/1abb6810098d4015bdc860c91bcfd2b6/250x250-000000-80-0-0.jpg",
                 "Blues", ""));
+                }
+
+            }
+        },getContext());
 
 
-        albunes.add(new Album("https://e-cdns-images.dzcdn.net/images/misc/069c9888538799748960781f098b5f4b/250x250-000000-80-0-0.jpg",
+
+
+
+        /*albunes.add(new Album("https://e-cdns-images.dzcdn.net/images/misc/069c9888538799748960781f098b5f4b/250x250-000000-80-0-0.jpg",
                 "Latino", ""));
 
         albunes.add(new Album("https://e-cdns-images.dzcdn.net/images/misc/b0b8efcbc3cb688864ce69da0061e525/250x250-000000-80-0-0.jpg",
@@ -203,9 +183,9 @@ public class GeneroFragment extends Fragment implements AlbumAdapterRecyclerView
         albunes.add(new Album("https://cdns-images.dzcdn.net/images/cover/27170198c97ac7e37f8a62cf5cae4299/500x500-000000-80-0-0.jpg",
                 "In My Mind", ""));
         albunes.add(new Album("https://cdns-images.dzcdn.net/images/cover/7e8314f4280cffde363547a495a260bc/250x250-000000-80-0-0.jpg",
-                "Night Visions", ""));
+                "Night Visions", ""));*/
 
-        return albunes;
+        return artistDeezersRock;
     }
 
 
@@ -223,11 +203,11 @@ public class GeneroFragment extends Fragment implements AlbumAdapterRecyclerView
     }
 
     @Override
-    public void cambiarDeActividad(Album album) {
+    public void cambiarDeActividad(ArtistDeezer album) {
         MainActivity mainActivity = (MainActivity) getActivity();
         Bundle bundle = new Bundle();
-        bundle.putString(PistaAlbumFragment.KEY_IMAGEN_CABECERA_ALBUM_PISTA, album.getImagen());
-        bundle.putString(PistaAlbumFragment.KEY_NOMBRE_CABECERA_ALBUM_PISTA, album.getNombre());
+        bundle.putString(PistaAlbumFragment.KEY_IMAGEN_CABECERA_ALBUM_PISTA, album.getPictureMedium());
+        bundle.putString(PistaAlbumFragment.KEY_NOMBRE_CABECERA_ALBUM_PISTA, album.getName());
         pistaAlbumFragment.setArguments(bundle);
         mainActivity.reemplazarFragment(pistaAlbumFragment);
     }

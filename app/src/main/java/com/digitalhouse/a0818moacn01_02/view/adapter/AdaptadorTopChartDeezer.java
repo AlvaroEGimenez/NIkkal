@@ -1,4 +1,4 @@
-package com.digitalhouse.a0818moacn01_02.model.PruebasRetrofit2;
+package com.digitalhouse.a0818moacn01_02.view.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.digitalhouse.a0818moacn01_02.R;
-import com.digitalhouse.a0818moacn01_02.model.TopChartLocal;
+import com.digitalhouse.a0818moacn01_02.model.Track;
 
 import java.util.List;
 
@@ -49,7 +49,7 @@ public class AdaptadorTopChartDeezer extends BaseAdapter {
             TextView nombre = rootView.findViewById(R.id.labelTopChart);
             ImageView imagen = rootView.findViewById(R.id.imagenTopChart);
 
-            Glide.with(context).load(topChartList.get(position).getArtist().getPictureMedium()).into(imagen);
+            Glide.with(context).load(topChartList.get(position).getAlbum().getCoverMedium()).into(imagen);
 
             nombre.setText(topChartList.get(position).getArtist().getName());
 

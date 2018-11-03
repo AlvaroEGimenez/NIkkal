@@ -1,4 +1,4 @@
-package com.digitalhouse.a0818moacn01_02;
+package com.digitalhouse.a0818moacn01_02.Utils;
 
 import android.app.Activity;
 import android.media.AudioManager;
@@ -6,6 +6,8 @@ import android.media.MediaPlayer;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+
+import com.digitalhouse.a0818moacn01_02.R;
 
 import java.io.IOException;
 

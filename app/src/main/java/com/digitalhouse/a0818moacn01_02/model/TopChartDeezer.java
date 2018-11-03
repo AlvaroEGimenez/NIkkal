@@ -1,4 +1,4 @@
-package com.digitalhouse.a0818moacn01_02.model.PruebasRetrofit2;
+package com.digitalhouse.a0818moacn01_02.model;
 
 import java.util.List;
 import com.google.gson.annotations.Expose;

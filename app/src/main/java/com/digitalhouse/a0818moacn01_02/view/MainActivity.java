@@ -46,10 +46,10 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
         setContentView(R.layout.activity_main);
 
         if (savedInstanceState != null) {
-                //Restore the fragment's instance
-                mContent = getSupportFragmentManager().getFragment(savedInstanceState, "CategoriaFragment");
+            //Restore the fragment's instance
+            mContent = getSupportFragmentManager().getFragment(savedInstanceState, "CategoriaFragment");
 
-            }
+        }
 
 
 

@@ -11,18 +11,17 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.digitalhouse.a0818moacn01_02.R;
-import com.digitalhouse.a0818moacn01_02.model.Album;
+import com.digitalhouse.a0818moacn01_02.model.ArtistDeezer;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class AlbumAdapterRecyclerView extends RecyclerView.Adapter {
-    private List<Album> albunes;
+    private List<ArtistDeezer> albunes;
     private Integer resources;
     private Activity activity;
     private AlbumAdapterInterface escuchador;
 
-    public AlbumAdapterRecyclerView(ArrayList<Album> albunes, int resources, Activity activity, AlbumAdapterInterface escuchador) {
+    public AlbumAdapterRecyclerView(List<ArtistDeezer> albunes, int resources, Activity activity, AlbumAdapterInterface escuchador) {
         this.albunes = albunes;
         this.resources = resources;
         this.activity = activity;
@@ -38,9 +37,9 @@ public class AlbumAdapterRecyclerView extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int posicion) {
-        Album album = albunes.get(posicion);
+        ArtistDeezer albumRock = albunes.get(posicion);
         AlbumViewHolder albumViewHolder = (AlbumViewHolder) holder;
-        albumViewHolder.cargar(album);
+        albumViewHolder.cargar(albumRock);
     }
 
     @Override
@@ -49,31 +48,34 @@ public class AlbumAdapterRecyclerView extends RecyclerView.Adapter {
     }
 
     public interface AlbumAdapterInterface {
-        void cambiarDeActividad(Album album);
+        void cambiarDeActividad(ArtistDeezer album);
     }
 
     public class AlbumViewHolder extends RecyclerView.ViewHolder {
         private ImageView imagenAlbumCardView;
         private TextView tituloCardView;
+        private TextView textViewFanAlbum;
 
         public AlbumViewHolder(@NonNull final View itemView) {
             super(itemView);
 
             imagenAlbumCardView = itemView.findViewById(R.id.imagenAlbum);
             tituloCardView = itemView.findViewById(R.id.tituloAlbum);
+            textViewFanAlbum = itemView.findViewById(R.id.fanAlbum);
 
             imagenAlbumCardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Album album = albunes.get(getAdapterPosition());
+                    ArtistDeezer album = albunes.get(getAdapterPosition());
                     escuchador.cambiarDeActividad(album);
                 }
             });
         }
 
-        public void cargar(Album album) {
-            tituloCardView.setText(album.getNombre());
-            cargarImagen(imagenAlbumCardView, album.getImagen());
+        public void cargar(ArtistDeezer album) {
+            tituloCardView.setText(album.getName());
+            //textViewFanAlbum.setText(album.getNbFan().toString());
+            cargarImagen(imagenAlbumCardView, album.getPictureMedium());
         }
     }
 

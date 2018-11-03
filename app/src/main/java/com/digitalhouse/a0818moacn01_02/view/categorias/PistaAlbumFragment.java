@@ -2,7 +2,6 @@ package com.digitalhouse.a0818moacn01_02.view.categorias;
 
 
 import android.app.Dialog;
-import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -21,12 +20,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.deezer.sdk.network.connect.DeezerConnect;
-import com.deezer.sdk.player.AlbumPlayer;
-import com.deezer.sdk.player.TrackPlayer;
-import com.deezer.sdk.player.networkcheck.NetworkStateChecker;
-import com.deezer.sdk.player.networkcheck.NetworkStateListener;
-import com.digitalhouse.a0818moacn01_02.DAOLocal;
+import com.digitalhouse.a0818moacn01_02.DAO.DAOLocal;
 import com.digitalhouse.a0818moacn01_02.R;
 import com.digitalhouse.a0818moacn01_02.model.TopChartLocal;
 import com.digitalhouse.a0818moacn01_02.view.adapter.pista.PistaAdapterViewPage;

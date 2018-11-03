@@ -15,19 +15,17 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextSwitcher;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
 import com.android.volley.RequestQueue;
-import com.digitalhouse.a0818moacn01_02.DAOLocal;
+import com.digitalhouse.a0818moacn01_02.DAO.DAOLocal;
 import com.digitalhouse.a0818moacn01_02.R;
-import com.digitalhouse.a0818moacn01_02.ReproducirMp3;
+import com.digitalhouse.a0818moacn01_02.Utils.ReproducirMp3;
 import com.digitalhouse.a0818moacn01_02.model.Album;
-import com.digitalhouse.a0818moacn01_02.model.PruebasRetrofit2.AdaptadorTopChartDeezer;
-import com.digitalhouse.a0818moacn01_02.model.PruebasRetrofit2.ModeloRespuesta;
-import com.digitalhouse.a0818moacn01_02.model.PruebasRetrofit2.ResultListener;
-import com.digitalhouse.a0818moacn01_02.model.PruebasRetrofit2.TopChartController;
-import com.digitalhouse.a0818moacn01_02.model.PruebasRetrofit2.Track;
+import com.digitalhouse.a0818moacn01_02.view.adapter.AdaptadorTopChartDeezer;
+import com.digitalhouse.a0818moacn01_02.Utils.ResultListener;
+import com.digitalhouse.a0818moacn01_02.model.PruebasRetrofit2.Controller.TopChartController;
+import com.digitalhouse.a0818moacn01_02.model.Track;
 import com.digitalhouse.a0818moacn01_02.model.TopChartLocal;
 import com.digitalhouse.a0818moacn01_02.view.MainActivity;
 import com.digitalhouse.a0818moacn01_02.view.adapter.AdaptadorTopChart;
@@ -40,7 +38,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import it.moondroid.coverflow.components.ui.containers.FeatureCoverFlow;
-import retrofit2.Call;
 
 public class CategoriaFragment extends Fragment implements CategoriaAdapterRecyclerView.AdapterInterface, AdaptadorTopChartDeezer.onItemClickTopChartDeezer, AdaptadorTopChart.onItemClickTopChart {
     public final static String KEY_GENERO = "Géneros";
@@ -56,6 +53,7 @@ public class CategoriaFragment extends Fragment implements CategoriaAdapterRecyc
     private AdaptadorTopChart adaptadorTopChart;
     private List<Track> topChartListDeezer = new ArrayList<>();
     private List<TopChartLocal> topChartListLocal = new ArrayList<>();
+
     private TextSwitcher mTitle;
 
     private View view;
@@ -64,7 +62,6 @@ public class CategoriaFragment extends Fragment implements CategoriaAdapterRecyc
     private TextView tvMasEscuchado;
     private TextView tvFavorito;
     private TextView tvTopChart;
-    private Call<ModeloRespuesta> call;
 
     MediaPlayer mediaPlayer = new MediaPlayer();
 
@@ -80,6 +77,7 @@ public class CategoriaFragment extends Fragment implements CategoriaAdapterRecyc
                              Bundle savedInstanceState) {
 
         final View view = inflater.inflate(R.layout.categoria_album, container, false);
+        featureCoverFlow = view.findViewById(R.id.coverFlow);
 
         this.view = view;
         parent = (MainActivity) getActivity();
@@ -92,7 +90,10 @@ public class CategoriaFragment extends Fragment implements CategoriaAdapterRecyc
         DAOLocal daoLocal = new DAOLocal();
         daoLocal.ObtenerTopChar(topChartListLocal);
 
-        if (savedInstanceState == null){
+        adaptadorTopChart = new AdaptadorTopChart(topChartListLocal, getContext(), CategoriaFragment.this);
+        featureCoverFlow.setAdapter(adaptadorTopChart);
+
+        if (savedInstanceState == null) {
             TopChartController topChartController = new TopChartController();
             topChartController.getTraks(new ResultListener<List<Track>>() {
                 @Override
@@ -100,18 +101,12 @@ public class CategoriaFragment extends Fragment implements CategoriaAdapterRecyc
                     if (resultado.size() > 0) {
                         topChartListDeezer = resultado;
                         AdaptadorTopChartDeezer adaptadorTopChartDeezer = new AdaptadorTopChartDeezer(topChartListDeezer, getContext(), CategoriaFragment.this);
-                        featureCoverFlow = view.findViewById(R.id.coverFlow);
+
                         featureCoverFlow.setAdapter(adaptadorTopChartDeezer);
                     }
+
                 }
             }, getContext());
-        }
-
-
-        if (topChartListDeezer.size() <= 0) {
-            adaptadorTopChart = new AdaptadorTopChart(topChartListLocal, getContext(), CategoriaFragment.this);
-            featureCoverFlow = view.findViewById(R.id.coverFlow);
-            featureCoverFlow.setAdapter(adaptadorTopChart);
         }
 
 
@@ -307,22 +302,4 @@ public class CategoriaFragment extends Fragment implements CategoriaAdapterRecyc
     }
 
 
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-        if (savedInstanceState != null) {
-            AdaptadorTopChartDeezer adaptadorTopChartDeezer = new AdaptadorTopChartDeezer(topChartListDeezer, getContext(), CategoriaFragment.this);
-            featureCoverFlow = view.findViewById(R.id.coverFlow);
-            featureCoverFlow.setAdapter(adaptadorTopChartDeezer);
-        }
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        AdaptadorTopChartDeezer adaptadorTopChartDeezer = new AdaptadorTopChartDeezer(topChartListDeezer, getContext(), CategoriaFragment.this);
-        featureCoverFlow = view.findViewById(R.id.coverFlow);
-        featureCoverFlow.setAdapter(adaptadorTopChartDeezer);
-    }
 }

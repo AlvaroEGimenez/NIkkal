@@ -10,8 +10,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.digitalhouse.a0818moacn01_02.R;
-import com.digitalhouse.a0818moacn01_02.model.PruebasRetrofit2.Track;
-import com.digitalhouse.a0818moacn01_02.model.TopChart;
 import com.digitalhouse.a0818moacn01_02.model.TopChartLocal;
 
 import java.util.List;

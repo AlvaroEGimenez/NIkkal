@@ -1,12 +1,12 @@
-package com.digitalhouse.a0818moacn01_02.model.PruebasRetrofit2;
+package com.digitalhouse.a0818moacn01_02.model;
 
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-class Tracks {
+public class Tracks {
     @SerializedName("data")
-    private List<Track> trackList;
+    public List<Track> trackList;
 
     @SerializedName("total")
     private Integer total;

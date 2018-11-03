@@ -1,4 +1,4 @@
-package com.digitalhouse.a0818moacn01_02;
+package com.digitalhouse.a0818moacn01_02.DAO;
 
 import com.digitalhouse.a0818moacn01_02.model.TopChartLocal;
 

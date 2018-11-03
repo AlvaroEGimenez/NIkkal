@@ -1,9 +1,9 @@
-package com.digitalhouse.a0818moacn01_02.model.PruebasRetrofit2;
+package com.digitalhouse.a0818moacn01_02.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class ArtistDeezer {
+public class Genre {
 
     @SerializedName("id")
     @Expose
@@ -11,12 +11,6 @@ public class ArtistDeezer {
     @SerializedName("name")
     @Expose
     private String name;
-    @SerializedName("link")
-    @Expose
-    private String link;
-    @SerializedName("share")
-    @Expose
-    private String share;
     @SerializedName("picture")
     @Expose
     private String picture;
@@ -32,18 +26,6 @@ public class ArtistDeezer {
     @SerializedName("picture_xl")
     @Expose
     private String pictureXl;
-    @SerializedName("nb_album")
-    @Expose
-    private Integer nbAlbum;
-    @SerializedName("nb_fan")
-    @Expose
-    private Integer nbFan;
-    @SerializedName("radio")
-    @Expose
-    private Boolean radio;
-    @SerializedName("tracklist")
-    @Expose
-    private String tracklist;
     @SerializedName("type")
     @Expose
     private String type;
@@ -62,22 +44,6 @@ public class ArtistDeezer {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getLink() {
-        return link;
-    }
-
-    public void setLink(String link) {
-        this.link = link;
-    }
-
-    public String getShare() {
-        return share;
-    }
-
-    public void setShare(String share) {
-        this.share = share;
     }
 
     public String getPicture() {
@@ -118,38 +84,6 @@ public class ArtistDeezer {
 
     public void setPictureXl(String pictureXl) {
         this.pictureXl = pictureXl;
-    }
-
-    public Integer getNbAlbum() {
-        return nbAlbum;
-    }
-
-    public void setNbAlbum(Integer nbAlbum) {
-        this.nbAlbum = nbAlbum;
-    }
-
-    public Integer getNbFan() {
-        return nbFan;
-    }
-
-    public void setNbFan(Integer nbFan) {
-        this.nbFan = nbFan;
-    }
-
-    public Boolean getRadio() {
-        return radio;
-    }
-
-    public void setRadio(Boolean radio) {
-        this.radio = radio;
-    }
-
-    public String getTracklist() {
-        return tracklist;
-    }
-
-    public void setTracklist(String tracklist) {
-        this.tracklist = tracklist;
     }
 
     public String getType() {
