@@ -22,20 +22,21 @@ public class TopChartDAO extends DaoHelper{
 
 
     public void getTopChart(final ResultListener<List<Track>> listenerDelController){
-        Call<ModeloRespuesta> call = serviceTopChart.getTopChart();
-        call.enqueue(new Callback<ModeloRespuesta>() {
+        Call<ContenedorTracks> call = serviceTopChart.getTopChart();
+
+        call.enqueue(new Callback<ContenedorTracks>() {
             @Override
-            public void onResponse(Call<ModeloRespuesta> call, Response<ModeloRespuesta> response) {
+            public void onResponse(Call<ContenedorTracks> call, Response<ContenedorTracks> response) {
 
-                ModeloRespuesta modeloRespuesta = response.body();
+                ContenedorTracks contenedorTracks = response.body();
 
-                List<Track> tracks = modeloRespuesta.getTrackList();
+                List<Track> tracksList = contenedorTracks.getTracks().getTrackList();
 
-                listenerDelController.finish(tracks);
+                listenerDelController.finish(tracksList);
             }
 
             @Override
-            public void onFailure(Call<ModeloRespuesta> call, Throwable t) {
+            public void onFailure(Call<ContenedorTracks> call, Throwable t) {
                 Log.e("ERROR",t.toString());
             }
         });

@@ -8,7 +8,7 @@ import java.util.List;
 
 public class TopChartController {
 
-    public void getTopChart (final ResultListener<List<Track>> listenerView, Context context){
+    public void getTraks (final ResultListener<List<Track>> listenerView, Context context){
         if (Util.hayInternet(context)){
             TopChartDAO topChartDAO = new TopChartDAO();
             topChartDAO.getTopChart(new ResultListener<List<Track>>() {
