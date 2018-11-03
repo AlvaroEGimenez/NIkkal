@@ -17,11 +17,10 @@ public class TopChartDAO extends DaoHelper {
     private ServiceTopChart serviceTopChart;
 
 
-    public static final String base_url = "https://api.deezer.com/";
 
 
     public TopChartDAO() {
-        super(base_url);
+        super();
         serviceTopChart = retrofit.create(ServiceTopChart.class);
     }
 

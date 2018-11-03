@@ -11,18 +11,18 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.digitalhouse.a0818moacn01_02.R;
-import com.digitalhouse.a0818moacn01_02.model.Album;
+import com.digitalhouse.a0818moacn01_02.model.Genre;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class CategoriaAdapterRecyclerView extends RecyclerView.Adapter {
-    private List<Album> albunes;
+    private List<Genre> albunes;
     private Integer resources;
     private Activity activity;
     private AdapterInterface escuchador;
 
-    public CategoriaAdapterRecyclerView(ArrayList<Album> albunes, int resources, Activity activity, AdapterInterface escuchador) {
+    public CategoriaAdapterRecyclerView(List<Genre> albunes, int resources, Activity activity, AdapterInterface escuchador) {
         this.albunes = albunes;
         this.resources = resources;
         this.activity = activity;
@@ -31,16 +31,16 @@ public class CategoriaAdapterRecyclerView extends RecyclerView.Adapter {
 
     @NonNull
     @Override
-    public AlbumViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public GenreViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(resources, parent, false);
-        return new AlbumViewHolder(view);
+        return new GenreViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int posicion) {
-        Album album = albunes.get(posicion);
-        AlbumViewHolder albumViewHolder = (AlbumViewHolder) holder;
-        albumViewHolder.cargar(album);
+        Genre Genre = albunes.get(posicion);
+        GenreViewHolder GenreViewHolder = (GenreViewHolder) holder;
+        GenreViewHolder.cargar(Genre);
     }
 
     @Override
@@ -49,14 +49,14 @@ public class CategoriaAdapterRecyclerView extends RecyclerView.Adapter {
     }
 
     public interface AdapterInterface {
-        void cambiarDeActividad(Album album);
+        void cambiarDeActividad(Genre Genre);
     }
 
-    public class AlbumViewHolder extends RecyclerView.ViewHolder {
+    public class GenreViewHolder extends RecyclerView.ViewHolder {
         private ImageView imagenCategoriaCardView;
         private TextView tituloCardView;
 
-        public AlbumViewHolder(@NonNull final View itemView) {
+        public GenreViewHolder(@NonNull final View itemView) {
             super(itemView);
 
             imagenCategoriaCardView = itemView.findViewById(R.id.imagenCategoria);
@@ -65,15 +65,15 @@ public class CategoriaAdapterRecyclerView extends RecyclerView.Adapter {
             imagenCategoriaCardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Album album = albunes.get(getAdapterPosition());
-                    escuchador.cambiarDeActividad(album);
+                    Genre Genre = albunes.get(getAdapterPosition());
+                    escuchador.cambiarDeActividad(Genre);
                 }
             });
         }
 
-        public void cargar(Album album) {
-            tituloCardView.setText(album.getNombre());
-            cargarImagen(imagenCategoriaCardView, album.getImagen());
+        public void cargar(Genre Genre) {
+            tituloCardView.setText(Genre.getName());
+            cargarImagen(imagenCategoriaCardView, Genre.getPictureMedium());
         }
     }
 

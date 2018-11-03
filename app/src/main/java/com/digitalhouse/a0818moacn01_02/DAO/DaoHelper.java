@@ -1,18 +1,25 @@
 package com.digitalhouse.a0818moacn01_02.DAO;
 
+import com.digitalhouse.a0818moacn01_02.Utils.ResultListener;
+
+import java.util.List;
+
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class DaoHelper {
+public abstract class DaoHelper {
+
     protected Retrofit retrofit;
 
-    public DaoHelper(String base_url) {
+    public static final String KEY_BASE_URL = "https://api.deezer.com/";
+
+    public DaoHelper() {
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
 
         Retrofit.Builder builder =
                 new Retrofit.Builder()
-                        .baseUrl(base_url)
+                        .baseUrl(KEY_BASE_URL)
                         .addConverterFactory(
                                 GsonConverterFactory.create()
                         );
@@ -24,4 +31,5 @@ public class DaoHelper {
                         )
                         .build();
     }
+
 }

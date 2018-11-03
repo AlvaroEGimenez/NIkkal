@@ -11,18 +11,19 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.digitalhouse.a0818moacn01_02.R;
+import com.digitalhouse.a0818moacn01_02.model.ArtistDeezer;
 import com.digitalhouse.a0818moacn01_02.model.Artista;
 
 import java.util.List;
 
 public class ArtistaAdapterRecyclerView  extends RecyclerView.Adapter {
 
-    private List<Artista> artistas;
+    private List<ArtistDeezer> artistas;
     private Integer resources;
     private Activity activity;
     private ArtistaAdapterInterface escuchador;
 
-    public ArtistaAdapterRecyclerView( List<Artista> artistas, int resources, Activity activity, ArtistaAdapterInterface escuchador) {
+    public ArtistaAdapterRecyclerView( List<ArtistDeezer> artistas, int resources, Activity activity, ArtistaAdapterInterface escuchador) {
         this.artistas = artistas;
         this.resources = resources;
         this.activity = activity;
@@ -39,7 +40,7 @@ public class ArtistaAdapterRecyclerView  extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int posicion) {
-        Artista artista = artistas.get(posicion);
+        ArtistDeezer artista = artistas.get(posicion);
         ArtistaViewHolder artistaViewHolder = (ArtistaViewHolder) holder;
         artistaViewHolder.cargar(artista);
     }
@@ -50,7 +51,7 @@ public class ArtistaAdapterRecyclerView  extends RecyclerView.Adapter {
     }
 
     public interface ArtistaAdapterInterface {
-        void cambiarDeActividad(Artista artista);
+        void cambiarDeActividad(ArtistDeezer artista);
     }
 
 
@@ -67,15 +68,15 @@ public class ArtistaAdapterRecyclerView  extends RecyclerView.Adapter {
             imagenArtistaCardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Artista artista = artistas.get(getAdapterPosition());
+                    ArtistDeezer artista = artistas.get(getAdapterPosition());
                     escuchador.cambiarDeActividad(artista);
                 }
             });
         }
 
-        public void cargar(Artista artista) {
-            nombreArtistaCardView.setText(artista.getNombre());
-            cargarImagen(imagenArtistaCardView, artista.getImagen());
+        public void cargar(ArtistDeezer artista) {
+            nombreArtistaCardView.setText(artista.getName());
+            cargarImagen(imagenArtistaCardView, artista.getPictureMedium());
         }
     }
 

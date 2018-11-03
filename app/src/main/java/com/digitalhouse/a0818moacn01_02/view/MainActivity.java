@@ -3,27 +3,27 @@ package com.digitalhouse.a0818moacn01_02.view;
 import android.graphics.Color;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.digitalhouse.a0818moacn01_02.R;
-import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Buscar.AdapatadorBusqueda;
 import com.digitalhouse.a0818moacn01_02.model.Busqueda;
-import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Configuracion.ConfiguracionFragment;
-import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Radio_Online.RadioFragment;
+import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Buscar.AdapatadorBusqueda;
 import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Buscar.BuscarFragment;
+import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Configuracion.ConfiguracionFragment;
 import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Favoritos.FavoritoFragment;
 import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Pantalla_Principal.CategoriaFragment;
+import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Radio_Online.RadioFragment;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
-
 import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity implements AdapatadorBusqueda.BusquedaInterface {
@@ -50,7 +50,6 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
             mContent = getSupportFragmentManager().getFragment(savedInstanceState, "CategoriaFragment");
 
         }
-
 
 
         textViewNombrePista = findViewById(R.id.tvNombreReproductor);
@@ -91,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
 
     }
 
-    public void  reemplazarFragment(Fragment fragment) {
+    public void reemplazarFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.container, fragment);
@@ -102,10 +101,10 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
     @Override
     public void busquedaClick(Busqueda busqueda) {
         linearLayoutReproductor.setVisibility(View.VISIBLE);
-        textViewNombrePista.setText(busqueda.getBusqueda()+" - "+busqueda.getArtista());
+        textViewNombrePista.setText(busqueda.getBusqueda() + " - " + busqueda.getArtista());
         textViewNombrePista.setTextColor(Color.parseColor("#FD9701"));
         String urlMp3 = busqueda.getMp3();
-        reproducirMp3(urlMp3,mediaPlayer);
+        reproducirMp3(urlMp3, mediaPlayer);
 
 
     }
@@ -181,8 +180,6 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
     }
 
 
-
-
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -190,4 +187,18 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
         //Save the fragment's instance
         getSupportFragmentManager().putFragment(outState, "CategoriaFragment", mContent);
     }
+
+//
+//    @Override
+//    public void onBackPressed() {
+     /*   int count = getFragmentManager().getBackStackEntryCount();
+
+        if (count == 0) {
+            super.onBackPressed();
+            Toast.makeText(MainActivity.this,"se presiono el boton de back",Toast.LENGTH_LONG).show();
+            reemplazarFragment(categoriaFragment);
+        } else {
+            getFragmentManager().popBackStack();
+        }*/
+//    }
 }
