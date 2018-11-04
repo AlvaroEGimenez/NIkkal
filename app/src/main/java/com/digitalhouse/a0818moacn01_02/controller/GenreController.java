@@ -25,41 +25,4 @@ public class GenreController {
 
         }
     }
-
-    public void getArtistAlbum(final ResultListener<List<AlbumDeezer>> listenerView, Context context, Integer artistId) {
-        if (Util.hayInternet(context)) {
-            genreDAO.getArtistAlbum(new ResultListener<List<AlbumDeezer>>() {
-                @Override
-                public void finish(List<AlbumDeezer> resultado) {
-                    listenerView.finish(resultado);
-
-                }
-            }, artistId);
-
-        }
-    }
-
-    public void getArtist(final ResultListener<List<ArtistDeezer>> listenerView, Context context, Integer genreId) {
-        if (Util.hayInternet(context)) {
-            genreDAO.getArtist(new ResultListener<List<ArtistDeezer>>() {
-                @Override
-                public void finish(List<ArtistDeezer> resultado) {
-                    listenerView.finish(resultado);
-                }
-            }, genreId);
-
-        }
-    }
-
-    public void getPistas(final ResultListener<List<ArtistDeezer>> listenerView, Context context, Integer genreId) {
-        if (Util.hayInternet(context)) {
-            genreDAO.getArtist(new ResultListener<List<ArtistDeezer>>() {
-                @Override
-                public void finish(List<ArtistDeezer> resultado) {
-                    listenerView.finish(resultado);
-                }
-            }, genreId);
-
-        }
-    }
 }
