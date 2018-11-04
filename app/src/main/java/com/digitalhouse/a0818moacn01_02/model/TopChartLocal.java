@@ -7,6 +7,8 @@ public class TopChartLocal {
     private Integer posicion;
     private String urlMp3;
     private Boolean favorito;
+    private Integer progreso=0;
+    private Integer duracion=0;
 
     public TopChartLocal(String nombreTrack, String nombreArtista, String urlImagen, Integer posicion, String urlMp3) {
         this.nombreTrack = nombreTrack;
@@ -43,5 +45,21 @@ public class TopChartLocal {
 
     public void setFavorito(Boolean favorito) {
         this.favorito = favorito;
+    }
+
+    public Integer getProgreso() {
+        return progreso;
+    }
+
+    public void setProgreso(Integer progreso) {
+        this.progreso = progreso;
+    }
+
+    public Integer getDuracion() {
+        return duracion;
+    }
+
+    public void setDuracion(Integer duracion) {
+        this.duracion = duracion;
     }
 }

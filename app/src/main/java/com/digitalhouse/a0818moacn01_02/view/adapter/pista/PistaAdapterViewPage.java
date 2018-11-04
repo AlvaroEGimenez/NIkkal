@@ -58,6 +58,9 @@ public class PistaAdapterViewPage extends PagerAdapter {
         final ProgressBar progressBar = view.findViewById(R.id.progrerssBarPistaViewPage);
         final ImageButton btnPlay = view.findViewById(R.id.ic_play_pista);
         final ImageButton btnPause = view.findViewById(R.id.ic_pause_pista);
+        Integer progreso = pistas.get(position).getProgreso();
+        progressBar.setProgress(progreso);
+        progressBar.setMax(pistas.get(position).getDuracion());
 
         container.addView(view);
         final  TopChartLocal pista = pistas.get(position);

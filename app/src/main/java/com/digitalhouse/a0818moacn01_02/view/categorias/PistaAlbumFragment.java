@@ -173,6 +173,8 @@ Integer  positionActual=0;
             public void run() {
                 progressBar.setProgress(mediaPlayer.getCurrentPosition());
                 mSeekbarUpdateHandler.postDelayed(this, 50);
+                pista.setProgreso(mediaPlayer.getCurrentPosition());
+
             }
         };
 
@@ -188,6 +190,7 @@ Integer  positionActual=0;
         }
         mediaPlayer.start();
         progressBar.setMax(mediaPlayer.getDuration());
+    pista.setDuracion(mediaPlayer.getDuration());
         mSeekbarUpdateHandler.postDelayed(mUpdateSeekbar, 0);
 
         positionActual = posicion;

@@ -13,13 +13,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.android.volley.RequestQueue;
 import com.bumptech.glide.Glide;
 import com.digitalhouse.a0818moacn01_02.R;
 import com.digitalhouse.a0818moacn01_02.Utils.ResultListener;
-import com.digitalhouse.a0818moacn01_02.controller.ArtistController;
-import com.digitalhouse.a0818moacn01_02.model.Album;
-import com.digitalhouse.a0818moacn01_02.model.AlbumDeezer;
+import com.digitalhouse.a0818moacn01_02.controller.GenreController;
 import com.digitalhouse.a0818moacn01_02.model.ArtistDeezer;
 import com.digitalhouse.a0818moacn01_02.view.MainActivity;
 import com.digitalhouse.a0818moacn01_02.view.adapter.AlbumAdapterRecyclerView;
@@ -34,7 +31,7 @@ public class GeneroFragment extends Fragment implements AlbumAdapterRecyclerView
     public static final String KEY_NOMBRE_GENERO = "nombreGenero";
     public static final String KEY_ID_GENERO = "idGenero";
 
-//    private ArrayList<Album> albunes = new ArrayList<>();
+    //    private ArrayList<Album> albunes = new ArrayList<>();
     private List<ArtistDeezer> artistGenre = new ArrayList<>();
     private Integer idGenre;
     private View view;
@@ -126,8 +123,8 @@ public class GeneroFragment extends Fragment implements AlbumAdapterRecyclerView
 
 
     public void cargarArtistas() {
-        ArtistController artistController = new ArtistController();
-        artistController.getArtist(new ResultListener<List<ArtistDeezer>>() {
+        GenreController genreController = new GenreController();
+        genreController.getArtist(new ResultListener<List<ArtistDeezer>>() {
             @Override
             public void finish(List<ArtistDeezer> resultado) {
                 artistGenre = resultado;
