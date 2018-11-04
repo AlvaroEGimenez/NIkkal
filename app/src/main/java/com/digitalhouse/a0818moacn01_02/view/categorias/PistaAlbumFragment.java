@@ -22,7 +22,11 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.digitalhouse.a0818moacn01_02.DAO.DAOLocal;
 import com.digitalhouse.a0818moacn01_02.R;
+import com.digitalhouse.a0818moacn01_02.Utils.ResultListener;
+import com.digitalhouse.a0818moacn01_02.controller.TracksController;
 import com.digitalhouse.a0818moacn01_02.model.TopChartLocal;
+import com.digitalhouse.a0818moacn01_02.model.Track;
+import com.digitalhouse.a0818moacn01_02.model.Tracks;
 import com.digitalhouse.a0818moacn01_02.view.adapter.pista.PistaAdapterViewPage;
 import com.digitalhouse.a0818moacn01_02.view.adapter.pista.PistaAlbumRecyclerView;
 import com.digitalhouse.a0818moacn01_02.view.adapter.pista.RecyclerItemTouchHelper;
@@ -30,12 +34,14 @@ import com.digitalhouse.a0818moacn01_02.view.adapter.pista.RecyclerItemTouchHelp
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import me.angeldevil.autoscrollviewpager.AutoScrollViewPager;
 
 public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerView.PistaAdapterInterface, PistaAdapterViewPage.PistaViewPageInterface, RecyclerItemTouchHelper.RecyclerItemTouchHelperListener{
     public static final String KEY_IMAGEN_CABECERA_ALBUM_PISTA = "imgCabeceraAlbumPista";
     public static final String KEY_NOMBRE_CABECERA_ALBUM_PISTA = "nombreCabeceraAlbumPista";
+    public static final String KEY_PISTA_ID_ALBUM_PISTA = "pistaIdAlbumPista";
 
     private ImageView imgCabeceraAlbumPista;
     private Toolbar toolbaarNombreCabeceraAlbumPista;
@@ -47,8 +53,8 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
     private MediaPlayer mediaPlayer = new MediaPlayer();
     private ImageButton btnPlay;
     private ImageButton btnPause;
-Integer  positionActual=0;
-    private ArrayList<TopChartLocal> pistas = new ArrayList<>();
+    Integer  positionActual=0;
+    private List<Track> pistas = new ArrayList<>();
 
 
     public PistaAlbumFragment() {
@@ -66,37 +72,44 @@ Integer  positionActual=0;
         Bundle bundle = getArguments();
         String urlImagenCabecera = bundle.getString(KEY_IMAGEN_CABECERA_ALBUM_PISTA);
         String nombreCabeceraPistaAlbum = bundle.getString(KEY_NOMBRE_CABECERA_ALBUM_PISTA);
+        Integer idPista = bundle.getInt(KEY_PISTA_ID_ALBUM_PISTA);
 
         cargarImagen(imgCabeceraAlbumPista, urlImagenCabecera);
         toolbaarNombreCabeceraAlbumPista.setTitle(nombreCabeceraPistaAlbum);
-
-        crearAlbumRecyclerView(R.id.rvPistaAlbum);
-
-        DAOLocal daoLocal = new DAOLocal();
-        daoLocal.ObtenerTopChar(pistas);
-
+        cargarPista(idPista);
 
         return view;
+    }
+
+    private void cargarPista(Integer idPista) {
+        TracksController tracksController = new TracksController();
+        tracksController.getPistas(new ResultListener<List<Track>>() {
+            @Override
+            public void finish(List<Track> resultado) {
+                crearAlbumRecyclerView(R.id.rvPistaAlbum, resultado);
+            }
+        }, getContext(), idPista);
     }
 
     private void cargarImagen(ImageView imageView, String url) {
         Glide.with(getContext()).load(url).into(imageView);
     }
 
-    private void crearAlbumRecyclerView(Integer idLayout) {
+    private void crearAlbumRecyclerView(Integer idLayout, List<Track> pistas) {
+        this.pistas = pistas;
         recyclerView = view.findViewById(idLayout);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
-        pistaAlbumRecyclerView = new PistaAlbumRecyclerView(this.pistas, R.layout.cardview_pista_album, getActivity(), this);
+        pistaAlbumRecyclerView = new PistaAlbumRecyclerView(pistas, R.layout.cardview_pista_album, getActivity(), this);
 
         ItemTouchHelper.SimpleCallback itemTouchHelperCallback = new RecyclerItemTouchHelper(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT, this);
         new ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(recyclerView);
         recyclerView.setAdapter(pistaAlbumRecyclerView);
     }
 
-    private void setFavoritoPista(TopChartLocal pista, ImageView favoritoPista) {
+    private void setFavoritoPista(Track pista, ImageView favoritoPista) {
         if (!pista.getFavorito()) {
             pista.setFavorito(true);
         } else {
@@ -111,18 +124,18 @@ Integer  positionActual=0;
     }
 
     @Override
-    public void favoritoListener(TopChartLocal pista, ImageView favoritoPista) {
+    public void favoritoListener(Track pista, ImageView favoritoPista) {
         setFavoritoPista(pista, favoritoPista);
     }
 
     @Override
-    public void playListListener(TopChartLocal pista) {
+    public void playListListener(Track pista) {
 
-        Toast.makeText(getContext(), "Se ha agregado al playList: " + pista.getNombreTrack(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), "Se ha agregado al playList: " + pista.getTitle(), Toast.LENGTH_SHORT).show();
     }
 
     @Override
-    public void compartirListener(TopChartLocal pista) {
+    public void compartirListener(Track pista) {
         Toast.makeText(getContext(), "Compartir pista", Toast.LENGTH_SHORT).show();
     }
 
@@ -156,7 +169,7 @@ Integer  positionActual=0;
     }
 
     @Override
-    public void pistaPlay(final TopChartLocal pista, final ProgressBar progressBar, Integer posicion) {
+    public void pistaPlay(final Track pista, final ProgressBar progressBar, Integer posicion) {
 
        if(mediaPlayer.getCurrentPosition()>0 && positionActual == posicion){
            mediaPlayer.start();
@@ -176,7 +189,7 @@ Integer  positionActual=0;
             }
         };
 
-        final String url = pista.getUrlMp3();
+        final String url = pista.getPreview();
 
         mediaPlayer.reset();
 
@@ -194,14 +207,14 @@ Integer  positionActual=0;
     }
 
     @Override
-    public void pistaPause(TopChartLocal pista, ProgressBar progressBar, Integer posicion) {
+    public void pistaPause(Track pista, ProgressBar progressBar, Integer posicion) {
         mediaPlayer.pause();
     }
 
 
     @Override
     public void favoritoListenerPista(Integer posicion, ImageView favoritoPistaReproductor) {
-        TopChartLocal pista = pistas.get(posicion);
+        Track pista = pistas.get(posicion);
         setFavoritoPista(pista, favoritoPistaReproductor);
         pistaAlbumRecyclerView.notifyDataSetChanged();
         pistaAdapterViewPage.notifyDataSetChanged();
@@ -218,7 +231,7 @@ Integer  positionActual=0;
 
     @Override
     public void onItemDismiss(int position) {
-        TopChartLocal pista = pistas.get(position);
+        Track pista = pistas.get(position);
         Toast.makeText(getContext(), "Ingrese nombre del playList ", Toast.LENGTH_SHORT).show();
         pistaAlbumRecyclerView.notifyItemRemoved(position);
         pistaAlbumRecyclerView.notifyItemInserted(position);

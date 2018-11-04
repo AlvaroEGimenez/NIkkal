@@ -13,6 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextSwitcher;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
@@ -64,6 +66,8 @@ public class CategoriaFragment extends Fragment implements CategoriaAdapterRecyc
     private TextView tvMasEscuchado;
     private TextView tvFavorito;
     private TextView tvTopChart;
+    private ProgressBar pbCategoria;
+    private LinearLayout conatiner;
 
     MediaPlayer mediaPlayer = new MediaPlayer();
 
@@ -81,6 +85,8 @@ public class CategoriaFragment extends Fragment implements CategoriaAdapterRecyc
 
         final View view = inflater.inflate(R.layout.categoria_album, container, false);
         featureCoverFlow = view.findViewById(R.id.coverFlow);
+        pbCategoria = view.findViewById(R.id.pbCategoria);
+        conatiner =  view.findViewById(R.id.categoriaContainer);
 
         this.view = view;
         parent = (MainActivity) getActivity();
@@ -217,6 +223,8 @@ public class CategoriaFragment extends Fragment implements CategoriaAdapterRecyc
                 genreList =  resultado;
                 genreList.remove(0);
                 crearRecyclerViewGenre(R.id.rvGeneroRecyclerView);
+                pbCategoria.setVisibility(View.GONE);
+                conatiner.setVisibility(View.VISIBLE);
 
             }
         }, getContext());

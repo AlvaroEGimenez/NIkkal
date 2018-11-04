@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -179,26 +180,4 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
         }
     }
 
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-
-        //Save the fragment's instance
-        getSupportFragmentManager().putFragment(outState, "CategoriaFragment", mContent);
-    }
-
-//
-//    @Override
-//    public void onBackPressed() {
-     /*   int count = getFragmentManager().getBackStackEntryCount();
-
-        if (count == 0) {
-            super.onBackPressed();
-            Toast.makeText(MainActivity.this,"se presiono el boton de back",Toast.LENGTH_LONG).show();
-            reemplazarFragment(categoriaFragment);
-        } else {
-            getFragmentManager().popBackStack();
-        }*/
-//    }
 }

@@ -11,18 +11,20 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.digitalhouse.a0818moacn01_02.R;
+import com.digitalhouse.a0818moacn01_02.model.AlbumDeezer;
 import com.digitalhouse.a0818moacn01_02.model.ArtistDeezer;
 
 import java.util.List;
 
 public class AlbumAdapterRecyclerView extends RecyclerView.Adapter {
-    private List<ArtistDeezer> albunes;
+    private List<AlbumDeezer> albunDeezer;
     private Integer resources;
     private Activity activity;
     private AlbumAdapterInterface escuchador;
 
-    public AlbumAdapterRecyclerView(List<ArtistDeezer> albunes, int resources, Activity activity, AlbumAdapterInterface escuchador) {
-        this.albunes = albunes;
+
+    public AlbumAdapterRecyclerView(List<AlbumDeezer> albunes, int resources, Activity activity, AlbumAdapterInterface escuchador) {
+        this.albunDeezer = albunes;
         this.resources = resources;
         this.activity = activity;
         this.escuchador = escuchador;
@@ -37,18 +39,18 @@ public class AlbumAdapterRecyclerView extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int posicion) {
-        ArtistDeezer albumRock = albunes.get(posicion);
+        AlbumDeezer albumDeezer = albunDeezer.get(posicion);
         AlbumViewHolder albumViewHolder = (AlbumViewHolder) holder;
-        albumViewHolder.cargar(albumRock);
+        albumViewHolder.cargar(albumDeezer);
     }
 
     @Override
     public int getItemCount() {
-        return albunes.size();
+        return albunDeezer.size();
     }
 
     public interface AlbumAdapterInterface {
-        void cambiarDeActividad(ArtistDeezer album);
+        void cambiarDeActividad(AlbumDeezer album);
     }
 
     public class AlbumViewHolder extends RecyclerView.ViewHolder {
@@ -66,16 +68,22 @@ public class AlbumAdapterRecyclerView extends RecyclerView.Adapter {
             imagenAlbumCardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    ArtistDeezer album = albunes.get(getAdapterPosition());
-                    escuchador.cambiarDeActividad(album);
+                    AlbumDeezer album = albunDeezer.get(getAdapterPosition());
+                    imagenAlbumCardView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            AlbumDeezer album = albunDeezer.get(getAdapterPosition());
+                            escuchador.cambiarDeActividad(album);
+                        }
+                    });
                 }
             });
         }
 
-        public void cargar(ArtistDeezer album) {
-            tituloCardView.setText(album.getName());
+        public void cargar(AlbumDeezer album) {
+            tituloCardView.setText(album.getTitle());
             //textViewFanAlbum.setText(album.getNbFan().toString());
-            cargarImagen(imagenAlbumCardView, album.getPictureMedium());
+            cargarImagen(imagenAlbumCardView, album.getCoverMedium());
         }
     }
 

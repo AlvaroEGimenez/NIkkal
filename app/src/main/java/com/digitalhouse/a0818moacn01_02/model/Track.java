@@ -65,6 +65,8 @@ public class Track {
     @SerializedName("type")
     @Expose
     private String type;
+    private Boolean favorito = Boolean.FALSE;
+
 
     public Integer getId() {
         return id;
@@ -226,4 +228,11 @@ public class Track {
         this.type = type;
     }
 
+    public Boolean getFavorito() {
+        return favorito;
+    }
+
+    public void setFavorito(Boolean favorito) {
+        this.favorito = favorito;
+    }
 }

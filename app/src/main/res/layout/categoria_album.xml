@@ -7,10 +7,26 @@
     android:background="@drawable/background_bg"
     tools:context=".view.menuNavegacion.Pantalla_Principal.CategoriaFragment">
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        >
+
+    <ProgressBar
+        android:id="@+id/pbCategoria"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:visibility="visible"
+        />
     <LinearLayout
+        android:id="@+id/categoriaContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="gone"
+        >
 
 
         <RelativeLayout
@@ -122,4 +138,6 @@
 
         </android.support.v7.widget.RecyclerView>
     </LinearLayout>
+
+    </FrameLayout>
 </ScrollView>

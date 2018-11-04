@@ -14,23 +14,24 @@ import android.widget.TextView;
 
 import com.digitalhouse.a0818moacn01_02.R;
 import com.digitalhouse.a0818moacn01_02.model.TopChartLocal;
+import com.digitalhouse.a0818moacn01_02.model.Track;
 
 import java.util.List;
 
 public class PistaAdapterViewPage extends PagerAdapter {
-    private List<TopChartLocal> pistas;
+    private List<Track> pistas;
     private Context context;
     private LayoutInflater layoutInflater;
     private PistaViewPageInterface escuchador;
 
-    public PistaAdapterViewPage(List<TopChartLocal> pistas, Context context, PistaViewPageInterface escuchador) {
+    public PistaAdapterViewPage(List<Track> pistas, Context context, PistaViewPageInterface escuchador) {
         this.pistas = pistas;
         this.context = context;
         layoutInflater = ((Activity)context).getLayoutInflater();
         this.escuchador = escuchador;
     }
 
-    public void setDatos(List<TopChartLocal> pistas){
+    public void setDatos(List<Track> pistas){
         this.pistas = pistas;
     }
     @Override
@@ -60,7 +61,7 @@ public class PistaAdapterViewPage extends PagerAdapter {
         final ImageButton btnPause = view.findViewById(R.id.ic_pause_pista);
 
         container.addView(view);
-        final  TopChartLocal pista = pistas.get(position);
+        final  Track pista = pistas.get(position);
         favoritoPista.setImageResource(pista.getFavorito() ? R.drawable.ic_favorite_seleccionado : R.drawable.ic_favorite_no_seleccion);
 
         favoritoPista.setOnClickListener(new View.OnClickListener() {
@@ -70,8 +71,8 @@ public class PistaAdapterViewPage extends PagerAdapter {
             }
         });
 
-        textView.setText(pista.getNombreTrack());
-        textViewArtista.setText(pista.getNombreArtista());
+        textView.setText(pista.getTitle());
+        textViewArtista.setText(pista.getArtist().getName());
 
         final  Integer  posicion = position;
         btnPistaAnterior.setOnClickListener(new View.OnClickListener() {
@@ -119,8 +120,8 @@ public class PistaAdapterViewPage extends PagerAdapter {
     public interface PistaViewPageInterface {
         void pistaAnterior(Integer position);
         void pistaSiguiente(Integer position);
-        void pistaPlay( TopChartLocal pista, final ProgressBar progressBar, Integer posicion);
-        void pistaPause( TopChartLocal pista, final ProgressBar progressBar, Integer posicion);
+        void pistaPlay( Track pista, final ProgressBar progressBar, Integer posicion);
+        void pistaPause( Track pista, final ProgressBar progressBar, Integer posicion);
         void favoritoListenerPista(Integer position, ImageView favoritoPista);
 
     }

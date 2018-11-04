@@ -13,18 +13,19 @@ import android.widget.TextView;
 
 import com.digitalhouse.a0818moacn01_02.R;
 import com.digitalhouse.a0818moacn01_02.model.TopChartLocal;
+import com.digitalhouse.a0818moacn01_02.model.Track;
 
 import java.util.Collections;
 import java.util.List;
 
 public class PistaAlbumRecyclerView extends RecyclerView.Adapter implements  RecyclerItemTouchHelper.RecyclerItemTouchHelperListener{
-    private List<TopChartLocal> pistas;
+    private List<Track> pistas;
     private Integer resources;
     private Activity activity;
 
     private PistaAdapterInterface escuchador;
 
-    public PistaAlbumRecyclerView(List<TopChartLocal> pistas, int resources, Activity activity, PistaAdapterInterface escuchador) {
+    public PistaAlbumRecyclerView(List<Track> pistas, int resources, Activity activity, PistaAdapterInterface escuchador) {
         this.pistas = pistas;
         this.resources = resources;
         this.activity = activity;
@@ -40,9 +41,9 @@ public class PistaAlbumRecyclerView extends RecyclerView.Adapter implements  Rec
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int posicion) {
-        TopChartLocal topChartLocal = pistas.get(posicion);
+        Track pista = pistas.get(posicion);
         PistaViewHolder pistaViewHolder = (PistaViewHolder) holder;
-        pistaViewHolder.cargar(topChartLocal);
+        pistaViewHolder.cargar(pista);
     }
 
     @Override
@@ -65,9 +66,9 @@ public class PistaAlbumRecyclerView extends RecyclerView.Adapter implements  Rec
     }
 
     public interface PistaAdapterInterface {
-        void favoritoListener(TopChartLocal pista, ImageView favoritoPista);
-        void playListListener(TopChartLocal pista);
-        void compartirListener(TopChartLocal pista);
+        void favoritoListener(Track pista, ImageView favoritoPista);
+        void playListListener(Track pista);
+        void compartirListener(Track pista);
         void pistaViewPageListener(Integer posicion, View itemView);
     }
 
@@ -92,7 +93,7 @@ public class PistaAlbumRecyclerView extends RecyclerView.Adapter implements  Rec
             favoritoPista.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    TopChartLocal pista = pistas.get(getAdapterPosition());
+                    Track pista = pistas.get(getAdapterPosition());
                     escuchador.favoritoListener(pista, favoritoPista);
                 }
             });
@@ -100,8 +101,8 @@ public class PistaAlbumRecyclerView extends RecyclerView.Adapter implements  Rec
             compartirPista.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    TopChartLocal topChartLocal = pistas.get(getAdapterPosition());
-                    escuchador.compartirListener(topChartLocal);
+                    Track pista = pistas.get(getAdapterPosition());
+                    escuchador.compartirListener(pista);
                 }
             });
 
@@ -114,9 +115,9 @@ public class PistaAlbumRecyclerView extends RecyclerView.Adapter implements  Rec
 
         }
 
-        public void cargar(TopChartLocal pista) {
-            tvNombreAlbumTemaPista.setText(pista.getNombreTrack());
-            tvNombreArtistaTemaPista.setText(pista.getNombreArtista()); //pista.getAlbum().getNombre()
+        public void cargar(Track pista) {
+            tvNombreAlbumTemaPista.setText(pista.getTitle());
+            tvNombreArtistaTemaPista.setText(pista.getArtist().getName());
             favoritoPista.setImageResource(pista.getFavorito() ? R.drawable.ic_favorite_seleccionado : R.drawable.ic_favorite_no_seleccion);
 
         }

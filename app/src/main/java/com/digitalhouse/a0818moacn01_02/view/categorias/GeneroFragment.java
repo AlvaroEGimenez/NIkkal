@@ -1,6 +1,9 @@
 package com.digitalhouse.a0818moacn01_02.view.categorias;
 
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -12,35 +15,33 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 
-import com.android.volley.RequestQueue;
 import com.bumptech.glide.Glide;
 import com.digitalhouse.a0818moacn01_02.R;
 import com.digitalhouse.a0818moacn01_02.Utils.ResultListener;
 import com.digitalhouse.a0818moacn01_02.controller.ArtistController;
-import com.digitalhouse.a0818moacn01_02.model.Album;
-import com.digitalhouse.a0818moacn01_02.model.AlbumDeezer;
 import com.digitalhouse.a0818moacn01_02.model.ArtistDeezer;
 import com.digitalhouse.a0818moacn01_02.view.MainActivity;
-import com.digitalhouse.a0818moacn01_02.view.adapter.AlbumAdapterRecyclerView;
 import com.digitalhouse.a0818moacn01_02.view.adapter.ArtistaAdapterRecyclerView;
 import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Pantalla_Principal.CategoriaFragment;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class GeneroFragment extends Fragment implements AlbumAdapterRecyclerView.AlbumAdapterInterface, ArtistaAdapterRecyclerView.ArtistaAdapterInterface {
+public class GeneroFragment extends Fragment implements ArtistaAdapterRecyclerView.ArtistaAdapterInterface {
     public static final String KEY_IMAGEN_GENERO = "imagenGenero";
     public static final String KEY_NOMBRE_GENERO = "nombreGenero";
     public static final String KEY_ID_GENERO = "idGenero";
 
-//    private ArrayList<Album> albunes = new ArrayList<>();
     private List<ArtistDeezer> artistGenre = new ArrayList<>();
     private Integer idGenre;
     private View view;
+    private ProgressBar pbCategoria;
+    private LinearLayout conatiner;
 
     private AlbumFragment albumFragment = new AlbumFragment();
-//    PistaAlbumFragment pistaAlbumFragment = new PistaAlbumFragment();
 
     public GeneroFragment() {
     }
@@ -51,11 +52,11 @@ public class GeneroFragment extends Fragment implements AlbumAdapterRecyclerView
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_genero, container, false);
         this.view = view;
+        conatiner = view.findViewById(R.id.generoContainer);
+        pbCategoria = view.findViewById(R.id.pbGenero);
 
         ImageView imgGenero = view.findViewById(R.id.imgGenero);
         Toolbar tvCabeceraGenero = view.findViewById(R.id.tvCabeceraGenero);
-//      view.findViewById(R.id.rvGeneroAlbum);
-
 
         tvCabeceraGenero.setNavigationIcon(R.drawable.ic_arrow_back_24dp);
         tvCabeceraGenero.setNavigationOnClickListener(new View.OnClickListener() {
@@ -75,39 +76,15 @@ public class GeneroFragment extends Fragment implements AlbumAdapterRecyclerView
         String nombreGenero = bundle.getString(KEY_NOMBRE_GENERO);
         idGenre = bundle.getInt(KEY_ID_GENERO);
 
-        //cargarGeneros();
         cargarArtistas();
-
 
         cargarImagen(imgGenero, urlImagenCabecera);
         tvCabeceraGenero.setTitle(nombreGenero);
-//        crearAlbumRecyclerView(R.id.rvGeneroAlbum);
-
-
         return view;
     }
 
-    private void cargarGeneros() {
-
-    }
-
-
     private void cargarImagen(ImageView imageView, String url) {
         Glide.with(getContext()).load(url).into(imageView);
-    }
-
-    private void crearAlbumRecyclerView(Integer idLayout) {
-//        RecyclerView generoRecyclerView = view.findViewById(idLayout);
-//        generoRecyclerView.setHasFixedSize(true);
-//
-//        LinearLayoutManager linearLayoutManager = new GridLayoutManager(getContext(), 2);
-//        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-//
-//        generoRecyclerView.setLayoutManager(linearLayoutManager);
-//
-//        AlbumAdapterRecyclerView categoriaAdapterRecyclerView = new AlbumAdapterRecyclerView(artistGenre, R.layout.cardview_album, getActivity(), this);
-//
-//        generoRecyclerView.setAdapter(categoriaAdapterRecyclerView);
     }
 
     private void crearArtistaRecyclerView(View view, Integer idLayout) {
@@ -132,22 +109,14 @@ public class GeneroFragment extends Fragment implements AlbumAdapterRecyclerView
             public void finish(List<ArtistDeezer> resultado) {
                 artistGenre = resultado;
                 crearArtistaRecyclerView(view, R.id.rvGeneroArtista);
+                pbCategoria.setVisibility(View.GONE);
+                conatiner.setVisibility(View.VISIBLE);
 
 
             }
         }, getContext(), idGenre);
 
     }
-
-    /*@Override
-    public void cambiarDeActividad(AlbumDeezer album) {
-        MainActivity mainActivity = (MainActivity) getActivity();
-        Bundle bundle = new Bundle();
-        bundle.putString(PistaAlbumFragment.KEY_IMAGEN_CABECERA_ALBUM_PISTA, album.getCoverMedium());
-        bundle.putString(PistaAlbumFragment.KEY_NOMBRE_CABECERA_ALBUM_PISTA, album.getTitle());
-        pistaAlbumFragment.setArguments(bundle);
-        mainActivity.reemplazarFragment(pistaAlbumFragment);
-    }*/
 
     @Override
     public void cambiarDeActividad(ArtistDeezer artista) {
