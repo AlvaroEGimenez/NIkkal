@@ -68,12 +68,7 @@ public class AlbumAdapterRecyclerView extends RecyclerView.Adapter {
                 @Override
                 public void onClick(View view) {
                     final AlbumDeezer album = albunDeezer.get(getAdapterPosition());
-                    imagenAlbumCardView.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            escuchador.cambiarDeActividad(album);
-                        }
-                    });
+                    escuchador.cambiarDeActividad(album);
                 }
             });
         }
