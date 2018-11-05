@@ -13,7 +13,6 @@ import com.bumptech.glide.Glide;
 import com.digitalhouse.a0818moacn01_02.R;
 import com.digitalhouse.a0818moacn01_02.model.Genre;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CategoriaAdapterRecyclerView extends RecyclerView.Adapter {
@@ -49,7 +48,7 @@ public class CategoriaAdapterRecyclerView extends RecyclerView.Adapter {
     }
 
     public interface AdapterInterface {
-        void cambiarDeActividad(Genre Genre);
+        void cambiarDeActividadGenero(Genre Genre);
     }
 
     public class GenreViewHolder extends RecyclerView.ViewHolder {
@@ -66,7 +65,7 @@ public class CategoriaAdapterRecyclerView extends RecyclerView.Adapter {
                 @Override
                 public void onClick(View view) {
                     Genre Genre = albunes.get(getAdapterPosition());
-                    escuchador.cambiarDeActividad(Genre);
+                    escuchador.cambiarDeActividadGenero(Genre);
                 }
             });
         }

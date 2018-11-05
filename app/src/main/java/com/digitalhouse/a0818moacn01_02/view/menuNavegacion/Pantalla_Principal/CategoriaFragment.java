@@ -23,27 +23,29 @@ import com.android.volley.RequestQueue;
 import com.digitalhouse.a0818moacn01_02.DAO.DAOLocal;
 import com.digitalhouse.a0818moacn01_02.R;
 import com.digitalhouse.a0818moacn01_02.Utils.ReproducirMp3;
-import com.digitalhouse.a0818moacn01_02.controller.GenreController;
-import com.digitalhouse.a0818moacn01_02.model.Album;
-import com.digitalhouse.a0818moacn01_02.model.Genre;
-import com.digitalhouse.a0818moacn01_02.view.adapter.AdaptadorTopChartDeezer;
 import com.digitalhouse.a0818moacn01_02.Utils.ResultListener;
+import com.digitalhouse.a0818moacn01_02.controller.GenreController;
+import com.digitalhouse.a0818moacn01_02.controller.RadioController;
+import com.digitalhouse.a0818moacn01_02.model.Genre;
 import com.digitalhouse.a0818moacn01_02.model.PruebasRetrofit2.Controller.TopChartController;
-import com.digitalhouse.a0818moacn01_02.model.Track;
+import com.digitalhouse.a0818moacn01_02.model.RadioDeezer;
 import com.digitalhouse.a0818moacn01_02.model.TopChartLocal;
+import com.digitalhouse.a0818moacn01_02.model.Track;
 import com.digitalhouse.a0818moacn01_02.view.MainActivity;
 import com.digitalhouse.a0818moacn01_02.view.adapter.AdaptadorTopChart;
+import com.digitalhouse.a0818moacn01_02.view.adapter.AdaptadorTopChartDeezer;
 import com.digitalhouse.a0818moacn01_02.view.adapter.CategoriaAdapterRecyclerView;
+import com.digitalhouse.a0818moacn01_02.view.adapter.RadioAdapterRecyclerView;
 import com.digitalhouse.a0818moacn01_02.view.categorias.GeneroFragment;
-import com.digitalhouse.a0818moacn01_02.view.categorias.MasEscuchado;
-import com.digitalhouse.a0818moacn01_02.view.categorias.SugerenciaActivity;
+import com.digitalhouse.a0818moacn01_02.view.categorias.SugerenciasFragment;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import it.moondroid.coverflow.components.ui.containers.FeatureCoverFlow;
 
-public class CategoriaFragment extends Fragment implements CategoriaAdapterRecyclerView.AdapterInterface, AdaptadorTopChartDeezer.onItemClickTopChartDeezer, AdaptadorTopChart.onItemClickTopChart {
+public class CategoriaFragment extends Fragment implements CategoriaAdapterRecyclerView.AdapterInterface, AdaptadorTopChartDeezer.onItemClickTopChartDeezer, AdaptadorTopChart.onItemClickTopChart
+        , RadioAdapterRecyclerView.AdapterInterface {
     public final static String KEY_GENERO = "Géneros";
     public final static String KEY_SUGERENCIA = "Sugerencias";
     public final static String KEY_MAS_ESCUCHADO = "Lo Más Escuchado";
@@ -52,6 +54,7 @@ public class CategoriaFragment extends Fragment implements CategoriaAdapterRecyc
     private RecyclerView recyclerView;
 
     private GeneroFragment generoFragment = new GeneroFragment();
+    private SugerenciasFragment sugerenciasFragment = new SugerenciasFragment();
 
     private FeatureCoverFlow featureCoverFlow;
     private AdaptadorTopChart adaptadorTopChart;
@@ -74,7 +77,8 @@ public class CategoriaFragment extends Fragment implements CategoriaAdapterRecyc
     private MainActivity parent;
 
     private RequestQueue requestQueue;
-    private  List<Genre> genreList = new ArrayList<>();
+    private List<Genre> genreList = new ArrayList<>();
+    private List<RadioDeezer> radioDeezerList = new ArrayList<>();
 
     public CategoriaFragment() {
     }
@@ -86,15 +90,17 @@ public class CategoriaFragment extends Fragment implements CategoriaAdapterRecyc
         final View view = inflater.inflate(R.layout.categoria_album, container, false);
         featureCoverFlow = view.findViewById(R.id.coverFlow);
         pbCategoria = view.findViewById(R.id.pbCategoria);
-        conatiner =  view.findViewById(R.id.categoriaContainer);
+        conatiner = view.findViewById(R.id.categoriaContainer);
 
         this.view = view;
         parent = (MainActivity) getActivity();
+
+
         setCategotia();
         cargarGenre();
+        cargarRadios();
 
 
-//        crearRecyclerView(R.id.rvSugerenciaRecyclerView, tvSugerencia.getText().toString());
 //        crearRecyclerView(R.id.rvMasEscuchadoRecyclerView, tvMasEscuchado.getText().toString());
 //        crearRecyclerView(R.id.rvFavoritoRecyclerView, tvFavorito.getText().toString());
 
@@ -158,6 +164,34 @@ public class CategoriaFragment extends Fragment implements CategoriaAdapterRecyc
         return view;
     }
 
+    private void crearRecyclerViewRadio(Integer idLayout) {
+        RecyclerView radioRecyclerView = view.findViewById(idLayout);
+        radioRecyclerView.setHasFixedSize(true);
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+
+        radioRecyclerView.setLayoutManager(linearLayoutManager);
+
+        RadioAdapterRecyclerView adapter = new RadioAdapterRecyclerView(radioDeezerList, R.layout.carcdview_categoria, getActivity(), this);
+
+        radioRecyclerView.setAdapter(adapter);
+
+
+    }
+
+    private void cargarRadios() {
+        RadioController radioController = new RadioController();
+        radioController.getRadios(new ResultListener<List<RadioDeezer>>() {
+            @Override
+            public void finish(List<RadioDeezer> resultado) {
+                radioDeezerList = resultado;
+                crearRecyclerViewRadio(R.id.rvSugerenciaRecyclerView);
+
+            }
+        }, getContext());
+    }
+
     private void crearRecyclerViewGenre(Integer idLayout) {
         RecyclerView genreRecyclerView = view.findViewById(idLayout);
         genreRecyclerView.setHasFixedSize(true);
@@ -174,26 +208,15 @@ public class CategoriaFragment extends Fragment implements CategoriaAdapterRecyc
 
 
     private void llamarActividad(Genre genre) {
-        String genero = genre.getName();
+
         Intent intent = null;
+        Bundle bundle = new Bundle();
+        bundle.putString(GeneroFragment.KEY_IMAGEN_GENERO, genre.getPictureMedium());
+        bundle.putString(GeneroFragment.KEY_NOMBRE_GENERO, genre.getName());
+        bundle.putInt(GeneroFragment.KEY_ID_GENERO, genre.getId());
 
-   /*     switch (genero) {
-            case CategoriaFragment.KEY_GENERO:*/
-                Bundle bundle = new Bundle();
-                bundle.putString(GeneroFragment.KEY_IMAGEN_GENERO, genre.getPictureMedium());
-                bundle.putString(GeneroFragment.KEY_NOMBRE_GENERO, genre.getName());
-                bundle.putInt(GeneroFragment.KEY_ID_GENERO, genre.getId());
-
-                generoFragment.setArguments(bundle);
-
-                parent.reemplazarFragment(generoFragment);
-             /*   break;
-            case CategoriaFragment.KEY_SUGERENCIA:
-                intent = new Intent(getContext(), SugerenciaActivity.class);
-                break;
-            case CategoriaFragment.KEY_MAS_ESCUCHADO:
-                intent = new Intent(getContext(), MasEscuchado.class);
-        }*/
+        generoFragment.setArguments(bundle);
+        parent.reemplazarFragment(generoFragment);
 
         if (intent != null)
             startActivity(intent);
@@ -214,13 +237,13 @@ public class CategoriaFragment extends Fragment implements CategoriaAdapterRecyc
         tvFavorito.setText(R.string.tv_favorito);
     }
 
-    private void cargarGenre(){
+    private void cargarGenre() {
 
         GenreController genreController = new GenreController();
         genreController.getGenre(new ResultListener<List<Genre>>() {
             @Override
             public void finish(List<Genre> resultado) {
-                genreList =  resultado;
+                genreList = resultado;
                 genreList.remove(0);
                 crearRecyclerViewGenre(R.id.rvGeneroRecyclerView);
                 pbCategoria.setVisibility(View.GONE);
@@ -230,7 +253,6 @@ public class CategoriaFragment extends Fragment implements CategoriaAdapterRecyc
         }, getContext());
 
     }
-
 
 
     @Override
@@ -258,7 +280,24 @@ public class CategoriaFragment extends Fragment implements CategoriaAdapterRecyc
 
 
     @Override
-    public void cambiarDeActividad(Genre Genre) {
+    public void cambiarDeActividadGenero(Genre Genre) {
         llamarActividad(Genre);
+    }
+
+    @Override
+    public void cambiarDeActividadRadio(RadioDeezer radioDeezer) {
+
+        Intent intent = null;
+        Bundle bundle = new Bundle();
+        bundle.putString(SugerenciasFragment.KEY_IMAGEN_SUGERENCIA, radioDeezer.getPictureMedium());
+        bundle.putString(SugerenciasFragment.KEY_URL_PLAYLIST_SUGERENCIA, radioDeezer.getTracklist());
+        bundle.putString(SugerenciasFragment.KEY_NOMBRE_SUGERENCIA,radioDeezer.getTitle());
+
+        sugerenciasFragment.setArguments(bundle);
+        parent.reemplazarFragment(sugerenciasFragment);
+        if (intent != null){
+            startActivity(intent);
+        }
+
     }
 }

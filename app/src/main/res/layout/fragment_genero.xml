@@ -6,7 +6,7 @@
     android:id="@+id/generoActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/mainBackground"
+    android:background="@drawable/background_bg"
     android:fitsSystemWindows="true"
     tools:context=".view.categorias.GeneroFragment">
 
@@ -22,7 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
-            app:contentScrim="@color/colorPrimaryDark"
+            app:contentScrim="@android:color/black"
             app:expandedTitleMarginEnd="32dp"
             app:expandedTitleMarginStart="32dp"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">

@@ -3,17 +3,17 @@ package com.digitalhouse.a0818moacn01_02.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class ArtistDeezer {
+public class RadioDeezer {
 
     @SerializedName("id")
     @Expose
-    private Integer id;
-    @SerializedName("name")
+    private String id;
+    @SerializedName("title")
     @Expose
-    private String name;
-    @SerializedName("link")
+    private String title;
+    @SerializedName("description")
     @Expose
-    private String link;
+    private String description;
     @SerializedName("share")
     @Expose
     private String share;
@@ -32,15 +32,6 @@ public class ArtistDeezer {
     @SerializedName("picture_xl")
     @Expose
     private String pictureXl;
-    @SerializedName("nb_album")
-    @Expose
-    private Integer nbAlbum;
-    @SerializedName("nb_fan")
-    @Expose
-    private Integer nbFan = 0;
-    @SerializedName("radio")
-    @Expose
-    private Boolean radio;
     @SerializedName("tracklist")
     @Expose
     private String tracklist;
@@ -48,29 +39,43 @@ public class ArtistDeezer {
     @Expose
     private String type;
 
-
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public RadioDeezer withId(String id) {
+        this.id = id;
+        return this;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getTitle() {
+        return title;
     }
 
-    public String getLink() {
-        return link;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public void setLink(String link) {
-        this.link = link;
+    public RadioDeezer withTitle(String title) {
+        this.title = title;
+        return this;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public RadioDeezer withDescription(String description) {
+        this.description = description;
+        return this;
     }
 
     public String getShare() {
@@ -81,12 +86,22 @@ public class ArtistDeezer {
         this.share = share;
     }
 
+    public RadioDeezer withShare(String share) {
+        this.share = share;
+        return this;
+    }
+
     public String getPicture() {
         return picture;
     }
 
     public void setPicture(String picture) {
         this.picture = picture;
+    }
+
+    public RadioDeezer withPicture(String picture) {
+        this.picture = picture;
+        return this;
     }
 
     public String getPictureSmall() {
@@ -97,12 +112,22 @@ public class ArtistDeezer {
         this.pictureSmall = pictureSmall;
     }
 
+    public RadioDeezer withPictureSmall(String pictureSmall) {
+        this.pictureSmall = pictureSmall;
+        return this;
+    }
+
     public String getPictureMedium() {
         return pictureMedium;
     }
 
     public void setPictureMedium(String pictureMedium) {
         this.pictureMedium = pictureMedium;
+    }
+
+    public RadioDeezer withPictureMedium(String pictureMedium) {
+        this.pictureMedium = pictureMedium;
+        return this;
     }
 
     public String getPictureBig() {
@@ -113,6 +138,11 @@ public class ArtistDeezer {
         this.pictureBig = pictureBig;
     }
 
+    public RadioDeezer withPictureBig(String pictureBig) {
+        this.pictureBig = pictureBig;
+        return this;
+    }
+
     public String getPictureXl() {
         return pictureXl;
     }
@@ -121,26 +151,9 @@ public class ArtistDeezer {
         this.pictureXl = pictureXl;
     }
 
-    public Integer getNbAlbum() {
-        return nbAlbum;
-    }
-
-    public void setNbAlbum(Integer nbAlbum) {
-        this.nbAlbum = nbAlbum;
-    }
-
-    public Integer getNbFan() { return nbFan;}
-
-    public void setNbFan(Integer nbFan) {
-        this.nbFan = nbFan;
-    }
-
-    public Boolean getRadio() {
-        return radio;
-    }
-
-    public void setRadio(Boolean radio) {
-        this.radio = radio;
+    public RadioDeezer withPictureXl(String pictureXl) {
+        this.pictureXl = pictureXl;
+        return this;
     }
 
     public String getTracklist() {
@@ -151,12 +164,22 @@ public class ArtistDeezer {
         this.tracklist = tracklist;
     }
 
+    public RadioDeezer withTracklist(String tracklist) {
+        this.tracklist = tracklist;
+        return this;
+    }
+
     public String getType() {
         return type;
     }
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public RadioDeezer withType(String type) {
+        this.type = type;
+        return this;
     }
 
 }

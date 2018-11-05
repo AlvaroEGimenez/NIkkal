@@ -12,7 +12,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.digitalhouse.a0818moacn01_02.R;
 import com.digitalhouse.a0818moacn01_02.model.AlbumDeezer;
-import com.digitalhouse.a0818moacn01_02.model.ArtistDeezer;
 
 import java.util.List;
 
@@ -56,23 +55,22 @@ public class AlbumAdapterRecyclerView extends RecyclerView.Adapter {
     public class AlbumViewHolder extends RecyclerView.ViewHolder {
         private ImageView imagenAlbumCardView;
         private TextView tituloCardView;
-        private TextView textViewFanAlbum;
+        private TextView cantidadTracks;
 
         public AlbumViewHolder(@NonNull final View itemView) {
             super(itemView);
 
             imagenAlbumCardView = itemView.findViewById(R.id.imagenAlbum);
             tituloCardView = itemView.findViewById(R.id.tituloAlbum);
-            textViewFanAlbum = itemView.findViewById(R.id.fanAlbum);
+            cantidadTracks = itemView.findViewById(R.id.cantidadTracks);
 
             imagenAlbumCardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    AlbumDeezer album = albunDeezer.get(getAdapterPosition());
+                    final AlbumDeezer album = albunDeezer.get(getAdapterPosition());
                     imagenAlbumCardView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            AlbumDeezer album = albunDeezer.get(getAdapterPosition());
                             escuchador.cambiarDeActividad(album);
                         }
                     });
@@ -82,7 +80,7 @@ public class AlbumAdapterRecyclerView extends RecyclerView.Adapter {
 
         public void cargar(AlbumDeezer album) {
             tituloCardView.setText(album.getTitle());
-            //textViewFanAlbum.setText(album.getNbFan().toString());
+            cantidadTracks.setText(String.valueOf(album.getRating()));
             cargarImagen(imagenAlbumCardView, album.getCoverMedium());
         }
     }

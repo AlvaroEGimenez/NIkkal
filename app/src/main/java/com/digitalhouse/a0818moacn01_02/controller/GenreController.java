@@ -20,7 +20,6 @@ public class GenreController {
                     listenerView.finish(resultado);
                 }
             });
-
         }
     }
 }

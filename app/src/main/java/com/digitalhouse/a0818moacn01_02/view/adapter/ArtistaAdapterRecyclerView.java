@@ -12,7 +12,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.digitalhouse.a0818moacn01_02.R;
 import com.digitalhouse.a0818moacn01_02.model.ArtistDeezer;
-import com.digitalhouse.a0818moacn01_02.model.Artista;
 
 import java.util.List;
 
