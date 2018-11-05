@@ -25,6 +25,7 @@ import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Pantalla_Principal.C
 import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Radio_Online.RadioFragment;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
+
 import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity implements AdapatadorBusqueda.BusquedaInterface {
@@ -110,10 +111,9 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
 
     }
 
-    private void reproducirMp3(final String url, final MediaPlayer mediaPlayer) {
+    public void reproducirMp3(final String url, final MediaPlayer mediaPlayer) {
 
         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-
 
         try {
             if (!mediaPlayer.isPlaying()) {
@@ -177,6 +177,26 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
 
         {
             e.printStackTrace();
+        }
+    }
+
+    public MediaPlayer getMediaPlayer() {
+        return mediaPlayer;
+    }
+
+    public void visibilidadReproductor(Boolean esVisible) {
+        if (esVisible) {
+            linearLayoutReproductor.setVisibility(View.VISIBLE);
+            imageViewPlay.setVisibility(View.INVISIBLE);
+            imageViewPause.setVisibility(View.VISIBLE);
+            textViewNombrePista.setTextColor(Color.parseColor("#FD9701"));
+            imageViewPause.setVisibility(View.VISIBLE);
+        }else{
+            linearLayoutReproductor.setVisibility(View.GONE);
+            imageViewPlay.setVisibility(View.GONE);
+            imageViewPause.setVisibility(View.GONE);
+            imageViewPause.setVisibility(View.GONE);
+            linearLayoutReproductor.setVisibility(View.GONE);
         }
     }
 

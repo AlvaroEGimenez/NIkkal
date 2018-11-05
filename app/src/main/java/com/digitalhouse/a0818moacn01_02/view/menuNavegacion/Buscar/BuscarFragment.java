@@ -28,6 +28,7 @@ import com.android.volley.toolbox.Volley;
 import com.digitalhouse.a0818moacn01_02.R;
 import com.digitalhouse.a0818moacn01_02.Utils.ReproducirMp3;
 import com.digitalhouse.a0818moacn01_02.model.Busqueda;
+import com.digitalhouse.a0818moacn01_02.view.MainActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -77,7 +78,8 @@ public class BuscarFragment extends Fragment implements AdapatadorBusqueda.Busqu
         recyclerView.setHasFixedSize(true);
 
 
-        mediaPlayer = new MediaPlayer();
+        MainActivity mainActivity = (MainActivity)getActivity();
+        mediaPlayer = mainActivity.getMediaPlayer();
 
 
         imageButtonBusqueda.setOnClickListener(new View.OnClickListener() {

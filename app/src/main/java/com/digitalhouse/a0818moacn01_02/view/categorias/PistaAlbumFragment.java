@@ -2,21 +2,26 @@ package com.digitalhouse.a0818moacn01_02.view.categorias;
 
 
 import android.app.Dialog;
+import android.content.DialogInterface;
+import android.graphics.Color;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -27,6 +32,7 @@ import com.digitalhouse.a0818moacn01_02.controller.TracksController;
 import com.digitalhouse.a0818moacn01_02.model.TopChartLocal;
 import com.digitalhouse.a0818moacn01_02.model.Track;
 import com.digitalhouse.a0818moacn01_02.model.Tracks;
+import com.digitalhouse.a0818moacn01_02.view.MainActivity;
 import com.digitalhouse.a0818moacn01_02.view.adapter.pista.PistaAdapterViewPage;
 import com.digitalhouse.a0818moacn01_02.view.adapter.pista.PistaAlbumRecyclerView;
 import com.digitalhouse.a0818moacn01_02.view.adapter.pista.RecyclerItemTouchHelper;
@@ -50,16 +56,22 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
     private AutoScrollViewPager autoScrollViewPager;
     private RecyclerView recyclerView;
     private View view;
-    private MediaPlayer mediaPlayer = new MediaPlayer();
-    private ImageButton btnPlay;
-    private ImageButton btnPause;
-    Integer  positionActual=0;
+    private MediaPlayer mediaPlayer;
+    private Integer  positionActual=null;
+    private Track pistaActual;
+    private Boolean swap = Boolean.FALSE;
+    private MainActivity mainActivity;
     private List<Track> pistas = new ArrayList<>();
 
 
     public PistaAlbumFragment() {
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mainActivity = (MainActivity)getActivity();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -77,6 +89,8 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
         cargarImagen(imgCabeceraAlbumPista, urlImagenCabecera);
         toolbaarNombreCabeceraAlbumPista.setTitle(nombreCabeceraPistaAlbum);
         cargarPista(idPista);
+
+        mediaPlayer = mainActivity.getMediaPlayer();
 
         return view;
     }
@@ -141,15 +155,34 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
 
     @Override
     public void pistaViewPageListener(Integer posicion, View itemViewSelected) {
-        Dialog dialog = new Dialog(getContext(), R.style.pistaViewPage);
+        final Dialog dialog = new Dialog(getContext(), R.style.pistaViewPage);
         dialog.setContentView(R.layout.pista_view_page_content);
 
         pistaAdapterViewPage = new PistaAdapterViewPage(pistas, getContext(), this);
         autoScrollViewPager = dialog.findViewById(R.id.pistaViewPagerScroll);
         autoScrollViewPager.setAdapter(pistaAdapterViewPage);
-
         autoScrollViewPager.setCurrentItem(posicion);
+
+        dialog.setOnKeyListener(new Dialog.OnKeyListener() {
+
+            @Override
+            public boolean onKey(DialogInterface arg0, int keyCode,
+                                 KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_BACK) {
+                    dialog.dismiss();
+                    swap = Boolean.FALSE;
+                    TextView textViewNombrePista = mainActivity.findViewById(R.id.tvNombreReproductor);
+                    textViewNombrePista.setSelected(true);
+                    textViewNombrePista.setText(pistaActual.getArtist().getName() + " - " + pistaActual.getTitle());
+                    mainActivity.visibilidadReproductor(true);
+                }
+                return true;
+            }
+        });
+
+
         dialog.show();
+        mainActivity.visibilidadReproductor(false);
     }
 
     private void cargarImagen(ImageView imageView, Integer idDrawable) {
@@ -158,19 +191,22 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
 
     @Override
     public void pistaAnterior(Integer position) {
+        positionActual = position;
         autoScrollViewPager.setCurrentItem(position);
+
     }
 
     @Override
     public void pistaSiguiente(Integer position) {
+        positionActual = position;
         autoScrollViewPager.setCurrentItem(position);
-        long itemId = pistaAlbumRecyclerView.getItemId(position);
 
     }
 
     @Override
     public void pistaPlay(final Track pista, final ProgressBar progressBar, Integer posicion) {
-
+        pistaActual = pista;
+        swap = Boolean.TRUE;
        if(mediaPlayer.getCurrentPosition()>0 && positionActual == posicion){
            mediaPlayer.start();
             return;
@@ -235,5 +271,13 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
         Toast.makeText(getContext(), "Ingrese nombre del playList ", Toast.LENGTH_SHORT).show();
         pistaAlbumRecyclerView.notifyItemRemoved(position);
         pistaAlbumRecyclerView.notifyItemInserted(position);
+    }
+
+    public Boolean getSwap() {
+        return swap;
+    }
+
+    public void setSwap(Boolean swap) {
+        this.swap = swap;
     }
 }
