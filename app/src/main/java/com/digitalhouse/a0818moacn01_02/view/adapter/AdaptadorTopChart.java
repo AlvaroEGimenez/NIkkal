@@ -25,6 +25,11 @@ public class AdaptadorTopChart extends BaseAdapter {
         this.onItemClickTopChart = onItemClickTopChart;
     }
 
+    public void setTopChartList(List<TopChartLocal> topChartList) {
+        this.topChartList = topChartList;
+        notifyDataSetChanged();
+    }
+
     @Override
     public int getCount() {
         return topChartList.size();

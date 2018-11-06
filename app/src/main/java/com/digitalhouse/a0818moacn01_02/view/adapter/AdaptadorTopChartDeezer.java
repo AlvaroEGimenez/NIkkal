@@ -25,6 +25,11 @@ public class AdaptadorTopChartDeezer extends BaseAdapter {
         this.onItemClickTopChart = onItemClickTopChart;
     }
 
+    public void setTopChartList(List<Track> topChartList) {
+        this.topChartList = topChartList;
+        notifyDataSetChanged();
+    }
+
     @Override
     public int getCount() {
         return topChartList.size();
