@@ -11,18 +11,18 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.digitalhouse.a0818moacn01_02.R;
 import com.digitalhouse.a0818moacn01_02.model.TopChartLocal;
+import com.digitalhouse.a0818moacn01_02.model.Track;
 
 import java.util.List;
 
-public class AdaptadorTopChart extends BaseAdapter {
+public class AdaptadorLocalTopChart extends BaseAdapter {
     private List<TopChartLocal> topChartList;
     private Context context;
-    private onItemClickTopChart onItemClickTopChart;
+    private onItemClickTopChartDeezer onItemClickTopChart;
 
-    public AdaptadorTopChart(List<TopChartLocal> topChartList, Context context, onItemClickTopChart onItemClickTopChart) {
+    public AdaptadorLocalTopChart(List<TopChartLocal> topChartList, Context context) {
         this.topChartList = topChartList;
         this.context = context;
-        this.onItemClickTopChart = onItemClickTopChart;
     }
 
     public void setTopChartList(List<TopChartLocal> topChartList) {
@@ -61,7 +61,7 @@ public class AdaptadorTopChart extends BaseAdapter {
             imagen.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    onItemClickTopChart.onClickTopChart(topChartList.get(position));
+                    onItemClickTopChart.onClickTopChartDeezer(topChartList.get(position));
                 }
             });
 
@@ -70,7 +70,7 @@ public class AdaptadorTopChart extends BaseAdapter {
         return rootView;
     }
 
-    public interface onItemClickTopChart{
-        void onClickTopChart(TopChartLocal topChartLocal);
+    public interface onItemClickTopChartDeezer{
+        void onClickTopChartDeezer(TopChartLocal topChartLocalDeezer);
     }
 }

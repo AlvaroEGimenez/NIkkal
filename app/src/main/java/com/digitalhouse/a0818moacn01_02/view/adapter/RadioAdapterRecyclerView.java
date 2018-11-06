@@ -80,4 +80,5 @@ public class RadioAdapterRecyclerView extends RecyclerView.Adapter {
     private void cargarImagen(ImageView imageView, String url) {
         Glide.with(activity).load(url).into(imageView);
     }
+
 }

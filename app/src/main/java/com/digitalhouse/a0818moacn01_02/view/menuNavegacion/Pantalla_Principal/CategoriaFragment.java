@@ -18,35 +18,40 @@ import android.widget.ProgressBar;
 import android.widget.TextSwitcher;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
+
+import com.digitalhouse.a0818moacn01_02.DAO.DAOLocal;
 import com.digitalhouse.a0818moacn01_02.R;
 import com.digitalhouse.a0818moacn01_02.Utils.ReproducirMp3;
 import com.digitalhouse.a0818moacn01_02.Utils.ResultListener;
 import com.digitalhouse.a0818moacn01_02.controller.GenreController;
 import com.digitalhouse.a0818moacn01_02.controller.RadioController;
+import com.digitalhouse.a0818moacn01_02.controller.TopChartController;
 import com.digitalhouse.a0818moacn01_02.model.Genre;
-import com.digitalhouse.a0818moacn01_02.model.PruebasRetrofit2.Controller.TopChartController;
 import com.digitalhouse.a0818moacn01_02.model.RadioDeezer;
+import com.digitalhouse.a0818moacn01_02.model.TopChartDeezer;
 import com.digitalhouse.a0818moacn01_02.model.TopChartLocal;
 import com.digitalhouse.a0818moacn01_02.model.Track;
 import com.digitalhouse.a0818moacn01_02.view.MainActivity;
-import com.digitalhouse.a0818moacn01_02.view.adapter.AdaptadorTopChart;
+import com.digitalhouse.a0818moacn01_02.view.adapter.AdaptadorLocalTopChart;
 import com.digitalhouse.a0818moacn01_02.view.adapter.AdaptadorTopChartDeezer;
 import com.digitalhouse.a0818moacn01_02.view.adapter.CategoriaAdapterRecyclerView;
 import com.digitalhouse.a0818moacn01_02.view.adapter.RadioAdapterRecyclerView;
 import com.digitalhouse.a0818moacn01_02.view.categorias.GeneroFragment;
 import com.digitalhouse.a0818moacn01_02.view.categorias.SugerenciasFragment;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import it.moondroid.coverflow.components.ui.containers.FeatureCoverFlow;
 
-public class CategoriaFragment extends Fragment implements CategoriaAdapterRecyclerView.AdapterInterface, AdaptadorTopChartDeezer.onItemClickTopChartDeezer, AdaptadorTopChart.onItemClickTopChart
-        , RadioAdapterRecyclerView.AdapterInterface {
+public class CategoriaFragment extends Fragment implements CategoriaAdapterRecyclerView.AdapterInterface, AdaptadorTopChartDeezer.onItemClickTopChartDeezer, RadioAdapterRecyclerView.AdapterInterface {
 
 
     private GeneroFragment generoFragment = new GeneroFragment();
     private SugerenciasFragment sugerenciasFragment = new SugerenciasFragment();
     private FeatureCoverFlow featureCoverFlow;
     private List<RadioDeezer> radioDeezerList = new ArrayList<>();
+    List<Track> topChartDeezerList = new ArrayList<>();
     private TextSwitcher mTitle;
     private View view;
     private ProgressBar pbCategoria;
@@ -72,7 +77,12 @@ public class CategoriaFragment extends Fragment implements CategoriaAdapterRecyc
         parent = (MainActivity) getActivity();
 
         adaptadorTopChartDeezer = new AdaptadorTopChartDeezer(new ArrayList<Track>(), getContext(), this);
+        DAOLocal daoLocal = new DAOLocal();
+        final List<TopChartLocal> topChartLocal = new ArrayList<>();
+        daoLocal.ObtenerTopChar(topChartLocal);
 
+        AdaptadorLocalTopChart adaptadorLocalTopChart = new AdaptadorLocalTopChart(topChartLocal,getContext());
+        featureCoverFlow.setAdapter(adaptadorLocalTopChart);
 
         setCategotia();
         cargarGenre();
@@ -98,7 +108,6 @@ public class CategoriaFragment extends Fragment implements CategoriaAdapterRecyc
         topChartController.getTraks(new ResultListener<List<Track>>() {
             @Override
             public void finish(final List<Track> resultado) {
-
                 adaptadorTopChartDeezer.setTopChartList(resultado);
                 featureCoverFlow.setAdapter(adaptadorTopChartDeezer);
 
@@ -107,6 +116,7 @@ public class CategoriaFragment extends Fragment implements CategoriaAdapterRecyc
                     public void onScrolledToPosition(int position) {
 
                         mTitle.setText(resultado.get(position).getTitle() + " - " + resultado.get(position).getArtist().getName());
+
                     }
 
                     @Override
@@ -114,6 +124,7 @@ public class CategoriaFragment extends Fragment implements CategoriaAdapterRecyc
 
                     }
                 });
+
             }
         }, getContext());
 
@@ -220,16 +231,6 @@ public class CategoriaFragment extends Fragment implements CategoriaAdapterRecyc
         textViewNombrePista.setTextColor(Color.parseColor("#FD9701"));
     }
 
-    @Override
-    public void onClickTopChart(TopChartLocal topChartLocal) {
-        TextView textViewNombrePista = getActivity().findViewById(R.id.tvNombreReproductor);
-        textViewNombrePista.setSelected(true);
-
-        ReproducirMp3 reproducirMp3 = new ReproducirMp3();
-        reproducirMp3.reproducirMp3(topChartLocal.getUrlMp3(), mediaPlayer, parent);
-        textViewNombrePista.setText(topChartLocal.getNombreTrack() + " - " + topChartLocal.getNombreArtista());
-        textViewNombrePista.setTextColor(Color.parseColor("#FD9701"));
-    }
 
     @Override
     public void cambiarDeActividadGenero(Genre Genre) {
@@ -241,8 +242,8 @@ public class CategoriaFragment extends Fragment implements CategoriaAdapterRecyc
 
         Intent intent = null;
         Bundle bundle = new Bundle();
-        bundle.putString(SugerenciasFragment.KEY_IMAGEN_SUGERENCIA, radioDeezer.getPictureMedium());
-        bundle.putString(SugerenciasFragment.KEY_URL_PLAYLIST_SUGERENCIA, radioDeezer.getTracklist());
+        bundle.putString(SugerenciasFragment.KEY_IMAGEN_SUGERENCIA, radioDeezer.getPictureBig());
+        bundle.putString(SugerenciasFragment.KEY_ID_PLAYLIST_SUGERENCIA, radioDeezer.getId());
         bundle.putString(SugerenciasFragment.KEY_NOMBRE_SUGERENCIA, radioDeezer.getTitle());
 
         sugerenciasFragment.setArguments(bundle);

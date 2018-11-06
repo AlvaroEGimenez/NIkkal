@@ -30,8 +30,6 @@ public class AlbumFragment extends Fragment implements AlbumAdapterRecyclerView.
     public static final String KEY_NOMBRE_ARTISTA = "nombreArtista";
     public static final String KEY_ID_ARTISTA = "idArtista";
 
-    private ImageView imagenArtista;
-    private Toolbar tvCabeceraArtista;
     private PistaAlbumFragment pistaAlbumFragment = new PistaAlbumFragment();
     private Integer idArtist;
     private List<AlbumDeezer> albumDeezerList = new ArrayList<>();
@@ -51,8 +49,8 @@ public class AlbumFragment extends Fragment implements AlbumAdapterRecyclerView.
         conatiner = view.findViewById(R.id.categoriaAlbumContainer);
         pbAlbum = view.findViewById(R.id.pbAlbum);
 
-        imagenArtista = view.findViewById(R.id.imagenArtista);
-        tvCabeceraArtista = view.findViewById(R.id.tvCabeceraArtista);
+        ImageView imagenArtista = view.findViewById(R.id.imagenArtista);
+        Toolbar tvCabeceraArtista = view.findViewById(R.id.tvCabeceraArtista);
         view.findViewById(R.id.rvAlbum);
 
         Bundle bundle = getArguments();

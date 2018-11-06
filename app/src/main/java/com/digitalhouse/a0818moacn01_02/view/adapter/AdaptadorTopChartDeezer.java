@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide;
 import com.digitalhouse.a0818moacn01_02.R;
 import com.digitalhouse.a0818moacn01_02.model.Track;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AdaptadorTopChartDeezer extends BaseAdapter {

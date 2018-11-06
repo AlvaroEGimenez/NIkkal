@@ -2,24 +2,25 @@ package com.digitalhouse.a0818moacn01_02.controller;
 
 import android.content.Context;
 
-import com.digitalhouse.a0818moacn01_02.Utils.Util;
 import com.digitalhouse.a0818moacn01_02.DAO.TopChartDAO;
+import com.digitalhouse.a0818moacn01_02.DAO.TrackListDAO;
 import com.digitalhouse.a0818moacn01_02.Utils.ResultListener;
+import com.digitalhouse.a0818moacn01_02.Utils.Util;
 import com.digitalhouse.a0818moacn01_02.model.Track;
 
 import java.util.List;
 
-public class TopChartController {
+public class TrackListController {
 
-    public void getTraks (final ResultListener<List<Track>> listenerView, Context context){
+    public void getTraksList (final ResultListener<List<Track>> listenerView, Context context, Integer tracklistId){
         if (Util.hayInternet(context)){
-            TopChartDAO topChartDAO = new TopChartDAO();
-            topChartDAO.getTracks(new ResultListener<List<Track>>() {
+            TrackListDAO trackListDAO = new TrackListDAO();
+            trackListDAO.getTrackList(new ResultListener<List<Track>>() {
                 @Override
                 public void finish(List<Track> resultado) {
                     listenerView.finish(resultado);
                 }
-            });
+            },tracklistId);
 
         }
     }

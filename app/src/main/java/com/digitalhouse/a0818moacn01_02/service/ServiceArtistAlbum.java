@@ -8,7 +8,6 @@ import retrofit2.http.Path;
 
 public interface ServiceArtistAlbum {
 
-
     @GET("artist/{artistId}/albums")
     Call<ContenedorAlbum> getArtistAlbum(@Path(value = "artistId", encoded = true) Integer idArtist);
 
