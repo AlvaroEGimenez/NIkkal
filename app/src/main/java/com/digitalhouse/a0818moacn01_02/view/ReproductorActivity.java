@@ -30,6 +30,7 @@ public class ReproductorActivity extends AppCompatActivity {
         Integer posicion = bundle.getInt(KEY_POSICION);
 
 
+
         ViewPager viewPager = findViewById(R.id.viewpageSugerencia);
         SugerenciasViewPager sugerenciasViewPager = new SugerenciasViewPager(getSupportFragmentManager(),trackList);
 

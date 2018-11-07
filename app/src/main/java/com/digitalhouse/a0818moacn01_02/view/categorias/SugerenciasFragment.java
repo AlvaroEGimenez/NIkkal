@@ -27,6 +27,7 @@ import com.digitalhouse.a0818moacn01_02.Utils.ResultListener;
 import com.digitalhouse.a0818moacn01_02.controller.TrackListController;
 import com.digitalhouse.a0818moacn01_02.model.Track;
 import com.digitalhouse.a0818moacn01_02.view.ReproductorActivity;
+import com.digitalhouse.a0818moacn01_02.view.ReproductorFragment;
 import com.digitalhouse.a0818moacn01_02.view.adapter.PlaylistAdapterRecyclerView;
 
 import java.io.Serializable;
@@ -156,6 +157,7 @@ public class SugerenciasFragment extends Fragment implements PlaylistAdapterRecy
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), ReproductorActivity.class);
                 Bundle bundle = new Bundle();
+
                 bundle.putInt(ReproductorActivity.KEY_POSICION,posicion);
                 bundle.putSerializable(ReproductorActivity.KEY_OBJETO, (Serializable) trackList);
                 intent.putExtras(bundle);

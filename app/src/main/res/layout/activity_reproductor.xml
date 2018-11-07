@@ -16,42 +16,19 @@
 
     </android.support.v4.view.ViewPager>
 
-
-    <LinearLayout
-        android:id="@+id/lineallayoutReprductor"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
+    <ProgressBar
+        android:id="@+id/progressBarReproductor"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="170dp"
-        android:layout_above="@+id/relative">
-
-        <TextView
-            android:id="@+id/tvtiempoTrascurrido"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.2"
-            android:text="0.00"
-            android:textAlignment="center"
-            android:textColor="@color/album_titulo"/>
-
-        <SeekBar
-            android:id="@+id/seekbarReproductor"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_weight="1.6"
-            />
-
-        <TextView
-            android:id="@+id/tvtiempoRestante"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.2"
-            android:text="4.21"
-            android:textAlignment="center"
-            android:textColor="@color/album_titulo" />
-    </LinearLayout>
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="40dp"
+        android:background="@drawable/circle_shape"
+        android:indeterminate="false"
+        android:max="100"
+        android:progress="65"
+        android:progressDrawable="@drawable/circular_progress_bar" />
 
 
     <RelativeLayout
@@ -60,8 +37,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
+        android:layout_marginStart="0dp"
         android:layout_marginTop="40dp"
-        android:layout_marginBottom="80dp"
+        android:layout_marginBottom="135dp"
         android:orientation="horizontal">
 
         <ImageView
@@ -79,14 +57,15 @@
             android:layout_height="60dp"
             android:layout_centerHorizontal="true"
             android:src="@drawable/play_button"
-            android:visibility="visible"/>
+            android:visibility="invisible" />
+
         <ImageView
             android:id="@+id/ivPausaReproductor"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_centerHorizontal="true"
             android:src="@drawable/pause"
-            android:visibility="invisible"/>
+            android:visibility="visible" />
 
         <ImageView
             android:id="@+id/ivProximoReproductor"

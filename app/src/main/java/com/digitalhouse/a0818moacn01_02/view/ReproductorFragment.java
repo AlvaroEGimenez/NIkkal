@@ -1,6 +1,7 @@
 package com.digitalhouse.a0818moacn01_02.view;
 
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -9,11 +10,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestBuilder;
 import com.bumptech.glide.request.target.ViewTarget;
+import com.deezer.sdk.network.connect.DeezerConnect;
+import com.deezer.sdk.network.request.event.DeezerError;
+import com.deezer.sdk.player.TrackPlayer;
+import com.deezer.sdk.player.exception.TooManyPlayersExceptions;
+import com.deezer.sdk.player.networkcheck.WifiAndMobileNetworkStateChecker;
 import com.digitalhouse.a0818moacn01_02.R;
 import com.digitalhouse.a0818moacn01_02.model.Track;
 import com.jgabrielfreitas.core.BlurImageView;
@@ -23,16 +30,25 @@ import com.jgabrielfreitas.core.BlurImageView;
  */
 public class ReproductorFragment extends Fragment {
 
+    String applicationID = "54587f8009fc0747c9f2eacef47d35f4";
+    final DeezerConnect deezerConnect = new DeezerConnect(getContext(), applicationID);
+
     public static final String KEY_IMAGEN_TRACK = "imagen";
     public static final String KEY_NOMBRE_TRACK = "nombre track";
     public static final String KEY_NOMBRE_ARTISTA = "nombre artista";
     public static final String KEY_DURACION_TRACK = "duracion";
+    public static final String KEY_ID_TRACK = "idTrack";
+    public static final String KEY_POSICION_ACTUAL = "posicion";
 
 
     private String urlImagen;
     private String nombreTrack;
     private String nombreArtista;
     private Integer duracionTrack;
+    private Integer idTrack;
+    private Long posicionActual;
+
+    private TrackPlayer trackPlayer;
 
     public static ReproductorFragment factory(Track track) {
         ReproductorFragment reproductorFragment = new ReproductorFragment();
@@ -41,6 +57,7 @@ public class ReproductorFragment extends Fragment {
         bundle.putString(KEY_NOMBRE_TRACK, track.getTitle());
         bundle.putString(KEY_NOMBRE_ARTISTA, track.getArtist().getName());
         bundle.putInt(KEY_DURACION_TRACK, track.getDuration());
+        bundle.putInt(KEY_ID_TRACK,track.getId());
         reproductorFragment.setArguments(bundle);
         return reproductorFragment;
     }
@@ -52,6 +69,7 @@ public class ReproductorFragment extends Fragment {
             nombreTrack = bundle.getString(KEY_NOMBRE_TRACK);
             nombreArtista = bundle.getString(KEY_NOMBRE_ARTISTA);
             duracionTrack = bundle.getInt(KEY_DURACION_TRACK);
+            posicionActual = bundle.getLong(KEY_POSICION_ACTUAL);
 
         }
     }
@@ -80,8 +98,50 @@ public class ReproductorFragment extends Fragment {
         textViewNombredelArtista.setText(nombreArtista);
         textViewNombredelTrack.setSelected(true);
 
+        try {
+             trackPlayer = new TrackPlayer(getActivity().getApplication(),deezerConnect,new WifiAndMobileNetworkStateChecker());
+        } catch (TooManyPlayersExceptions tooManyPlayersExceptions) {
+            tooManyPlayersExceptions.printStackTrace();
+        } catch (DeezerError deezerError) {
+            deezerError.printStackTrace();
+        }
 
+        ProgressBar progressBar = getActivity().findViewById(R.id.progressBarReproductor);
+        progressBar.setMax(100);
+        ImageView imageViewAnterior = getActivity().findViewById(R.id.ivAnteriorReproductor);
+        final ImageView imageViewPlay = getActivity().findViewById(R.id.ivPlayReproductor);
+        final ImageView imageViewPause = getActivity().findViewById(R.id.ivPausaReproductor);
+        ImageView imageViewProximo = getActivity().findViewById(R.id.ivProximoReproductor);
 
+        imageViewPause.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                imageViewPlay.setVisibility(View.VISIBLE);
+                imageViewPause.setVisibility(View.INVISIBLE);
+            }
+        });
+
+        imageViewPlay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                imageViewPlay.setVisibility(View.INVISIBLE);
+                imageViewPause.setVisibility(View.VISIBLE);
+            }
+        });
+
+        imageViewAnterior.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        imageViewProximo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
         return view;
     }

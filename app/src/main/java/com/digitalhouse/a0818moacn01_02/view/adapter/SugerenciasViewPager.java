@@ -19,7 +19,7 @@ public class SugerenciasViewPager extends FragmentPagerAdapter {
         super(fm);
         this.trackList = trackList;
 
-        for (Track track : trackList){
+        for (Track track : trackList) {
             reproductorFragments.add(ReproductorFragment.factory(track));
         }
     }
@@ -32,5 +32,9 @@ public class SugerenciasViewPager extends FragmentPagerAdapter {
     @Override
     public int getCount() {
         return trackList.size();
+    }
+
+    public interface siguiente {
+        void siguiente(Integer posicion);
     }
 }
