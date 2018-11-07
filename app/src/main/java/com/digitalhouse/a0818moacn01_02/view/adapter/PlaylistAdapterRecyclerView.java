@@ -71,7 +71,7 @@ public class PlaylistAdapterRecyclerView extends RecyclerView.Adapter {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    playlistClick.OnClickTrack(track);
+                    playlistClick.OnClickTrack(track, getAdapterPosition());
                 }
             });
 
@@ -79,6 +79,6 @@ public class PlaylistAdapterRecyclerView extends RecyclerView.Adapter {
     }
 
     public  interface playlistClick{
-        void OnClickTrack(Track track);
+        void OnClickTrack(Track track, Integer posicion);
     }
 }

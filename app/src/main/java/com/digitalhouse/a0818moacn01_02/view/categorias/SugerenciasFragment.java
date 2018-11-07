@@ -29,6 +29,7 @@ import com.digitalhouse.a0818moacn01_02.model.Track;
 import com.digitalhouse.a0818moacn01_02.view.ReproductorActivity;
 import com.digitalhouse.a0818moacn01_02.view.adapter.PlaylistAdapterRecyclerView;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,7 +45,7 @@ public class SugerenciasFragment extends Fragment implements PlaylistAdapterRecy
     private RadioPlayer radioPlayer;
     private TrackPlayer trackPlayer;
     private Integer id;
-    private Activity activity;
+    private List<Track> trackList;
 
 
     public SugerenciasFragment() {
@@ -100,6 +101,7 @@ public class SugerenciasFragment extends Fragment implements PlaylistAdapterRecy
         trackListController.getTraksList(new ResultListener<List<Track>>() {
             @Override
             public void finish(List<Track> resultado) {
+                trackList = resultado;
                 playlistAdapterRecyclerView.setTrackList(resultado);
             }
         }, getContext(), id);
@@ -109,7 +111,7 @@ public class SugerenciasFragment extends Fragment implements PlaylistAdapterRecy
     }
 
     @Override
-    public void OnClickTrack(final Track track) {
+    public void OnClickTrack(final Track track, final Integer posicion) {
 
         final ImageView imageViewPlay = getActivity().findViewById(R.id.btnRepoductorPlay);
         final ImageView imageViewPause = getActivity().findViewById(R.id.btnReproductorPause);
@@ -154,6 +156,9 @@ public class SugerenciasFragment extends Fragment implements PlaylistAdapterRecy
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), ReproductorActivity.class);
                 Bundle bundle = new Bundle();
+                bundle.putInt(ReproductorActivity.KEY_POSICION,posicion);
+                bundle.putSerializable(ReproductorActivity.KEY_OBJETO, (Serializable) trackList);
+                intent.putExtras(bundle);
                 startActivity(intent);
 
             }

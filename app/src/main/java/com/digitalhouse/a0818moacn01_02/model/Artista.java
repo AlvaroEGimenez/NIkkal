@@ -1,6 +1,6 @@
 package com.digitalhouse.a0818moacn01_02.model;
 
-public class Artista {
+public class Artista  {
     private String imagen;
     private String nombre;
     private String  genero;

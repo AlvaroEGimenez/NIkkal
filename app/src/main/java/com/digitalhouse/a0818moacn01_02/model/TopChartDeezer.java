@@ -1,10 +1,11 @@
 package com.digitalhouse.a0818moacn01_02.model;
 
+import java.io.Serializable;
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class TopChartDeezer {
+public class TopChartDeezer implements Serializable {
 
     @SerializedName("tracks")
     @Expose

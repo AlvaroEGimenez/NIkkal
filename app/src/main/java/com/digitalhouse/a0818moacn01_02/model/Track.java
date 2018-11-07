@@ -3,7 +3,9 @@ package com.digitalhouse.a0818moacn01_02.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Track {
+import java.io.Serializable;
+
+public class Track implements Serializable {
 
     @SerializedName("id")
     @Expose

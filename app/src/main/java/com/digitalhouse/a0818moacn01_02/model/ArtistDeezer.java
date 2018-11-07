@@ -3,7 +3,9 @@ package com.digitalhouse.a0818moacn01_02.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class ArtistDeezer {
+import java.io.Serializable;
+
+public class ArtistDeezer implements Serializable {
 
     @SerializedName("id")
     @Expose

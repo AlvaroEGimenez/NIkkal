@@ -3,9 +3,10 @@ package com.digitalhouse.a0818moacn01_02.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class AlbumDeezer {
+public class AlbumDeezer implements Serializable {
 
     @SerializedName("id")
     @Expose

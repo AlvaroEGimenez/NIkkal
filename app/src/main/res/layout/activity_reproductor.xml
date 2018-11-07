@@ -1,9 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.ReproductorActivity">
+    android:background="@drawable/background_bg"
+    tools:context=".view.ReproductorActivity"
+    >
 
-</android.support.constraint.ConstraintLayout>
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpageSugerencia"
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        android:layout_marginTop="20dp"
+        >
+
+    </android.support.v4.view.ViewPager>
+
+
+    <LinearLayout
+        android:id="@+id/lineallayoutReprductor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="170dp"
+        android:layout_above="@+id/relative">
+
+        <TextView
+            android:id="@+id/tvtiempoTrascurrido"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2"
+            android:text="0.00"
+            android:textAlignment="center"
+            android:textColor="@color/album_titulo"/>
+
+        <SeekBar
+            android:id="@+id/seekbarReproductor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_weight="1.6"
+            />
+
+        <TextView
+            android:id="@+id/tvtiempoRestante"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2"
+            android:text="4.21"
+            android:textAlignment="center"
+            android:textColor="@color/album_titulo" />
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/relative"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="80dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/ivAnteriorReproductor"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="35dp"
+            android:layout_toStartOf="@+id/ivPlayReproductor"
+            android:src="@drawable/back" />
+
+        <ImageView
+            android:id="@+id/ivPlayReproductor"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/play_button"
+            android:visibility="visible"/>
+        <ImageView
+            android:id="@+id/ivPausaReproductor"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/pause"
+            android:visibility="invisible"/>
+
+        <ImageView
+            android:id="@+id/ivProximoReproductor"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="35dp"
+            android:layout_toEndOf="@+id/ivPlayReproductor"
+            android:src="@drawable/next" />
+    </RelativeLayout>
+
+
+
+
+</RelativeLayout>
