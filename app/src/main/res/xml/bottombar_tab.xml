@@ -18,8 +18,4 @@
         icon="@drawable/ic_radio"
         id="@+id/radioFragment"
         title="@string/btnbar_radio" />
-    <tab
-        icon="@drawable/ic_settings"
-        id="@+id/ajustesFragment"
-        title="@string/btnbar_ajuste" />
 </tabs>

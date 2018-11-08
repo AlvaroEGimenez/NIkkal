@@ -20,7 +20,8 @@ public class TopChartController {
                     listenerView.finish(resultado);
                 }
             });
-
         }
     }
+
+
 }
