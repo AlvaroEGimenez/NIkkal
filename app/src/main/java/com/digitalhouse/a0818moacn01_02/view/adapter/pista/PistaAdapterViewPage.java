@@ -5,18 +5,14 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.digitalhouse.a0818moacn01_02.R;
-import com.digitalhouse.a0818moacn01_02.model.TopChartLocal;
 import com.digitalhouse.a0818moacn01_02.model.Track;
-import com.digitalhouse.a0818moacn01_02.view.categorias.PistaAlbumFragment;
 
 import java.util.List;
 
@@ -25,18 +21,16 @@ public class PistaAdapterViewPage extends PagerAdapter {
     private Context context;
     private LayoutInflater layoutInflater;
     private PistaViewPageInterface escuchador;
-    private PistaAlbumFragment parent;
+    private Boolean primerInstancia;
 
     public PistaAdapterViewPage(List<Track> pistas, Context context, PistaViewPageInterface escuchador) {
         this.pistas = pistas;
         this.context = context;
-        layoutInflater = ((Activity)context).getLayoutInflater();
+        layoutInflater = ((Activity) context).getLayoutInflater();
         this.escuchador = escuchador;
+        primerInstancia = Boolean.TRUE;
     }
 
-    public void setDatos(List<Track> pistas){
-        this.pistas = pistas;
-    }
     @Override
     public int getCount() {
         return pistas.size();
@@ -44,7 +38,13 @@ public class PistaAdapterViewPage extends PagerAdapter {
 
     @Override
     public boolean isViewFromObject(@NonNull View view, @NonNull Object o) {
-        return view == (View)o;
+        return view == (View) o;
+    }
+
+
+    @Override
+    public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
+        container.removeView((View) object);
     }
 
     @NonNull
@@ -54,18 +54,15 @@ public class PistaAdapterViewPage extends PagerAdapter {
         TextView textView = view.findViewById(R.id.tvTitulo_PistaViewPage);
         TextView textViewArtista = view.findViewById(R.id.Artista_PistaViewPage);
         textView.setSelected(true);
-        PistaAlbumFragment parent = (PistaAlbumFragment) this.escuchador;
-
 
         final ImageView favoritoPista = view.findViewById(R.id.imgFavoritoViewPage);
         final ImageButton btnPistaAnterior = view.findViewById(R.id.ic_play_antrior_pista);
         final ImageButton btnPistaSiguiente = view.findViewById(R.id.ic_play_siguiente_pista);
-        final ProgressBar progressBar = view.findViewById(R.id.progrerssBarPistaViewPage);
         final ImageButton btnPlay = view.findViewById(R.id.ic_play_pista);
         final ImageButton btnPause = view.findViewById(R.id.ic_pause_pista);
 
         container.addView(view);
-        final  Track pista = pistas.get(position);
+        final Track pista = pistas.get(position);
         favoritoPista.setImageResource(pista.getFavorito() ? R.drawable.ic_favorite_seleccionado : R.drawable.ic_favorite_no_seleccion);
 
         favoritoPista.setOnClickListener(new View.OnClickListener() {
@@ -78,69 +75,67 @@ public class PistaAdapterViewPage extends PagerAdapter {
         textView.setText(pista.getTitle());
         textViewArtista.setText(pista.getArtist().getName());
 
-        final  Integer  posicion = position;
+        final Integer posicion = position;
         btnPistaAnterior.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                escuchador.pistaAnterior(posicion-1);
-
+                escuchador.pistaAnterior(posicion - 1);
             }
         });
 
         btnPistaSiguiente.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                escuchador.pistaSiguiente(posicion+1);
+                escuchador.pistaSiguiente(posicion + 1);
             }
         });
 
         btnPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                play(pista, posicion, btnPlay, btnPause, progressBar);
+                play(pista, posicion, btnPlay, btnPause);
             }
         });
 
         btnPause.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                pause(pista, posicion, btnPlay, btnPause, progressBar);
+                pause(pista, posicion, btnPlay, btnPause);
             }
         });
 
-        if(parent.getSwap()) {
-            play(pista, posicion, btnPlay, btnPause, progressBar);
+        if (primerInstancia) {
+            play(pista, posicion, btnPlay, btnPause);
+            primerInstancia = Boolean.FALSE;
         }
 
-
         return view;
-    }
-
-    @Override
-    public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
-        container.removeView((View)object);
     }
 
 
     public interface PistaViewPageInterface {
         void pistaAnterior(Integer position);
+
         void pistaSiguiente(Integer position);
-        void pistaPlay( Track pista, final ProgressBar progressBar, Integer posicion);
-        void pistaPause( Track pista, final ProgressBar progressBar, Integer posicion);
+
+        void pistaPlay(Track pista, Integer posicion);
+
+        void pistaPause(Track pista, Integer posicion);
+
         void favoritoListenerPista(Integer position, ImageView favoritoPista);
     }
 
 
-    private void play( Track pista, Integer posicion, ImageButton btnPlay, ImageView btnPause, ProgressBar progressBar){
+    private void play(Track pista, Integer posicion, ImageButton btnPlay, ImageView btnPause) {
         btnPlay.setVisibility(View.INVISIBLE);
         btnPause.setVisibility(View.VISIBLE);
-        escuchador.pistaPlay( pista, progressBar, posicion);
+        escuchador.pistaPlay(pista, posicion);
     }
 
-    private void pause( Track pista, Integer posicion, ImageButton btnPlay, ImageView btnPause, ProgressBar progressBar ){
+    private void pause(Track pista, Integer posicion, ImageButton btnPlay, ImageView btnPause) {
         btnPlay.setVisibility(View.VISIBLE);
         btnPause.setVisibility(View.INVISIBLE);
-        escuchador.pistaPause( pista, progressBar, posicion);
+        escuchador.pistaPause(pista, posicion);
 
     }
 

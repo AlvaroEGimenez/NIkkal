@@ -51,7 +51,8 @@
         <item name="android:textColorPrimary">@color/album_titulo</item>
         <item name="android:textSize">@dimen/tv_album_titulo</item>
         <item name="android:textColor">@color/album_titulo</item>
-    </style>parent="@android:style/Theme.Material.Dialog"
+    </style>
+    parent="@android:style/Theme.Material.Dialog"
 
     <style name="pistaViewPage">
         <item name="android:textColor">@color/album_titulo</item>
