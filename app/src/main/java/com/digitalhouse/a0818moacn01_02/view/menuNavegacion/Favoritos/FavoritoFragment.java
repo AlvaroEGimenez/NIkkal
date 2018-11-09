@@ -10,7 +10,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.digitalhouse.a0818moacn01_02.R;
-import com.digitalhouse.a0818moacn01_02.model.Favoritos;
+import com.digitalhouse.a0818moacn01_02.Utils.ResultListener;
+import com.digitalhouse.a0818moacn01_02.controller.RadioController;
+import com.digitalhouse.a0818moacn01_02.controller.TracksController;
+import com.digitalhouse.a0818moacn01_02.model.RadioDeezer;
+import com.digitalhouse.a0818moacn01_02.model.Track;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,35 +23,55 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class FavoritoFragment extends Fragment {
+public class FavoritoFragment extends Fragment { //implements AdaptadorFavoritos.AartistaFavoritodAdapterInterface {
+   /* public static final String KEY_IMAGEN_ARTISTA_FAVORITO ="imagentArtistaFavorito";
+    public static final String KEY_NOMBRE_ARTISTA_FAVORITO ="nombreArtistaFavorito";
+    public static final String KEY_LISTA_ARTISTA_FAVORITO = "listaArtistaFavorito";*/
 
+
+    private AdaptadorFavoritos adaptadorFavoritos;
+    //private Integer trackId = 3135556;
+    //private View view;
 
     public FavoritoFragment() {
         // Required empty public constructor
     }
 
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_favorito, container, false);
 
-        // Inflate the layout for this fragment
-        //todo esto iría en una clase recycler que despues se comunica a traves del adapter con el fragment y el fragment con la activity :S
-        List<Favoritos> listaDeFavoritos = new ArrayList<>();
-        listaDeFavoritos.add(new Favoritos(getResources().getString(R.string.tv_titulo_escuchadas_recientemente),R.drawable.fondo_pista,getResources().getString(R.string.tv_subtitulo_escuchadas_recientemente)));
-        listaDeFavoritos.add(new Favoritos(getResources().getString(R.string.tv_titulo_escuchadas_recientemente),R.drawable.fondo_pista,getResources().getString(R.string.tv_subtitulo_escuchadas_recientemente)));
-        listaDeFavoritos.add(new Favoritos(getResources().getString(R.string.tv_titulo_escuchadas_recientemente),R.drawable.fondo_pista,getResources().getString(R.string.tv_subtitulo_escuchadas_recientemente)));
-        listaDeFavoritos.add(new Favoritos(getResources().getString(R.string.tv_titulo_escuchadas_recientemente),R.drawable.fondo_pista,getResources().getString(R.string.tv_subtitulo_escuchadas_recientemente)));
-        listaDeFavoritos.add(new Favoritos(getResources().getString(R.string.tv_titulo_escuchadas_recientemente),R.drawable.fondo_pista,getResources().getString(R.string.tv_subtitulo_escuchadas_recientemente)));
-        listaDeFavoritos.add(new Favoritos(getResources().getString(R.string.tv_titulo_escuchadas_recientemente),R.drawable.fondo_pista,getResources().getString(R.string.tv_subtitulo_escuchadas_recientemente)));
-        listaDeFavoritos.add(new Favoritos(getResources().getString(R.string.tv_titulo_escuchadas_recientemente),R.drawable.fondo_pista,getResources().getString(R.string.tv_subtitulo_escuchadas_recientemente)));
-        listaDeFavoritos.add(new Favoritos(getResources().getString(R.string.tv_titulo_escuchadas_recientemente),R.drawable.fondo_pista,getResources().getString(R.string.tv_subtitulo_escuchadas_recientemente)));
+        View view = inflater.inflate(R.layout.fragment_favorito, container, false);
+        /*this.view = view;
+        container = view.findViewById(R.id.rlayoutFavoritosContainer);*/
+
+        //instancio adaptador
+        adaptadorFavoritos = new AdaptadorFavoritos(new ArrayList<RadioDeezer>());
+
+        // buscamos la View
         RecyclerView recyclerView = view.findViewById(R.id.recyclerFavoritos);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext(),LinearLayoutManager.VERTICAL,false));
+
+        //DATOS instanciamos un controller
+        RadioController radioController = new RadioController();
+
+
+        radioController.getRadios(new ResultListener<List<RadioDeezer>>() {
+            @Override
+            public void finish(List<RadioDeezer> Resultado) {
+                adaptadorFavoritos.setRadioDeezerList(Resultado);
+
+            }
+        },this.getContext());
+
+
+
+
+        //performance
         recyclerView.setHasFixedSize(true);
-        AdaptadorFavoritos adaptadorFavoritos = new AdaptadorFavoritos(listaDeFavoritos);
+
+        //layout manager
+        recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext(),LinearLayoutManager.VERTICAL,false));
+
         recyclerView.setAdapter(adaptadorFavoritos);
 
 
@@ -55,4 +79,11 @@ public class FavoritoFragment extends Fragment {
 
     }
 
+  /*  @Override
+    public void cambiarDeActividad(ArtistDeezer artistDeezer) {
+        //casteamos para decirle que es el contexto
+        MainActivity mainActivity = (MainActivity) getActivity();
+        Bundle bundle = new Bundle();
+        bundle.putString();
+    }*/
 }

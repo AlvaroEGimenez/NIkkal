@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Nikkal</string>
+    <string name="app_name">NIKKAL</string>
     <string name="app_name1">Radio Online</string>
 
     <!-- TODO: Remove or change this placeholder text -->
@@ -17,9 +17,9 @@
 
     <string name="tv_busqueda_reciente">Busquedas recientes</string>
     <string name="hint_buscar">Buscar</string>
-    <string name="tv_canciones_favoritas">Canciones</string>
-    <string name="tv_artistas_favoritos">Artistas</string>
-    <string name="tv_almbum_favoritos">Álbumes</string>
+    <string name="tv_canciones_favoritas">Mis Canciones</string>
+    <string name="tv_artistas_favoritos">Mis Artistas</string>
+    <string name="tv_almbum_favoritos">Mis Álbumes</string>
     <string name="tv_mis_playlist">Mis Listas de Reproducción</string>
     <string name="tv_titulo_favoritos">Favoritos</string>
     <string name="tv_escuchadas_recientemente">Escuchadas Recientemente</string>
