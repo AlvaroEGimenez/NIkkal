@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+
+        android:icon="@drawable/icono_pantalla_principal"
+        android:id="@+id/albumFragment"
+
+        android:title="@string/btnbar_inicio" />
+    <item
+        android:icon="@drawable/icono_buscar"
+        android:id="@+id/buscarFragment"
+        android:title="@string/btnbar_buscar" />
+
+    <item
+        android:icon="@drawable/icono_favorito"
+        android:id="@+id/favoritoFragment"
+        android:title="@string/btnbar_favorito" />
+    <item
+        android:icon="@drawable/ic_radio"
+        android:id="@+id/radioFragment"
+        android:title="@string/btnbar_radio" />
+</menu>

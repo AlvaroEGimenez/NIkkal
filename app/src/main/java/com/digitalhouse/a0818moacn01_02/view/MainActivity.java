@@ -1,13 +1,18 @@
 package com.digitalhouse.a0818moacn01_02.view;
 
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -48,11 +53,9 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if (savedInstanceState != null) {
-            //Restore the fragment's instance
-            mContent = getSupportFragmentManager().getFragment(savedInstanceState, "CategoriaFragment");
+        final BottomNavigationView bottomNavigation = findViewById(R.id.navigationView);
+        ActionBar actionBar = getSupportActionBar();
 
-        }
 
 
         textViewNombrePista = findViewById(R.id.tvNombreReproductor);
@@ -62,12 +65,36 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
 
         mediaPlayer = new MediaPlayer();
 
-        final BottomBar bottomBar = findViewById(R.id.bottombar);
+        //final BottomBar bottomBar = findViewById(R.id.bottombar);
 
-        bottomBar.setDefaultTab(R.id.albumFragment);
+       // bottomBar.setDefaultTab(R.id.albumFragment);
+        reemplazarFragment(categoriaFragment);
+
+        bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                switch (item.getItemId()) {
+                    case R.id.albumFragment:
+                        reemplazarFragment(categoriaFragment);
+                        return true;
+                    case R.id.buscarFragment:
+                        reemplazarFragment(buscarFragment);
+                        return true;
+
+                    case R.id.favoritoFragment:
+                        reemplazarFragment(favoritoFragment);
+                        return true;
+                    case R.id.radioFragment:
+                        reemplazarFragment(radioFragment);
+                        return true;
+                }
+                return false;
+            }
+        });
 
 
-        bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
+        /*bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
             public void onTabSelected(int tabId) {
                 switch (tabId) {
@@ -87,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
                         break;
                 }
             }
-        });
+        });*/
 
     }
 

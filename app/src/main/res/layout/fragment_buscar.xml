@@ -28,7 +28,8 @@
             android:imeOptions="actionSearch"
             android:inputType="text"
             android:maxLines="1"
-            android:textColor="@color/album_titulo">
+            android:textColor="@color/album_titulo"
+            android:textColorHint="@color/album_titulo">
 
             <requestFocus />
         </EditText>
