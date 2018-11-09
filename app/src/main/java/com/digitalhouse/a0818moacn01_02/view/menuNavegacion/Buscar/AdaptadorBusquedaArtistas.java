@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.digitalhouse.a0818moacn01_02.R;
 import com.digitalhouse.a0818moacn01_02.model.ArtistDeezer;
+import com.github.abdularis.civ.CircleImageView;
 
 import java.util.List;
 
@@ -40,7 +41,6 @@ public class AdaptadorBusquedaArtistas extends RecyclerView.Adapter {
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int posicion) {
         AdaptadorBusquedaArtistas.ViewHolderBusquedaArtista viewHolderBusqueda = (AdaptadorBusquedaArtistas.ViewHolderBusquedaArtista) viewHolder;
         ArtistDeezer trackBusqueda = listaBusqueda.get(posicion);
-
         viewHolderBusqueda.bind(trackBusqueda);
 
 
@@ -55,19 +55,20 @@ public class AdaptadorBusquedaArtistas extends RecyclerView.Adapter {
 
     public class ViewHolderBusquedaArtista extends RecyclerView.ViewHolder {
         private TextView textViewBusqueda;
-        private ImageView imageViewArtista;
+        private CircleImageView imageViewArtista;
 
 
         public ViewHolderBusquedaArtista(@NonNull View itemView) {
             super(itemView);
-            textViewBusqueda = itemView.findViewById(R.id.tvBusquedaArtista);
-            imageViewArtista = itemView.findViewById(R.id.civImagenArtista);
+            textViewBusqueda = itemView.findViewById(R.id.nombreArtistaCardViewBusqueda);
+            imageViewArtista = itemView.findViewById(R.id.imagenArtistaCardViewBusqueda);
 
 
         }
 
         public void bind(ArtistDeezer track) {
             textViewBusqueda.setText(track.getName());
+            Glide.with(context).load(track.getPictureMedium()).into(imageViewArtista);
 
         }
     }
