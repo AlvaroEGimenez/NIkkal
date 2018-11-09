@@ -25,16 +25,18 @@ import com.digitalhouse.a0818moacn01_02.Utils.ReproducirMp3;
 import com.digitalhouse.a0818moacn01_02.Utils.ResultListener;
 import com.digitalhouse.a0818moacn01_02.controller.GenreController;
 import com.digitalhouse.a0818moacn01_02.controller.RadioController;
+import com.digitalhouse.a0818moacn01_02.controller.TopChartAlbumsController;
 import com.digitalhouse.a0818moacn01_02.controller.TopChartController;
+import com.digitalhouse.a0818moacn01_02.model.AlbumDeezer;
 import com.digitalhouse.a0818moacn01_02.model.Genre;
 import com.digitalhouse.a0818moacn01_02.model.RadioDeezer;
-import com.digitalhouse.a0818moacn01_02.model.TopChartDeezer;
 import com.digitalhouse.a0818moacn01_02.model.TopChartLocal;
 import com.digitalhouse.a0818moacn01_02.model.Track;
 import com.digitalhouse.a0818moacn01_02.view.MainActivity;
 import com.digitalhouse.a0818moacn01_02.view.adapter.AdaptadorLocalTopChart;
 import com.digitalhouse.a0818moacn01_02.view.adapter.AdaptadorTopChartDeezer;
 import com.digitalhouse.a0818moacn01_02.view.adapter.CategoriaAdapterRecyclerView;
+import com.digitalhouse.a0818moacn01_02.view.adapter.MasEscuchadosRecyclerView;
 import com.digitalhouse.a0818moacn01_02.view.adapter.RadioAdapterRecyclerView;
 import com.digitalhouse.a0818moacn01_02.view.categorias.GeneroFragment;
 import com.digitalhouse.a0818moacn01_02.view.categorias.SugerenciasFragment;
@@ -51,7 +53,8 @@ public class CategoriaFragment extends Fragment implements CategoriaAdapterRecyc
     private SugerenciasFragment sugerenciasFragment = new SugerenciasFragment();
     private FeatureCoverFlow featureCoverFlow;
     private List<RadioDeezer> radioDeezerList = new ArrayList<>();
-    List<Track> topChartDeezerList = new ArrayList<>();
+    private List<Track> topChartDeezerList = new ArrayList<>();
+    private List<AlbumDeezer> albumDeezerList = new ArrayList<>();
     private TextSwitcher mTitle;
     private View view;
     private ProgressBar pbCategoria;
@@ -81,12 +84,13 @@ public class CategoriaFragment extends Fragment implements CategoriaAdapterRecyc
         final List<TopChartLocal> topChartLocal = new ArrayList<>();
         daoLocal.ObtenerTopChar(topChartLocal);
 
-        AdaptadorLocalTopChart adaptadorLocalTopChart = new AdaptadorLocalTopChart(topChartLocal,getContext());
+        AdaptadorLocalTopChart adaptadorLocalTopChart = new AdaptadorLocalTopChart(topChartLocal, getContext());
         featureCoverFlow.setAdapter(adaptadorLocalTopChart);
 
         setCategotia();
         cargarGenre();
         cargarRadios();
+        cargarTopChartAlbums();
 
 
         mTitle = view.findViewById(R.id.tituloTopChart);
@@ -131,6 +135,18 @@ public class CategoriaFragment extends Fragment implements CategoriaAdapterRecyc
         return view;
     }
 
+    private void cargarTopChartAlbums() {
+        TopChartAlbumsController topChartAlbumsController = new TopChartAlbumsController();
+        topChartAlbumsController.getTopChartAlbums(new ResultListener<List<AlbumDeezer>>() {
+            @Override
+            public void finish(List<AlbumDeezer> resultado) {
+                albumDeezerList = resultado;
+                crearRecyclerViewMasEscuchados(R.id.rvMasEscuchadoRecyclerView);
+
+            }
+        }, getContext());
+    }
+
     private void setCategotia() {
 
         TextView tvGeneros = view.findViewById(R.id.tvGeneroRecyclerView);
@@ -142,8 +158,6 @@ public class CategoriaFragment extends Fragment implements CategoriaAdapterRecyc
         TextView tvMasEscuchado = view.findViewById(R.id.tvMasEscuchadoRecyclerView);
         tvMasEscuchado.setText(R.string.tv_mas_escuchado);
 
-        TextView tvFavorito = view.findViewById(R.id.tvFavoritoRecyclerView);
-        tvFavorito.setText(R.string.tv_favorito);
     }
 
     private void cargarGenre() {
@@ -188,6 +202,17 @@ public class CategoriaFragment extends Fragment implements CategoriaAdapterRecyc
 
         radioRecyclerView.setAdapter(adapter);
 
+    }
+
+    private void crearRecyclerViewMasEscuchados(Integer idLayout) {
+        RecyclerView recyclerViewMasEscuchados = view.findViewById(idLayout);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+
+        recyclerViewMasEscuchados.setLayoutManager(linearLayoutManager);
+        MasEscuchadosRecyclerView masEscuchadosRecyclerView = new MasEscuchadosRecyclerView(albumDeezerList);
+        recyclerViewMasEscuchados.setHasFixedSize(true);
+        recyclerViewMasEscuchados.setAdapter(masEscuchadosRecyclerView);
 
     }
 
