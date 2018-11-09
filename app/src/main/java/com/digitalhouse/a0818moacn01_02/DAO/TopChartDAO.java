@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.digitalhouse.a0818moacn01_02.Utils.ResultListener;
 import com.digitalhouse.a0818moacn01_02.model.Container.ContenedorTracks;
+import com.digitalhouse.a0818moacn01_02.service.ServiceSearch;
 import com.digitalhouse.a0818moacn01_02.service.ServiceTopChart;
 import com.digitalhouse.a0818moacn01_02.model.Track;
 
@@ -15,6 +16,7 @@ import retrofit2.Response;
 
 public class TopChartDAO extends DaoHelper {
     private ServiceTopChart serviceTopChart;
+    private ServiceSearch serviceSearch;
 
 
 
@@ -22,6 +24,7 @@ public class TopChartDAO extends DaoHelper {
     public TopChartDAO() {
         super();
         serviceTopChart = retrofit.create(ServiceTopChart.class);
+        serviceSearch = retrofit.create(ServiceSearch.class);
     }
 
 
@@ -45,4 +48,5 @@ public class TopChartDAO extends DaoHelper {
             }
         });
     }
+
 }

@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.digitalhouse.a0818moacn01_02.R;
 import com.digitalhouse.a0818moacn01_02.model.Busqueda;
+import com.digitalhouse.a0818moacn01_02.model.Track;
 import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Buscar.AdapatadorBusqueda;
 import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Buscar.BuscarFragment;
 import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Configuracion.ConfiguracionFragment;
@@ -84,8 +85,6 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
                     case R.id.radioFragment:
                         reemplazarFragment(radioFragment);
                         break;
-                    case R.id.ajustesFragment:
-                        reemplazarFragment(configuracionFragment);
                 }
             }
         });
@@ -101,11 +100,11 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
     }
 
     @Override
-    public void busquedaClick(Busqueda busqueda) {
+    public void busquedaClick(Track track) {
         linearLayoutReproductor.setVisibility(View.VISIBLE);
-        textViewNombrePista.setText(busqueda.getBusqueda() + " - " + busqueda.getArtista());
+        textViewNombrePista.setText(track.getTitle() + " - " + track.getArtist().getName());
         textViewNombrePista.setTextColor(Color.parseColor("#FD9701"));
-        String urlMp3 = busqueda.getMp3();
+        String urlMp3 = track.getPreview();
         reproducirMp3(urlMp3, mediaPlayer);
 
 

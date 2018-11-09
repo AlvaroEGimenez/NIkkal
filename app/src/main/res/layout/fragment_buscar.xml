@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/album_background"
+    android:background="@drawable/background_bg"
     android:orientation="vertical"
     tools:context=".view.menuNavegacion.Buscar.BuscarFragment">
 
     <LinearLayout
+        android:id="@+id/lineallayoutBusqueda"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
         android:background="@drawable/roundedbuttonbuscar"
         android:orientation="horizontal">
 
@@ -20,121 +21,93 @@
             android:id="@+id/edittextBusqueda"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginLeft="16dp"
-            android:layout_weight="1.7"
-            android:backgroundTint="@color/album_background"
+            android:layout_marginStart="10dp"
+            android:layout_weight="1.8"
+            android:background="@drawable/roundedbuttonbuscar"
             android:hint="@string/hint_buscar"
             android:imeOptions="actionSearch"
             android:inputType="text"
             android:maxLines="1"
-            android:textColor="@color/album_titulo"
-            android:textColorHint="@color/album_background">
+            android:textColor="@color/album_titulo">
 
             <requestFocus />
         </EditText>
 
-    <ImageButton
-        android:id="@+id/imagebuttonBusqueda"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="0.3"
-        android:background="@drawable/roundedbuttonbuscar"
-        android:clickable="true"
-        android:focusable="true"
-        android:foreground="?attr/selectableItemBackground"
-        android:src="@drawable/ic_buscar" />
-</LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="60dp"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="match_parent"
+        <ImageButton
+            android:id="@+id/imagebuttonBusqueda"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:layout_marginBottom="30dp"
-            android:text="Busquedas recientes"
-            android:textAlignment="center"
-            android:textColor="#ffffff"
-            android:textSize="18dp" />
+            android:layout_marginEnd="10dp"
+            android:layout_weight="0.2"
+            android:background="@android:color/transparent"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground"
+            android:src="@drawable/ic_buscar" />
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rvBusqueda"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/album_background" />
     </LinearLayout>
 
-    <FrameLayout
-        android:id="@+id/framePlayer"
+    <RelativeLayout
+        android:id="@+id/relativeLayoutBusqueda"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_gravity="bottom"
-        android:background="@color/busqueda_fondo"
-        android:clickable="true"
-        android:focusable="true"
+        android:layout_height="match_parent"
+        android:layout_below="@id/lineallayoutBusqueda"
         android:visibility="invisible">
 
-        <LinearLayout
+
+        <TextView
+            android:id="@+id/textviewResultado"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/tvNombreTrack"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1.7"
-                android:ellipsize="marquee"
-                android:textAlignment="center"
-                android:marqueeRepeatLimit="marquee_forever"
-                android:scrollHorizontally="true"
-                android:singleLine="true"
-                android:textColor="@color/album_titulo"
-                android:textSize="18sp"/>
-
-            <FrameLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_weight="0.3">
-
-                <ImageView
-                    android:id="@+id/btnPause"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/ic_pause" />
-
-                <ImageView
-                    android:id="@+id/btnPlay"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/ic_play"
-                    android:visibility="invisible" />
-
-            </FrameLayout>
+            android:layout_marginTop="10dp"
+            android:gravity="center_vertical"
+            android:text="Resultado mas relevante"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:textColor="@color/album_titulo" />
 
 
-        </LinearLayout>
+        <ImageView
+            android:id="@+id/civImagenArtista"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_below="@+id/textviewResultado"
+            android:layout_margin="10dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/apu" />
 
-        <ProgressBar
-            android:id="@+id/progress_horizontal"
-            style="@android:style/Widget.ProgressBar.Horizontal"
+        <TextView
+            android:id="@+id/tvBusquedaArtista"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textviewResultado"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="38dp"
+            android:layout_marginEnd="10dp"
+            android:layout_toEndOf="@+id/civImagenArtista"
+            android:text="MUSE"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@color/album_titulo" />
+
+        <TextView
+            android:id="@+id/textviewTracks"
             android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:layout_gravity="bottom"
-            android:layout_margin="20sp"
-            android:layout_marginBottom="10dp"
-            android:max="99"
-            android:visibility="gone" />
+            android:layout_height="wrap_content"
+            android:layout_below="@id/civImagenArtista"
+            android:text="Tracks"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:textColor="@color/album_titulo" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvBusquedaTracks"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textviewTracks"
+            android:layout_margin="10dp" />
 
 
-    </FrameLayout>
+    </RelativeLayout>
 
-</FrameLayout>
+
+</RelativeLayout>

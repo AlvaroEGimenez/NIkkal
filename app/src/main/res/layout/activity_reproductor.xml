@@ -48,19 +48,20 @@
             android:layout_height="25dp"
             android:layout_centerVertical="true"
             android:layout_marginEnd="35dp"
-            android:layout_toStartOf="@+id/ivPlayReproductor"
+            android:layout_toStartOf="@+id/ivPausa_Reproductor"
             android:src="@drawable/back" />
 
+
+
         <ImageView
-            android:id="@+id/ivPlayReproductor"
+            android:id="@+id/ivPausa_Reproductor"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_centerHorizontal="true"
             android:src="@drawable/play_button"
             android:visibility="invisible" />
-
         <ImageView
-            android:id="@+id/ivPausaReproductor"
+            android:id="@+id/ivPlayReproductor"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_centerHorizontal="true"
@@ -73,7 +74,7 @@
             android:layout_height="25dp"
             android:layout_centerVertical="true"
             android:layout_marginStart="35dp"
-            android:layout_toEndOf="@+id/ivPlayReproductor"
+            android:layout_toEndOf="@+id/ivPausa_Reproductor"
             android:src="@drawable/next" />
     </RelativeLayout>
 

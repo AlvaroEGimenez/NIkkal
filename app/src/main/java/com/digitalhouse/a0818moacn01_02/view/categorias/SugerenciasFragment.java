@@ -157,11 +157,11 @@ public class SugerenciasFragment extends Fragment implements PlaylistAdapterRecy
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), ReproductorActivity.class);
                 Bundle bundle = new Bundle();
-
                 bundle.putInt(ReproductorActivity.KEY_POSICION,posicion);
                 bundle.putSerializable(ReproductorActivity.KEY_OBJETO, (Serializable) trackList);
                 intent.putExtras(bundle);
                 startActivity(intent);
+
 
             }
         });

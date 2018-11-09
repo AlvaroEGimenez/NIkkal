@@ -10,15 +10,17 @@ import android.widget.TextView;
 
 import com.digitalhouse.a0818moacn01_02.R;
 import com.digitalhouse.a0818moacn01_02.model.Busqueda;
+import com.digitalhouse.a0818moacn01_02.model.Track;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class AdapatadorBusqueda extends RecyclerView.Adapter{
 
-    ArrayList<Busqueda> listaBusqueda;
+    List<Track> listaBusqueda;
     BusquedaInterface busquedaInterface;
 
-    public AdapatadorBusqueda(ArrayList<Busqueda> listaBusqueda, BusquedaInterface busquedaInterface) {
+    public AdapatadorBusqueda(List<Track> listaBusqueda, BusquedaInterface busquedaInterface) {
         this.listaBusqueda = listaBusqueda;
         this.busquedaInterface = busquedaInterface;
     }
@@ -36,8 +38,8 @@ public class AdapatadorBusqueda extends RecyclerView.Adapter{
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int posicion) {
         ViewHolderBusqueda viewHolderBusqueda = (ViewHolderBusqueda) viewHolder;
-        Busqueda busqueda = listaBusqueda.get(posicion);
-        viewHolderBusqueda.bind(busqueda);
+        Track trackBusqueda = listaBusqueda.get(posicion);
+        viewHolderBusqueda.bind(trackBusqueda);
 
 
 
@@ -49,7 +51,7 @@ public class AdapatadorBusqueda extends RecyclerView.Adapter{
     }
 
     public interface BusquedaInterface{
-        void busquedaClick (Busqueda busqueda);
+        void busquedaClick (Track trackBusqueda);
     }
 
 
@@ -64,15 +66,15 @@ public class AdapatadorBusqueda extends RecyclerView.Adapter{
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Busqueda busqueda = listaBusqueda.get(getAdapterPosition());
+                    Track busqueda = listaBusqueda.get(getAdapterPosition());
                     busquedaInterface.busquedaClick(busqueda);
                 }
             });
 
         }
 
-        public void  bind (Busqueda busqueda){
-            textViewBusqueda.setText(busqueda.getBusqueda()+" - "+busqueda.getArtista());
+        public void  bind (Track track){
+            textViewBusqueda.setText(track.getTitle()+" - "+track.getArtist().getName());
         }
     }
 }

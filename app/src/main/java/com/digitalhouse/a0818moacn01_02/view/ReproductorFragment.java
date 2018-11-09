@@ -4,7 +4,10 @@ package com.digitalhouse.a0818moacn01_02.view;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,13 +15,16 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestBuilder;
 import com.bumptech.glide.request.target.ViewTarget;
 import com.deezer.sdk.network.connect.DeezerConnect;
 import com.deezer.sdk.network.request.event.DeezerError;
+import com.deezer.sdk.player.Player;
 import com.deezer.sdk.player.TrackPlayer;
+import com.deezer.sdk.player.event.PlayerState;
 import com.deezer.sdk.player.exception.TooManyPlayersExceptions;
 import com.deezer.sdk.player.networkcheck.WifiAndMobileNetworkStateChecker;
 import com.digitalhouse.a0818moacn01_02.R;
@@ -48,7 +54,6 @@ public class ReproductorFragment extends Fragment {
     private Integer idTrack;
     private Long posicionActual;
 
-    private TrackPlayer trackPlayer;
 
     public static ReproductorFragment factory(Track track) {
         ReproductorFragment reproductorFragment = new ReproductorFragment();
@@ -70,6 +75,7 @@ public class ReproductorFragment extends Fragment {
             nombreArtista = bundle.getString(KEY_NOMBRE_ARTISTA);
             duracionTrack = bundle.getInt(KEY_DURACION_TRACK);
             posicionActual = bundle.getLong(KEY_POSICION_ACTUAL);
+            idTrack = bundle.getInt(KEY_ID_TRACK);
 
         }
     }
@@ -97,37 +103,61 @@ public class ReproductorFragment extends Fragment {
         textViewNombredelTrack.setText(nombreTrack);
         textViewNombredelArtista.setText(nombreArtista);
         textViewNombredelTrack.setSelected(true);
+        final ProgressBar progressBar = getActivity().findViewById(R.id.progressBarReproductor);
+
+        ImageView imageViewAnterior = getActivity().findViewById(R.id.ivAnteriorReproductor);
+        final ImageView imageViewPause = getActivity().findViewById(R.id.ivPausa_Reproductor);
+        final ImageView imageViewPlay = getActivity().findViewById(R.id.ivPlayReproductor);
+        ImageView imageViewProximo = getActivity().findViewById(R.id.ivProximoReproductor);
+
 
         try {
-             trackPlayer = new TrackPlayer(getActivity().getApplication(),deezerConnect,new WifiAndMobileNetworkStateChecker());
+            final TrackPlayer  trackPlayer = new TrackPlayer(getActivity().getApplication(),deezerConnect,new WifiAndMobileNetworkStateChecker());
+                    if (trackPlayer.getPlayerState() != PlayerState.PLAYING){
+                        Toast.makeText(getActivity(),"NO REPRODUCIENDO",Toast.LENGTH_LONG).show();
+                    }
+                    else {
+                        Toast.makeText(getActivity(),"REPRODUCIENDO",Toast.LENGTH_LONG).show();
+                    }
+            final Handler mSeekbarUpdateHandler = new Handler();
+            final Runnable mUpdateSeekbar = new Runnable() {
+
+                @RequiresApi(api = Build.VERSION_CODES.N)
+                @Override
+                public void run() {
+                    Integer posicionactual = Math.toIntExact(trackPlayer.getPosition());
+                    progressBar.setProgress(posicionactual);
+                    mSeekbarUpdateHandler.postDelayed(this, 50);
+                }
+            };
+
+            progressBar.setMax((int) trackPlayer.getTrackDuration());
+            mSeekbarUpdateHandler.postDelayed(mUpdateSeekbar, 0);
+
+            imageViewPause.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    imageViewPlay.setVisibility(View.VISIBLE);
+                    imageViewPause.setVisibility(View.INVISIBLE);
+                    trackPlayer.pause();
+                }
+            });
+
+            imageViewPlay.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    imageViewPlay.setVisibility(View.INVISIBLE);
+                    imageViewPause.setVisibility(View.VISIBLE);
+                    trackPlayer.play();
+                }
+            });
+
         } catch (TooManyPlayersExceptions tooManyPlayersExceptions) {
             tooManyPlayersExceptions.printStackTrace();
         } catch (DeezerError deezerError) {
             deezerError.printStackTrace();
         }
 
-        ProgressBar progressBar = getActivity().findViewById(R.id.progressBarReproductor);
-        progressBar.setMax(100);
-        ImageView imageViewAnterior = getActivity().findViewById(R.id.ivAnteriorReproductor);
-        final ImageView imageViewPlay = getActivity().findViewById(R.id.ivPlayReproductor);
-        final ImageView imageViewPause = getActivity().findViewById(R.id.ivPausaReproductor);
-        ImageView imageViewProximo = getActivity().findViewById(R.id.ivProximoReproductor);
-
-        imageViewPause.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                imageViewPlay.setVisibility(View.VISIBLE);
-                imageViewPause.setVisibility(View.INVISIBLE);
-            }
-        });
-
-        imageViewPlay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                imageViewPlay.setVisibility(View.INVISIBLE);
-                imageViewPause.setVisibility(View.VISIBLE);
-            }
-        });
 
         imageViewAnterior.setOnClickListener(new View.OnClickListener() {
             @Override
