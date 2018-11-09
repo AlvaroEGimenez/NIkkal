@@ -8,6 +8,7 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,6 +18,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -56,6 +58,8 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
     private MainActivity mainActivity;
     private ProgressBar progressBar;
     private List<Track> pistas = new ArrayList<>();
+    private FloatingActionButton btnReproducirAlbum;
+    private Boolean reprducirAlbum=Boolean.FALSE;
 
     public PistaAlbumFragment() {
     }
@@ -72,6 +76,8 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
         view = inflater.inflate(R.layout.fragment_pista_album, container, false);
         imgCabeceraAlbumPista = view.findViewById(R.id.imgCabeceraAlbumPista);
         toolbaarNombreCabeceraAlbumPista = view.findViewById(R.id.toolbaarNombreCabeceraAlbumPista);
+        btnReproducirAlbum = view.findViewById(R.id.btnReproducirAlbumPista);
+        btnReproducirAlbum.setOnClickListener(resproducirAlbumListener);
 
         Bundle bundle = getArguments();
         String urlImagenCabecera = bundle.getString(KEY_IMAGEN_CABECERA_ALBUM_PISTA);
@@ -191,8 +197,8 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
     }
 
     @Override
-    public void pistaPlay(final Track pista, Integer posicion) {
-        pistaActual = pista;
+    public void pistaPlay(final Integer posicion) {
+        pistaActual = pistas.get(posicion);
         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
 
 
@@ -203,10 +209,15 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
             public void run() {
                 progressBar.setProgress(mediaPlayer.getCurrentPosition());
                 mSeekbarUpdateHandler.postDelayed(this, 50);
+                if(reprducirAlbum && !mediaPlayer.isPlaying() && posicion<= pistas.size()){
+                    pistaSiguiente(posicion+1);
+                    pistaPlay(posicion+1);
+
+                }
             }
         };
 
-        final String url = pista.getPreview();
+        final String url = pistaActual.getPreview();
 
         mediaPlayer.reset();
 
@@ -222,7 +233,7 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
     }
 
     @Override
-    public void pistaPause(Track pista, Integer posicion) {
+    public void pistaPause() {
         mediaPlayer.pause();
     }
 
@@ -250,5 +261,15 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
         pistaAlbumRecyclerView.notifyItemRemoved(position);
         pistaAlbumRecyclerView.notifyItemInserted(position);
     }
+
+
+    View.OnClickListener resproducirAlbumListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            reprducirAlbum = Boolean.TRUE;
+            pistaViewPageListener(0, null);
+            pistaPlay(0);
+        }
+    };
 
 }
