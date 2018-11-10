@@ -8,7 +8,18 @@
     android:background="@drawable/background_bg"
     tools:context=".view.categorias.PistaAlbumFragment">
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/btnReproducirAlbumPista"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_anchorGravity="bottom|end"
+        app:elevation="6dp"
+        android:layout_margin="16dp"
+        android:src="@android:drawable/ic_media_play"
+        app:layout_anchor="@+id/appbar"/>
+
     <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar"
         android:layout_width="match_parent"
         android:layout_height="250dp"
         android:fitsSystemWindows="true"
@@ -44,15 +55,7 @@
 
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/btnReproducirAlbumPista"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="top|end"
-        app:elevation="6dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginRight="5dp"
-        android:src="@android:drawable/ic_media_play" />
+
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvPistaAlbum"
@@ -62,6 +65,5 @@
         >
 
     </android.support.v7.widget.RecyclerView>
-
 
 </android.support.design.widget.CoordinatorLayout>
