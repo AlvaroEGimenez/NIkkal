@@ -41,13 +41,14 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
     private LinearLayout linearLayoutReproductor;
     private MediaPlayer mediaPlayer;
     private Fragment mContent;
+    private BottomNavigationView bottomNavigation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final BottomNavigationView bottomNavigation = findViewById(R.id.navigationView);
+        bottomNavigation = findViewById(R.id.navigationView);
         ActionBar actionBar = getSupportActionBar();
 
 
@@ -220,4 +221,7 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
         }
     }
 
+    public BottomNavigationView getBottomNavigation() {
+        return bottomNavigation;
+    }
 }

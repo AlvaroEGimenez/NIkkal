@@ -59,7 +59,7 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
     private ProgressBar progressBar;
     private List<Track> pistas = new ArrayList<>();
     private FloatingActionButton btnReproducirAlbum;
-    private Boolean reprducirAlbum=Boolean.FALSE;
+    private Boolean reprducirAlbum = Boolean.FALSE;
 
     public PistaAlbumFragment() {
     }
@@ -153,6 +153,7 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
 
     @Override
     public void pistaViewPageListener(Integer posicion, View itemViewSelected) {
+        mainActivity.getBottomNavigation().setVisibility(View.GONE);
         final Dialog dialog = new Dialog(getContext(), R.style.pistaViewPage);
         dialog.setContentView(R.layout.pista_view_page_content);
         progressBar = dialog.findViewById(R.id.progrerssBarPistaViewPage);
@@ -172,6 +173,7 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
                     textViewNombrePista.setSelected(true);
                     textViewNombrePista.setText(pistaActual.getArtist().getName() + " - " + pistaActual.getTitle());
                     mainActivity.visibilidadReproductor(true);
+                    mainActivity.getBottomNavigation().setVisibility(View.VISIBLE);
                 }
                 return true;
             }
@@ -187,17 +189,27 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
     }
 
     @Override
-    public void pistaAnterior(Integer position) {
-        autoScrollViewPager.setCurrentItem(position);
+    public void pistaAnterior(Integer posicion) {
+        autoScrollViewPager.setCurrentItem(posicion);
+        pistaPlay(posicion < 0 ? pistas.size() + posicion : posicion);
     }
 
     @Override
-    public void pistaSiguiente(Integer position) {
-        autoScrollViewPager.setCurrentItem(position);
+    public void pistaSiguiente(Integer posicion) {
+        autoScrollViewPager.setCurrentItem(posicion);
+        pistaPlay(posicion >= pistas.size() ? posicion - pistas.size() : posicion);
     }
 
     @Override
     public void pistaPlay(final Integer posicion) {
+        if (mediaPlayer.getCurrentPosition() > 0 && pistaActual.getId().equals(pistas.get(posicion))) {
+            mediaPlayer.start();
+            return;
+        }
+
+        recyclerView.getLayoutManager().smoothScrollToPosition(recyclerView, new RecyclerView.State(), posicion);
+        recyclerView.getAdapter().notifyDataSetChanged();
+
         pistaActual = pistas.get(posicion);
         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
 
@@ -209,10 +221,8 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
             public void run() {
                 progressBar.setProgress(mediaPlayer.getCurrentPosition());
                 mSeekbarUpdateHandler.postDelayed(this, 50);
-                if(reprducirAlbum && !mediaPlayer.isPlaying() && posicion<= pistas.size()){
-                    pistaSiguiente(posicion+1);
-                    pistaPlay(posicion+1);
-
+                if (reprducirAlbum && !mediaPlayer.isPlaying() && posicion <= pistas.size()) {
+                    pistaSiguiente(posicion + 1);
                 }
             }
         };
