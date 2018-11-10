@@ -10,9 +10,8 @@
 
     <com.github.abdularis.civ.CircleImageView
         android:id="@+id/imagenArtistaCardViewBusqueda"
-        android:layout_width="@dimen/card_imagen_artista_wigth"
-        android:layout_height="@dimen/card_imagen_artista_higth"
-        android:onClick="onCircleImageClick"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:src="@drawable/ic_launcher_background"
         />
 

@@ -4,31 +4,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background_bg"
-    tools:context=".view.ReproductorActivity"
-    >
+    tools:context=".view.ReproductorActivity">
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpageSugerencia"
         android:layout_width="match_parent"
         android:layout_height="350dp"
-        android:layout_marginTop="20dp"
-        >
+        android:layout_marginTop="20dp">
 
     </android.support.v4.view.ViewPager>
-
-    <ProgressBar
-        android:id="@+id/progressBarReproductor"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="250dp"
-        android:layout_height="250dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="40dp"
-        android:background="@drawable/circle_shape"
-        android:indeterminate="false"
-        android:max="100"
-        android:progress="65"
-        android:progressDrawable="@drawable/circular_progress_bar" />
 
 
     <RelativeLayout
@@ -51,8 +35,6 @@
             android:layout_toStartOf="@+id/ivPausa_Reproductor"
             android:src="@drawable/back" />
 
-
-
         <ImageView
             android:id="@+id/ivPausa_Reproductor"
             android:layout_width="60dp"
@@ -60,6 +42,7 @@
             android:layout_centerHorizontal="true"
             android:src="@drawable/play_button"
             android:visibility="invisible" />
+
         <ImageView
             android:id="@+id/ivPlayReproductor"
             android:layout_width="60dp"
@@ -77,8 +60,6 @@
             android:layout_toEndOf="@+id/ivPausa_Reproductor"
             android:src="@drawable/next" />
     </RelativeLayout>
-
-
 
 
 </RelativeLayout>

@@ -1,6 +1,5 @@
 package com.digitalhouse.a0818moacn01_02.view;
 
-import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -16,12 +15,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.digitalhouse.a0818moacn01_02.R;
-import com.digitalhouse.a0818moacn01_02.model.Busqueda;
 import com.digitalhouse.a0818moacn01_02.model.Track;
 import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Buscar.AdapatadorBusqueda;
 import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Buscar.BuscarFragment;
@@ -29,8 +25,6 @@ import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Configuracion.Config
 import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Favoritos.FavoritoFragment;
 import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Pantalla_Principal.CategoriaFragment;
 import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Radio_Online.RadioFragment;
-import com.roughike.bottombar.BottomBar;
-import com.roughike.bottombar.OnTabSelectListener;
 
 import java.io.IOException;
 
@@ -127,12 +121,12 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
     }
 
     @Override
-    public void busquedaClick(Track track) {
+    public void busquedaClick(Track track, Integer posicion) {
         linearLayoutReproductor.setVisibility(View.VISIBLE);
         textViewNombrePista.setText(track.getTitle() + " - " + track.getArtist().getName());
-        textViewNombrePista.setTextColor(Color.parseColor("#FD9701"));
         String urlMp3 = track.getPreview();
         reproducirMp3(urlMp3, mediaPlayer);
+        textViewNombrePista.setSelected(true);
 
 
     }
