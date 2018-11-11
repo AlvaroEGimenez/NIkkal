@@ -2,6 +2,8 @@ package com.digitalhouse.a0818moacn01_02.view.categorias;
 
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,6 +21,8 @@ import com.digitalhouse.a0818moacn01_02.R;
 import com.digitalhouse.a0818moacn01_02.Utils.ResultListener;
 import com.digitalhouse.a0818moacn01_02.controller.ArtistAlbumControler;
 import com.digitalhouse.a0818moacn01_02.model.AlbumDeezer;
+import com.digitalhouse.a0818moacn01_02.model.ArtistDeezer;
+import com.digitalhouse.a0818moacn01_02.model.Track;
 import com.digitalhouse.a0818moacn01_02.view.MainActivity;
 import com.digitalhouse.a0818moacn01_02.view.adapter.AlbumAdapterRecyclerView;
 
@@ -29,6 +33,7 @@ public class AlbumFragment extends Fragment implements AlbumAdapterRecyclerView.
     public static final String KEY_IMAGEN_ARTISTA = "imagenArtista";
     public static final String KEY_NOMBRE_ARTISTA = "nombreArtista";
     public static final String KEY_ID_ARTISTA = "idArtista";
+    public static final String KEY_FAVORITO_ARTISTA = "idFavoritoArtista";
 
     private PistaAlbumFragment pistaAlbumFragment = new PistaAlbumFragment();
     private Integer idArtist;
@@ -36,10 +41,18 @@ public class AlbumFragment extends Fragment implements AlbumAdapterRecyclerView.
     private View view;
     private ProgressBar pbAlbum;
     private LinearLayout conatiner;
+    private MainActivity parent;
+    private Boolean favoritoArtista;
+    private FloatingActionButton btnFavorito;
 
     public AlbumFragment() {
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        parent = (MainActivity) getActivity();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,6 +62,9 @@ public class AlbumFragment extends Fragment implements AlbumAdapterRecyclerView.
         conatiner = view.findViewById(R.id.categoriaAlbumContainer);
         pbAlbum = view.findViewById(R.id.pbAlbum);
 
+        btnFavorito = view.findViewById(R.id.btnFavoritoArtista);
+        btnFavorito.setOnClickListener(favoritoListener);
+
         ImageView imagenArtista = view.findViewById(R.id.imagenArtista);
         Toolbar tvCabeceraArtista = view.findViewById(R.id.tvCabeceraArtista);
         view.findViewById(R.id.rvAlbum);
@@ -57,6 +73,9 @@ public class AlbumFragment extends Fragment implements AlbumAdapterRecyclerView.
         String urlImagenCabecera = bundle.getString(KEY_IMAGEN_ARTISTA);
         String nombreGenero = bundle.getString(KEY_NOMBRE_ARTISTA);
         idArtist = bundle.getInt(KEY_ID_ARTISTA);
+
+        favoritoArtista  = bundle.getBoolean(KEY_FAVORITO_ARTISTA);
+
 
         cargarArtistAlbum();
         cargarImagen(imagenArtista, urlImagenCabecera);
@@ -107,7 +126,36 @@ public class AlbumFragment extends Fragment implements AlbumAdapterRecyclerView.
         bundle.putString(PistaAlbumFragment.KEY_IMAGEN_CABECERA_ALBUM_PISTA, album.getCoverMedium());
         bundle.putString(PistaAlbumFragment.KEY_NOMBRE_CABECERA_ALBUM_PISTA, album.getTitle());
         bundle.putInt(PistaAlbumFragment.KEY_PISTA_ID_ALBUM_PISTA, album.getId());
+        bundle.putBoolean(PistaAlbumFragment.KEY_FAVORITO_ALBUM, album.getFavorito());
+
         pistaAlbumFragment.setArguments(bundle);
         mainActivity.reemplazarFragment(pistaAlbumFragment);
+    }
+
+    View.OnClickListener favoritoListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            if (parent.estaLogeado(getContext())){
+                setFavoritoPista();
+            }
+
+        }
+    };
+
+
+    private void setFavoritoPista() {
+
+        if (favoritoArtista) {
+            favoritoArtista = Boolean.FALSE;
+            cargarImagen( R.drawable.ic_favorite_no_seleccion);
+        } else {
+            cargarImagen(R.drawable.ic_favorite_black_24dp);
+            favoritoArtista = Boolean.TRUE;
+
+        }
+    }
+
+    private void cargarImagen(Integer idDrawable) {
+        Glide.with(getContext()).load(idDrawable).into(btnFavorito);
     }
 }

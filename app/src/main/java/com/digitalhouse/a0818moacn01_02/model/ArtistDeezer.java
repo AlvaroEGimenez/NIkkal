@@ -49,7 +49,7 @@ public class ArtistDeezer implements Serializable {
     @SerializedName("type")
     @Expose
     private String type;
-
+    private Boolean favorito = Boolean.FALSE;
 
     public Integer getId() {
         return id;
@@ -161,4 +161,11 @@ public class ArtistDeezer implements Serializable {
         this.type = type;
     }
 
+    public Boolean getFavorito() {
+        return favorito;
+    }
+
+    public void setFavorito(Boolean favorito) {
+        this.favorito = favorito;
+    }
 }

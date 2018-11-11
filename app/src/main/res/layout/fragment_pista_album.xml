@@ -12,14 +12,26 @@
         android:id="@+id/btnReproducirAlbumPista"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_anchorGravity="bottom|end"
-        app:elevation="6dp"
         android:layout_margin="16dp"
         android:src="@android:drawable/ic_media_play"
-        app:layout_anchor="@+id/appbar"/>
+        app:elevation="6dp"
+        app:layout_anchor="@+id/appbarFragmentPista"
+        app:layout_anchorGravity="bottom|end" />
+
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/btnFavoritoAlbum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="80dp"
+
+        android:src="@drawable/ic_favorite_no_seleccion"
+        app:elevation="6dp"
+        app:layout_anchor="@+id/appbarFragmentPista"
+        app:layout_anchorGravity="bottom|end" />
 
     <android.support.design.widget.AppBarLayout
-        android:id="@+id/appbar"
+        android:id="@+id/appbarFragmentPista"
         android:layout_width="match_parent"
         android:layout_height="250dp"
         android:fitsSystemWindows="true"
@@ -48,8 +60,8 @@
                 android:id="@+id/toolbaarNombreCabeceraAlbumPista"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                app:layout_collapseMode="pin"
                 android:fitsSystemWindows="true"
+                app:layout_collapseMode="pin"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
 
