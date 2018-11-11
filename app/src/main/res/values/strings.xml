@@ -25,6 +25,10 @@
     <string name="tv_escuchadas_recientemente">Escuchadas Recientemente</string>
     <string name="tv_titulo_escuchadas_recientemente">Escuchadas Recientemente</string>
     <string name="tv_subtitulo_escuchadas_recientemente">Subtitulo Escuchadas Recientemente</string>
-
+    <string name="facebook_app_id">2190104334649785</string>
+    <string name="fb_login_protocol_scheme">fb2190104334649785</string>
+    <string name="si">Sí</string>
+    <string name="no">No</string>
+    <string name="cabeceraLogin">Necesitas logearte para poder acceder a mas funcionalidades</string>
 
 </resources>

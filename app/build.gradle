@@ -50,4 +50,5 @@ dependencies {
     implementation 'com.github.jgabrielfreitas:BlurImageView:1.0.1'
     implementation 'com.mikhaellopez:circularimageview:3.2.0'
     implementation 'com.github.abdularis:CircularImageView:v1.2'
+    implementation 'com.facebook.android:facebook-android-sdk:[4,5)'
 }

@@ -3,6 +3,7 @@ package com.digitalhouse.a0818moacn01_02.view.categorias;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -29,10 +31,12 @@ import com.digitalhouse.a0818moacn01_02.R;
 import com.digitalhouse.a0818moacn01_02.Utils.ResultListener;
 import com.digitalhouse.a0818moacn01_02.controller.TracksController;
 import com.digitalhouse.a0818moacn01_02.model.Track;
+import com.digitalhouse.a0818moacn01_02.view.LoginActivity;
 import com.digitalhouse.a0818moacn01_02.view.MainActivity;
 import com.digitalhouse.a0818moacn01_02.view.adapter.pista.PistaAdapterViewPage;
 import com.digitalhouse.a0818moacn01_02.view.adapter.pista.PistaAlbumRecyclerView;
 import com.digitalhouse.a0818moacn01_02.view.adapter.pista.RecyclerItemTouchHelper;
+import com.facebook.AccessToken;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -137,7 +141,9 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
 
     @Override
     public void favoritoListener(Track pista, ImageView favoritoPista) {
-        setFavoritoPista(pista, favoritoPista);
+        if (mainActivity.estaLogeado(getContext())){
+            setFavoritoPista(pista, favoritoPista);
+        }
     }
 
     @Override
@@ -281,5 +287,8 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
             pistaPlay(0);
         }
     };
+
+
+    
 
 }
