@@ -8,25 +8,33 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.digitalhouse.a0818moacn01_02.R;
+import com.digitalhouse.a0818moacn01_02.Utils.ResultListener;
+import com.digitalhouse.a0818moacn01_02.controller.TracksController;
 import com.digitalhouse.a0818moacn01_02.model.Track;
+import com.digitalhouse.a0818moacn01_02.view.adapter.listaReproduccion.ItemTouchHelperCallback;
+import com.digitalhouse.a0818moacn01_02.view.adapter.listaReproduccion.PistaListaReproduccionAdapter;
+import com.digitalhouse.a0818moacn01_02.view.adapter.pista.RecyclerItemTouchHelper;
 import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Buscar.AdapatadorBusqueda;
 import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Buscar.BuscarFragment;
 import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Configuracion.ConfiguracionFragment;
@@ -34,18 +42,13 @@ import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Favoritos.FavoritoFr
 import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Pantalla_Principal.CategoriaFragment;
 import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Radio_Online.RadioFragment;
 import com.facebook.AccessToken;
-import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
-import com.facebook.FacebookSdk;
 import com.facebook.Profile;
-import com.facebook.appevents.AppEventsLogger;
-import com.facebook.login.LoginResult;
-import com.facebook.login.widget.LoginButton;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements AdapatadorBusqueda.BusquedaInterface {
+public class MainActivity extends AppCompatActivity implements AdapatadorBusqueda.BusquedaInterface,  PistaListaReproduccionAdapter.PistaListaReproduccionAdapterInterface {
 
     private CategoriaFragment categoriaFragment = new CategoriaFragment();
     private BuscarFragment buscarFragment = new BuscarFragment();
@@ -59,6 +62,9 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
     private MediaPlayer mediaPlayer;
     private Fragment mContent;
     private BottomNavigationView bottomNavigation;
+    private DrawerLayout drawer;
+    private NavigationView navigationView;
+    private View headerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,9 +78,12 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
         imageViewPause = findViewById(R.id.btnReproductorPause);
         linearLayoutReproductor = findViewById(R.id.layoutPlayer);
 
-        mediaPlayer = new MediaPlayer();
-
         reemplazarFragment(categoriaFragment);
+
+        mediaPlayer = new MediaPlayer();
+        navigationView = findViewById(R.id.navigationMainActivity);
+        headerView = navigationView.inflateHeaderView(R.layout.header_navigation_view);
+        cargarImagenHeaderNavigationView();
 
         bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -98,8 +107,21 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
                 return false;
             }
         });
+        List<Integer> tracksId = new ArrayList<>();
+        tracksId.add(3135553);
+        tracksId.add(3135653);
+        tracksId.add(3135453);
+        tracksId.add(3135753);
+        tracksId.add(3132553);
+        tracksId.add(3135563);
+        tracksId.add(3135453);
+        tracksId.add(3137553);
+        tracksId.add(3135353);
+        tracksId.add(3135453);
+        tracksId.add(3535553);
+        tracksId.add(3165553);
 
-
+        cargarListaReproduccion(tracksId);
     }
 
 
@@ -200,7 +222,7 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
             imageViewPause.setVisibility(View.VISIBLE);
             textViewNombrePista.setTextColor(Color.parseColor("#FD9701"));
             imageViewPause.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             linearLayoutReproductor.setVisibility(View.GONE);
             imageViewPlay.setVisibility(View.GONE);
             imageViewPause.setVisibility(View.GONE);
@@ -210,19 +232,19 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
     }
 
 
-    public Boolean estaLogeado(final Context context){
+    public Boolean estaLogeado(final Context context) {
         AccessToken accessToken = AccessToken.getCurrentAccessToken();
         boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
 
-        if (!isLoggedIn){
+        if (!isLoggedIn) {
             alertDialogInicionSesion(context);
             return Boolean.FALSE;
-        }else {
+        } else {
             return Boolean.TRUE;
         }
     }
 
-    private void alertDialogInicionSesion(final Context context){
+    private void alertDialogInicionSesion(final Context context) {
         String mensajeSi = getResources().getString(R.string.si);
         String mensajeNo = getResources().getString(R.string.no);
         String mensajeCabecera = getResources().getString(R.string.cabeceraLogin);
@@ -251,9 +273,62 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
         alert11.show();
     }
 
+    public void cargarImagenHeaderNavigationView() {
+        ImageView ivUSuario = headerView.findViewById(R.id.usuarioListaReproducion);
+
+        Profile profile = Profile.getCurrentProfile();
+        if (profile != null) {
+            Uri uri = profile.getProfilePictureUri(200, 200);
+            Glide.with(this).load(uri).into(ivUSuario);
+        } else {
+            ivUSuario.setImageResource(R.drawable.ic_person_outline_black_24dp);
+        }
+
+    }
+
+
+    private void cargarListaReproduccion(final List<Integer> tracksId ) {
+        TracksController tracksController = new TracksController();
+      final List<Track> pistas = new ArrayList<>();
+
+       for(Integer pistaId : tracksId) {
+           tracksController.getPista(new ResultListener<Track>() {
+               @Override
+               public void finish(Track resultado) {
+                   pistas.add(resultado);
+                   if (pistas.size() ==  tracksId.size()) {
+                       crearListaReproduccionRecyclerView(pistas);
+                   }
+
+               }
+           }, getApplicationContext(), pistaId);
+       }
+    }
+
+    private void crearListaReproduccionRecyclerView(List<Track> pistas) {
+        RecyclerView recyclerView = findViewById(R.id.rvListaReproduccion);
+        recyclerView.setHasFixedSize(true);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        PistaListaReproduccionAdapter pistaAlbumRecyclerView = new PistaListaReproduccionAdapter(pistas, R.layout.cardview_pista_listado_reproduccion, this, this);
+
+        recyclerView.setAdapter(pistaAlbumRecyclerView);
+
+        ItemTouchHelper.Callback callback = new ItemTouchHelperCallback(pistaAlbumRecyclerView);
+        ItemTouchHelper mItemTouchHelper = new ItemTouchHelper(callback);
+        mItemTouchHelper.attachToRecyclerView(recyclerView);
+    }
+
 
     public BottomNavigationView getBottomNavigation() {
         return bottomNavigation;
     }
 
+
+
+    @Override
+    public void pistaListaReproduccionAdapterInterface(Integer posicion, View itemView) {
+
+    }
 }

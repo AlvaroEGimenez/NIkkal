@@ -44,5 +44,26 @@ public class TrackDAO extends DaoHelper {
         });
     }
 
+
+
+    public void getTrack(final ResultListener<Track> listenerDelController, Integer trackId) {
+
+        Call<Track> call = trackService.getTrack(trackId);
+
+        call.enqueue(new Callback<Track>() {
+            @Override
+            public void onResponse(Call<Track> call, Response<Track> response) {
+                Track track = response.body();
+                listenerDelController.finish(track);
+            }
+
+            @Override
+            public void onFailure(Call<Track> call, Throwable t) {
+                Log.e("ERROR", t.toString());
+            }
+        });
+    }
+
+
 }
 

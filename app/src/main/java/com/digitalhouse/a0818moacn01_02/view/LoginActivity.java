@@ -97,6 +97,5 @@ public class LoginActivity extends AppCompatActivity {
             Glide.with(this).load(uri).into(imageView);
         }
 
-      //  onBackPressed();
     }
 }
