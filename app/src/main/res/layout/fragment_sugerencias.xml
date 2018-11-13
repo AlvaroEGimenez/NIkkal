@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
-            app:contentScrim="@android:color/black"
+            app:contentScrim="@color/bar_bottom_background"
             app:expandedTitleMarginEnd="64dp"
             app:expandedTitleMarginStart="10dp"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
@@ -40,6 +40,12 @@
         </android.support.design.widget.CollapsingToolbarLayout>
 
     </android.support.design.widget.AppBarLayout>
+
+    <ProgressBar
+        android:id="@+id/pbSugerencia"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|center_horizontal" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvTracksSugerencias"

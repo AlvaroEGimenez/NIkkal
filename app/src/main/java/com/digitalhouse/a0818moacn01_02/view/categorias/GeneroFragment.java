@@ -125,6 +125,8 @@ public class GeneroFragment extends Fragment implements ArtistaAdapterRecyclerVi
         bundle.putString(AlbumFragment.KEY_IMAGEN_ARTISTA, artista.getPictureMedium());
         bundle.putString(AlbumFragment.KEY_NOMBRE_ARTISTA, artista.getName());
         bundle.putInt(AlbumFragment.KEY_ID_ARTISTA, artista.getId());
+        bundle.putBoolean(AlbumFragment.KEY_FAVORITO_ARTISTA, artista.getFavorito());
+
         albumFragment.setArguments(bundle);
         mainActivity.reemplazarFragment(albumFragment);
     }

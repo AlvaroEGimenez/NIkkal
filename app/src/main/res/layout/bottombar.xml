@@ -2,12 +2,10 @@
 <com.roughike.bottombar.BottomBar xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/bottombar"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_alignParentBottom="true"
-    android:layout_gravity="bottom|end"
-    android:background="@color/colorPrimaryDark"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@android:color/black"
     app:bb_activeTabColor="@color/bottomBarIcon"
-    app:bb_badgeBackgroundColor="@android:color/black"
     app:bb_inActiveTabColor="@android:color/white"
-    app:bb_tabXmlResource="@xml/bottombar_tab" />
+    app:bb_tabXmlResource="@xml/bottombar_tab"
+    android:layout_marginTop="15dp"/>

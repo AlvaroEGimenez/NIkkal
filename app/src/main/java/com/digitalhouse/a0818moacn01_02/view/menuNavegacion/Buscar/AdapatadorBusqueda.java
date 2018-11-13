@@ -9,10 +9,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.digitalhouse.a0818moacn01_02.R;
-import com.digitalhouse.a0818moacn01_02.model.Busqueda;
 import com.digitalhouse.a0818moacn01_02.model.Track;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class AdapatadorBusqueda extends RecyclerView.Adapter{
@@ -51,7 +49,7 @@ public class AdapatadorBusqueda extends RecyclerView.Adapter{
     }
 
     public interface BusquedaInterface{
-        void busquedaClick (Track trackBusqueda);
+        void busquedaClick (Track trackBusqueda, Integer posicion);
     }
 
 
@@ -67,7 +65,7 @@ public class AdapatadorBusqueda extends RecyclerView.Adapter{
                 @Override
                 public void onClick(View v) {
                     Track busqueda = listaBusqueda.get(getAdapterPosition());
-                    busquedaInterface.busquedaClick(busqueda);
+                    busquedaInterface.busquedaClick(busqueda,getAdapterPosition());
                 }
             });
 

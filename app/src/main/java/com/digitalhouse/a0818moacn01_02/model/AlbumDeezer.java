@@ -83,6 +83,7 @@ public class AlbumDeezer implements Serializable {
     @SerializedName("tracks")
     @Expose
     private List<Track> tracks;
+    private Boolean favorito = Boolean.FALSE;
 
     public Integer getId() {
         return id;
@@ -285,4 +286,11 @@ public class AlbumDeezer implements Serializable {
         this.tracks = tracks;
     }
 
+    public Boolean getFavorito() {
+        return favorito;
+    }
+
+    public void setFavorito(Boolean favorito) {
+        this.favorito = favorito;
+    }
 }

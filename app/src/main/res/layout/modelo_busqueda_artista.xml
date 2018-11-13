@@ -1,25 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/card_view_album_margin"
+    android:layout_marginTop="@dimen/card_view_album_margin_top"
+    android:layout_marginRight="@dimen/card_view_album_margin"
+    android:orientation="vertical">
 
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="50dp"
-    android:layout_margin="6dp"
-    android:orientation="horizontal"
-    android:gravity="center_vertical">
 
-    <ImageView
+    <com.github.abdularis.civ.CircleImageView
+        android:id="@+id/imagenArtistaCardViewBusqueda"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/ic_launcher_background"
+        />
 
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:src="@drawable/apu"
-        android:scaleType="centerInside"/>
 
     <TextView
-
+        android:id="@+id/nombreArtistaCardViewBusqueda"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/album_titulo"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+        android:layout_gravity="bottom"
+        android:gravity="center"
+        android:theme="@style/nombreAlbum" />
 
 </LinearLayout>

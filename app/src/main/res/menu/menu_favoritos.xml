@@ -2,33 +2,32 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".MainActivityRadioFragment">
+    tools:context=".MainActivityFavoritoFragment">
 
-    <group android:id="@+id/toolbarMenuFavoritos"
-        android:visible="true">
-
-
-
-    <item android:id="@+id/itemAlbumFavorito"
+     <item android:id="@+id/itemAlbumFavorito"
         android:icon="@drawable/ic_album_24dp"
-        android:title="@string/tv_almbum_favoritos"
+        android:title=""
+        app:showAsAction="always"
         />
 
     <item android:id="@+id/itemCancionFavorita"
-        android:icon="@+id/ivIconoPitstaFavorita"
-        android:title="@string/tv_canciones_favoritas"
+        android:icon="@drawable/ic_pista"
+        android:title=""
+        app:showAsAction="always"
         />
 
     <item android:id="@+id/itemArtistaFavorito"
         android:icon="@drawable/ic_artista"
-        android:title="@string/tv_canciones_favoritas"
+        android:title=""
+        app:showAsAction="always"
         />
 
     <item android:id="@+id/itemListasFavoritas"
         android:icon="@drawable/ic_listas_de_reproduccion"
-        android:title="@string/tv_mis_playlist"
+        android:title=""
+        app:showAsAction="always"
         />
 
-    </group>
+
 
 </menu>

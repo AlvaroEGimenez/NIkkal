@@ -62,11 +62,12 @@ public class Track implements Serializable {
     @Expose
     private ArtistDeezer artist;
     @SerializedName("album")
-    @Expose
     private AlbumDeezer album;
     @SerializedName("type")
-    @Expose
     private String type;
+
+
+
     private Boolean favorito = Boolean.FALSE;
 
 
@@ -237,4 +238,5 @@ public class Track implements Serializable {
     public void setFavorito(Boolean favorito) {
         this.favorito = favorito;
     }
+
 }

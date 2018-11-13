@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">NIKKAL</string>
+    <string name="app_name"> </string>
     <string name="app_name1">Radio Online</string>
 
     <!-- TODO: Remove or change this placeholder text -->
@@ -25,7 +25,10 @@
     <string name="tv_escuchadas_recientemente">Recently Played</string>
     <string name="tv_titulo_escuchadas_recientemente">Tittle Recently Played</string>
     <string name="tv_subtitulo_escuchadas_recientemente">Subtittle Recently Played</string>
-
-
+    <string name="facebook_app_id">2190104334649785</string>
+    <string name="fb_login_protocol_scheme">fb2190104334649785</string>
+    <string name="si">Si</string>
+    <string name="no">No</string>
+    <string name="cabeceraLogin">You need to log in to access more features.</string>
 
 </resources>

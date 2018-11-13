@@ -8,14 +8,38 @@
     android:background="@drawable/background_bg"
     tools:context=".view.categorias.PistaAlbumFragment">
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/btnReproducirAlbumPista"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:src="@android:drawable/ic_media_play"
+        app:elevation="6dp"
+        app:layout_anchor="@+id/appbarFragmentPista"
+        app:layout_anchorGravity="bottom|end" />
+
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/btnFavoritoAlbum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="80dp"
+
+        android:src="@drawable/ic_favorite_no_seleccion"
+        app:elevation="6dp"
+        app:layout_anchor="@+id/appbarFragmentPista"
+        app:layout_anchorGravity="bottom|end" />
+
     <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbarFragmentPista"
         android:layout_width="match_parent"
         android:layout_height="250dp"
         android:fitsSystemWindows="true"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
+
         <android.support.design.widget.CollapsingToolbarLayout
-            android:id="@+id/main.collapsing"
+            android:id="@+id/collapsingToolbarLayoutPista"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
@@ -36,8 +60,10 @@
                 android:id="@+id/toolbaarNombreCabeceraAlbumPista"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
+                android:fitsSystemWindows="true"
                 app:layout_collapseMode="pin"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
 
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>

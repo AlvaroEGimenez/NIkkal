@@ -8,7 +8,18 @@
     android:background="@drawable/background_bg"
     tools:context=".view.categorias.AlbumFragment">
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/btnFavoritoArtista"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_anchorGravity="bottom|end"
+        app:elevation="6dp"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_favorite_no_seleccion"
+        app:layout_anchor="@+id/appbarFragmentAlbum"/>
+
     <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbarFragmentAlbum"
         android:layout_width="match_parent"
         android:layout_height="250dp"
         android:fitsSystemWindows="true"

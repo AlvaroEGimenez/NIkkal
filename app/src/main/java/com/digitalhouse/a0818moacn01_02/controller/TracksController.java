@@ -21,4 +21,17 @@ public class TracksController {
 
         }
     }
+
+    public void getPista(final ResultListener<Track> listenerView, Context context, Integer trackId) {
+        if (Util.hayInternet(context)) {
+            TrackDAO trackDAO = new TrackDAO();
+            trackDAO.getTrack(new ResultListener<Track>() {
+                @Override
+                public void finish(Track resultado) {
+                    listenerView.finish(resultado);
+                }
+            }, trackId);
+
+        }
+    }
 }

@@ -3,19 +3,19 @@
     <tab
         icon="@drawable/icono_pantalla_principal"
         id="@+id/albumFragment"
-        title="@string/btnbar_inicio"
+
         />
     <tab
         icon="@drawable/icono_buscar"
         id="@+id/buscarFragment"
-        title="@string/btnbar_buscar" />
+        />
 
     <tab
         icon="@drawable/icono_favorito"
         id="@+id/favoritoFragment"
-        title="@string/btnbar_favorito" />
+        />
     <tab
         icon="@drawable/ic_radio"
         id="@+id/radioFragment"
-        title="@string/btnbar_radio" />
+        />
 </tabs>

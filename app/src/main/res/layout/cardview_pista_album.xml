@@ -87,14 +87,18 @@
                 android:layout_height="wrap_content"
                 android:text="Nombre Tema"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                android:textColor="@color/album_titulo" />
+                android:textColor="@color/album_titulo"
+                android:singleLine="true"
+                />
 
             <TextView
                 android:id="@+id/tvNombreArtistaTemaPista"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Nombre Album"
-                android:textColor="@color/album_titulo" />
+                android:textColor="@color/album_titulo"
+                android:singleLine="true"
+                />
         </LinearLayout>
 
         <ImageView

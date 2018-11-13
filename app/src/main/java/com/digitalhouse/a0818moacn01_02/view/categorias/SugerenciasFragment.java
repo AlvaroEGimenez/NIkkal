@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -62,6 +63,8 @@ public class SugerenciasFragment extends Fragment implements PlaylistAdapterRecy
 
         ImageView imageViewSugerencia = view.findViewById(R.id.ivImagenSugerencia);
 
+        final ProgressBar progressBar = view.findViewById(R.id.pbSugerencia);
+
         String applicationID = "54587f8009fc0747c9f2eacef47d35f4";
         final DeezerConnect deezerConnect = new DeezerConnect(getContext(), applicationID);
 
@@ -91,10 +94,12 @@ public class SugerenciasFragment extends Fragment implements PlaylistAdapterRecy
         Toolbar toolbarSugerencias = view.findViewById(R.id.toolbarSugerencias);
         toolbarSugerencias.setTitle(bundle.getString(KEY_NOMBRE_SUGERENCIA));
 
-        RecyclerView recyclerViewTrackList = view.findViewById(R.id.rvTracksSugerencias);
+        final RecyclerView recyclerViewTrackList = view.findViewById(R.id.rvTracksSugerencias);
         recyclerViewTrackList.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayout.VERTICAL, false);
         recyclerViewTrackList.setLayoutManager(layoutManager);
+
+        recyclerViewTrackList.setVisibility(View.INVISIBLE);
         final PlaylistAdapterRecyclerView playlistAdapterRecyclerView = new PlaylistAdapterRecyclerView(new ArrayList<Track>(), this);
         recyclerViewTrackList.setAdapter(playlistAdapterRecyclerView);
 
@@ -104,6 +109,8 @@ public class SugerenciasFragment extends Fragment implements PlaylistAdapterRecy
             public void finish(List<Track> resultado) {
                 trackList = resultado;
                 playlistAdapterRecyclerView.setTrackList(resultado);
+                progressBar.setVisibility(View.INVISIBLE);
+                recyclerViewTrackList.setVisibility(View.VISIBLE);
             }
         }, getContext(), id);
 

@@ -93,19 +93,19 @@ public class PistaAdapterViewPage extends PagerAdapter {
         btnPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                play(pista, posicion, btnPlay, btnPause);
+                play(posicion, btnPlay, btnPause);
             }
         });
 
         btnPause.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                pause(pista, posicion, btnPlay, btnPause);
+                pause(posicion, btnPlay, btnPause);
             }
         });
 
         if (primerInstancia) {
-            play(pista, posicion, btnPlay, btnPause);
+            play(posicion, btnPlay, btnPause);
             primerInstancia = Boolean.FALSE;
         }
 
@@ -118,24 +118,24 @@ public class PistaAdapterViewPage extends PagerAdapter {
 
         void pistaSiguiente(Integer position);
 
-        void pistaPlay(Track pista, Integer posicion);
+        void pistaPlay(Integer posicion);
 
-        void pistaPause(Track pista, Integer posicion);
+        void pistaPause();
 
         void favoritoListenerPista(Integer position, ImageView favoritoPista);
     }
 
 
-    private void play(Track pista, Integer posicion, ImageButton btnPlay, ImageView btnPause) {
+    private void play(Integer posicion, ImageButton btnPlay, ImageView btnPause) {
         btnPlay.setVisibility(View.INVISIBLE);
         btnPause.setVisibility(View.VISIBLE);
-        escuchador.pistaPlay(pista, posicion);
+        escuchador.pistaPlay(posicion);
     }
 
-    private void pause(Track pista, Integer posicion, ImageButton btnPlay, ImageView btnPause) {
+    private void pause(Integer posicion, ImageButton btnPlay, ImageView btnPause) {
         btnPlay.setVisibility(View.VISIBLE);
         btnPause.setVisibility(View.INVISIBLE);
-        escuchador.pistaPause(pista, posicion);
+        escuchador.pistaPause();
 
     }
 

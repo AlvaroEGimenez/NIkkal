@@ -2,7 +2,7 @@ package com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Buscar;
 
 
 import android.content.Context;
-import android.graphics.Color;
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -21,17 +21,16 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.digitalhouse.a0818moacn01_02.R;
 import com.digitalhouse.a0818moacn01_02.Utils.ReproducirMp3;
 import com.digitalhouse.a0818moacn01_02.Utils.ResultListener;
 import com.digitalhouse.a0818moacn01_02.controller.SearchControlller;
 import com.digitalhouse.a0818moacn01_02.model.ArtistDeezer;
-import com.digitalhouse.a0818moacn01_02.model.Busqueda;
 import com.digitalhouse.a0818moacn01_02.model.Track;
 import com.digitalhouse.a0818moacn01_02.view.MainActivity;
-import com.mikhaellopez.circularimageview.CircularImageView;
+import com.digitalhouse.a0818moacn01_02.view.ReproductorActivity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,19 +40,16 @@ import java.util.List;
  */
 public class BuscarFragment extends Fragment implements AdapatadorBusqueda.BusquedaInterface {
 
-    private ArrayList<Busqueda> listaBusquedas = new ArrayList<>();
-    private ImageButton imageButtonBusqueda;
+
     private EditText editTextBusqueda;
-    private ImageView circleImageView;
-    private TextView textViewArtista;
     private RecyclerView recyclerViewTracks;
     private AdapatadorBusqueda adapatadorBusqueda;
-    private String busqueda;
     private MediaPlayer mediaPlayer;
     private List<Track> trackListSeach = new ArrayList<>();
-    private ArtistDeezer artistDeezer;
+    private List<ArtistDeezer> artistDeezerList = new ArrayList<>();
     private RelativeLayout relativeLayoutBusqueda;
-
+    private RecyclerView recyclerViewArtistaBusqueda;
+    private View view;
 
     public BuscarFragment() {
         // Required empty public constructor
@@ -64,7 +60,9 @@ public class BuscarFragment extends Fragment implements AdapatadorBusqueda.Busqu
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_buscar, container, false);
+        final View view = inflater.inflate(R.layout.fragment_buscar, container, false);
+
+        this.view = view;
 
         relativeLayoutBusqueda = view.findViewById(R.id.relativeLayoutBusqueda);
 
@@ -73,7 +71,7 @@ public class BuscarFragment extends Fragment implements AdapatadorBusqueda.Busqu
         mostrarTeclado();
 
 
-        imageButtonBusqueda = view.findViewById(R.id.imagebuttonBusqueda);
+        ImageButton imageButtonBusqueda = view.findViewById(R.id.imagebuttonBusqueda);
 
 
         recyclerViewTracks = view.findViewById(R.id.rvBusquedaTracks);
@@ -89,31 +87,14 @@ public class BuscarFragment extends Fragment implements AdapatadorBusqueda.Busqu
         MainActivity mainActivity = (MainActivity) getActivity();
         mediaPlayer = mainActivity.getMediaPlayer();
 
-        circleImageView = view.findViewById(R.id.civImagenArtista);
-        textViewArtista = view.findViewById(R.id.tvBusquedaArtista);
+        //circleImageView = view.findViewById(R.id.civImagenArtista);
+        //textViewArtista = view.findViewById(R.id.tvBusquedaArtista);
 
         imageButtonBusqueda.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                editTextBusqueda.onEditorAction(EditorInfo.IME_ACTION_DONE);
-                busqueda = editTextBusqueda.getText().toString();
-                ocultarTeclado();
-                listaBusquedas.clear();
+                realizarBusqueda();
 
-                SearchControlller searchControlller = new SearchControlller();
-                searchControlller.getSearch(new ResultListener<List<Track>>() {
-                    @Override
-                    public void finish(List<Track> resultado) {
-                        trackListSeach = resultado;
-                        artistDeezer = trackListSeach.get(0).getArtist();
-                        adapatadorBusqueda = new AdapatadorBusqueda(trackListSeach, BuscarFragment.this);
-                        recyclerViewTracks.setAdapter(adapatadorBusqueda);
-                        Glide.with(getContext()).load(artistDeezer.getPictureMedium()).into(circleImageView);
-                        textViewArtista.setText(artistDeezer.getName());
-                        relativeLayoutBusqueda.setVisibility(View.VISIBLE);
-                    }
-                }, getContext(), busqueda);
-                editTextBusqueda.setText("");
             }
         });
 
@@ -121,77 +102,60 @@ public class BuscarFragment extends Fragment implements AdapatadorBusqueda.Busqu
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    busqueda = editTextBusqueda.getText().toString();
-                    ocultarTeclado();
-                    listaBusquedas.clear();
-
-
-                    SearchControlller searchControlller = new SearchControlller();
-                    searchControlller.getSearch(new ResultListener<List<Track>>() {
-                        @Override
-                        public void finish(List<Track> resultado) {
-                            trackListSeach = resultado;
-                            adapatadorBusqueda = new AdapatadorBusqueda(trackListSeach, BuscarFragment.this);
-                            recyclerViewTracks.setAdapter(adapatadorBusqueda);
-                        }
-                    }, getContext(), busqueda);
-                    editTextBusqueda.setText("");
+                    realizarBusqueda();
                 }
                 return false;
             }
         });
 
-
         return view;
     }
 
-
-    /*private void analizarJSON() {
-
-        String url = "https://api.deezer.com/search?q=" + busqueda;
-
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-
-                        try {
-                            JSONArray jsonArray = response.getJSONArray("data");
-
-                            for (int i = 0; i < jsonArray.length(); i++) {
-                                JSONObject hit = jsonArray.getJSONObject(i);
-
-                                String titulo = hit.getString("title_short");
-                                String urlMp3 = hit.getString("preview");
-                                Object artista = hit.getJSONObject("artist");
-                                String nombreArtista = ((JSONObject) artista).getString("name");
-                                listaBusquedas.add(new Busqueda(titulo, urlMp3, nombreArtista));
-                            }
-
-
-
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }, new Response.ErrorListener() {
+    private void realizarBusqueda() {
+        editTextBusqueda.onEditorAction(EditorInfo.IME_ACTION_DONE);
+        String busqueda = editTextBusqueda.getText().toString();
+        ocultarTeclado();
+        artistDeezerList.clear();
+        SearchControlller searchControlller = new SearchControlller();
+        searchControlller.getSearch(new ResultListener<List<Track>>() {
             @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
+            public void finish(List<Track> resultado) {
+                trackListSeach = resultado;
 
+                adapatadorBusqueda = new AdapatadorBusqueda(trackListSeach, BuscarFragment.this);
+                recyclerViewTracks.setAdapter(adapatadorBusqueda);
+
+                for (Track track : trackListSeach) {
+                    artistDeezerList.add(track.getArtist());
+                }
+
+                List<ArtistDeezer> artistDeezerListFiltrada = new ArrayList<>();
+
+                for (ArtistDeezer artistDeezer : artistDeezerList){
+                    if (!artistDeezerListFiltrada.contains(artistDeezerList)){
+                        artistDeezerListFiltrada.add(artistDeezer);
+
+                    }
+                }
+                recyclerViewArtistaBusqueda = view.findViewById(R.id.rvArtistaBusqueda);
+                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+                linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+                AdaptadorBusquedaArtistas adaptadorBusquedaArtistas = new AdaptadorBusquedaArtistas(artistDeezerListFiltrada);
+                recyclerViewArtistaBusqueda.setHasFixedSize(true);
+                recyclerViewArtistaBusqueda.setLayoutManager(linearLayoutManager);
+                recyclerViewArtistaBusqueda.setAdapter(adaptadorBusquedaArtistas);
+
+                relativeLayoutBusqueda.setVisibility(View.VISIBLE);
             }
-        });
-
-        requestQueue.add(request);
-    }*/
-
+        }, getContext(), busqueda);
+        editTextBusqueda.setText("");
+    }
 
     @Override
-    public void busquedaClick(Track track) {
+    public void busquedaClick(Track track, final Integer posicion) {
         LinearLayout linearLayout = getActivity().findViewById(R.id.layoutPlayer);
         TextView textViewNombrePista = getActivity().findViewById(R.id.tvNombreReproductor);
-        textViewNombrePista.setSelected(true);
+        ImageView imageViewExpandir = getActivity().findViewById(R.id.btnActivityReproductor);
 
 
         linearLayout.setVisibility(View.VISIBLE);
@@ -201,8 +165,21 @@ public class BuscarFragment extends Fragment implements AdapatadorBusqueda.Busqu
         reproducirMp3.reproducirMp3(url, mediaPlayer, getActivity());
 
         textViewNombrePista.setText(track.getTitle() + " - " + track.getArtist().getName());
-        textViewNombrePista.setTextColor(Color.parseColor("#FD9701"));
         textViewNombrePista.setSelected(true);
+
+        imageViewExpandir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), ReproductorActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putInt(ReproductorActivity.KEY_POSICION,posicion);
+                bundle.putSerializable(ReproductorActivity.KEY_OBJETO, (Serializable) trackListSeach);
+                intent.putExtras(bundle);
+                startActivity(intent);
+
+
+            }
+        });
 
 
     }

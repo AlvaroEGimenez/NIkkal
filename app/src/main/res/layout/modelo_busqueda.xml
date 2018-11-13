@@ -7,7 +7,7 @@
     android:foreground="?attr/selectableItemBackground"
     android:gravity="center_vertical"
     android:orientation="horizontal"
-    android:padding="10dp"
+    android:layout_marginStart="10dp"
     android:layout_marginTop="1dp">
 
     <TextView
@@ -16,14 +16,14 @@
         android:layout_height="wrap_content"
         android:textColor="@color/album_titulo"
         android:textSize="16sp"
-        android:layout_weight="1.7"
+        android:layout_weight="1.9"
         android:text="nombre"/>
 
     <ImageView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_more"
-        android:layout_weight="0.3"
+        android:layout_weight="0.1"
         android:clickable="true"
         android:focusable="true"
         android:foreground="?attr/selectableItemBackground" />

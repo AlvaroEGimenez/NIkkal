@@ -103,7 +103,7 @@ public class ReproductorFragment extends Fragment {
         textViewNombredelTrack.setText(nombreTrack);
         textViewNombredelArtista.setText(nombreArtista);
         textViewNombredelTrack.setSelected(true);
-        final ProgressBar progressBar = getActivity().findViewById(R.id.progressBarReproductor);
+    //        final ProgressBar progressBar = getActivity().findViewById(R.id.progressBarReproductor);
 
         ImageView imageViewAnterior = getActivity().findViewById(R.id.ivAnteriorReproductor);
         final ImageView imageViewPause = getActivity().findViewById(R.id.ivPausa_Reproductor);
@@ -126,12 +126,12 @@ public class ReproductorFragment extends Fragment {
                 @Override
                 public void run() {
                     Integer posicionactual = Math.toIntExact(trackPlayer.getPosition());
-                    progressBar.setProgress(posicionactual);
+                    //progressBar.setProgress(posicionactual);
                     mSeekbarUpdateHandler.postDelayed(this, 50);
                 }
             };
 
-            progressBar.setMax((int) trackPlayer.getTrackDuration());
+            //progressBar.setMax((int) trackPlayer.getTrackDuration());
             mSeekbarUpdateHandler.postDelayed(mUpdateSeekbar, 0);
 
             imageViewPause.setOnClickListener(new View.OnClickListener() {
