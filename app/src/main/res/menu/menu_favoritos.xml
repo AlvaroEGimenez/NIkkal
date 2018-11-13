@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MainActivityRadioFragment">
+
+    <group android:id="@+id/toolbarMenuFavoritos"
+        android:visible="true">
+
+
+
+    <item android:id="@+id/itemAlbumFavorito"
+        android:icon="@drawable/ic_album_24dp"
+        android:title="@string/tv_almbum_favoritos"
+        />
+
+    <item android:id="@+id/itemCancionFavorita"
+        android:icon="@+id/ivIconoPitstaFavorita"
+        android:title="@string/tv_canciones_favoritas"
+        />
+
+    <item android:id="@+id/itemArtistaFavorito"
+        android:icon="@drawable/ic_artista"
+        android:title="@string/tv_canciones_favoritas"
+        />
+
+    <item android:id="@+id/itemListasFavoritas"
+        android:icon="@drawable/ic_listas_de_reproduccion"
+        android:title="@string/tv_mis_playlist"
+        />
+
+    </group>
+
+</menu>

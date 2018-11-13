@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.digitalhouse.a0818moacn01_02.R;
 import com.digitalhouse.a0818moacn01_02.model.Busqueda;
+import com.digitalhouse.a0818moacn01_02.model.RadioDeezer;
 import com.digitalhouse.a0818moacn01_02.model.Track;
 import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Buscar.AdapatadorBusqueda;
 import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Buscar.BuscarFragment;
@@ -29,7 +30,7 @@ import com.roughike.bottombar.OnTabSelectListener;
 
 import java.io.IOException;
 
-public class MainActivity extends AppCompatActivity implements AdapatadorBusqueda.BusquedaInterface {
+public class MainActivity extends AppCompatActivity implements AdapatadorBusqueda.BusquedaInterface, FavoritoFragment.interfacePasadorDeInformacion{
 
     private CategoriaFragment categoriaFragment = new CategoriaFragment();
     private BuscarFragment buscarFragment = new BuscarFragment();
@@ -199,4 +200,8 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
         }
     }
 
+    @Override
+    public void recibirmensaje(RadioDeezer radioDeezer) {
+        Toast.makeText(this, "Acá viene lo bueno", Toast.LENGTH_SHORT).show();
+    }
 }
