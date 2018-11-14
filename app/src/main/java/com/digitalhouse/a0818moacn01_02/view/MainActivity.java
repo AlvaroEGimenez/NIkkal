@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -48,7 +49,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements AdapatadorBusqueda.BusquedaInterface,  PistaListaReproduccionAdapter.PistaListaReproduccionAdapterInterface {
+public class MainActivity extends AppCompatActivity implements AdapatadorBusqueda.BusquedaInterface,
+        PistaListaReproduccionAdapter.PistaListaReproduccionAdapterInterface, MediaPlayer.OnCompletionListener {
 
     private CategoriaFragment categoriaFragment = new CategoriaFragment();
     private BuscarFragment buscarFragment = new BuscarFragment();
@@ -65,6 +67,10 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
     private DrawerLayout drawer;
     private NavigationView navigationView;
     private View headerView;
+    private List<Track> pistasListaReproduccion = new ArrayList<>();
+    private  PistaListaReproduccionAdapter pistaAlbumRecyclerView;
+    private FloatingActionButton btnListaReproduccion;
+    private Integer posicionActualLista;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +89,8 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
         mediaPlayer = new MediaPlayer();
         navigationView = findViewById(R.id.navigationMainActivity);
         headerView = navigationView.inflateHeaderView(R.layout.header_navigation_view);
+        btnListaReproduccion =  findViewById(R.id.btnListaReproduccion);
+        btnListaReproduccion.setOnClickListener(listaReproducction);
         cargarImagenHeaderNavigationView();
 
         bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -162,6 +170,7 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
                 mediaPlayer.prepare();
                 mediaPlayer.start();
             }
+
 
             imageViewPause.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -289,29 +298,28 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
 
     private void cargarListaReproduccion(final List<Integer> tracksId ) {
         TracksController tracksController = new TracksController();
-      final List<Track> pistas = new ArrayList<>();
 
-       for(Integer pistaId : tracksId) {
-           tracksController.getPista(new ResultListener<Track>() {
-               @Override
-               public void finish(Track resultado) {
-                   pistas.add(resultado);
-                   if (pistas.size() ==  tracksId.size()) {
-                       crearListaReproduccionRecyclerView(pistas);
-                   }
+        for(Integer pistaId : tracksId) {
+            tracksController.getPista(new ResultListener<Track>() {
+                @Override
+                public void finish(Track resultado) {
+                    pistasListaReproduccion.add(resultado);
+                    if (pistasListaReproduccion.size() ==  tracksId.size()) {
+                        crearListaReproduccionRecyclerView();
+                    }
 
-               }
-           }, getApplicationContext(), pistaId);
-       }
+                }
+            }, getApplicationContext(), pistaId);
+        }
     }
 
-    private void crearListaReproduccionRecyclerView(List<Track> pistas) {
+    private void crearListaReproduccionRecyclerView() {
         RecyclerView recyclerView = findViewById(R.id.rvListaReproduccion);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
-        PistaListaReproduccionAdapter pistaAlbumRecyclerView = new PistaListaReproduccionAdapter(pistas, R.layout.cardview_pista_listado_reproduccion, this, this);
+        pistaAlbumRecyclerView = new PistaListaReproduccionAdapter(pistasListaReproduccion, R.layout.cardview_pista_listado_reproduccion, this, this);
 
         recyclerView.setAdapter(pistaAlbumRecyclerView);
 
@@ -325,10 +333,49 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
         return bottomNavigation;
     }
 
+    public List<Track> getPistasListaReproduccion() {
+        return pistasListaReproduccion;
+    }
 
+    public PistaListaReproduccionAdapter getPistaAlbumRecyclerView() {
+        return pistaAlbumRecyclerView;
+    }
+
+    View.OnClickListener listaReproducction = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            posicionActualLista = 0;
+            pistaListaReproduccionAdapterInterface(posicionActualLista++);
+
+            mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+
+                  if(posicionActualLista < pistasListaReproduccion.size()) {
+                      pistaListaReproduccionAdapterInterface(posicionActualLista++);
+                  }else{
+                      posicionActualLista = 0;
+                      return;
+                  }
+                }
+            });
+        }
+    };
 
     @Override
-    public void pistaListaReproduccionAdapterInterface(Integer posicion, View itemView) {
+    public void pistaListaReproduccionAdapterInterface(Integer posicion) {
+        mediaPlayer.reset();
+        Track pista = pistasListaReproduccion.get(posicion);
+        busquedaClick(pista, posicion);
+
+    }
+
+    @Override
+    public void onCompletion(MediaPlayer mp) {
+        Track pista = pistasListaReproduccion.get(5);
+        busquedaClick(pista, 5);
+
+
 
     }
 }

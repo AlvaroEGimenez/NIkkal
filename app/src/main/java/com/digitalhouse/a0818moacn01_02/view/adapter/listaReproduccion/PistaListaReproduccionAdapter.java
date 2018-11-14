@@ -20,7 +20,7 @@ import com.digitalhouse.a0818moacn01_02.view.adapter.pista.RecyclerItemTouchHelp
 import java.util.Collections;
 import java.util.List;
 
-public class PistaListaReproduccionAdapter extends RecyclerView.Adapter implements  OnMoveAndSwipedListener{
+public class PistaListaReproduccionAdapter extends RecyclerView.Adapter implements OnMoveAndSwipedListener {
     private List<Track> pistas;
     private Integer resources;
     private Activity activity;
@@ -68,7 +68,7 @@ public class PistaListaReproduccionAdapter extends RecyclerView.Adapter implemen
     }
 
     public interface PistaListaReproduccionAdapterInterface {
-        void pistaListaReproduccionAdapterInterface(Integer posicion, View itemView);
+        void pistaListaReproduccionAdapterInterface(Integer posicion);
     }
 
     public class PistaViewHolder extends RecyclerView.ViewHolder {
@@ -80,28 +80,30 @@ public class PistaListaReproduccionAdapter extends RecyclerView.Adapter implemen
         public PistaViewHolder(@NonNull final View itemView) {
             super(itemView);
 
-
             tvNombreAlbumTemaPista = itemView.findViewById(R.id.tvNombreAlbumTemaPistaListaReprod);
             tvNombreArtistaTemaPista = itemView.findViewById(R.id.tvNombreArtistaTemaPistaListaReprod);
 
             imgAlbum = itemView.findViewById(R.id.imgAlbumListaReproduccion);
 
-
-
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    escuchador.pistaListaReproduccionAdapterInterface(getAdapterPosition(), itemView);
+                    escuchador.pistaListaReproduccionAdapterInterface(getAdapterPosition());
                 }
             });
 
         }
 
         public void cargar(Track pista) {
-            if(pista.getAlbum() != null) {
-                tvNombreAlbumTemaPista.setText(pista.getTitle());
-                tvNombreArtistaTemaPista.setText(pista.getArtist().getName());
+
+            tvNombreAlbumTemaPista.setText(pista.getTitle());
+            tvNombreArtistaTemaPista.setText(pista.getArtist() != null ? pista.getArtist().getName() : "");
+            if (pista.getAlbum() != null && pista.getAlbum().getCoverMedium() != null) {
                 Glide.with(itemView.getContext()).load(pista.getAlbum().getCoverMedium()).into(imgAlbum);
+            }else if(pista.getArtist() != null && pista.getArtist().getPictureMedium() != null){
+                Glide.with(itemView.getContext()).load(pista.getArtist().getPictureMedium()).into(imgAlbum);
+            }else {
+                Glide.with(itemView.getContext()).load(pista.getImagenAlbum()).into(imgAlbum);
             }
 
         }

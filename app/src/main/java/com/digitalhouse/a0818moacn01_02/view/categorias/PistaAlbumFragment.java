@@ -3,7 +3,6 @@ package com.digitalhouse.a0818moacn01_02.view.categorias;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -11,7 +10,6 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -20,7 +18,6 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -31,12 +28,10 @@ import com.digitalhouse.a0818moacn01_02.R;
 import com.digitalhouse.a0818moacn01_02.Utils.ResultListener;
 import com.digitalhouse.a0818moacn01_02.controller.TracksController;
 import com.digitalhouse.a0818moacn01_02.model.Track;
-import com.digitalhouse.a0818moacn01_02.view.LoginActivity;
 import com.digitalhouse.a0818moacn01_02.view.MainActivity;
 import com.digitalhouse.a0818moacn01_02.view.adapter.pista.PistaAdapterViewPage;
 import com.digitalhouse.a0818moacn01_02.view.adapter.pista.PistaAlbumRecyclerView;
 import com.digitalhouse.a0818moacn01_02.view.adapter.pista.RecyclerItemTouchHelper;
-import com.facebook.AccessToken;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -65,6 +60,7 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
     private List<Track> pistas = new ArrayList<>();
     private FloatingActionButton btnReproducirAlbum;
     private Boolean reprducirAlbum = Boolean.FALSE;
+    private String urlImagenCabecera;
 
     private Boolean favoritoAlbum;
     private FloatingActionButton btnFavorito;
@@ -91,7 +87,7 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
 
 
         Bundle bundle = getArguments();
-        String urlImagenCabecera = bundle.getString(KEY_IMAGEN_CABECERA_ALBUM_PISTA);
+        urlImagenCabecera = bundle.getString(KEY_IMAGEN_CABECERA_ALBUM_PISTA);
         String nombreCabeceraPistaAlbum = bundle.getString(KEY_NOMBRE_CABECERA_ALBUM_PISTA);
         Integer idPista = bundle.getInt(KEY_PISTA_ID_ALBUM_PISTA);
         favoritoAlbum  = bundle.getBoolean(KEY_FAVORITO_ALBUM);
@@ -216,7 +212,8 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
 
     @Override
     public void pistaPlay(final Integer posicion) {
-        if (mediaPlayer.getCurrentPosition() > 0 && pistaActual.getId().equals(pistas.get(posicion))) {
+        if (mediaPlayer.getCurrentPosition() > 0 && pistaActual != null && pistaActual.getId().equals(pistas.get(posicion))) {
+            mediaPlayer.reset();
             mediaPlayer.start();
             return;
         }
@@ -284,6 +281,10 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
         Toast.makeText(getContext(), "Ingrese nombre del playList ", Toast.LENGTH_SHORT).show();
         pistaAlbumRecyclerView.notifyItemRemoved(position);
         pistaAlbumRecyclerView.notifyItemInserted(position);
+        Track pista = pistas.get(position);
+        pista.setImagenAlbum(urlImagenCabecera);
+        parent.getPistasListaReproduccion().add(pistas.get(position));
+        parent.getPistaAlbumRecyclerView().notifyDataSetChanged();
     }
 
 
