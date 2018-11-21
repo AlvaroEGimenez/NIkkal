@@ -312,7 +312,7 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
             Toast.makeText(getContext(), "Pista Agregada ", Toast.LENGTH_SHORT).show();
             parent.agregarPistaReproducción(pistas.get(position));
         } else {
-            final Dialog dialog = new Dialog(getContext());
+            final Dialog dialog = new Dialog(getContext(), R.style.listaReproduccionDialog);
             dialog.setContentView(R.layout.nueva_lista_reprosuccion);
             dialog.show();
 
