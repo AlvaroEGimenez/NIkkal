@@ -59,7 +59,7 @@ public class RecyclerItemTouchHelper extends ItemTouchHelper.SimpleCallback {
 
     @Override
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-        listener.onItemDismiss(viewHolder.getAdapterPosition());
+        listener.onItemDismiss(viewHolder.getAdapterPosition(), direction);
     }
 
     @Override
@@ -71,7 +71,7 @@ public class RecyclerItemTouchHelper extends ItemTouchHelper.SimpleCallback {
 
     public interface RecyclerItemTouchHelperListener {
         boolean onItemMove(int fromPosition, int toPosition);
-        void onItemDismiss(int position);
+        void onItemDismiss(int position, int direction);
     }
 }
 

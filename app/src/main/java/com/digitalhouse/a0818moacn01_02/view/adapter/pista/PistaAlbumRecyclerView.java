@@ -59,7 +59,7 @@ public class PistaAlbumRecyclerView extends RecyclerView.Adapter implements  Rec
     }
 
     @Override
-    public void onItemDismiss(int posicion) {
+    public void onItemDismiss(int posicion, int direction) {
         pistas.remove(posicion);
         notifyItemRemoved(posicion);
         notifyItemInserted(posicion);

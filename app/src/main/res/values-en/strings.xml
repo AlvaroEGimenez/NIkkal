@@ -30,5 +30,9 @@
     <string name="si">Si</string>
     <string name="no">No</string>
     <string name="cabeceraLogin">You need to log in to access more features.</string>
+    <string name="hint_nombre_lista_reproduccion">Nombre Lista de Reproducción</string>
+    <string name="btn_aceptar">Aceptar</string>
+    <string name="btn_cancelar">Cancelar</string>
+    <string name="campo_obligatorio">Complete el campo obligatorio</string>
 
 </resources>

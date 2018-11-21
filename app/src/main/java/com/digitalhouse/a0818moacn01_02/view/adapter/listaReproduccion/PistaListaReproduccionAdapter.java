@@ -62,7 +62,7 @@ public class PistaListaReproduccionAdapter extends RecyclerView.Adapter implemen
     }
 
     @Override
-    public void onItemDismiss(int posicion) {
+    public void onItemDismiss(int posicion, int direction) {
         pistas.remove(posicion);
         notifyItemRemoved(posicion);
     }

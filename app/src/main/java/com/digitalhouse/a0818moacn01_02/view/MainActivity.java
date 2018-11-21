@@ -32,6 +32,7 @@ import com.bumptech.glide.Glide;
 import com.digitalhouse.a0818moacn01_02.R;
 import com.digitalhouse.a0818moacn01_02.Utils.ResultListener;
 import com.digitalhouse.a0818moacn01_02.controller.TracksController;
+import com.digitalhouse.a0818moacn01_02.model.ListaReproduccion;
 import com.digitalhouse.a0818moacn01_02.model.Track;
 import com.digitalhouse.a0818moacn01_02.view.adapter.listaReproduccion.ItemTouchHelperCallback;
 import com.digitalhouse.a0818moacn01_02.view.adapter.listaReproduccion.PistaListaReproduccionAdapter;
@@ -67,7 +68,7 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
     private DrawerLayout drawer;
     private NavigationView navigationView;
     private View headerView;
-    private List<Track> pistasListaReproduccion = new ArrayList<>();
+    private ListaReproduccion listaReproduccion = new ListaReproduccion();
     private  PistaListaReproduccionAdapter pistaAlbumRecyclerView;
     private FloatingActionButton btnListaReproduccion;
     private Integer posicionActualLista;
@@ -303,8 +304,8 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
             tracksController.getPista(new ResultListener<Track>() {
                 @Override
                 public void finish(Track resultado) {
-                    pistasListaReproduccion.add(resultado);
-                    if (pistasListaReproduccion.size() ==  tracksId.size()) {
+                    listaReproduccion.agregarPista(resultado);
+                    if (listaReproduccion.getPistas().size() ==  tracksId.size()) {
                         crearListaReproduccionRecyclerView();
                     }
 
@@ -319,7 +320,7 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
-        pistaAlbumRecyclerView = new PistaListaReproduccionAdapter(pistasListaReproduccion, R.layout.cardview_pista_listado_reproduccion, this, this);
+        pistaAlbumRecyclerView = new PistaListaReproduccionAdapter(listaReproduccion.getPistas(), R.layout.cardview_pista_listado_reproduccion, this, this);
 
         recyclerView.setAdapter(pistaAlbumRecyclerView);
 
@@ -334,7 +335,14 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
     }
 
     public List<Track> getPistasListaReproduccion() {
-        return pistasListaReproduccion;
+        return listaReproduccion.getPistas();
+    }
+
+    public Boolean nuevaListaReproduccion(String nombre){
+        // todo guardar lista anterior
+        listaReproduccion.getPistas().clear();
+        listaReproduccion.setNombre(nombre);
+        return true;
     }
 
     public PistaListaReproduccionAdapter getPistaAlbumRecyclerView() {
@@ -351,7 +359,7 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
                 @Override
                 public void onCompletion(MediaPlayer mp) {
 
-                  if(posicionActualLista < pistasListaReproduccion.size()) {
+                  if(posicionActualLista < listaReproduccion.getPistas().size()) {
                       pistaListaReproduccionAdapterInterface(posicionActualLista++);
                   }else{
                       posicionActualLista = 0;
@@ -365,17 +373,19 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
     @Override
     public void pistaListaReproduccionAdapterInterface(Integer posicion) {
         mediaPlayer.reset();
-        Track pista = pistasListaReproduccion.get(posicion);
+        Track pista = listaReproduccion.getPistas().get(posicion);
         busquedaClick(pista, posicion);
 
     }
 
     @Override
     public void onCompletion(MediaPlayer mp) {
-        Track pista = pistasListaReproduccion.get(5);
+        Track pista = listaReproduccion.getPistas().get(5);
         busquedaClick(pista, 5);
+    }
 
-
-
+    public void agregarPistaReproducción(Track pista){
+        getPistasListaReproduccion().add(pista);
+        getPistaAlbumRecyclerView().notifyDataSetChanged();
     }
 }
