@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -37,7 +38,7 @@ import com.digitalhouse.a0818moacn01_02.model.RadioDeezer;
 
 import com.digitalhouse.a0818moacn01_02.Utils.ResultListener;
 import com.digitalhouse.a0818moacn01_02.controller.TracksController;
-
+import com.digitalhouse.a0818moacn01_02.model.ListaReproduccion;
 import com.digitalhouse.a0818moacn01_02.model.Track;
 import com.digitalhouse.a0818moacn01_02.view.adapter.listaReproduccion.ItemTouchHelperCallback;
 import com.digitalhouse.a0818moacn01_02.view.adapter.listaReproduccion.PistaListaReproduccionAdapter;
@@ -55,6 +56,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+public class MainActivity extends AppCompatActivity implements AdapatadorBusqueda.BusquedaInterface,
+        PistaListaReproduccionAdapter.PistaListaReproduccionAdapterInterface, MediaPlayer.OnCompletionListener {
 
 public class MainActivity extends AppCompatActivity implements AdapatadorBusqueda.BusquedaInterface,  PistaListaReproduccionAdapter.PistaListaReproduccionAdapterInterface, FavoritoFragment.interfacePasadorDeInformacion {
 
@@ -74,6 +77,10 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
     private DrawerLayout drawer;
     private NavigationView navigationView;
     private View headerView;
+    private ListaReproduccion listaReproduccion = new ListaReproduccion();
+    private  PistaListaReproduccionAdapter pistaAlbumRecyclerView;
+    private FloatingActionButton btnListaReproduccion;
+    private Integer posicionActualLista;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +99,8 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
         mediaPlayer = new MediaPlayer();
         navigationView = findViewById(R.id.navigationMainActivity);
         headerView = navigationView.inflateHeaderView(R.layout.header_navigation_view);
+        btnListaReproduccion =  findViewById(R.id.btnListaReproduccion);
+        btnListaReproduccion.setOnClickListener(listaReproducction);
         cargarImagenHeaderNavigationView();
 
         bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -181,6 +190,7 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
                 mediaPlayer.prepare();
                 mediaPlayer.start();
             }
+
 
             imageViewPause.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -314,29 +324,28 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
 
     private void cargarListaReproduccion(final List<Integer> tracksId ) {
         TracksController tracksController = new TracksController();
-      final List<Track> pistas = new ArrayList<>();
 
-       for(Integer pistaId : tracksId) {
-           tracksController.getPista(new ResultListener<Track>() {
-               @Override
-               public void finish(Track resultado) {
-                   pistas.add(resultado);
-                   if (pistas.size() ==  tracksId.size()) {
-                       crearListaReproduccionRecyclerView(pistas);
-                   }
+        for(Integer pistaId : tracksId) {
+            tracksController.getPista(new ResultListener<Track>() {
+                @Override
+                public void finish(Track resultado) {
+                    listaReproduccion.agregarPista(resultado);
+                    if (listaReproduccion.getPistas().size() ==  tracksId.size()) {
+                        crearListaReproduccionRecyclerView();
+                    }
 
-               }
-           }, getApplicationContext(), pistaId);
-       }
+                }
+            }, getApplicationContext(), pistaId);
+        }
     }
 
-    private void crearListaReproduccionRecyclerView(List<Track> pistas) {
+    private void crearListaReproduccionRecyclerView() {
         RecyclerView recyclerView = findViewById(R.id.rvListaReproduccion);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
-        PistaListaReproduccionAdapter pistaAlbumRecyclerView = new PistaListaReproduccionAdapter(pistas, R.layout.cardview_pista_listado_reproduccion, this, this);
+        pistaAlbumRecyclerView = new PistaListaReproduccionAdapter(listaReproduccion.getPistas(), R.layout.cardview_pista_listado_reproduccion, this, this);
 
         recyclerView.setAdapter(pistaAlbumRecyclerView);
 
@@ -350,11 +359,59 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
         return bottomNavigation;
     }
 
+    public List<Track> getPistasListaReproduccion() {
+        return listaReproduccion.getPistas();
+    }
 
+    public Boolean nuevaListaReproduccion(String nombre){
+        // todo guardar lista anterior
+        listaReproduccion.getPistas().clear();
+        listaReproduccion.setNombre(nombre);
+        return true;
+    }
+
+    public PistaListaReproduccionAdapter getPistaAlbumRecyclerView() {
+        return pistaAlbumRecyclerView;
+    }
+
+    View.OnClickListener listaReproducction = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            posicionActualLista = 0;
+            pistaListaReproduccionAdapterInterface(posicionActualLista++);
+
+            mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+
+                  if(posicionActualLista < listaReproduccion.getPistas().size()) {
+                      pistaListaReproduccionAdapterInterface(posicionActualLista++);
+                  }else{
+                      posicionActualLista = 0;
+                      return;
+                  }
+                }
+            });
+        }
+    };
 
     @Override
-    public void pistaListaReproduccionAdapterInterface(Integer posicion, View itemView) {
+    public void pistaListaReproduccionAdapterInterface(Integer posicion) {
+        mediaPlayer.reset();
+        Track pista = listaReproduccion.getPistas().get(posicion);
+        busquedaClick(pista, posicion);
 
 
+    }
+
+    @Override
+    public void onCompletion(MediaPlayer mp) {
+        Track pista = listaReproduccion.getPistas().get(5);
+        busquedaClick(pista, 5);
+    }
+
+    public void agregarPistaReproducción(Track pista){
+        getPistasListaReproduccion().add(pista);
+        getPistaAlbumRecyclerView().notifyDataSetChanged();
     }
 }

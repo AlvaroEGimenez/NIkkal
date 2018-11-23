@@ -65,6 +65,7 @@ public class Track implements Serializable {
     private AlbumDeezer album;
     @SerializedName("type")
     private String type;
+    private String imagenAlbum;
 
 
 
@@ -239,4 +240,11 @@ public class Track implements Serializable {
         this.favorito = favorito;
     }
 
+    public String getImagenAlbum() {
+        return imagenAlbum;
+    }
+
+    public void setImagenAlbum(String imagenAlbum) {
+        this.imagenAlbum = imagenAlbum;
+    }
 }
