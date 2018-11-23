@@ -57,9 +57,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements AdapatadorBusqueda.BusquedaInterface,
-        PistaListaReproduccionAdapter.PistaListaReproduccionAdapterInterface, MediaPlayer.OnCompletionListener {
-
-public class MainActivity extends AppCompatActivity implements AdapatadorBusqueda.BusquedaInterface,  PistaListaReproduccionAdapter.PistaListaReproduccionAdapterInterface, FavoritoFragment.interfacePasadorDeInformacion {
+        PistaListaReproduccionAdapter.PistaListaReproduccionAdapterInterface, MediaPlayer.OnCompletionListener , FavoritoFragment.interfacePasadorDeInformacion{
 
 
     private CategoriaFragment categoriaFragment = new CategoriaFragment();
@@ -155,9 +153,18 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
 
     public void reemplazarFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.container, fragment);
-        fragmentTransaction.addToBackStack(null).commit();
+        Fragment fragmentAnt = fragmentManager.findFragmentById(R.id.container);
+        if(!fragment.isRemoving()){
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.container, fragment);
+            fragmentTransaction.addToBackStack(null).commit();
+        }else{
+            fragmentManager.beginTransaction().remove(fragment).commit();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.container, fragment);
+            fragmentTransaction.addToBackStack(null).commit();
+        }
+
 
     }
 
@@ -330,7 +337,7 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
                 @Override
                 public void finish(Track resultado) {
                     listaReproduccion.agregarPista(resultado);
-                    if (listaReproduccion.getPistas().size() ==  tracksId.size()) {
+                    if (listaReproduccion.getPistas().size() ==  tracksId.size()-1) {
                         crearListaReproduccionRecyclerView();
                     }
 

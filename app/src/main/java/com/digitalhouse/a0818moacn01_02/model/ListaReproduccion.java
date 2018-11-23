@@ -7,14 +7,17 @@ public class ListaReproduccion {
     private List<Track> pistas;
     private String nombre;
 
-    public void agregarPista(Track pista){
-        if(this.pistas == null){
+    public void agregarPista(Track pista) {
+        if (this.pistas == null) {
             this.pistas = new ArrayList<>();
         }
         this.pistas.add(pista);
     }
 
     public List<Track> getPistas() {
+        if (pistas == null) {
+            pistas = new ArrayList<>();
+        }
         return pistas;
     }
 
