@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -37,11 +38,17 @@ import com.digitalhouse.a0818moacn01_02.view.MainActivity;
 import com.digitalhouse.a0818moacn01_02.view.adapter.pista.PistaAdapterViewPage;
 import com.digitalhouse.a0818moacn01_02.view.adapter.pista.PistaAlbumRecyclerView;
 import com.digitalhouse.a0818moacn01_02.view.adapter.pista.RecyclerItemTouchHelper;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import me.angeldevil.autoscrollviewpager.AutoScrollViewPager;
 
@@ -66,6 +73,8 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
     private FloatingActionButton btnReproducirAlbum;
     private Boolean reprducirAlbum = Boolean.FALSE;
     private String urlImagenCabecera;
+    private FirebaseAuth mAuth;
+    private DatabaseReference databaseReference;
 
     private Boolean favoritoAlbum;
     private FloatingActionButton btnFavorito;
@@ -77,12 +86,18 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         parent = (MainActivity) getActivity();
+
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_pista_album, container, false);
+
+
+
         imgCabeceraAlbumPista = view.findViewById(R.id.imgCabeceraAlbumPista);
         toolbaarNombreCabeceraAlbumPista = view.findViewById(R.id.toolbaarNombreCabeceraAlbumPista);
         btnReproducirAlbum = view.findViewById(R.id.btnReproducirAlbumPista);
@@ -100,6 +115,9 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
         cargarImagen(imgCabeceraAlbumPista, urlImagenCabecera);
         toolbaarNombreCabeceraAlbumPista.setTitle(nombreCabeceraPistaAlbum);
         cargarPista(idPista);
+
+
+
 
         mediaPlayer = parent.getMediaPlayer();
 
@@ -137,6 +155,20 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
     private void setFavoritoPista(Track pista, ImageView favoritoPista) {
         if (!pista.getFavorito()) {
             pista.setFavorito(true);
+            String nombreTrack = pista.getTitle();
+            String nombreArtista = pista.getArtist().getName();
+            String urlTrack = pista.getPreview();
+            Integer id = pista.getId();
+
+            Map<String, Object> datoFavorito = new HashMap<>();
+            datoFavorito.put("nombreTrack",nombreTrack);
+            datoFavorito.put("nombreArtista", nombreArtista);
+            datoFavorito.put("urlTrack",urlTrack);
+            datoFavorito.put("id",id);
+
+            databaseReference.child("favorito").push().setValue(datoFavorito);
+
+
         } else {
             pista.setFavorito(false);
         }
@@ -373,6 +405,8 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
         } else {
             cargarImagen(R.drawable.ic_favorite_black_24dp);
             favoritoAlbum = Boolean.TRUE;
+            Map<String, Object> favoritos = new HashMap<>();
+
 
         }
     }
@@ -401,5 +435,22 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
             textInputLayout.setErrorEnabled(true);
         }
     }
+
+    /*@Override
+    public void onStart() {
+        super.onStart();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        updateUI(currentUser);
+    }*/
+
+    private void updateUI(FirebaseUser currentUser) {
+        if(currentUser != null ){
+            String nombre = currentUser.getDisplayName();
+            Uri uri = currentUser.getPhotoUrl();
+            //todo poner nombre e imagen de usuario en el header
+
+        }
+    }
+
 
 }

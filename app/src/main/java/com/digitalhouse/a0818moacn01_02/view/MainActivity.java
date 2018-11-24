@@ -52,6 +52,7 @@ import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Pantalla_Principal.C
 import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Radio_Online.RadioFragment;
 import com.facebook.AccessToken;
 import com.facebook.Profile;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -81,10 +82,13 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
     private FloatingActionButton btnListaReproduccion;
     private Integer posicionActualLista;
     private Menu menuFavoritos;
+    private FirebaseAuth mAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
 
         Util.printHash(this);
