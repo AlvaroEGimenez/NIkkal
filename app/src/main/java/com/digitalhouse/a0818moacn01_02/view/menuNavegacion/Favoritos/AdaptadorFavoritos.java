@@ -1,6 +1,8 @@
 package com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Favoritos;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,20 +16,20 @@ import com.digitalhouse.a0818moacn01_02.R;
 import com.digitalhouse.a0818moacn01_02.model.ArtistDeezer;
 import com.digitalhouse.a0818moacn01_02.model.RadioDeezer;
 import com.digitalhouse.a0818moacn01_02.model.Track;
+import com.digitalhouse.a0818moacn01_02.view.categorias.SugerenciasFragment;
 
 import java.util.List;
 
 public class AdaptadorFavoritos extends RecyclerView.Adapter {
     //atributos. no tomamos como Atributo una lista de favoritos ya que aún no manejamos base de datos donde almacenar el favorito del usuario
     private List<RadioDeezer> radioDeezerList;
-    //private AartistaFavoritodAdapterInterface escuchador; COMENTADO MIENTRAS HAGO COMUNICACION ENTRE FRAGMENTS
+    private RadioFavoritodAdapterInterface escuchador; //para pasar datos al fragment
 
     //CONSTRUCTOR
 
-
-    public AdaptadorFavoritos(List<RadioDeezer> radioDeezerList){ //AartistaFavoritodAdapterInterface escuchador) {COMENTADO MIENTRAS HAGO COMUNICACION ENTRE FRAGMENTS
+    public AdaptadorFavoritos(List<RadioDeezer> radioDeezerList, RadioFavoritodAdapterInterface escuchador) {
         this.radioDeezerList = radioDeezerList;
-        //this.escuchador = escuchador;
+        this.escuchador = escuchador;
     }
 
     //GETTER
@@ -35,10 +37,18 @@ public class AdaptadorFavoritos extends RecyclerView.Adapter {
         return radioDeezerList;
     }
 
+    public RadioFavoritodAdapterInterface getEscuchador() {
+        return escuchador;
+    }
+
     //SETTER
     public void setRadioDeezerList(List<RadioDeezer> radioDeezerList) {
         this.radioDeezerList = radioDeezerList;
         notifyDataSetChanged();
+    }
+
+    public void setEscuchador(RadioFavoritodAdapterInterface escuchador) {
+        this.escuchador = escuchador;
     }
 
     @NonNull
@@ -67,10 +77,7 @@ public class AdaptadorFavoritos extends RecyclerView.Adapter {
         return radioDeezerList.size();
     }
 
-    //CLASE ANÓNIMA----------TODAVIA NO USO PQ NO HE HECHO COMUNICACION ENTRE FRAGMENTS
-    public interface AartistaFavoritodAdapterInterface {
-        void cambiarDeActividad(RadioDeezer radioDeezer);
-    }
+
 
 
     //VIEWHOLDER
@@ -87,7 +94,18 @@ public class AdaptadorFavoritos extends RecyclerView.Adapter {
             textViewViewHolderFavoritosTitulo = itemView.findViewById(R.id.tvTituloEscuchadoRecientemente);
             textViewViewHolderFavoritosSubtitulo = itemView.findViewById(R.id.tvSubTituloEscuchadoRecientemente);
             imageViewHolderFavoritos = itemView.findViewById(R.id.ivEscuchadoRecientemente);
+
+            //CLICK
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    RadioDeezer radioDeezer = radioDeezerList.get(getAdapterPosition());
+                    escuchador.cambiarDeActividad(radioDeezer);
+                }
+            });
         }
+
+
 
         //MÉTODO
         public void cargarTrackFavoritos (RadioDeezer radioDeezer){
@@ -97,4 +115,15 @@ public class AdaptadorFavoritos extends RecyclerView.Adapter {
             //imageViewHolderFavoritos.setImageResource(favorito.getFavoritoImagen());
         }
     }
+
+    //CLASE ANÓNIMA
+    public interface RadioFavoritodAdapterInterface {
+        void cambiarDeActividad(RadioDeezer radioDeezer);
+
+
+    }
+
+
+
+
 }

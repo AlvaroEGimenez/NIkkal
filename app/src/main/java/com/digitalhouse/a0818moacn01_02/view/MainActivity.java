@@ -22,14 +22,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.digitalhouse.a0818moacn01_02.R;
+
+
+import com.digitalhouse.a0818moacn01_02.model.RadioDeezer;
+
 import com.digitalhouse.a0818moacn01_02.Utils.ResultListener;
 import com.digitalhouse.a0818moacn01_02.controller.TracksController;
 import com.digitalhouse.a0818moacn01_02.model.ListaReproduccion;
@@ -51,7 +57,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements AdapatadorBusqueda.BusquedaInterface,
-        PistaListaReproduccionAdapter.PistaListaReproduccionAdapterInterface, MediaPlayer.OnCompletionListener {
+        PistaListaReproduccionAdapter.PistaListaReproduccionAdapterInterface, MediaPlayer.OnCompletionListener , FavoritoFragment.interfacePasadorDeInformacion{
+
 
     private CategoriaFragment categoriaFragment = new CategoriaFragment();
     private BuscarFragment buscarFragment = new BuscarFragment();
@@ -72,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
     private  PistaListaReproduccionAdapter pistaAlbumRecyclerView;
     private FloatingActionButton btnListaReproduccion;
     private Integer posicionActualLista;
-
+    private Menu menuFavoritos;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -133,12 +140,32 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
         cargarListaReproduccion(tracksId);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        menuFavoritos = menu;
+        getMenuInflater().inflate(R.menu.menu_favoritos, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return super.onOptionsItemSelected(item);
+    }
 
     public void reemplazarFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.container, fragment);
-        fragmentTransaction.addToBackStack(null).commit();
+        Fragment fragmentAnt = fragmentManager.findFragmentById(R.id.container);
+        if(!fragment.isRemoving()){
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.container, fragment);
+            fragmentTransaction.addToBackStack(null).commit();
+        }else{
+            fragmentManager.beginTransaction().remove(fragment).commit();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.container, fragment);
+            fragmentTransaction.addToBackStack(null).commit();
+        }
+
 
     }
 
@@ -242,6 +269,12 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
     }
 
 
+    @Override
+    public void recibirmensaje(RadioDeezer radioDeezer) {
+        Toast.makeText(this, "Acá viene lo bueno", Toast.LENGTH_SHORT).show();
+    }
+
+
     public Boolean estaLogeado(final Context context) {
         AccessToken accessToken = AccessToken.getCurrentAccessToken();
         boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
@@ -283,6 +316,14 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
         alert11.show();
     }
 
+    public Menu getMenuFavoritos() {
+        return menuFavoritos;
+    }
+
+    public void setMenuFavoritos(Menu menuFavoritos) {
+        this.menuFavoritos = menuFavoritos;
+    }
+
     public void cargarImagenHeaderNavigationView() {
         ImageView ivUSuario = headerView.findViewById(R.id.usuarioListaReproducion);
 
@@ -293,6 +334,8 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
         } else {
             ivUSuario.setImageResource(R.drawable.ic_person_outline_black_24dp);
         }
+
+
 
     }
 
@@ -305,7 +348,7 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
                 @Override
                 public void finish(Track resultado) {
                     listaReproduccion.agregarPista(resultado);
-                    if (listaReproduccion.getPistas().size() ==  tracksId.size()) {
+                    if (listaReproduccion.getPistas().size() ==  tracksId.size()-1) {
                         crearListaReproduccionRecyclerView();
                     }
 
@@ -375,6 +418,7 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
         mediaPlayer.reset();
         Track pista = listaReproduccion.getPistas().get(posicion);
         busquedaClick(pista, posicion);
+
 
     }
 

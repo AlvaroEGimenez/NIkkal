@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MainActivityFavoritoFragment">
+    <group android:id="@+id/gupofavorito">
+
+        <item
+            android:id="@+id/itemAlbumFavorito"
+            android:icon="@drawable/ic_album_24dp"
+            android:title=""
+            app:showAsAction="always" />
+
+        <item
+            android:id="@+id/itemCancionFavorita"
+            android:icon="@drawable/ic_pista"
+            android:title=""
+            app:showAsAction="always" />
+
+        <item
+            android:id="@+id/itemArtistaFavorito"
+            android:icon="@drawable/ic_artista"
+            android:title=""
+            app:showAsAction="always" />
+
+        <item
+            android:id="@+id/itemListasFavoritas"
+            android:icon="@drawable/ic_listas_de_reproduccion"
+            android:title=""
+            app:showAsAction="always" />
+
+
+    </group>
+
+</menu>
