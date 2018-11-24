@@ -4,6 +4,8 @@ package com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Favoritos;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -41,6 +43,8 @@ public class FavoritoFragment extends Fragment implements AdaptadorFavoritos.Rad
     private interfacePasadorDeInformacion notificador;
     private SugerenciasFragment sugerenciasFragment = new SugerenciasFragment();
     private MainActivity parent;
+    private AppBarLayout appBarLayout;
+    private CollapsingToolbarLayout collapsingToolbarLayout;
     //private Integer trackId = 3135556;
     //private View view;
 
@@ -98,7 +102,9 @@ public class FavoritoFragment extends Fragment implements AdaptadorFavoritos.Rad
         //traigo la actividad que contiene este fragment
 
         parent = (MainActivity) getActivity();
-
+        collapsingToolbarLayout = view.findViewById(R.id.collapsingFavoritos);
+        appBarLayout = view.findViewById(R.id.appBarFavoritos);
+        appBarLayout.addOnOffsetChangedListener(appBarlistener);
         return view;
 
     }
@@ -130,9 +136,25 @@ public class FavoritoFragment extends Fragment implements AdaptadorFavoritos.Rad
 
     public interface interfacePasadorDeInformacion {
         public void recibirmensaje(RadioDeezer radioDeezer);
-
-
     }
+
+
+    AppBarLayout.OnOffsetChangedListener appBarlistener = new AppBarLayout.OnOffsetChangedListener() {
+        @Override
+        public void onOffsetChanged(AppBarLayout appBarLayout, int i) {
+
+         if( parent.getMenuFavoritos() == null){
+             return;
+         }
+            if (Math.abs(i) - appBarLayout.getTotalScrollRange() == 0) {
+                parent.getMenuFavoritos().setGroupVisible(R.id.gupofavorito, true);
+            } else {
+                parent.getMenuFavoritos().setGroupVisible(R.id.gupofavorito, false);
+
+            }
+        }
+    };
+
 
 
 }

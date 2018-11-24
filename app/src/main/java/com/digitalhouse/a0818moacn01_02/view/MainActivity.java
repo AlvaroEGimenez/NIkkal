@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
     private  PistaListaReproduccionAdapter pistaAlbumRecyclerView;
     private FloatingActionButton btnListaReproduccion;
     private Integer posicionActualLista;
-
+    private Menu menuFavoritos;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -142,6 +142,7 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        menuFavoritos = menu;
         getMenuInflater().inflate(R.menu.menu_favoritos, menu);
         return true;
     }
@@ -315,6 +316,14 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
         alert11.show();
     }
 
+    public Menu getMenuFavoritos() {
+        return menuFavoritos;
+    }
+
+    public void setMenuFavoritos(Menu menuFavoritos) {
+        this.menuFavoritos = menuFavoritos;
+    }
+
     public void cargarImagenHeaderNavigationView() {
         ImageView ivUSuario = headerView.findViewById(R.id.usuarioListaReproducion);
 
@@ -325,6 +334,8 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
         } else {
             ivUSuario.setImageResource(R.drawable.ic_person_outline_black_24dp);
         }
+
+
 
     }
 
