@@ -36,7 +36,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        textView = findViewById(R.id.textViewNombre);
+        //textView = findViewById(R.id.textViewNombre);
         imageView = findViewById(R.id.imageViewPhoto);
 
         FacebookSdk.sdkInitialize(getApplicationContext());

@@ -13,7 +13,7 @@
         android:roundIcon="@drawable/icononikkal"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.InicioActivity">
+        <activity android:name=".view.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -21,7 +21,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".view.MainActivity"
+            android:name=".view.InicioActivity"
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".view.categorias.SugerenciaActivity" />
         <activity android:name=".view.categorias.MasEscuchado" />
