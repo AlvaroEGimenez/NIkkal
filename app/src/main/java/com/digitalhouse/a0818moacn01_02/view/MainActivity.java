@@ -34,6 +34,7 @@ import com.bumptech.glide.Glide;
 import com.digitalhouse.a0818moacn01_02.R;
 
 
+import com.digitalhouse.a0818moacn01_02.Utils.Util;
 import com.digitalhouse.a0818moacn01_02.model.RadioDeezer;
 
 import com.digitalhouse.a0818moacn01_02.Utils.ResultListener;
@@ -84,6 +85,9 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+        Util.printHash(this);
 
         bottomNavigation = findViewById(R.id.navigationView);
         ActionBar actionBar = getSupportActionBar();

@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="250dp"
         android:fitsSystemWindows="true"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:background="@drawable/background_bg"
         android:elevation="0dp"
         >
 
@@ -32,23 +32,8 @@
             android:id="@+id/rlayoutFavoritosContainer"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="16dp">
-
-            <TextView
-                android:id="@+id/titleFavoritos"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:text="NIKKAL"
-                android:textAlignment="center"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                android:textColor="@color/colorAccent"
-                android:textSize="50sp"
-                android:textStyle="bold"
-                android:layout_alignParentLeft="true" />
-
-
+            android:layout_margin="16dp"
+            android:gravity="center_vertical">
 
 
                     <ImageView
@@ -57,7 +42,6 @@
                         android:layout_width="35dp"
                         android:layout_height="35dp"
                         android:layout_margin="4dp"
-                        android:layout_below="@id/titleFavoritos"
                         />
                     <TextView
                         android:id="@+id/tvIconoAlbumFavorito"
@@ -65,7 +49,6 @@
                         android:layout_height="wrap_content"
                         android:text="@string/tv_almbum_favoritos"
                         android:layout_toRightOf="@id/ivIconoAlbumFavorito"
-                        android:layout_below="@id/titleFavoritos"
                         android:textSize="18sp"
                         android:textColor="@color/album_titulo"
                         android:paddingTop="10dp"
