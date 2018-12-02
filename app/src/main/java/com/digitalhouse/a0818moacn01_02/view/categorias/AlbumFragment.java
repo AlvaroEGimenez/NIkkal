@@ -34,6 +34,7 @@ public class AlbumFragment extends Fragment implements AlbumAdapterRecyclerView.
     public static final String KEY_NOMBRE_ARTISTA = "nombreArtista";
     public static final String KEY_ID_ARTISTA = "idArtista";
     public static final String KEY_FAVORITO_ARTISTA = "idFavoritoArtista";
+    private static final String KEY_PISTA_ALBUM = "pistaAlbum";
 
     private PistaAlbumFragment pistaAlbumFragment = new PistaAlbumFragment();
     private Integer idArtist;
@@ -127,6 +128,7 @@ public class AlbumFragment extends Fragment implements AlbumAdapterRecyclerView.
         bundle.putString(PistaAlbumFragment.KEY_NOMBRE_CABECERA_ALBUM_PISTA, album.getTitle());
         bundle.putInt(PistaAlbumFragment.KEY_PISTA_ID_ALBUM_PISTA, album.getId());
         bundle.putBoolean(PistaAlbumFragment.KEY_FAVORITO_ALBUM, album.getFavorito());
+        bundle.putString(PistaAlbumFragment.KEY_CATEGORIA, KEY_PISTA_ALBUM);
 
         pistaAlbumFragment.setArguments(bundle);
         mainActivity.reemplazarFragment(pistaAlbumFragment);

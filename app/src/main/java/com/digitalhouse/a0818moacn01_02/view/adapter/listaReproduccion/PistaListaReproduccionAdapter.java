@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.digitalhouse.a0818moacn01_02.R;
+import com.digitalhouse.a0818moacn01_02.model.ListaReproduccion;
 import com.digitalhouse.a0818moacn01_02.model.Track;
 import com.digitalhouse.a0818moacn01_02.view.MainActivity;
 import com.digitalhouse.a0818moacn01_02.view.adapter.pista.RecyclerItemTouchHelper;
@@ -24,14 +25,16 @@ public class PistaListaReproduccionAdapter extends RecyclerView.Adapter implemen
     private List<Track> pistas;
     private Integer resources;
     private Activity activity;
+    private ListaReproduccion listaReproduccion;
 
     private PistaListaReproduccionAdapterInterface escuchador;
 
-    public PistaListaReproduccionAdapter(List<Track> pistas, int resources, Activity activity, PistaListaReproduccionAdapterInterface escuchador) {
+    public PistaListaReproduccionAdapter(List<Track> pistas, int resources, Activity activity, PistaListaReproduccionAdapterInterface escuchador, ListaReproduccion listaReproduccion) {
         this.pistas = pistas;
         this.resources = resources;
         this.activity = activity;
         this.escuchador = escuchador;
+        this.listaReproduccion = listaReproduccion;
     }
 
 
@@ -63,7 +66,9 @@ public class PistaListaReproduccionAdapter extends RecyclerView.Adapter implemen
 
     @Override
     public void onItemDismiss(int posicion, int direction) {
+        Track pista = pistas.get(posicion);
         pistas.remove(posicion);
+       listaReproduccion.eliminarPista(pista);
         notifyItemRemoved(posicion);
     }
 
@@ -109,4 +114,9 @@ public class PistaListaReproduccionAdapter extends RecyclerView.Adapter implemen
         }
     }
 
+
+    public void setPistas(List<Track> pistas) {
+        this.pistas = pistas;
+        notifyDataSetChanged();
+    }
 }

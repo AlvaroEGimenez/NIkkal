@@ -23,7 +23,6 @@
         <activity
             android:name=".view.InicioActivity"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".view.categorias.SugerenciaActivity" />
         <activity android:name=".view.categorias.MasEscuchado" />
         <activity android:name=".view.ReproductorActivity" />
 

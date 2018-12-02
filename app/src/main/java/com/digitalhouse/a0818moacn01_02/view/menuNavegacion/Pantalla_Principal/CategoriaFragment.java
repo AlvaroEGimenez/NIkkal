@@ -39,7 +39,7 @@ import com.digitalhouse.a0818moacn01_02.view.adapter.CategoriaAdapterRecyclerVie
 import com.digitalhouse.a0818moacn01_02.view.adapter.MasEscuchadosRecyclerView;
 import com.digitalhouse.a0818moacn01_02.view.adapter.RadioAdapterRecyclerView;
 import com.digitalhouse.a0818moacn01_02.view.categorias.GeneroFragment;
-import com.digitalhouse.a0818moacn01_02.view.categorias.SugerenciasFragment;
+import com.digitalhouse.a0818moacn01_02.view.categorias.PistaAlbumFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,10 +47,8 @@ import java.util.List;
 import it.moondroid.coverflow.components.ui.containers.FeatureCoverFlow;
 
 public class CategoriaFragment extends Fragment implements CategoriaAdapterRecyclerView.AdapterInterface, AdaptadorTopChartDeezer.onItemClickTopChartDeezer, RadioAdapterRecyclerView.AdapterInterface {
-
-
+    private static final String KEY_SUGERENCIA= "sugerencia";
     private GeneroFragment generoFragment = new GeneroFragment();
-    private SugerenciasFragment sugerenciasFragment = new SugerenciasFragment();
     private FeatureCoverFlow featureCoverFlow;
     private List<RadioDeezer> radioDeezerList = new ArrayList<>();
     private List<Track> topChartDeezerList = new ArrayList<>();
@@ -59,10 +57,11 @@ public class CategoriaFragment extends Fragment implements CategoriaAdapterRecyc
     private View view;
     private ProgressBar pbCategoria;
     private LinearLayout conatiner;
-    private MediaPlayer mediaPlayer = new MediaPlayer();
+    private MediaPlayer mediaPlayer;
     private MainActivity parent;
     private List<Genre> genreList = new ArrayList<>();
     private AdaptadorTopChartDeezer adaptadorTopChartDeezer;
+    private PistaAlbumFragment pistaAlbumFragment = new PistaAlbumFragment();
 
     public CategoriaFragment() {
     }
@@ -78,6 +77,7 @@ public class CategoriaFragment extends Fragment implements CategoriaAdapterRecyc
 
         this.view = view;
         parent = (MainActivity) getActivity();
+        mediaPlayer = parent.getMediaPlayer();
 
         adaptadorTopChartDeezer = new AdaptadorTopChartDeezer(new ArrayList<Track>(), getContext(), this);
         DAOLocal daoLocal = new DAOLocal();
@@ -264,18 +264,13 @@ public class CategoriaFragment extends Fragment implements CategoriaAdapterRecyc
 
     @Override
     public void cambiarDeActividadRadio(RadioDeezer radioDeezer) {
-
-        Intent intent = null;
         Bundle bundle = new Bundle();
-        bundle.putString(SugerenciasFragment.KEY_IMAGEN_SUGERENCIA, radioDeezer.getPictureBig());
-        bundle.putString(SugerenciasFragment.KEY_ID_PLAYLIST_SUGERENCIA, radioDeezer.getId());
-        bundle.putString(SugerenciasFragment.KEY_NOMBRE_SUGERENCIA, radioDeezer.getTitle());
+        bundle.putString(PistaAlbumFragment.KEY_IMAGEN_CABECERA_ALBUM_PISTA, radioDeezer.getPictureBig());
+        bundle.putString(PistaAlbumFragment.KEY_NOMBRE_CABECERA_ALBUM_PISTA,radioDeezer.getTitle());
+        bundle.putInt(PistaAlbumFragment.KEY_PISTA_ID_ALBUM_PISTA, Integer.parseInt(radioDeezer.getId()));
+        bundle.putString(PistaAlbumFragment.KEY_CATEGORIA, KEY_SUGERENCIA);
 
-        sugerenciasFragment.setArguments(bundle);
-        parent.reemplazarFragment(sugerenciasFragment);
-        if (intent != null) {
-            startActivity(intent);
-        }
-
+        pistaAlbumFragment.setArguments(bundle);
+        parent.reemplazarFragment(pistaAlbumFragment);
     }
 }

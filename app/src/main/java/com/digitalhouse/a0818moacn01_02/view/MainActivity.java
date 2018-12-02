@@ -32,34 +32,29 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.digitalhouse.a0818moacn01_02.R;
-
-
-import com.digitalhouse.a0818moacn01_02.Utils.Util;
-import com.digitalhouse.a0818moacn01_02.model.RadioDeezer;
-
 import com.digitalhouse.a0818moacn01_02.Utils.ResultListener;
-import com.digitalhouse.a0818moacn01_02.controller.TracksController;
+import com.digitalhouse.a0818moacn01_02.Utils.Util;
 import com.digitalhouse.a0818moacn01_02.model.ListaReproduccion;
+import com.digitalhouse.a0818moacn01_02.model.RadioDeezer;
 import com.digitalhouse.a0818moacn01_02.model.Track;
 import com.digitalhouse.a0818moacn01_02.view.adapter.listaReproduccion.ItemTouchHelperCallback;
 import com.digitalhouse.a0818moacn01_02.view.adapter.listaReproduccion.PistaListaReproduccionAdapter;
-import com.digitalhouse.a0818moacn01_02.view.adapter.pista.RecyclerItemTouchHelper;
 import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Buscar.AdapatadorBusqueda;
 import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Buscar.BuscarFragment;
 import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Configuracion.ConfiguracionFragment;
 import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Favoritos.FavoritoFragment;
 import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Pantalla_Principal.CategoriaFragment;
 import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Radio_Online.RadioFragment;
-import com.facebook.AccessToken;
 import com.facebook.Profile;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements AdapatadorBusqueda.BusquedaInterface,
-        PistaListaReproduccionAdapter.PistaListaReproduccionAdapterInterface, MediaPlayer.OnCompletionListener , FavoritoFragment.interfacePasadorDeInformacion{
+        PistaListaReproduccionAdapter.PistaListaReproduccionAdapterInterface, MediaPlayer.OnCompletionListener, FavoritoFragment.interfacePasadorDeInformacion {
 
 
     private CategoriaFragment categoriaFragment = new CategoriaFragment();
@@ -77,8 +72,8 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
     private DrawerLayout drawer;
     private NavigationView navigationView;
     private View headerView;
-    private ListaReproduccion listaReproduccion = new ListaReproduccion();
-    private  PistaListaReproduccionAdapter pistaAlbumRecyclerView;
+    private ListaReproduccion listaReproduccion;
+    private PistaListaReproduccionAdapter pistaAlbumRecyclerView;
     private FloatingActionButton btnListaReproduccion;
     private Integer posicionActualLista;
     private Menu menuFavoritos;
@@ -88,7 +83,6 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
 
 
         Util.printHash(this);
@@ -105,7 +99,7 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
         mediaPlayer = new MediaPlayer();
         navigationView = findViewById(R.id.navigationMainActivity);
         headerView = navigationView.inflateHeaderView(R.layout.header_navigation_view);
-        btnListaReproduccion =  findViewById(R.id.btnListaReproduccion);
+        btnListaReproduccion = findViewById(R.id.btnListaReproduccion);
         btnListaReproduccion.setOnClickListener(listaReproducction);
         cargarImagenHeaderNavigationView();
 
@@ -131,21 +125,10 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
                 return false;
             }
         });
-        List<Integer> tracksId = new ArrayList<>();
-        tracksId.add(3135553);
-        tracksId.add(3135653);
-        tracksId.add(3135453);
-        tracksId.add(3135753);
-        tracksId.add(3132553);
-        tracksId.add(3135563);
-        tracksId.add(3135453);
-        tracksId.add(3137553);
-        tracksId.add(3135353);
-        tracksId.add(3135453);
-        tracksId.add(3535553);
-        tracksId.add(3165553);
 
-        cargarListaReproduccion(tracksId);
+        listaReproduccion = new ListaReproduccion("default");
+        crearListaReproduccionRecyclerView();
+        cargarListaReproduccion();
     }
 
     @Override
@@ -163,11 +146,11 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
     public void reemplazarFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         Fragment fragmentAnt = fragmentManager.findFragmentById(R.id.container);
-        if(!fragment.isRemoving()){
+        if (!fragment.isRemoving()) {
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.container, fragment);
             fragmentTransaction.addToBackStack(null).commit();
-        }else{
+        } else {
             fragmentManager.beginTransaction().remove(fragment).commit();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.container, fragment);
@@ -284,10 +267,10 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
 
 
     public Boolean estaLogeado(final Context context) {
-        AccessToken accessToken = AccessToken.getCurrentAccessToken();
-        boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
+        FirebaseUser currentUser = FirebaseAuth.getInstance()
+                .getCurrentUser();
 
-        if (!isLoggedIn) {
+        if (currentUser == null) {
             alertDialogInicionSesion(context);
             return Boolean.FALSE;
         } else {
@@ -343,35 +326,27 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
             ivUSuario.setImageResource(R.drawable.ic_person_outline_black_24dp);
         }
 
+    }
+
+
+    private void cargarListaReproduccion() {
+        listaReproduccion.getLista(new ResultListener<List<Track>>() {
+            @Override
+            public void finish(List<Track> Resultado) {
+                pistaAlbumRecyclerView.setPistas(Resultado);
+            }
+        });
 
 
     }
 
-
-    private void cargarListaReproduccion(final List<Integer> tracksId ) {
-        TracksController tracksController = new TracksController();
-
-        for(Integer pistaId : tracksId) {
-            tracksController.getPista(new ResultListener<Track>() {
-                @Override
-                public void finish(Track resultado) {
-                    listaReproduccion.agregarPista(resultado);
-                    if (listaReproduccion.getPistas().size() ==  tracksId.size()-1) {
-                        crearListaReproduccionRecyclerView();
-                    }
-
-                }
-            }, getApplicationContext(), pistaId);
-        }
-    }
-
-    private void crearListaReproduccionRecyclerView() {
+    public void crearListaReproduccionRecyclerView() {
         RecyclerView recyclerView = findViewById(R.id.rvListaReproduccion);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
-        pistaAlbumRecyclerView = new PistaListaReproduccionAdapter(listaReproduccion.getPistas(), R.layout.cardview_pista_listado_reproduccion, this, this);
+        pistaAlbumRecyclerView = new PistaListaReproduccionAdapter(new ArrayList<Track>(), R.layout.cardview_pista_listado_reproduccion, this, this, listaReproduccion);
 
         recyclerView.setAdapter(pistaAlbumRecyclerView);
 
@@ -389,10 +364,11 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
         return listaReproduccion.getPistas();
     }
 
-    public Boolean nuevaListaReproduccion(String nombre){
+    public Boolean nuevaListaReproduccion(String nombre) {
         // todo guardar lista anterior
         listaReproduccion.getPistas().clear();
         listaReproduccion.setNombre(nombre);
+        cargarListaReproduccion();
         return true;
     }
 
@@ -410,12 +386,12 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
                 @Override
                 public void onCompletion(MediaPlayer mp) {
 
-                  if(posicionActualLista < listaReproduccion.getPistas().size()) {
-                      pistaListaReproduccionAdapterInterface(posicionActualLista++);
-                  }else{
-                      posicionActualLista = 0;
-                      return;
-                  }
+                    if (posicionActualLista < listaReproduccion.getPistas().size() - 2) {
+                        pistaListaReproduccionAdapterInterface(posicionActualLista++);
+                    } else {
+                        posicionActualLista = 0;
+                        return;
+                    }
                 }
             });
         }
@@ -426,8 +402,6 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
         mediaPlayer.reset();
         Track pista = listaReproduccion.getPistas().get(posicion);
         busquedaClick(pista, posicion);
-
-
     }
 
     @Override
@@ -436,8 +410,8 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
         busquedaClick(pista, 5);
     }
 
-    public void agregarPistaReproducción(Track pista){
-        getPistasListaReproduccion().add(pista);
+    public void agregarPistaReproducción(Track pista) {
+        listaReproduccion.agregarPista(pista);
         getPistaAlbumRecyclerView().notifyDataSetChanged();
     }
 }

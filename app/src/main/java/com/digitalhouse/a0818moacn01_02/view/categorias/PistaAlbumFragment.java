@@ -3,6 +3,7 @@ package com.digitalhouse.a0818moacn01_02.view.categorias;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -31,7 +32,9 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.digitalhouse.a0818moacn01_02.R;
+import com.digitalhouse.a0818moacn01_02.Utils.ReproducirMp3;
 import com.digitalhouse.a0818moacn01_02.Utils.ResultListener;
+import com.digitalhouse.a0818moacn01_02.controller.TrackListController;
 import com.digitalhouse.a0818moacn01_02.controller.TracksController;
 import com.digitalhouse.a0818moacn01_02.model.Track;
 import com.digitalhouse.a0818moacn01_02.view.MainActivity;
@@ -57,6 +60,7 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
     public static final String KEY_NOMBRE_CABECERA_ALBUM_PISTA = "nombreCabeceraAlbumPista";
     public static final String KEY_PISTA_ID_ALBUM_PISTA = "pistaIdAlbumPista";
     public static final String KEY_FAVORITO_ALBUM = "idFavoritoAlbum";
+    public static final String KEY_CATEGORIA = "categoria";
 
     private ImageView imgCabeceraAlbumPista;
     private Toolbar toolbaarNombreCabeceraAlbumPista;
@@ -96,8 +100,6 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_pista_album, container, false);
 
-
-
         imgCabeceraAlbumPista = view.findViewById(R.id.imgCabeceraAlbumPista);
         toolbaarNombreCabeceraAlbumPista = view.findViewById(R.id.toolbaarNombreCabeceraAlbumPista);
         btnReproducirAlbum = view.findViewById(R.id.btnReproducirAlbumPista);
@@ -111,17 +113,31 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
         String nombreCabeceraPistaAlbum = bundle.getString(KEY_NOMBRE_CABECERA_ALBUM_PISTA);
         Integer idPista = bundle.getInt(KEY_PISTA_ID_ALBUM_PISTA);
         favoritoAlbum = bundle.getBoolean(KEY_FAVORITO_ALBUM);
+        String categoria = bundle.getString(KEY_CATEGORIA);
 
         cargarImagen(imgCabeceraAlbumPista, urlImagenCabecera);
         toolbaarNombreCabeceraAlbumPista.setTitle(nombreCabeceraPistaAlbum);
-        cargarPista(idPista);
 
-
-
+        if ("sugerencia".equals(categoria)) {
+            cargarPistaSugerencia(idPista);
+        } else if ("pistaAlbum".equals(categoria)) {
+            cargarPista(idPista);
+        }
 
         mediaPlayer = parent.getMediaPlayer();
 
         return view;
+    }
+
+    private void cargarPistaSugerencia(Integer idPista) {
+
+        TrackListController trackListController = new TrackListController();
+        trackListController.getTraksList(new ResultListener<List<Track>>() {
+            @Override
+            public void finish(List<Track> resultado) {
+                crearAlbumRecyclerView(R.id.rvPistaAlbum, resultado);
+            }
+        }, getContext(), idPista);
     }
 
     private void cargarPista(Integer idPista) {
@@ -161,10 +177,10 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
             Integer id = pista.getId();
 
             Map<String, Object> datoFavorito = new HashMap<>();
-            datoFavorito.put("nombreTrack",nombreTrack);
+            datoFavorito.put("nombreTrack", nombreTrack);
             datoFavorito.put("nombreArtista", nombreArtista);
-            datoFavorito.put("urlTrack",urlTrack);
-            datoFavorito.put("id",id);
+            datoFavorito.put("urlTrack", urlTrack);
+            datoFavorito.put("id", id);
 
             databaseReference.child("favorito").push().setValue(datoFavorito);
 
@@ -222,6 +238,8 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
                     parent.visibilidadReproductor(true);
                     parent.getBottomNavigation().setVisibility(View.VISIBLE);
                     reprducirAlbum = Boolean.FALSE;
+                    ReproducirMp3 reproducirMp3 = new ReproducirMp3();
+                    reproducirMp3.reproducirMp3(pistaActual.getPreview(), mediaPlayer, parent);
                 }
                 return true;
             }
@@ -444,7 +462,7 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
     }*/
 
     private void updateUI(FirebaseUser currentUser) {
-        if(currentUser != null ){
+        if (currentUser != null) {
             String nombre = currentUser.getDisplayName();
             Uri uri = currentUser.getPhotoUrl();
             //todo poner nombre e imagen de usuario en el header

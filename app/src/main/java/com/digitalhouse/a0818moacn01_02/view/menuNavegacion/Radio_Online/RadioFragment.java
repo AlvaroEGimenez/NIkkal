@@ -19,6 +19,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.digitalhouse.a0818moacn01_02.R;
+import com.digitalhouse.a0818moacn01_02.view.MainActivity;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -97,7 +98,9 @@ public class RadioFragment extends Fragment implements AdaptadorRadio.RadioInter
         adaptadorRadio = new AdaptadorRadio(radios, this);
         recyclerView.setAdapter(adaptadorRadio);
 
-        mediaPlayer = new MediaPlayer();
+        MainActivity parent = (MainActivity)getActivity();
+
+        mediaPlayer = parent.getMediaPlayer();
 
         textViewNombrePista = getActivity().findViewById(R.id.tvNombreReproductor);
         textViewNombrePista.setTextColor(Color.parseColor("#FD9701"));
