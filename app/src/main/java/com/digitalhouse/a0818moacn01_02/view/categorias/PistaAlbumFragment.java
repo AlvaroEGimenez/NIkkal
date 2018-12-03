@@ -3,7 +3,6 @@ package com.digitalhouse.a0818moacn01_02.view.categorias;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.graphics.Color;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -36,15 +35,13 @@ import com.digitalhouse.a0818moacn01_02.Utils.ReproducirMp3;
 import com.digitalhouse.a0818moacn01_02.Utils.ResultListener;
 import com.digitalhouse.a0818moacn01_02.controller.TrackListController;
 import com.digitalhouse.a0818moacn01_02.controller.TracksController;
+import com.digitalhouse.a0818moacn01_02.model.FavoritoFirebase;
 import com.digitalhouse.a0818moacn01_02.model.Track;
 import com.digitalhouse.a0818moacn01_02.view.MainActivity;
 import com.digitalhouse.a0818moacn01_02.view.adapter.pista.PistaAdapterViewPage;
 import com.digitalhouse.a0818moacn01_02.view.adapter.pista.PistaAlbumRecyclerView;
 import com.digitalhouse.a0818moacn01_02.view.adapter.pista.RecyclerItemTouchHelper;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -77,11 +74,10 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
     private FloatingActionButton btnReproducirAlbum;
     private Boolean reprducirAlbum = Boolean.FALSE;
     private String urlImagenCabecera;
-    private FirebaseAuth mAuth;
-    private DatabaseReference databaseReference;
 
     private Boolean favoritoAlbum;
     private FloatingActionButton btnFavorito;
+    private FavoritoFirebase favoritoFirebase;
 
     public PistaAlbumFragment() {
     }
@@ -90,9 +86,7 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         parent = (MainActivity) getActivity();
-
-        databaseReference = FirebaseDatabase.getInstance().getReference();
-
+        favoritoFirebase = new FavoritoFirebase("pista");
     }
 
     @Override
@@ -161,32 +155,23 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
-        pistaAlbumRecyclerView = new PistaAlbumRecyclerView(pistas, R.layout.cardview_pista_album, getActivity(), this);
+        pistaAlbumRecyclerView = new PistaAlbumRecyclerView(pistas, R.layout.cardview_pista_album, getActivity(), this, favoritoFirebase);
 
         ItemTouchHelper.SimpleCallback itemTouchHelperCallback = new RecyclerItemTouchHelper(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT, this);
         new ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(recyclerView);
         recyclerView.setAdapter(pistaAlbumRecyclerView);
+
     }
+
 
     private void setFavoritoPista(Track pista, ImageView favoritoPista) {
         if (!pista.getFavorito()) {
             pista.setFavorito(true);
-            String nombreTrack = pista.getTitle();
-            String nombreArtista = pista.getArtist().getName();
-            String urlTrack = pista.getPreview();
-            Integer id = pista.getId();
-
-            Map<String, Object> datoFavorito = new HashMap<>();
-            datoFavorito.put("nombreTrack", nombreTrack);
-            datoFavorito.put("nombreArtista", nombreArtista);
-            datoFavorito.put("urlTrack", urlTrack);
-            datoFavorito.put("id", id);
-
-            databaseReference.child("favorito").push().setValue(datoFavorito);
-
+            favoritoFirebase.agregar(pista.getId());
 
         } else {
             pista.setFavorito(false);
+            favoritoFirebase.eliminar(pista.getId());
         }
 
         if (pista.getFavorito()) {
@@ -359,7 +344,7 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
         pista.setImagenAlbum(urlImagenCabecera);
 
         if (ItemTouchHelper.LEFT == direction) {
-            Toast.makeText(getContext(), "Pista Agregada ", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), getResources().getString(R.string.pista_gregada), Toast.LENGTH_SHORT).show();
             parent.agregarPistaReproducción(pistas.get(position));
         } else {
             final Dialog dialog = new Dialog(getContext(), R.style.listaReproduccionDialog);
@@ -423,8 +408,6 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
         } else {
             cargarImagen(R.drawable.ic_favorite_black_24dp);
             favoritoAlbum = Boolean.TRUE;
-            Map<String, Object> favoritos = new HashMap<>();
-
 
         }
     }

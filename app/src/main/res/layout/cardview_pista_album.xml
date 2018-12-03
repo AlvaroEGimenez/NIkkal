@@ -13,7 +13,6 @@
     android:focusable="true"
     >
 
-
     <RelativeLayout
         android:id="@+id/view_background"
         android:layout_width="match_parent"

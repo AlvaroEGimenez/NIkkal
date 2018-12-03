@@ -1,7 +1,6 @@
 package com.digitalhouse.a0818moacn01_02.view.adapter.pista;
 
 import android.app.Activity;
-import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,24 +11,26 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.digitalhouse.a0818moacn01_02.R;
-import com.digitalhouse.a0818moacn01_02.model.TopChartLocal;
+import com.digitalhouse.a0818moacn01_02.model.FavoritoFirebase;
 import com.digitalhouse.a0818moacn01_02.model.Track;
 
 import java.util.Collections;
 import java.util.List;
 
-public class PistaAlbumRecyclerView extends RecyclerView.Adapter implements  RecyclerItemTouchHelper.RecyclerItemTouchHelperListener{
+public class PistaAlbumRecyclerView extends RecyclerView.Adapter implements RecyclerItemTouchHelper.RecyclerItemTouchHelperListener {
     private List<Track> pistas;
     private Integer resources;
     private Activity activity;
+    private FavoritoFirebase favoritoFirebase;
 
     private PistaAdapterInterface escuchador;
 
-    public PistaAlbumRecyclerView(List<Track> pistas, int resources, Activity activity, PistaAdapterInterface escuchador) {
+    public PistaAlbumRecyclerView(List<Track> pistas, int resources, Activity activity, PistaAdapterInterface escuchador, FavoritoFirebase favoritoFirebase) {
         this.pistas = pistas;
         this.resources = resources;
         this.activity = activity;
         this.escuchador = escuchador;
+        this.favoritoFirebase = favoritoFirebase;
     }
 
     @NonNull
@@ -67,8 +68,11 @@ public class PistaAlbumRecyclerView extends RecyclerView.Adapter implements  Rec
 
     public interface PistaAdapterInterface {
         void favoritoListener(Track pista, ImageView favoritoPista);
+
         void playListListener(Track pista);
+
         void compartirListener(Track pista);
+
         void pistaViewPageListener(Integer posicion, View itemView);
     }
 
@@ -118,9 +122,18 @@ public class PistaAlbumRecyclerView extends RecyclerView.Adapter implements  Rec
         public void cargar(Track pista) {
             tvNombreAlbumTemaPista.setText(pista.getTitle());
             tvNombreArtistaTemaPista.setText(pista.getArtist().getName());
-            favoritoPista.setImageResource(pista.getFavorito() ? R.drawable.ic_favorite_seleccionado : R.drawable.ic_favorite_no_seleccion);
+            setFavoritoPistaFirebase(pista);
+        }
 
+
+        private void setFavoritoPistaFirebase(Track pista) {
+            if (favoritoFirebase.getFavoritoPorId(pista.getId()) != null) {
+                favoritoPista.setImageResource(R.drawable.ic_favorite_seleccionado);
+                pista.setFavorito(Boolean.TRUE);
+            } else {
+                favoritoPista.setImageResource(R.drawable.ic_favorite_no_seleccion);
+                pista.setFavorito(Boolean.FALSE);
+            }
         }
     }
-
 }
