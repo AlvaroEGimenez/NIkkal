@@ -159,7 +159,6 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
             fragmentTransaction.addToBackStack(null).commit();
         }
 
-
     }
 
     @Override

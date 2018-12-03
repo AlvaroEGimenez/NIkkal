@@ -87,7 +87,7 @@ public class PistaAlbumRecyclerView extends RecyclerView.Adapter implements  Rec
             tvNombreAlbumTemaPista = itemView.findViewById(R.id.tvNombreAlbumTemaPista);
             tvNombreArtistaTemaPista = itemView.findViewById(R.id.tvNombreArtistaTemaPista);
             favoritoPista = itemView.findViewById(R.id.favoritoPista);
-            compartirPista = itemView.findViewById(R.id.masOpciones);
+            compartirPista = itemView.findViewById(R.id.share);
             linearLayout = itemView.findViewById(R.id.linealForeground);
 
             favoritoPista.setOnClickListener(new View.OnClickListener() {
