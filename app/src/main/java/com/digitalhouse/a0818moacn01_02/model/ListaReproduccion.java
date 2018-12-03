@@ -67,6 +67,9 @@ public class ListaReproduccion {
     }
 
     public void getLista(final ResultListener<List<Track>> resultListener) {
+        if(currentUser == null){
+            return;
+        }
         final List<Track> artistList = new ArrayList<>();
         mReference.child(PATH_LIST_REPRODUCCION).child(currentUser.getUid()).child(nombre).addValueEventListener(new ValueEventListener() {
             @Override
