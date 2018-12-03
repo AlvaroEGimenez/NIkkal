@@ -34,5 +34,6 @@
     <string name="btn_aceptar">Aceptar</string>
     <string name="btn_cancelar">Cancelar</string>
     <string name="campo_obligatorio">Complete el campo obligatorio</string>
+    <string name="debe_crear_lista_rep">Debe crear abrir o crear una lista de reprodución</string>
 
 </resources>

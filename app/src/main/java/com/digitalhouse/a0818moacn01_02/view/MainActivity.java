@@ -78,6 +78,7 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
     private Integer posicionActualLista;
     private Menu menuFavoritos;
     private FirebaseAuth mAuth;
+    private TextView tvHeaderNombreListaReproduccion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +100,7 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
         mediaPlayer = new MediaPlayer();
         navigationView = findViewById(R.id.navigationMainActivity);
         headerView = navigationView.inflateHeaderView(R.layout.header_navigation_view);
+        tvHeaderNombreListaReproduccion = headerView.findViewById(R.id.tvHeaderNombreListaReproduccion);
         btnListaReproduccion = findViewById(R.id.btnListaReproduccion);
         btnListaReproduccion.setOnClickListener(listaReproducction);
         cargarImagenHeaderNavigationView();
@@ -126,9 +128,9 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
             }
         });
 
-        listaReproduccion = new ListaReproduccion("default");
+        listaReproduccion = new ListaReproduccion();
         crearListaReproduccionRecyclerView();
-        cargarListaReproduccion();
+      //  cargarListaReproduccion();
     }
 
     @Override
@@ -368,6 +370,7 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
         // todo guardar lista anterior
         listaReproduccion.getPistas().clear();
         listaReproduccion.setNombre(nombre);
+        tvHeaderNombreListaReproduccion.setText(nombre);
         cargarListaReproduccion();
         return true;
     }
@@ -386,7 +389,7 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
                 @Override
                 public void onCompletion(MediaPlayer mp) {
 
-                    if (posicionActualLista < listaReproduccion.getPistas().size() - 2) {
+                    if (posicionActualLista < listaReproduccion.getPistas().size() ) {
                         pistaListaReproduccionAdapterInterface(posicionActualLista++);
                     } else {
                         posicionActualLista = 0;
@@ -411,7 +414,15 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
     }
 
     public void agregarPistaReproducción(Track pista) {
-        listaReproduccion.agregarPista(pista);
-        getPistaAlbumRecyclerView().notifyDataSetChanged();
+       if(listaReproduccion.getNombre() == null) {
+           Toast.makeText(this, getResources().getString(R.string.debe_crear_lista_rep), Toast.LENGTH_SHORT).show();
+       }else {
+           listaReproduccion.agregarPista(pista);
+           getPistaAlbumRecyclerView().notifyDataSetChanged();
+       }
+    }
+
+    public void setTvHeaderNombreListaReproduccion(String tvHeaderNombreListaReproduccion) {
+        this.tvHeaderNombreListaReproduccion.setText(tvHeaderNombreListaReproduccion);
     }
 }

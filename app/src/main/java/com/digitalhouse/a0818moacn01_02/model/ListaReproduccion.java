@@ -31,6 +31,12 @@ public class ListaReproduccion {
         this.nombre = nombre;
     }
 
+    public ListaReproduccion() {
+        mReference = FirebaseDatabase.getInstance().getReference();
+        currentUser = FirebaseAuth.getInstance()
+                .getCurrentUser();
+    }
+
     public void agregarPista(Track pista) {
         if (this.pistas == null) {
             this.pistas = new ArrayList<>();
@@ -38,9 +44,6 @@ public class ListaReproduccion {
         this.pistas.add(pista);
 
         if (currentUser != null) {
-            if(nombre == null){
-                nombre = "default";
-            }
             DatabaseReference id = mReference.child(PATH_LIST_REPRODUCCION).child(currentUser.getUid()).child(nombre).push();
             pista.setUid(id.getKey());
             id.setValue(pista,
