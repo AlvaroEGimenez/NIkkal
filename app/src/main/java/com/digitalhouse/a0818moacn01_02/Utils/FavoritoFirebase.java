@@ -1,8 +1,9 @@
-package com.digitalhouse.a0818moacn01_02.model;
+package com.digitalhouse.a0818moacn01_02.Utils;
 
 import android.support.annotation.NonNull;
 
 import com.digitalhouse.a0818moacn01_02.Utils.ResultListener;
+import com.digitalhouse.a0818moacn01_02.model.Favorito;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -16,6 +17,10 @@ import java.util.List;
 
 public class FavoritoFirebase {
     public static final String PATH_LIST_FAVORITO = "favorito";
+    public static final String KEY_TIPO_PISTA="pista";
+    public static final String KEY_TIPO_ALBUM="album";
+    public static final String KEY_TIPO_ARTISTA="artista";
+
     private DatabaseReference mReference;
     private FirebaseUser currentUser;
     private String tipo;
@@ -34,21 +39,22 @@ public class FavoritoFirebase {
         });
     }
 
-    public void agregar(Integer id) {
+    public void agregar(Integer id, String urlImagen) {
         if (currentUser != null) {
-            DatabaseReference uid = mReference.child(PATH_LIST_FAVORITO).child(currentUser.getUid()).child(tipo).push();
-            Favorito favorito = new Favorito(id, uid.getKey());
+            DatabaseReference uid = mReference.child(currentUser.getUid()).child(PATH_LIST_FAVORITO).child(tipo).push();
+            Favorito favorito = new Favorito(id, uid.getKey(), urlImagen);
             uid.setValue(favorito,
                     FirebaseAuth.getInstance()
                             .getCurrentUser()
                             .getDisplayName()
             );
         }
+
     }
 
     public void eliminar(Integer id) {
         Favorito favorito = getFavoritoPorId(id);
-        mReference.child(PATH_LIST_FAVORITO).child(currentUser.getUid()).child(tipo).child(favorito.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+        mReference.child(currentUser.getUid()).child(PATH_LIST_FAVORITO).child(tipo).child(favorito.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 dataSnapshot.getRef().removeValue();
@@ -66,7 +72,7 @@ public class FavoritoFirebase {
             return;
         }
         final List<Favorito> favoritosList = new ArrayList<>();
-        mReference.child(PATH_LIST_FAVORITO).child(currentUser.getUid()).child(tipo).addValueEventListener(new ValueEventListener() {
+        mReference.child(currentUser.getUid()).child(PATH_LIST_FAVORITO).child(tipo).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 favoritosList.clear();

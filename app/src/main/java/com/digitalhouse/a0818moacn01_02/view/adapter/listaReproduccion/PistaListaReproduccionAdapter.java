@@ -1,22 +1,18 @@
 package com.digitalhouse.a0818moacn01_02.view.adapter.listaReproduccion;
 
 import android.app.Activity;
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.digitalhouse.a0818moacn01_02.R;
-import com.digitalhouse.a0818moacn01_02.model.ListaReproduccion;
+import com.digitalhouse.a0818moacn01_02.Utils.ListaReproduccionFirebase;
 import com.digitalhouse.a0818moacn01_02.model.Track;
-import com.digitalhouse.a0818moacn01_02.view.MainActivity;
-import com.digitalhouse.a0818moacn01_02.view.adapter.pista.RecyclerItemTouchHelper;
 
 import java.util.Collections;
 import java.util.List;
@@ -25,11 +21,11 @@ public class PistaListaReproduccionAdapter extends RecyclerView.Adapter implemen
     private List<Track> pistas;
     private Integer resources;
     private Activity activity;
-    private ListaReproduccion listaReproduccion;
+    private ListaReproduccionFirebase listaReproduccion;
 
     private PistaListaReproduccionAdapterInterface escuchador;
 
-    public PistaListaReproduccionAdapter(List<Track> pistas, int resources, Activity activity, PistaListaReproduccionAdapterInterface escuchador, ListaReproduccion listaReproduccion) {
+    public PistaListaReproduccionAdapter(List<Track> pistas, int resources, Activity activity, PistaListaReproduccionAdapterInterface escuchador, ListaReproduccionFirebase listaReproduccion) {
         this.pistas = pistas;
         this.resources = resources;
         this.activity = activity;

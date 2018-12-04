@@ -11,7 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.digitalhouse.a0818moacn01_02.R;
-import com.digitalhouse.a0818moacn01_02.model.FavoritoFirebase;
+import com.digitalhouse.a0818moacn01_02.Utils.FavoritoFirebase;
 import com.digitalhouse.a0818moacn01_02.model.Track;
 
 import java.util.Collections;

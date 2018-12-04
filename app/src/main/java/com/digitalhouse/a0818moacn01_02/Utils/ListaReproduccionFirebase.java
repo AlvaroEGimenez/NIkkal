@@ -1,10 +1,11 @@
-package com.digitalhouse.a0818moacn01_02.model;
+package com.digitalhouse.a0818moacn01_02.Utils;
 
 import android.support.annotation.NonNull;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.digitalhouse.a0818moacn01_02.Utils.ResultListener;
+import com.digitalhouse.a0818moacn01_02.model.Track;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -16,7 +17,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListaReproduccion {
+public class ListaReproduccionFirebase {
     public static final String PATH_LIST_REPRODUCCION = "lista_reproduccion";
     private List<Track> pistas;
     private String nombre;
@@ -24,14 +25,14 @@ public class ListaReproduccion {
     private FirebaseUser currentUser;
 
 
-    public ListaReproduccion(String nombre) {
+    public ListaReproduccionFirebase(String nombre) {
         mReference = FirebaseDatabase.getInstance().getReference();
         currentUser = FirebaseAuth.getInstance()
                 .getCurrentUser();
         this.nombre = nombre;
     }
 
-    public ListaReproduccion() {
+    public ListaReproduccionFirebase() {
         mReference = FirebaseDatabase.getInstance().getReference();
         currentUser = FirebaseAuth.getInstance()
                 .getCurrentUser();
@@ -44,7 +45,7 @@ public class ListaReproduccion {
         this.pistas.add(pista);
 
         if (currentUser != null) {
-            DatabaseReference id = mReference.child(PATH_LIST_REPRODUCCION).child(currentUser.getUid()).child(nombre).push();
+            DatabaseReference id = mReference.child(currentUser.getUid()).child(PATH_LIST_REPRODUCCION).child(nombre).push();
             pista.setUid(id.getKey());
             id.setValue(pista,
                     FirebaseAuth.getInstance()
@@ -56,7 +57,7 @@ public class ListaReproduccion {
     }
 
     public void eliminarPista(Track pista){
-        mReference.child(PATH_LIST_REPRODUCCION).child(currentUser.getUid()).child(nombre).child(pista.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+        mReference.child(currentUser.getUid()).child(PATH_LIST_REPRODUCCION).child(nombre).child(pista.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 dataSnapshot.getRef().removeValue();
@@ -74,7 +75,7 @@ public class ListaReproduccion {
             return;
         }
         final List<Track> artistList = new ArrayList<>();
-        mReference.child(PATH_LIST_REPRODUCCION).child(currentUser.getUid()).child(nombre).addValueEventListener(new ValueEventListener() {
+        mReference.child(currentUser.getUid()).child(PATH_LIST_REPRODUCCION).child(nombre).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 artistList.clear();

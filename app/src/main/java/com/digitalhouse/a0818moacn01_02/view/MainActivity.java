@@ -34,7 +34,7 @@ import com.bumptech.glide.Glide;
 import com.digitalhouse.a0818moacn01_02.R;
 import com.digitalhouse.a0818moacn01_02.Utils.ResultListener;
 import com.digitalhouse.a0818moacn01_02.Utils.Util;
-import com.digitalhouse.a0818moacn01_02.model.ListaReproduccion;
+import com.digitalhouse.a0818moacn01_02.Utils.ListaReproduccionFirebase;
 import com.digitalhouse.a0818moacn01_02.model.RadioDeezer;
 import com.digitalhouse.a0818moacn01_02.model.Track;
 import com.digitalhouse.a0818moacn01_02.view.adapter.listaReproduccion.ItemTouchHelperCallback;
@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
     private DrawerLayout drawer;
     private NavigationView navigationView;
     private View headerView;
-    private ListaReproduccion listaReproduccion;
+    private ListaReproduccionFirebase listaReproduccion;
     private PistaListaReproduccionAdapter pistaAlbumRecyclerView;
     private FloatingActionButton btnListaReproduccion;
     private Integer posicionActualLista;
@@ -128,7 +128,7 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
             }
         });
 
-        listaReproduccion = new ListaReproduccion();
+        listaReproduccion = new ListaReproduccionFirebase();
         crearListaReproduccionRecyclerView();
       //  cargarListaReproduccion();
     }
