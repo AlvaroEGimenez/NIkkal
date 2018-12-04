@@ -1,32 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:id="@+id/headerNavigationView"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/headerNavigationView"
     android:layout_width="match_parent"
     android:layout_height="160dp"
-    android:background="@color/colorPrimaryDark"
     android:alpha="0.95"
-    android:orientation="vertical"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:background="@color/colorPrimaryDark"
+    android:orientation="vertical">
 
+    <com.github.abdularis.civ.CircleImageView
+        android:id="@+id/usuarioListaReproducion"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="5dp" />
 
     <TextView
         android:id="@+id/tvHeaderNombreListaReproduccion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
         android:text="Lista de Reproducción"
         android:textColor="@color/colorAccent"
-        android:gravity="center"
-        android:layout_marginTop="10dp"
         android:textSize="20sp"
-        android:textStyle="bold"
-        />
+        android:textStyle="bold" />
 
-    <com.github.abdularis.civ.CircleImageView
-        android:layout_marginTop="5dp"
-        android:id="@+id/usuarioListaReproducion"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_gravity="center"
-        />
 
 </LinearLayout>

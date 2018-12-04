@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MainActivityRadioFragment">
+
+    <item android:id="@+id/cerrarSesion"
+        android:title="Cerrar Sesión"
+        app:showAsAction="always|collapseActionView"
+        app:actionViewClass="android.widget.SearchView" />
+    <item android:id="@+id/cerrarSesion"
+        android:title="Abrir lista Reprocucción"
+        app:showAsAction="always|collapseActionView"
+        app:actionViewClass="android.widget.SearchView" />
+    <item android:id="@+id/cerrarSesion"
+        android:title="Cerrar Lista de reproducción"
+        app:showAsAction="always|collapseActionView"
+        app:actionViewClass="android.widget.SearchView" />
+
+
+</menu>

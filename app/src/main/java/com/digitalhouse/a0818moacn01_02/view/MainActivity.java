@@ -77,6 +77,7 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
     private FloatingActionButton btnListaReproduccion;
     private Integer posicionActualLista;
     private Menu menuFavoritos;
+    private Menu menuHeaderListaReprod;
     private FirebaseAuth mAuth;
     private TextView tvHeaderNombreListaReproduccion;
 
@@ -137,6 +138,9 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
     public boolean onCreateOptionsMenu(Menu menu) {
         menuFavoritos = menu;
         getMenuInflater().inflate(R.menu.menu_favoritos, menu);
+
+        menuHeaderListaReprod = menu;
+        getMenuInflater().inflate(R.menu.menu_header_lista_reprod, menu);
         return true;
     }
 
