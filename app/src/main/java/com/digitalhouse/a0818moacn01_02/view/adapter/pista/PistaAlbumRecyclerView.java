@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import com.digitalhouse.a0818moacn01_02.R;
 import com.digitalhouse.a0818moacn01_02.Utils.FavoritoFirebase;
+import com.digitalhouse.a0818moacn01_02.Utils.ResultListener;
+import com.digitalhouse.a0818moacn01_02.model.Favorito;
 import com.digitalhouse.a0818moacn01_02.model.Track;
 
 import java.util.Collections;
@@ -126,14 +128,20 @@ public class PistaAlbumRecyclerView extends RecyclerView.Adapter implements Recy
         }
 
 
-        private void setFavoritoPistaFirebase(Track pista) {
-            if (favoritoFirebase.getFavoritoPorId(pista.getId()) != null) {
-                favoritoPista.setImageResource(R.drawable.ic_favorite_seleccionado);
-                pista.setFavorito(Boolean.TRUE);
-            } else {
-                favoritoPista.setImageResource(R.drawable.ic_favorite_no_seleccion);
-                pista.setFavorito(Boolean.FALSE);
-            }
+        private void setFavoritoPistaFirebase(final Track pista) {
+            favoritoFirebase.getFavoritoPorId(new ResultListener<Favorito>() {
+                @Override
+                public void finish(Favorito favorito) {
+                    if (favorito != null) {
+                        favoritoPista.setImageResource(R.drawable.ic_favorite_seleccionado);
+                        pista.setFavorito(Boolean.TRUE);
+                    } else {
+                        favoritoPista.setImageResource(R.drawable.ic_favorite_no_seleccion);
+                        pista.setFavorito(Boolean.FALSE);
+                    }
+                }
+            }, pista.getId());
+
         }
     }
 }

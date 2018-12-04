@@ -52,19 +52,24 @@ public class FavoritoFirebase {
 
     }
 
-    public void eliminar(Integer id) {
-        Favorito favorito = getFavoritoPorId(id);
-        mReference.child(currentUser.getUid()).child(PATH_LIST_FAVORITO).child(tipo).child(favorito.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+    public void eliminar(final Integer id) {
+        getFavoritoPorId(new ResultListener<Favorito>() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                dataSnapshot.getRef().removeValue();
-            }
+            public void finish(Favorito favorito) {
+                mReference.child(currentUser.getUid()).child(PATH_LIST_FAVORITO).child(tipo).child(favorito.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        dataSnapshot.getRef().removeValue();
+                    }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
 
+                    }
+                });
             }
-        });
+        }, id);
+
     }
 
     public void getLista(final ResultListener<List<Favorito>> resultListener) {
@@ -81,6 +86,7 @@ public class FavoritoFirebase {
                     favoritosList.add(favorito);
                 }
                 resultListener.finish(favoritosList);
+                mReference.child(currentUser.getUid()).child(PATH_LIST_FAVORITO).child(tipo).removeEventListener(this);
             }
 
             @Override
@@ -90,13 +96,17 @@ public class FavoritoFirebase {
     }
 
 
-    public Favorito getFavoritoPorId(Integer id) {
-        for (Favorito favorito : favoritoList) {
-            if (favorito.getId().equals(id)) {
-                return favorito;
+    public void getFavoritoPorId(final ResultListener<Favorito> listener,final Integer id) {
+        getLista(new ResultListener<List<Favorito>>() {
+            @Override
+            public void finish(List<Favorito> Resultado) {
+                for (Favorito favorito : favoritoList) {
+                    if (favorito.getId().equals(id)) {
+                        listener.finish(favorito);
+                    }
+                }
             }
-        }
+        });
 
-        return null;
     }
 }

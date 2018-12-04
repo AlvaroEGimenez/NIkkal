@@ -425,9 +425,14 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
         }
     };
 
-    private void inisializacionFavoritoALbum(FloatingActionButton btnFavorito) {
-        Favorito favoritoPorId = favoritoFirebaseAlbum.getFavoritoPorId(albumId);
-        btnFavorito.setImageResource(favoritoPorId != null ? R.drawable.ic_favorite_seleccionado :  R.drawable.ic_favorite_no_seleccion);
+    private void inisializacionFavoritoALbum(final FloatingActionButton btnFavorito) {
+        favoritoFirebaseAlbum.getFavoritoPorId(new ResultListener<Favorito>() {
+            @Override
+            public void finish(Favorito favorito) {
+                btnFavorito.setImageResource(favorito != null ? R.drawable.ic_favorite_seleccionado :  R.drawable.ic_favorite_no_seleccion);
+            }
+        }, albumId);
+
     }
 
     private void cargarImagen(Integer idDrawable) {
