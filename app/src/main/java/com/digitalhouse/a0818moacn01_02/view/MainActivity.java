@@ -52,6 +52,7 @@ import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Favoritos.MisListasF
 import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Pantalla_Principal.CategoriaFragment;
 import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Radio_Online.RadioFragment;
 import com.facebook.Profile;
+import com.google.firebase.auth.FirebaseAuth;
 
 
 import java.io.IOException;
@@ -145,7 +146,7 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
         listaReproduccion = new ListaReproduccionFirebase();
         crearListaReproduccionRecyclerView();
       //  cargarListaReproduccion();
-        cargarListaReproduccion(tracksId);
+        //cargarListaReproduccion(tracksId);
 
 
     }

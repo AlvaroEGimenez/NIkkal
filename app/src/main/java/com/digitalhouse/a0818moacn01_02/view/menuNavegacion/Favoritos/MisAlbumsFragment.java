@@ -16,7 +16,7 @@ import com.digitalhouse.a0818moacn01_02.Utils.ResultListener;
 import com.digitalhouse.a0818moacn01_02.controller.RadioController;
 import com.digitalhouse.a0818moacn01_02.model.RadioDeezer;
 import com.digitalhouse.a0818moacn01_02.view.MainActivity;
-import com.digitalhouse.a0818moacn01_02.view.categorias.SugerenciasFragment;
+import com.digitalhouse.a0818moacn01_02.view.categorias.PistaAlbumFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +28,8 @@ public class MisAlbumsFragment extends Fragment implements AdaptadorFavoritos.Ra
     private AdaptadorFavoritos adaptadorFavoritos;
     private InterfaceNotificador interfaceNotificador;
     private MainActivity parent;
-    private SugerenciasFragment sugerenciasFragment = new SugerenciasFragment();
+
+
 
     @Override
     public void onAttach(Context context) {
@@ -88,16 +89,18 @@ public class MisAlbumsFragment extends Fragment implements AdaptadorFavoritos.Ra
 
     @Override
     public void cambiarDeActividad(RadioDeezer radioDeezer) {
-        Intent intent = null;
+
+        MainActivity mainActivity = (MainActivity) getActivity();
         Bundle bundle = new Bundle();
-        bundle.putString(SugerenciasFragment.KEY_IMAGEN_SUGERENCIA, radioDeezer.getPictureBig());
-        bundle.putString(SugerenciasFragment.KEY_ID_PLAYLIST_SUGERENCIA, radioDeezer.getId());
-        bundle.putString(SugerenciasFragment.KEY_NOMBRE_SUGERENCIA, radioDeezer.getTitle());
-        sugerenciasFragment.setArguments(bundle);
-        parent.reemplazarFragment(sugerenciasFragment);
-        if (intent != null) {
-            startActivity(intent);
-        }
+        bundle.putString(PistaAlbumFragment.KEY_IMAGEN_CABECERA_ALBUM_PISTA, radioDeezer.getPictureBig());
+        bundle.putString(PistaAlbumFragment.KEY_NOMBRE_CABECERA_ALBUM_PISTA, radioDeezer.getTitle());
+        bundle.putInt(PistaAlbumFragment.KEY_PISTA_ID_ALBUM_PISTA, Integer.parseInt(radioDeezer.getId()));
+        bundle.putBoolean(PistaAlbumFragment.KEY_FAVORITO_ALBUM, Boolean.FALSE);
+        bundle.putString(PistaAlbumFragment.KEY_CATEGORIA, "sugerencia");
+
+        PistaAlbumFragment pistaAlbumFragment = new PistaAlbumFragment();
+        pistaAlbumFragment.setArguments(bundle);
+        mainActivity.reemplazarFragment(pistaAlbumFragment);
 
     }
 
