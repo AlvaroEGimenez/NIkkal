@@ -8,12 +8,18 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.digitalhouse.a0818moacn01_02.R;
 import com.digitalhouse.a0818moacn01_02.Utils.ResultListener;
@@ -23,6 +29,7 @@ import com.digitalhouse.a0818moacn01_02.model.AlbumDeezer;
 import com.digitalhouse.a0818moacn01_02.model.RadioDeezer;
 import com.digitalhouse.a0818moacn01_02.model.Track;
 import com.digitalhouse.a0818moacn01_02.view.MainActivity;
+import com.digitalhouse.a0818moacn01_02.view.categorias.AlbumFragment;
 import com.digitalhouse.a0818moacn01_02.view.categorias.PistaAlbumFragment;
 import com.digitalhouse.a0818moacn01_02.view.categorias.SugerenciasFragment;
 
@@ -33,7 +40,7 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class FavoritoFragment extends Fragment implements AdaptadorFavoritos.RadioFavoritodAdapterInterface { //implements AdaptadorFavoritos.AartistaFavoritodAdapterInterface {
+public class FavoritoFragment extends Fragment implements AdaptadorFavoritos.RadioFavoritodAdapterInterface  { //implements AdaptadorFavoritos.AartistaFavoritodAdapterInterface {
    /* public static final String KEY_IMAGEN_ARTISTA_FAVORITO ="imagentArtistaFavorito";
     public static final String KEY_NOMBRE_ARTISTA_FAVORITO ="nombreArtistaFavorito";
     public static final String KEY_LISTA_ARTISTA_FAVORITO = "listaArtistaFavorito";*/
@@ -45,8 +52,12 @@ public class FavoritoFragment extends Fragment implements AdaptadorFavoritos.Rad
     private MainActivity parent;
     private AppBarLayout appBarLayout;
     private CollapsingToolbarLayout collapsingToolbarLayout;
-    //private Integer trackId = 3135556;
-    //private View view;
+    private InterfaceNotificadorAlbumFavoritos notificadorAlbumFavoritos;
+    /*private InterfaceNotificadorArtistFavoritos notificadorArtistFavoritos;
+    private InterfaceNotificadorCancionesFavoritos notificadorCancionesFavoritos;
+    private InterfaceNotificadorListaFavoritos notificadorListaFavoritos;*/
+
+
 
 
     public FavoritoFragment() {
@@ -57,6 +68,10 @@ public class FavoritoFragment extends Fragment implements AdaptadorFavoritos.Rad
     public void onAttach(Context context) {
         super.onAttach(context);
         notificador = (interfacePasadorDeInformacion) context;
+        notificadorAlbumFavoritos = (InterfaceNotificadorAlbumFavoritos) context;
+        /*notificadorArtistFavoritos = (InterfaceNotificadorArtistFavoritos) context;
+        notificadorCancionesFavoritos = (InterfaceNotificadorCancionesFavoritos) context;
+        notificadorListaFavoritos = (InterfaceNotificadorListaFavoritos) context;*/
     }
 
     @Override
@@ -64,6 +79,51 @@ public class FavoritoFragment extends Fragment implements AdaptadorFavoritos.Rad
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_favorito, container, false);
+
+        RelativeLayout celdaAlbumFavorito = view.findViewById(R.id.celdaAlbumFavorito);
+        RelativeLayout celdaCancionFavorita = view.findViewById(R.id.celdaPsitaFavorito);
+        RelativeLayout celdaArtistaFavorito = view.findViewById(R.id.celdaArtista);
+        RelativeLayout celdaListaFavorita = view.findViewById(R.id.celdaListaDeReproduccion);
+
+        celdaAlbumFavorito.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Toast.makeText(parent, "Album Favorito", Toast.LENGTH_SHORT).show();
+                parent.reemplazarFragment(new MisAlbumsFragment());
+                //notificadorAlbumFavoritos.notificar(new MisAlbumsFragment());
+
+            }
+        });
+
+        celdaArtistaFavorito.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(parent, "Artista favorito", Toast.LENGTH_SHORT).show();
+                parent.reemplazarFragment(new MisArtistasFragment());
+                //notificadorAlbumFavoritos.notificar(new MisArtistasFragment());
+            }
+        });
+
+        celdaCancionFavorita.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(parent, "Cancion Favorita", Toast.LENGTH_SHORT).show();
+                parent.reemplazarFragment(new MisCancionesFragment());
+                //notificadorAlbumFavoritos.notificar(new MisCancionesFragment());
+            }
+        });
+
+        celdaListaFavorita.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(parent, "Lista Favorita", Toast.LENGTH_SHORT).show();
+                parent.reemplazarFragment(new MisListasFragment());
+                //notificadorAlbumFavoritos.notificar(new MisListasFragment());
+            }
+        });
+
+
         /*this.view = view;
         container = view.findViewById(R.id.rlayoutFavoritosContainer);*/
         //TOOLBAR
@@ -80,6 +140,8 @@ public class FavoritoFragment extends Fragment implements AdaptadorFavoritos.Rad
 
         //DATOS instanciamos un controller
         RadioController radioController = new RadioController();
+
+
 
 
         radioController.getRadios(new ResultListener<List<RadioDeezer>>() {
@@ -105,6 +167,7 @@ public class FavoritoFragment extends Fragment implements AdaptadorFavoritos.Rad
         collapsingToolbarLayout = view.findViewById(R.id.collapsingFavoritos);
         appBarLayout = view.findViewById(R.id.appBarFavoritos);
         appBarLayout.addOnOffsetChangedListener(appBarlistener);
+
         return view;
 
     }
@@ -126,14 +189,21 @@ public class FavoritoFragment extends Fragment implements AdaptadorFavoritos.Rad
 
     }
 
-    /*  @Override
-      public void cambiarDeActividad(ArtistDeezer artistDeezer) {
-          //casteamos para decirle que es el contexto
-          MainActivity mainActivity = (MainActivity) getActivity();
-          Bundle bundle = new Bundle();
-          bundle.putString();
-      }*/
+   /* public interface InterfaceNotificadorArtistFavoritos{
+        public void notificar (Fragment fragment);
+    }*/
 
+    public interface InterfaceNotificadorAlbumFavoritos{
+        public void notificar (Fragment fragment);
+    }
+   /*public interface InterfaceNotificadorCancionesFavoritos{
+        public void notificar (Fragment fragment);
+    }
+
+    public interface InterfaceNotificadorListaFavoritos {
+        public void notificar (Fragment fragment);
+    }
+*/
     public interface interfacePasadorDeInformacion {
         public void recibirmensaje(RadioDeezer radioDeezer);
     }

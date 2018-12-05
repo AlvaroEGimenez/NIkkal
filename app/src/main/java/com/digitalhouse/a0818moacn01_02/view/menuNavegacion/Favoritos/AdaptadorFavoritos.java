@@ -9,13 +9,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.digitalhouse.a0818moacn01_02.R;
 import com.digitalhouse.a0818moacn01_02.model.ArtistDeezer;
 import com.digitalhouse.a0818moacn01_02.model.RadioDeezer;
 import com.digitalhouse.a0818moacn01_02.model.Track;
+import com.digitalhouse.a0818moacn01_02.view.MainActivity;
 import com.digitalhouse.a0818moacn01_02.view.categorias.SugerenciasFragment;
 
 import java.util.List;
@@ -24,6 +27,8 @@ public class AdaptadorFavoritos extends RecyclerView.Adapter {
     //atributos. no tomamos como Atributo una lista de favoritos ya que aún no manejamos base de datos donde almacenar el favorito del usuario
     private List<RadioDeezer> radioDeezerList;
     private RadioFavoritodAdapterInterface escuchador; //para pasar datos al fragment
+
+
 
     //CONSTRUCTOR
 
@@ -88,12 +93,15 @@ public class AdaptadorFavoritos extends RecyclerView.Adapter {
         private TextView textViewViewHolderFavoritosSubtitulo;
         private ImageView imageViewHolderFavoritos;
 
+
         //CONSTRUCTOR
         public ViewHolderRadioFavorito(@NonNull View itemView) {
             super(itemView);
             textViewViewHolderFavoritosTitulo = itemView.findViewById(R.id.tvTituloEscuchadoRecientemente);
             textViewViewHolderFavoritosSubtitulo = itemView.findViewById(R.id.tvSubTituloEscuchadoRecientemente);
             imageViewHolderFavoritos = itemView.findViewById(R.id.ivEscuchadoRecientemente);
+
+
 
             //CLICK
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -103,6 +111,9 @@ public class AdaptadorFavoritos extends RecyclerView.Adapter {
                     escuchador.cambiarDeActividad(radioDeezer);
                 }
             });
+
+
+
         }
 
 
@@ -117,11 +128,16 @@ public class AdaptadorFavoritos extends RecyclerView.Adapter {
     }
 
     //CLASE ANÓNIMA
-    public interface RadioFavoritodAdapterInterface {
+    public interface
+    RadioFavoritodAdapterInterface {
         void cambiarDeActividad(RadioDeezer radioDeezer);
 
 
     }
+
+
+
+
 
 
 
