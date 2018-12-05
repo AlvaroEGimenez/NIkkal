@@ -183,9 +183,7 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
 
     @Override
     public void favoritoListener(Track pista, ImageView favoritoPista) {
-        if (parent.estaLogeado(getContext())) {
-            setFavoritoPista(pista, favoritoPista);
-        }
+
     }
 
     @Override
@@ -418,9 +416,6 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
     View.OnClickListener favoritoAlbumListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            if (parent.estaLogeado(getContext())) {
-                setFavoritoAlbum();
-            }
 
         }
     };

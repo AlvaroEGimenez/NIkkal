@@ -67,7 +67,6 @@ public class AlbumFragment extends Fragment implements AlbumAdapterRecyclerView.
         pbAlbum = view.findViewById(R.id.pbAlbum);
 
         btnFavorito = view.findViewById(R.id.btnFavoritoArtista);
-        btnFavorito.setOnClickListener(favoritoListener);
 
         ImageView imagenArtista = view.findViewById(R.id.imagenArtista);
         Toolbar tvCabeceraArtista = view.findViewById(R.id.tvCabeceraArtista);
@@ -136,15 +135,6 @@ public class AlbumFragment extends Fragment implements AlbumAdapterRecyclerView.
         mainActivity.reemplazarFragment(pistaAlbumFragment);
     }
 
-    View.OnClickListener favoritoListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            if (parent.estaLogeado(getContext())) {
-                setFavoritoPista();
-            }
-
-        }
-    };
 
 
     private void inisializacionFavoritoArtista(final FloatingActionButton btnFavorito) {

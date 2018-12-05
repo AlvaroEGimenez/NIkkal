@@ -46,8 +46,7 @@ import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Favoritos.FavoritoFr
 import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Pantalla_Principal.CategoriaFragment;
 import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Radio_Online.RadioFragment;
 import com.facebook.Profile;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -78,7 +77,6 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
     private Integer posicionActualLista;
     private Menu menuFavoritos;
     private Menu menuHeaderListaReprod;
-    private FirebaseAuth mAuth;
     private TextView tvHeaderNombreListaReproduccion;
 
     @Override
@@ -101,7 +99,6 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
         mediaPlayer = new MediaPlayer();
         navigationView = findViewById(R.id.navigationMainActivity);
         headerView = navigationView.inflateHeaderView(R.layout.header_navigation_view);
-        tvHeaderNombreListaReproduccion = headerView.findViewById(R.id.tvHeaderNombreListaReproduccion);
         btnListaReproduccion = findViewById(R.id.btnListaReproduccion);
         btnListaReproduccion.setOnClickListener(listaReproducction);
         cargarImagenHeaderNavigationView();
@@ -140,7 +137,7 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
         getMenuInflater().inflate(R.menu.menu_favoritos, menu);
 
         menuHeaderListaReprod = menu;
-        getMenuInflater().inflate(R.menu.menu_header_lista_reprod, menu);
+       // getMenuInflater().inflate(R.menu.menu_header_lista_reprod, menu);
         return true;
     }
 
@@ -271,17 +268,6 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
     }
 
 
-    public Boolean estaLogeado(final Context context) {
-        FirebaseUser currentUser = FirebaseAuth.getInstance()
-                .getCurrentUser();
-
-        if (currentUser == null) {
-            alertDialogInicionSesion(context);
-            return Boolean.FALSE;
-        } else {
-            return Boolean.TRUE;
-        }
-    }
 
     private void alertDialogInicionSesion(final Context context) {
         String mensajeSi = getResources().getString(R.string.si);
