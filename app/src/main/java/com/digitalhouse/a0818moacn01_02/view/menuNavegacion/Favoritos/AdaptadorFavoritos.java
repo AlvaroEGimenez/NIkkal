@@ -1,8 +1,6 @@
 package com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Favoritos;
 
 import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,7 +13,6 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.digitalhouse.a0818moacn01_02.R;
-import com.digitalhouse.a0818moacn01_02.model.ArtistDeezer;
 import com.digitalhouse.a0818moacn01_02.model.RadioDeezer;
 import com.digitalhouse.a0818moacn01_02.model.Track;
 import com.digitalhouse.a0818moacn01_02.view.MainActivity;

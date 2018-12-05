@@ -24,14 +24,10 @@ import android.widget.Toast;
 import com.digitalhouse.a0818moacn01_02.R;
 import com.digitalhouse.a0818moacn01_02.Utils.ResultListener;
 import com.digitalhouse.a0818moacn01_02.controller.RadioController;
-import com.digitalhouse.a0818moacn01_02.controller.TracksController;
-import com.digitalhouse.a0818moacn01_02.model.AlbumDeezer;
 import com.digitalhouse.a0818moacn01_02.model.RadioDeezer;
-import com.digitalhouse.a0818moacn01_02.model.Track;
 import com.digitalhouse.a0818moacn01_02.view.MainActivity;
 import com.digitalhouse.a0818moacn01_02.view.categorias.AlbumFragment;
 import com.digitalhouse.a0818moacn01_02.view.categorias.PistaAlbumFragment;
-import com.digitalhouse.a0818moacn01_02.view.categorias.SugerenciasFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,14 +40,16 @@ public class FavoritoFragment extends Fragment implements AdaptadorFavoritos.Rad
    /* public static final String KEY_IMAGEN_ARTISTA_FAVORITO ="imagentArtistaFavorito";
     public static final String KEY_NOMBRE_ARTISTA_FAVORITO ="nombreArtistaFavorito";
     public static final String KEY_LISTA_ARTISTA_FAVORITO = "listaArtistaFavorito";*/
-
+   private static final String KEY_SUGERENCIA= "sugerencia";
 
     private AdaptadorFavoritos adaptadorFavoritos;
     private interfacePasadorDeInformacion notificador;
-    private SugerenciasFragment sugerenciasFragment = new SugerenciasFragment();
     private MainActivity parent;
     private AppBarLayout appBarLayout;
     private CollapsingToolbarLayout collapsingToolbarLayout;
+    private PistaAlbumFragment pistaAlbumFragment = new PistaAlbumFragment();
+    //private Integer trackId = 3135556;
+    //private View view;
     private InterfaceNotificadorAlbumFavoritos notificadorAlbumFavoritos;
     /*private InterfaceNotificadorArtistFavoritos notificadorArtistFavoritos;
     private InterfaceNotificadorCancionesFavoritos notificadorCancionesFavoritos;
@@ -174,17 +172,14 @@ public class FavoritoFragment extends Fragment implements AdaptadorFavoritos.Rad
 
     @Override
     public void cambiarDeActividad(RadioDeezer radioDeezer) {
-        //notificador.recibirmensaje(radioDeezer);
-        Intent intent = null;
         Bundle bundle = new Bundle();
-        bundle.putString(SugerenciasFragment.KEY_IMAGEN_SUGERENCIA, radioDeezer.getPictureBig());
-        bundle.putString(SugerenciasFragment.KEY_ID_PLAYLIST_SUGERENCIA, radioDeezer.getId());
-        bundle.putString(SugerenciasFragment.KEY_NOMBRE_SUGERENCIA, radioDeezer.getTitle());
-        sugerenciasFragment.setArguments(bundle);
-        parent.reemplazarFragment(sugerenciasFragment);
-        if (intent != null) {
-            startActivity(intent);
-        }
+        bundle.putString(PistaAlbumFragment.KEY_IMAGEN_CABECERA_ALBUM_PISTA, radioDeezer.getPictureBig());
+        bundle.putString(PistaAlbumFragment.KEY_NOMBRE_CABECERA_ALBUM_PISTA,radioDeezer.getTitle());
+        bundle.putInt(PistaAlbumFragment.KEY_PISTA_ID_ALBUM_PISTA, Integer.parseInt(radioDeezer.getId()));
+        bundle.putString(PistaAlbumFragment.KEY_CATEGORIA, KEY_SUGERENCIA);
+
+        pistaAlbumFragment.setArguments(bundle);
+        parent.reemplazarFragment(pistaAlbumFragment);
 
 
     }

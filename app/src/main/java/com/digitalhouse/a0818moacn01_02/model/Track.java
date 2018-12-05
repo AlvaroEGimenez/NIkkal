@@ -10,6 +10,7 @@ public class Track implements Serializable {
     @SerializedName("id")
     @Expose
     private Integer id;
+    private String uid;
     @SerializedName("readable")
     @Expose
     private Boolean readable;
@@ -246,5 +247,13 @@ public class Track implements Serializable {
 
     public void setImagenAlbum(String imagenAlbum) {
         this.imagenAlbum = imagenAlbum;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 }
