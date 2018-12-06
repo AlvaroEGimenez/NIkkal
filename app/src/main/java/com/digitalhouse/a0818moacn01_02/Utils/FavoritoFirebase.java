@@ -1,6 +1,7 @@
 package com.digitalhouse.a0818moacn01_02.Utils;
 
 import android.support.annotation.NonNull;
+import android.widget.Toast;
 
 import com.digitalhouse.a0818moacn01_02.Utils.ResultListener;
 import com.digitalhouse.a0818moacn01_02.model.Favorito;
@@ -64,7 +65,7 @@ public class FavoritoFirebase {
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                        System.out.println("ssd");
                     }
                 });
             }
@@ -100,7 +101,7 @@ public class FavoritoFirebase {
         getLista(new ResultListener<List<Favorito>>() {
             @Override
             public void finish(List<Favorito> Resultado) {
-                for (Favorito favorito : favoritoList) {
+                for (Favorito favorito : Resultado) {
                     if (favorito.getId().equals(id)) {
                         listener.finish(favorito);
                     }

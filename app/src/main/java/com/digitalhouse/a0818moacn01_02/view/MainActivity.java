@@ -46,6 +46,8 @@ import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Favoritos.FavoritoFr
 import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Pantalla_Principal.CategoriaFragment;
 import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Radio_Online.RadioFragment;
 import com.facebook.Profile;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 
 import java.io.IOException;
@@ -267,7 +269,17 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
         Toast.makeText(this, "Acá viene lo bueno", Toast.LENGTH_SHORT).show();
     }
 
+    public Boolean estaLogeado(final Context context) {
+        FirebaseUser currentUser = FirebaseAuth.getInstance()
+                .getCurrentUser();
 
+        if (currentUser == null) {
+            alertDialogInicionSesion(context);
+            return Boolean.FALSE;
+        } else {
+            return Boolean.TRUE;
+        }
+    }
 
     private void alertDialogInicionSesion(final Context context) {
         String mensajeSi = getResources().getString(R.string.si);

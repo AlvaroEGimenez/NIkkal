@@ -111,6 +111,8 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
         cargarImagen(imgCabeceraAlbumPista, urlImagenCabecera);
         toolbaarNombreCabeceraAlbumPista.setTitle(nombreCabeceraPistaAlbum);
 
+        crearAlbumRecyclerView(R.id.rvPistaAlbum);
+
         if ("sugerencia".equals(categoria)) {
             cargarPistaSugerencia(albumId);
         } else if ("pistaAlbum".equals(categoria)) {
@@ -129,7 +131,7 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
         trackListController.getTraksList(new ResultListener<List<Track>>() {
             @Override
             public void finish(List<Track> resultado) {
-                crearAlbumRecyclerView(R.id.rvPistaAlbum, resultado);
+                pistaAlbumRecyclerView.setPistas(resultado);
             }
         }, getContext(), idPista);
     }
@@ -138,8 +140,22 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
         TracksController tracksController = new TracksController();
         tracksController.getPistas(new ResultListener<List<Track>>() {
             @Override
-            public void finish(List<Track> resultado) {
-                crearAlbumRecyclerView(R.id.rvPistaAlbum, resultado);
+            public void finish(final List<Track> pistas) {
+                favoritoFirebasePista.getLista(new ResultListener<List<Favorito>>() {
+                    @Override
+                    public void finish(List<Favorito> favoritos) {
+                        for(Track pista : pistas){
+                            for(Favorito favorito : favoritos){
+                                if(pista.getId().equals(favorito.getId())){
+                                    pista.setFavorito(Boolean.TRUE);
+                                }
+                            }
+                        }
+                        pistaAlbumRecyclerView.setPistas(pistas);
+                    }
+                });
+
+
             }
         }, getContext(), idPista);
     }
@@ -148,14 +164,13 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
         Glide.with(imageView.getContext()).load(url).into(imageView);
     }
 
-    private void crearAlbumRecyclerView(Integer idLayout, List<Track> pistas) {
-        this.pistas = pistas;
+    private void crearAlbumRecyclerView(Integer idLayout) {
         recyclerView = view.findViewById(idLayout);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
-        pistaAlbumRecyclerView = new PistaAlbumRecyclerView(pistas, R.layout.cardview_pista_album, getActivity(), this, favoritoFirebasePista);
+        pistaAlbumRecyclerView = new PistaAlbumRecyclerView(new ArrayList<Track>(), R.layout.cardview_pista_album, getActivity(), this);
 
         ItemTouchHelper.SimpleCallback itemTouchHelperCallback = new RecyclerItemTouchHelper(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT, this);
         new ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(recyclerView);
@@ -165,6 +180,9 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
 
 
     private void setFavoritoPista(Track pista, ImageView favoritoPista) {
+        if(!parent.estaLogeado(getContext())){
+            return;
+        }
         if (!pista.getFavorito()) {
             pista.setFavorito(true);
             favoritoFirebasePista.agregar(pista.getId(), urlImagenCabecera);
@@ -183,6 +201,7 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
 
     @Override
     public void favoritoListener(Track pista, ImageView favoritoPista) {
+        setFavoritoPista(pista, favoritoPista);
 
     }
 
