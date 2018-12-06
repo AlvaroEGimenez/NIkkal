@@ -33,7 +33,15 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="16dp"
-            android:gravity="center_vertical">
+            android:gravity="center_vertical"
+            >
+
+            <RelativeLayout
+                android:id="@+id/celdaAlbumFavorito"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true">
 
 
                     <ImageView
@@ -48,16 +56,26 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/tv_almbum_favoritos"
-                        android:layout_toRightOf="@id/ivIconoAlbumFavorito"
+                        android:layout_toEndOf="@id/ivIconoAlbumFavorito"
                         android:textSize="18sp"
                         android:textColor="@color/album_titulo"
                         android:paddingTop="10dp"
                         android:paddingBottom="10dp"/>
 
-                    <ImageView
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/celdaPsitaFavorito"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/celdaAlbumFavorito"
+                android:clickable="true"
+                android:focusable="true">
+
+
+            <ImageView
                         android:id="@+id/ivIconoPitstaFavorita"
                         android:src="@drawable/ic_pista"
-                        android:layout_below="@+id/ivIconoAlbumFavorito"
                         android:layout_width="35dp"
                         android:layout_height="35dp"
                         android:layout_margin="4dp"
@@ -67,17 +85,25 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/tv_canciones_favoritas"
-                        android:layout_toRightOf="@id/ivIconoPitstaFavorita"
-                        android:layout_below="@id/tvIconoAlbumFavorito"
+                        android:layout_toEndOf="@id/ivIconoPitstaFavorita"
                         android:textSize="18sp"
                         android:textColor="@color/album_titulo"
                         android:paddingTop="10dp"
                         android:paddingBottom="10dp"/>
 
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/celdaArtista"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/celdaPsitaFavorito"
+                android:clickable="true"
+                android:focusable="true">
+
                     <ImageView
                         android:id="@+id/ivIconoArtistaFavorito"
                         android:src="@drawable/ic_artista"
-                        android:layout_below="@+id/ivIconoPitstaFavorita"
                         android:layout_width="35dp"
                         android:layout_height="35dp"
                         android:layout_margin="4dp"
@@ -87,17 +113,24 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/tv_artistas_favoritos"
-                        android:layout_toRightOf="@id/ivIconoPitstaFavorita"
-                        android:layout_below="@id/tvIconoPistaFavorita"
+                        android:layout_toEndOf="@id/ivIconoArtistaFavorito"
                         android:textSize="18sp"
                         android:textColor="@color/album_titulo"
                         android:paddingTop="10dp"
                         android:paddingBottom="10dp"/>
+            </RelativeLayout>
 
-                    <ImageView
+            <RelativeLayout
+                android:id="@+id/celdaListaDeReproduccion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/celdaArtista"
+                android:clickable="true"
+                android:focusable="true">
+
+            <ImageView
                         android:id="@+id/ivIconoListaDeReproduccion"
                         android:src="@drawable/ic_listas_de_reproduccion"
-                        android:layout_below="@+id/ivIconoArtistaFavorito"
                         android:layout_width="35dp"
                         android:layout_height="35dp"
                         android:layout_margin="4dp"
@@ -107,14 +140,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/tv_mis_playlist"
-                        android:layout_toRightOf="@id/ivIconoPitstaFavorita"
-                        android:layout_below="@id/tvIconoArtistaFavorito"
+                        android:layout_toEndOf="@id/ivIconoListaDeReproduccion"
                         android:textSize="18sp"
                         android:textColor="@color/album_titulo"
                         android:paddingTop="10dp"
                         android:paddingBottom="10dp"/>
 
-
+            </RelativeLayout>
 
 
 

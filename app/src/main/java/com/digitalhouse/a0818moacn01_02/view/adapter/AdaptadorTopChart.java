@@ -10,23 +10,22 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.digitalhouse.a0818moacn01_02.R;
-import com.digitalhouse.a0818moacn01_02.model.Track;
+import com.digitalhouse.a0818moacn01_02.model.TopChartLocal;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class AdaptadorTopChartDeezer extends BaseAdapter {
-    private List<Track> topChartList;
+public class AdaptadorTopChart extends BaseAdapter {
+    private List<TopChartLocal> topChartList;
     private Context context;
-    private onItemClickTopChartDeezer onItemClickTopChart;
+    private onItemClickTopChart onItemClickTopChart;
 
-    public AdaptadorTopChartDeezer(List<Track> topChartList, Context context, onItemClickTopChartDeezer onItemClickTopChart) {
+    public AdaptadorTopChart(List<TopChartLocal> topChartList, Context context, onItemClickTopChart onItemClickTopChart) {
         this.topChartList = topChartList;
         this.context = context;
         this.onItemClickTopChart = onItemClickTopChart;
     }
 
-    public void setTopChartList(List<Track> topChartList) {
+    public void setTopChartList(List<TopChartLocal> topChartList) {
         this.topChartList = topChartList;
         notifyDataSetChanged();
     }
@@ -55,14 +54,14 @@ public class AdaptadorTopChartDeezer extends BaseAdapter {
             TextView nombre = rootView.findViewById(R.id.labelTopChart);
             ImageView imagen = rootView.findViewById(R.id.imagenTopChart);
 
-            Glide.with(context).load(topChartList.get(position).getAlbum().getCoverMedium()).into(imagen);
+            Glide.with(context).load(topChartList.get(position).getUrlImagen()).into(imagen);
 
-            nombre.setText(topChartList.get(position).getArtist().getName());
+            nombre.setText(topChartList.get(position).getNombreArtista());
 
             imagen.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    onItemClickTopChart.onClickTopChartDeezer(topChartList.get(position),position);
+                    onItemClickTopChart.onClickTopChart(topChartList.get(position));
                 }
             });
 
@@ -71,7 +70,7 @@ public class AdaptadorTopChartDeezer extends BaseAdapter {
         return rootView;
     }
 
-    public interface onItemClickTopChartDeezer{
-        void onClickTopChartDeezer(Track topChartLocalDeezer, Integer posicion);
+    public interface onItemClickTopChart{
+        void onClickTopChart(TopChartLocal topChartLocal);
     }
 }

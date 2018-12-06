@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="300dp"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="200dp"
-    android:gravity="center"
     android:background="@android:color/black"
+    android:gravity="center"
     android:orientation="vertical">
 
     <android.support.design.widget.TextInputLayout
+        android:layout_centerVertical="true"
         android:id="@+id/tilNombreListaRep"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -17,36 +18,37 @@
             android:id="@+id/txtNombreNuevaListaRep"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@android:color/white"
             android:singleLine="true"
-            />
+            android:textColor="@android:color/white" />
 
     </android.support.design.widget.TextInputLayout>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
+
+    <Button
+        android:id="@+id/btnAceptarNuevaListaRep"
+        android:layout_width="140dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/btnCancelarNuevaListaRep"
+        android:layout_marginStart="37dp"
+        android:background="@android:color/transparent"
+        android:text="@string/btn_aceptar"
+        android:textColor="@color/colorAccent"
+        android:textStyle="bold"
+        android:layout_marginBottom="12dp"/>
 
-        <Button
-            android:id="@+id/btnAceptarNuevaListaRep"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/btn_aceptar"
-            android:background="@color/colorAccent"
-            android:layout_marginRight="5dp"
-            />
+    <Button
+        android:id="@+id/btnCancelarNuevaListaRep"
+        android:layout_width="140dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="12dp"
+        android:layout_marginEnd="37dp"
+        android:background="@android:color/transparent"
+        android:text="@string/btn_cancelar"
+        android:textColor="@color/colorAccent"
+        android:textStyle="bold" />
 
-        <Button
-            android:id="@+id/btnCancelarNuevaListaRep"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/btn_cancelar"
-            android:background="@color/colorAccent"
-            android:layout_marginLeft="5dp"
-            />
 
-    </LinearLayout>
-
-</LinearLayout>
+</RelativeLayout>

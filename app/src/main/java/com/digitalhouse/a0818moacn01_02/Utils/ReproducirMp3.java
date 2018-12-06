@@ -87,4 +87,48 @@ public class ReproducirMp3 {
             e.printStackTrace();
         }
     }
+
+    public void ReproducirMp3Activity(String url, MediaPlayer mediaPlayer){
+        mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+
+
+        try {
+            if (!mediaPlayer.isPlaying()) {
+
+                mediaPlayer.setDataSource(url);
+                mediaPlayer.prepare();
+                mediaPlayer.start();
+
+
+            } else {
+                mediaPlayer.stop();
+                mediaPlayer.reset();
+                mediaPlayer.setDataSource(url);
+                mediaPlayer.prepare();
+                mediaPlayer.start();
+            }
+
+        } catch (
+                IOException e)
+
+        {
+
+            e.printStackTrace();
+        } catch (
+                IllegalArgumentException e)
+
+        {
+            e.printStackTrace();
+        } catch (
+                SecurityException e)
+
+        {
+            e.printStackTrace();
+        } catch (
+                IllegalStateException e)
+
+        {
+            e.printStackTrace();
+        }
+    }
 }

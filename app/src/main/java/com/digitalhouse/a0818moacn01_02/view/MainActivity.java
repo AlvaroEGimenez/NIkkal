@@ -23,10 +23,12 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,11 +45,14 @@ import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Buscar.AdapatadorBus
 import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Buscar.BuscarFragment;
 import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Configuracion.ConfiguracionFragment;
 import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Favoritos.FavoritoFragment;
+import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Favoritos.MisAlbumsFragment;
+import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Favoritos.MisArtistasFragment;
+import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Favoritos.MisCancionesFragment;
+import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Favoritos.MisListasFragment;
 import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Pantalla_Principal.CategoriaFragment;
 import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Radio_Online.RadioFragment;
 import com.facebook.Profile;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 
 import java.io.IOException;
@@ -55,7 +60,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements AdapatadorBusqueda.BusquedaInterface,
-        PistaListaReproduccionAdapter.PistaListaReproduccionAdapterInterface, MediaPlayer.OnCompletionListener, FavoritoFragment.interfacePasadorDeInformacion {
+        PistaListaReproduccionAdapter.PistaListaReproduccionAdapterInterface, MediaPlayer.OnCompletionListener , FavoritoFragment.interfacePasadorDeInformacion, MisAlbumsFragment.InterfaceNotificador, FavoritoFragment.InterfaceNotificadorAlbumFavoritos {
 
 
     private CategoriaFragment categoriaFragment = new CategoriaFragment();
@@ -78,8 +83,14 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
     private FloatingActionButton btnListaReproduccion;
     private Integer posicionActualLista;
     private Menu menuFavoritos;
+    private FirebaseAuth mAuth;
+    private MisAlbumsFragment misAlbumsFragment = new MisAlbumsFragment();
+    private MisArtistasFragment misArtistasFragment = new MisArtistasFragment();
+    private MisCancionesFragment misCancionesFragment = new MisCancionesFragment();
+    private MisListasFragment misListasFragment = new MisListasFragment();
     private Menu menuHeaderListaReprod;
     private TextView tvHeaderNombreListaReproduccion;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,6 +106,10 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
         imageViewPlay = findViewById(R.id.btnRepoductorPlay);
         imageViewPause = findViewById(R.id.btnReproductorPause);
         linearLayoutReproductor = findViewById(R.id.layoutPlayer);
+
+
+
+
 
         reemplazarFragment(categoriaFragment);
 
@@ -131,6 +146,9 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
         listaReproduccion = new ListaReproduccionFirebase();
         crearListaReproduccionRecyclerView();
       //  cargarListaReproduccion();
+        //cargarListaReproduccion(tracksId);
+
+
     }
 
     @Override
@@ -143,10 +161,35 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
         return true;
     }
 
+
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        return super.onOptionsItemSelected(item);
+        int res_id = item.getItemId();
+        if(res_id == R.id.itemAlbumFavorito){
+            Toast.makeText(this, "Album favorito", Toast.LENGTH_SHORT).show();
+            reemplazarFragment(misAlbumsFragment);
+        }
+        if (res_id == R.id.itemArtistaFavorito){
+            Toast.makeText(this, "Artista Favorito", Toast.LENGTH_SHORT).show();
+            reemplazarFragment(misArtistasFragment);
+        }
+        if (res_id == R.id.itemCancionFavorita){
+            Toast.makeText(this, "Cancion Favorita", Toast.LENGTH_SHORT).show();
+            reemplazarFragment(misCancionesFragment);
+        }
+        if (res_id == R.id.itemListasFavoritas){
+            Toast.makeText(this, "Lista Favorita", Toast.LENGTH_SHORT).show();
+            reemplazarFragment(misListasFragment);
+        }
+
+
+        return true;
     }
+
+
+
+
 
     public void reemplazarFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -176,6 +219,7 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
     public void reproducirMp3(final String url, final MediaPlayer mediaPlayer) {
 
         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+
 
         try {
             if (!mediaPlayer.isPlaying()) {
@@ -217,6 +261,8 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
                     }
                 }
             });
+
+
 
 
         } catch (
@@ -421,6 +467,18 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
            listaReproduccion.agregarPista(pista);
            getPistaAlbumRecyclerView().notifyDataSetChanged();
        }
+    }
+
+    @Override
+    public void notificar(RadioDeezer radioDezeer) {
+
+    }
+
+
+    @Override
+    public void notificar(Fragment fragment) {
+        //reemplazarFragment(misAlbumsFragment);
+
     }
 
     public void setTvHeaderNombreListaReproduccion(String tvHeaderNombreListaReproduccion) {

@@ -62,7 +62,7 @@ public class ReproductorFragment extends Fragment {
         bundle.putString(KEY_NOMBRE_TRACK, track.getTitle());
         bundle.putString(KEY_NOMBRE_ARTISTA, track.getArtist().getName());
         bundle.putInt(KEY_DURACION_TRACK, track.getDuration());
-        bundle.putInt(KEY_ID_TRACK,track.getId());
+        bundle.putInt(KEY_ID_TRACK, track.getId());
         reproductorFragment.setArguments(bundle);
         return reproductorFragment;
     }
@@ -90,7 +90,7 @@ public class ReproductorFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view =  inflater.inflate(R.layout.fragment_reproductor, container, false);
+        View view = inflater.inflate(R.layout.fragment_reproductor, container, false);
 
         leerBundle(getArguments());
 
@@ -103,7 +103,7 @@ public class ReproductorFragment extends Fragment {
         textViewNombredelTrack.setText(nombreTrack);
         textViewNombredelArtista.setText(nombreArtista);
         textViewNombredelTrack.setSelected(true);
-    //        final ProgressBar progressBar = getActivity().findViewById(R.id.progressBarReproductor);
+
 
         ImageView imageViewAnterior = getActivity().findViewById(R.id.ivAnteriorReproductor);
         final ImageView imageViewPause = getActivity().findViewById(R.id.ivPausa_Reproductor);
@@ -111,52 +111,22 @@ public class ReproductorFragment extends Fragment {
         ImageView imageViewProximo = getActivity().findViewById(R.id.ivProximoReproductor);
 
 
-        try {
-            final TrackPlayer  trackPlayer = new TrackPlayer(getActivity().getApplication(),deezerConnect,new WifiAndMobileNetworkStateChecker());
-                    if (trackPlayer.getPlayerState() != PlayerState.PLAYING){
-                        Toast.makeText(getActivity(),"NO REPRODUCIENDO",Toast.LENGTH_LONG).show();
-                    }
-                    else {
-                        Toast.makeText(getActivity(),"REPRODUCIENDO",Toast.LENGTH_LONG).show();
-                    }
-            final Handler mSeekbarUpdateHandler = new Handler();
-            final Runnable mUpdateSeekbar = new Runnable() {
+        imageViewPause.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                imageViewPlay.setVisibility(View.VISIBLE);
+                imageViewPause.setVisibility(View.INVISIBLE);
+            }
+        });
 
-                @RequiresApi(api = Build.VERSION_CODES.N)
-                @Override
-                public void run() {
-                    Integer posicionactual = Math.toIntExact(trackPlayer.getPosition());
-                    //progressBar.setProgress(posicionactual);
-                    mSeekbarUpdateHandler.postDelayed(this, 50);
-                }
-            };
+        imageViewPlay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                imageViewPlay.setVisibility(View.INVISIBLE);
+                imageViewPause.setVisibility(View.VISIBLE);
 
-            //progressBar.setMax((int) trackPlayer.getTrackDuration());
-            mSeekbarUpdateHandler.postDelayed(mUpdateSeekbar, 0);
-
-            imageViewPause.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    imageViewPlay.setVisibility(View.VISIBLE);
-                    imageViewPause.setVisibility(View.INVISIBLE);
-                    trackPlayer.pause();
-                }
-            });
-
-            imageViewPlay.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    imageViewPlay.setVisibility(View.INVISIBLE);
-                    imageViewPause.setVisibility(View.VISIBLE);
-                    trackPlayer.play();
-                }
-            });
-
-        } catch (TooManyPlayersExceptions tooManyPlayersExceptions) {
-            tooManyPlayersExceptions.printStackTrace();
-        } catch (DeezerError deezerError) {
-            deezerError.printStackTrace();
-        }
+            }
+        });
 
 
         imageViewAnterior.setOnClickListener(new View.OnClickListener() {
