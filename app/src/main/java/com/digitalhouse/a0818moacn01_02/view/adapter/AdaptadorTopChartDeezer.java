@@ -62,7 +62,7 @@ public class AdaptadorTopChartDeezer extends BaseAdapter {
             imagen.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    onItemClickTopChart.onClickTopChartDeezer(topChartList.get(position));
+                    onItemClickTopChart.onClickTopChartDeezer(topChartList.get(position),position);
                 }
             });
 
@@ -72,6 +72,6 @@ public class AdaptadorTopChartDeezer extends BaseAdapter {
     }
 
     public interface onItemClickTopChartDeezer{
-        void onClickTopChartDeezer(Track topChartLocalDeezer);
+        void onClickTopChartDeezer(Track topChartLocalDeezer, Integer posicion);
     }
 }

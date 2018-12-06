@@ -220,6 +220,7 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
 
         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
 
+
         try {
             if (!mediaPlayer.isPlaying()) {
 
@@ -260,6 +261,8 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
                     }
                 }
             });
+
+
 
 
         } catch (

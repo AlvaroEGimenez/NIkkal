@@ -13,10 +13,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextSwitcher;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
 import com.digitalhouse.a0818moacn01_02.DAO.DAOLocal;
@@ -33,6 +35,7 @@ import com.digitalhouse.a0818moacn01_02.model.RadioDeezer;
 import com.digitalhouse.a0818moacn01_02.model.TopChartLocal;
 import com.digitalhouse.a0818moacn01_02.model.Track;
 import com.digitalhouse.a0818moacn01_02.view.MainActivity;
+import com.digitalhouse.a0818moacn01_02.view.ReproductorActivity;
 import com.digitalhouse.a0818moacn01_02.view.adapter.AdaptadorLocalTopChart;
 import com.digitalhouse.a0818moacn01_02.view.adapter.AdaptadorTopChartDeezer;
 import com.digitalhouse.a0818moacn01_02.view.adapter.CategoriaAdapterRecyclerView;
@@ -41,6 +44,7 @@ import com.digitalhouse.a0818moacn01_02.view.adapter.RadioAdapterRecyclerView;
 import com.digitalhouse.a0818moacn01_02.view.categorias.GeneroFragment;
 import com.digitalhouse.a0818moacn01_02.view.categorias.PistaAlbumFragment;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -114,6 +118,7 @@ public class CategoriaFragment extends Fragment implements CategoriaAdapterRecyc
             public void finish(final List<Track> resultado) {
                 adaptadorTopChartDeezer.setTopChartList(resultado);
                 featureCoverFlow.setAdapter(adaptadorTopChartDeezer);
+                topChartDeezerList = resultado;
 
                 featureCoverFlow.setOnScrollPositionListener(new FeatureCoverFlow.OnScrollPositionListener() {
                     @Override
@@ -246,14 +251,35 @@ public class CategoriaFragment extends Fragment implements CategoriaAdapterRecyc
     }
 
     @Override
-    public void onClickTopChartDeezer(Track topChartLocalDeezer) {
+    public void onClickTopChartDeezer(Track topChartLocalDeezer, final Integer position) {
         TextView textViewNombrePista = getActivity().findViewById(R.id.tvNombreReproductor);
         textViewNombrePista.setSelected(true);
+
 
         ReproducirMp3 reproducirMp3 = new ReproducirMp3();
         reproducirMp3.reproducirMp3(topChartLocalDeezer.getPreview(), mediaPlayer, parent);
         textViewNombrePista.setText(topChartLocalDeezer.getTitle() + " - " + topChartLocalDeezer.getArtist().getName());
         textViewNombrePista.setTextColor(Color.parseColor("#FD9701"));
+
+        ImageView imageView = getActivity().findViewById(R.id.btnActivityReproductor);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                List<Track> trackListReproductor = topChartDeezerList;
+                Intent intent = new Intent(getActivity(), ReproductorActivity.class);
+
+                Integer posicionReproductor = mediaPlayer.getCurrentPosition();
+
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(ReproductorActivity.KEY_OBJETO, (Serializable) trackListReproductor);
+                bundle.putInt(ReproductorActivity.KEY_POSICION, position);
+                bundle.putInt(ReproductorActivity.KEY_POSICION_REPRODUCTOR, posicionReproductor);
+
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
     }
 
 
