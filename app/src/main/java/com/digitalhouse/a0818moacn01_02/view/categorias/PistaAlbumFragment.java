@@ -2,7 +2,6 @@ package com.digitalhouse.a0818moacn01_02.view.categorias;
 
 
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -18,7 +17,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.TextUtils;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,11 +29,11 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.digitalhouse.a0818moacn01_02.R;
+import com.digitalhouse.a0818moacn01_02.Utils.FavoritoFirebase;
 import com.digitalhouse.a0818moacn01_02.Utils.ReproducirMp3;
 import com.digitalhouse.a0818moacn01_02.Utils.ResultListener;
 import com.digitalhouse.a0818moacn01_02.controller.TrackListController;
 import com.digitalhouse.a0818moacn01_02.controller.TracksController;
-import com.digitalhouse.a0818moacn01_02.Utils.FavoritoFirebase;
 import com.digitalhouse.a0818moacn01_02.model.Favorito;
 import com.digitalhouse.a0818moacn01_02.model.Track;
 import com.digitalhouse.a0818moacn01_02.view.MainActivity;
@@ -101,7 +99,6 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
         btnReproducirAlbum = view.findViewById(R.id.btnReproducirAlbumPista);
         btnReproducirAlbum.setOnClickListener(resproducirAlbumListener);
         btnFavorito = view.findViewById(R.id.btnFavoritoAlbum);
-        inisializacionFavoritoALbum(btnFavorito);
         btnFavorito.setOnClickListener(favoritoAlbumListener);
 
         Bundle bundle = getArguments();
@@ -113,7 +110,7 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
 
         cargarImagen(imgCabeceraAlbumPista, urlImagenCabecera);
         toolbaarNombreCabeceraAlbumPista.setTitle(nombreCabeceraPistaAlbum);
-
+        inisializacionFavoritoALbum(btnFavorito);
         crearAlbumRecyclerView(R.id.rvPistaAlbum);
 
         if ("sugerencia".equals(categoria)) {
@@ -134,7 +131,7 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
         trackListController.getTraksList(new ResultListener<List<Track>>() {
             @Override
             public void finish(List<Track> resultado) {
-                pistaAlbumRecyclerView.setPistas(resultado);
+                cargarFavoritosAdapter(resultado);
             }
         }, getContext(), idPista);
     }
@@ -144,23 +141,25 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
         tracksController.getPistas(new ResultListener<List<Track>>() {
             @Override
             public void finish(final List<Track> pistas) {
-                favoritoFirebasePista.getLista(new ResultListener<List<Favorito>>() {
-                    @Override
-                    public void finish(List<Favorito> favoritos) {
-                        for(Track pista : pistas){
-                            for(Favorito favorito : favoritos){
-                                if(pista.getId().equals(favorito.getId())){
-                                    pista.setFavorito(Boolean.TRUE);
-                                }
-                            }
-                        }
-                        pistaAlbumRecyclerView.setPistas(pistas);
-                    }
-                });
-
-
+                cargarFavoritosAdapter(pistas);
             }
         }, getContext(), idPista);
+    }
+
+    public void cargarFavoritosAdapter(final List<Track> pistas) {
+        favoritoFirebasePista.getLista(new ResultListener<List<Favorito>>() {
+            @Override
+            public void finish(List<Favorito> favoritos) {
+                for (Track pista : pistas) {
+                    for (Favorito favorito : favoritos) {
+                        if (pista.getId().equals(favorito.getId())) {
+                            pista.setFavorito(Boolean.TRUE);
+                        }
+                    }
+                }
+                pistaAlbumRecyclerView.setPistas(pistas);
+            }
+        });
     }
 
     private void cargarImagen(ImageView imageView, String url) {
@@ -183,29 +182,22 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
 
 
     private void setFavoritoPista(Track pista, ImageView favoritoPista) {
-        if(!parent.estaLogeado(getContext())){
-            return;
-        }
         if (!pista.getFavorito()) {
             pista.setFavorito(true);
             favoritoFirebasePista.agregar(pista.getId(), urlImagenCabecera);
-
+            cargarImagen(favoritoPista, R.drawable.ic_favorite_seleccionado);
         } else {
             pista.setFavorito(false);
             favoritoFirebasePista.eliminar(pista.getId());
-        }
-
-        if (pista.getFavorito()) {
-            cargarImagen(favoritoPista, R.drawable.ic_favorite_seleccionado);
-        } else {
             cargarImagen(favoritoPista, R.drawable.ic_favorite_no_seleccion);
         }
     }
 
     @Override
     public void favoritoListener(Track pista, ImageView favoritoPista) {
-        setFavoritoPista(pista, favoritoPista);
-
+        if (parent.estaLogeado(getContext())) {
+            setFavoritoPista(pista, favoritoPista);
+        }
     }
 
     @Override
@@ -442,7 +434,6 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
 
 
     private void setFavoritoAlbum() {
-
         if (favoritoAlbum) {
             favoritoAlbum = Boolean.FALSE;
             cargarImagen(R.drawable.ic_favorite_no_seleccion);
@@ -459,15 +450,18 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
     View.OnClickListener favoritoAlbumListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-
+            if (parent.estaLogeado(getContext())) {
+                setFavoritoAlbum();
+            }
         }
     };
 
     private void inisializacionFavoritoALbum(final FloatingActionButton btnFavorito) {
+        //   btnFavorito.setImageResource( R.drawable.ic_favorite_no_seleccion);
         favoritoFirebaseAlbum.getFavoritoPorId(new ResultListener<Favorito>() {
             @Override
             public void finish(Favorito favorito) {
-                btnFavorito.setImageResource(favorito != null ? R.drawable.ic_favorite_seleccionado : R.drawable.ic_favorite_no_seleccion);
+                btnFavorito.setImageResource(R.drawable.ic_favorite_black_24dp);
             }
         }, albumId);
 

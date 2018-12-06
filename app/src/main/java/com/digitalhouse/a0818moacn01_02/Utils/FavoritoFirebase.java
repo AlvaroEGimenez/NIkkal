@@ -1,9 +1,7 @@
 package com.digitalhouse.a0818moacn01_02.Utils;
 
 import android.support.annotation.NonNull;
-import android.widget.Toast;
 
-import com.digitalhouse.a0818moacn01_02.Utils.ResultListener;
 import com.digitalhouse.a0818moacn01_02.model.Favorito;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -18,26 +16,18 @@ import java.util.List;
 
 public class FavoritoFirebase {
     public static final String PATH_LIST_FAVORITO = "favorito";
-    public static final String KEY_TIPO_PISTA="pista";
-    public static final String KEY_TIPO_ALBUM="album";
-    public static final String KEY_TIPO_ARTISTA="artista";
+    public static final String KEY_TIPO_PISTA = "pista";
+    public static final String KEY_TIPO_ALBUM = "album";
+    public static final String KEY_TIPO_ARTISTA = "artista";
 
     private DatabaseReference mReference;
     private FirebaseUser currentUser;
     private String tipo;
-    private List<Favorito> favoritoList = new ArrayList<>();
 
     public FavoritoFirebase(String tipo) {
         mReference = FirebaseDatabase.getInstance().getReference();
-        currentUser = FirebaseAuth.getInstance()
-                .getCurrentUser();
+        currentUser = FirebaseAuth.getInstance().getCurrentUser();
         this.tipo = tipo;
-        getLista(new ResultListener<List<Favorito>>() {
-            @Override
-            public void finish(List<Favorito> Resultado) {
-                favoritoList.addAll(Resultado);
-            }
-        });
     }
 
     public void agregar(Integer id, String urlImagen) {
@@ -70,7 +60,6 @@ public class FavoritoFirebase {
                 });
             }
         }, id);
-
     }
 
     public void getLista(final ResultListener<List<Favorito>> resultListener) {
@@ -96,12 +85,11 @@ public class FavoritoFirebase {
         });
     }
 
-
-    public void getFavoritoPorId(final ResultListener<Favorito> listener,final Integer id) {
+    public void getFavoritoPorId(final ResultListener<Favorito> listener, final Integer id) {
         getLista(new ResultListener<List<Favorito>>() {
             @Override
-            public void finish(List<Favorito> Resultado) {
-                for (Favorito favorito : Resultado) {
+            public void finish(List<Favorito> favoritos) {
+                for (Favorito favorito : favoritos) {
                     if (favorito.getId().equals(id)) {
                         listener.finish(favorito);
                     }

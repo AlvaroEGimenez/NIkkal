@@ -28,6 +28,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -52,9 +53,9 @@ import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Favoritos.MisListasF
 import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Pantalla_Principal.CategoriaFragment;
 import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Radio_Online.RadioFragment;
 import com.facebook.Profile;
+import com.facebook.login.LoginManager;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -84,14 +85,13 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
     private FloatingActionButton btnListaReproduccion;
     private Integer posicionActualLista;
     private Menu menuFavoritos;
+    private ImageView menuHeaderListaReprod;
     private FirebaseAuth mAuth;
     private MisAlbumsFragment misAlbumsFragment = new MisAlbumsFragment();
     private MisArtistasFragment misArtistasFragment = new MisArtistasFragment();
     private MisCancionesFragment misCancionesFragment = new MisCancionesFragment();
     private MisListasFragment misListasFragment = new MisListasFragment();
-    private Menu menuHeaderListaReprod;
     private TextView tvHeaderNombreListaReproduccion;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,17 +108,17 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
         imageViewPause = findViewById(R.id.btnReproductorPause);
         linearLayoutReproductor = findViewById(R.id.layoutPlayer);
 
-
-
-
-
         reemplazarFragment(categoriaFragment);
 
         mediaPlayer = new MediaPlayer();
         navigationView = findViewById(R.id.navigationMainActivity);
         headerView = navigationView.inflateHeaderView(R.layout.header_navigation_view);
+        tvHeaderNombreListaReproduccion = headerView.findViewById(R.id.tvHeaderNombreListaReproduccion);
+        menuHeaderListaReprod = headerView.findViewById(R.id.menuHeaderListaReprod);
+        menuHeaderListaReprod.setOnClickListener(menuHeaderListaReprodListener);
         btnListaReproduccion = findViewById(R.id.btnListaReproduccion);
         btnListaReproduccion.setOnClickListener(listaReproducction);
+
         cargarImagenHeaderNavigationView();
 
         bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -147,18 +147,12 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
         listaReproduccion = new ListaReproduccionFirebase();
         crearListaReproduccionRecyclerView();
       //  cargarListaReproduccion();
-        //cargarListaReproduccion(tracksId);
-
-
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         menuFavoritos = menu;
         getMenuInflater().inflate(R.menu.menu_favoritos, menu);
-
-        menuHeaderListaReprod = menu;
-       // getMenuInflater().inflate(R.menu.menu_header_lista_reprod, menu);
         return true;
     }
 
@@ -262,8 +256,6 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
                     }
                 }
             });
-
-
 
 
         } catch (
@@ -484,5 +476,45 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
 
     public void setTvHeaderNombreListaReproduccion(String tvHeaderNombreListaReproduccion) {
         this.tvHeaderNombreListaReproduccion.setText(tvHeaderNombreListaReproduccion);
+    }
+
+    View.OnClickListener menuHeaderListaReprodListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            PopupMenu popup = new PopupMenu(getApplicationContext(), v);
+            MenuInflater inflater = popup.getMenuInflater();
+            inflater.inflate(R.menu.menu_header_lista_reprod, popup.getMenu());
+            popup.setOnMenuItemClickListener(new MenuItemSeleccionClickListener());
+            popup.show();
+        }
+    };
+
+   public class MenuItemSeleccionClickListener implements PopupMenu.OnMenuItemClickListener {
+
+        public MenuItemSeleccionClickListener() {
+        }
+
+        @Override
+        public boolean onMenuItemClick(MenuItem menuItem) {
+            switch (menuItem.getItemId()) {
+                case R.id.cerrarSesion:
+                    cerrarSesion();
+                    Toast.makeText(getApplicationContext(), "Chau chau", Toast.LENGTH_SHORT).show();
+                    return true;
+                case R.id.abrirListaReprod:
+                    Toast.makeText(getApplicationContext(), "Dale open Wachín", Toast.LENGTH_SHORT).show();
+                    return true;
+                case R.id.CerrarListaReprod:
+                    Toast.makeText(getApplicationContext(), "Close de Lista", Toast.LENGTH_SHORT).show();
+                    return true;
+                default:
+            }
+            return false;
+        }
+    }
+
+    private void cerrarSesion(){
+        FirebaseAuth.getInstance().signOut();
+        LoginManager.getInstance().logOut();
     }
 }

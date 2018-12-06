@@ -67,7 +67,7 @@ public class AlbumFragment extends Fragment implements AlbumAdapterRecyclerView.
         pbAlbum = view.findViewById(R.id.pbAlbum);
 
         btnFavorito = view.findViewById(R.id.btnFavoritoArtista);
-
+        btnFavorito.setOnClickListener(favoritoListener);
         ImageView imagenArtista = view.findViewById(R.id.imagenArtista);
         Toolbar tvCabeceraArtista = view.findViewById(R.id.tvCabeceraArtista);
         view.findViewById(R.id.rvAlbum);
@@ -128,7 +128,6 @@ public class AlbumFragment extends Fragment implements AlbumAdapterRecyclerView.
         bundle.putString(PistaAlbumFragment.KEY_IMAGEN_CABECERA_ALBUM_PISTA, album.getCoverMedium());
         bundle.putString(PistaAlbumFragment.KEY_NOMBRE_CABECERA_ALBUM_PISTA, album.getTitle());
         bundle.putInt(PistaAlbumFragment.KEY_PISTA_ID_ALBUM_PISTA, album.getId());
-        bundle.putBoolean(PistaAlbumFragment.KEY_FAVORITO_ALBUM, album.getFavorito());
         bundle.putString(PistaAlbumFragment.KEY_CATEGORIA, KEY_PISTA_ALBUM);
 
         pistaAlbumFragment.setArguments(bundle);
@@ -141,11 +140,21 @@ public class AlbumFragment extends Fragment implements AlbumAdapterRecyclerView.
         favoritoFirebaseArtista.getFavoritoPorId(new ResultListener<Favorito>() {
             @Override
             public void finish(Favorito favorito) {
-                btnFavorito.setImageResource(favorito != null ? R.drawable.ic_favorite_seleccionado :  R.drawable.ic_favorite_no_seleccion);
+                btnFavorito.setImageResource(R.drawable.ic_favorite_black_24dp );
             }
         }, idArtist);
 
     }
+
+    View.OnClickListener favoritoListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            if (parent.estaLogeado(getContext())){
+                setFavoritoPista();
+            }
+
+        }
+    };
 
     private void setFavoritoPista() {
 
