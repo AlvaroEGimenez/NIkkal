@@ -3,6 +3,7 @@ package com.digitalhouse.a0818moacn01_02.view.categorias;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -38,11 +39,13 @@ import com.digitalhouse.a0818moacn01_02.Utils.FavoritoFirebase;
 import com.digitalhouse.a0818moacn01_02.model.Favorito;
 import com.digitalhouse.a0818moacn01_02.model.Track;
 import com.digitalhouse.a0818moacn01_02.view.MainActivity;
+import com.digitalhouse.a0818moacn01_02.view.ReproductorActivity;
 import com.digitalhouse.a0818moacn01_02.view.adapter.pista.PistaAdapterViewPage;
 import com.digitalhouse.a0818moacn01_02.view.adapter.pista.PistaAlbumRecyclerView;
 import com.digitalhouse.a0818moacn01_02.view.adapter.pista.RecyclerItemTouchHelper;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -63,7 +66,7 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
     private AutoScrollViewPager autoScrollViewPager;
     private RecyclerView recyclerView;
     private View view;
-    private MediaPlayer mediaPlayer;
+    private MediaPlayer mediaPlayer = new MediaPlayer();
     private Track pistaActual;
     private MainActivity parent;
     private ProgressBar progressBar;
@@ -198,8 +201,8 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
     }
 
     @Override
-    public void pistaViewPageListener(Integer posicion, View itemViewSelected) {
-        parent.getBottomNavigation().setVisibility(View.GONE);
+    public void pistaViewPageListener(final Integer posicion, View itemViewSelected) {
+        /*parent.getBottomNavigation().setVisibility(View.GONE);
         final Dialog dialog = new Dialog(getContext(), R.style.pistaViewPage);
         dialog.setContentView(R.layout.pista_view_page_content);
         progressBar = dialog.findViewById(R.id.progrerssBarPistaViewPage);
@@ -220,18 +223,39 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
                     textViewNombrePista.setText(pistaActual.getArtist().getName() + " - " + pistaActual.getTitle());
                     parent.visibilidadReproductor(true);
                     parent.getBottomNavigation().setVisibility(View.VISIBLE);
-                    reprducirAlbum = Boolean.FALSE;
-                    ReproducirMp3 reproducirMp3 = new ReproducirMp3();
-                    reproducirMp3.reproducirMp3(pistaActual.getPreview(), mediaPlayer, parent);
-                }
-                return true;
+                    reprducirAlbum = Boolean.FALSE;*/
+        ReproducirMp3 reproducirMp3 = new ReproducirMp3();
+        reproducirMp3.reproducirMp3(pistas.get(posicion).getPreview(), mediaPlayer, parent);
+        TextView textViewNombrePista = getActivity().findViewById(R.id.tvNombreReproductor);
+        textViewNombrePista.setSelected(true);
+        textViewNombrePista.setText(pistas.get(posicion).getArtist().getName() + " - " + pistas.get(posicion).getTitle());
+        ImageView imageView = getActivity().findViewById(R.id.btnActivityReproductor);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(getActivity(), ReproductorActivity.class);
+
+                Integer posicionReproductor = mediaPlayer.getCurrentPosition();
+
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(ReproductorActivity.KEY_OBJETO, (Serializable) pistas);
+                bundle.putInt(ReproductorActivity.KEY_POSICION, posicion);
+                bundle.putInt(ReproductorActivity.KEY_POSICION_REPRODUCTOR, posicionReproductor);
+
+                intent.putExtras(bundle);
+                startActivity(intent);
             }
         });
+        //return true;
+        //}
+        /*});
 
 
         dialog.show();
-        parent.visibilidadReproductor(false);
+        parent.visibilidadReproductor(false);*/
     }
+
 
     private void cargarImagen(ImageView imageView, Integer idDrawable) {
         Glide.with(getContext()).load(idDrawable).into(imageView);
@@ -424,7 +448,7 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
         favoritoFirebaseAlbum.getFavoritoPorId(new ResultListener<Favorito>() {
             @Override
             public void finish(Favorito favorito) {
-                btnFavorito.setImageResource(favorito != null ? R.drawable.ic_favorite_seleccionado :  R.drawable.ic_favorite_no_seleccion);
+                btnFavorito.setImageResource(favorito != null ? R.drawable.ic_favorite_seleccionado : R.drawable.ic_favorite_no_seleccion);
             }
         }, albumId);
 
