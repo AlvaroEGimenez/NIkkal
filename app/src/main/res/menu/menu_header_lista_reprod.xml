@@ -10,10 +10,6 @@
         android:title="Abrir lista Reprocucción"
         app:showAsAction="always|collapseActionView"
         app:actionViewClass="android.widget.SearchView" />
-    <item android:id="@+id/CerrarListaReprod"
-        android:title="Cerrar Lista de reproducción"
-        app:showAsAction="always|collapseActionView"
-        app:actionViewClass="android.widget.SearchView" />
 </menu>
 
 

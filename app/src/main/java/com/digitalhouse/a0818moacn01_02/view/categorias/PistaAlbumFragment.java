@@ -467,5 +467,6 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
 
     private void setPistas(List<Track> pistas){
         this.pistas = pistas;
+        pistaAlbumRecyclerView.setPistas(pistas);
     }
 }

@@ -22,6 +22,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -42,6 +43,7 @@ import com.digitalhouse.a0818moacn01_02.model.RadioDeezer;
 import com.digitalhouse.a0818moacn01_02.model.Track;
 import com.digitalhouse.a0818moacn01_02.view.adapter.listaReproduccion.ItemTouchHelperCallback;
 import com.digitalhouse.a0818moacn01_02.view.adapter.listaReproduccion.PistaListaReproduccionAdapter;
+import com.digitalhouse.a0818moacn01_02.view.categorias.PistaAlbumFragment;
 import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Buscar.AdapatadorBusqueda;
 import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Buscar.BuscarFragment;
 import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Configuracion.ConfiguracionFragment;
@@ -62,7 +64,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements AdapatadorBusqueda.BusquedaInterface,
-        PistaListaReproduccionAdapter.PistaListaReproduccionAdapterInterface, MediaPlayer.OnCompletionListener , FavoritoFragment.interfacePasadorDeInformacion, MisAlbumsFragment.InterfaceNotificador, FavoritoFragment.InterfaceNotificadorAlbumFavoritos {
+        PistaListaReproduccionAdapter.PistaListaReproduccionAdapterInterface, MediaPlayer.OnCompletionListener, FavoritoFragment.interfacePasadorDeInformacion, MisAlbumsFragment.InterfaceNotificador, FavoritoFragment.InterfaceNotificadorAlbumFavoritos {
 
 
     private CategoriaFragment categoriaFragment = new CategoriaFragment();
@@ -92,6 +94,7 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
     private MisCancionesFragment misCancionesFragment = new MisCancionesFragment();
     private MisListasFragment misListasFragment = new MisListasFragment();
     private TextView tvHeaderNombreListaReproduccion;
+    private  DrawerLayout drawerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,7 +121,7 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
         menuHeaderListaReprod.setOnClickListener(menuHeaderListaReprodListener);
         btnListaReproduccion = findViewById(R.id.btnListaReproduccion);
         btnListaReproduccion.setOnClickListener(listaReproducction);
-
+        drawerLayout = findViewById(R.id.drawerMainActivity);
         cargarImagenHeaderNavigationView();
 
         bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -146,7 +149,7 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
 
         listaReproduccion = new ListaReproduccionFirebase();
         crearListaReproduccionRecyclerView();
-      //  cargarListaReproduccion();
+        //  cargarListaReproduccion();
     }
 
     @Override
@@ -157,23 +160,22 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
     }
 
 
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int res_id = item.getItemId();
-        if(res_id == R.id.itemAlbumFavorito){
+        if (res_id == R.id.itemAlbumFavorito) {
             Toast.makeText(this, "Album favorito", Toast.LENGTH_SHORT).show();
             reemplazarFragment(misAlbumsFragment);
         }
-        if (res_id == R.id.itemArtistaFavorito){
+        if (res_id == R.id.itemArtistaFavorito) {
             Toast.makeText(this, "Artista Favorito", Toast.LENGTH_SHORT).show();
             reemplazarFragment(misArtistasFragment);
         }
-        if (res_id == R.id.itemCancionFavorita){
+        if (res_id == R.id.itemCancionFavorita) {
             Toast.makeText(this, "Cancion Favorita", Toast.LENGTH_SHORT).show();
             reemplazarFragment(misCancionesFragment);
         }
-        if (res_id == R.id.itemListasFavoritas){
+        if (res_id == R.id.itemListasFavoritas) {
             Toast.makeText(this, "Lista Favorita", Toast.LENGTH_SHORT).show();
             reemplazarFragment(misListasFragment);
         }
@@ -181,9 +183,6 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
 
         return true;
     }
-
-
-
 
 
     public void reemplazarFragment(Fragment fragment) {
@@ -374,12 +373,18 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
     private void cargarListaReproduccion() {
         listaReproduccion.getLista(new ResultListener<List<Track>>() {
             @Override
-            public void finish(List<Track> Resultado) {
-                pistaAlbumRecyclerView.setPistas(Resultado);
+            public void finish(List<Track> pistas) {
+                listaReproduccion.getPistas().clear();
+                listaReproduccion.getPistas().addAll(pistas);
+                pistaAlbumRecyclerView.setPistas(pistas);
+                drawerLayout.openDrawer(Gravity.START);
             }
         });
-
-
+    }
+    public void cargarListaReproduccion(String nombre) {
+        listaReproduccion.setNombre(nombre);
+        tvHeaderNombreListaReproduccion.setText(nombre);
+        cargarListaReproduccion();
     }
 
     public void crearListaReproduccionRecyclerView() {
@@ -412,8 +417,11 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
         listaReproduccion.setNombre(nombre);
         tvHeaderNombreListaReproduccion.setText(nombre);
         cargarListaReproduccion();
+
+        drawerLayout.openDrawer(Gravity.START);
         return true;
     }
+
 
     public PistaListaReproduccionAdapter getPistaAlbumRecyclerView() {
         return pistaAlbumRecyclerView;
@@ -429,7 +437,7 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
                 @Override
                 public void onCompletion(MediaPlayer mp) {
 
-                    if (posicionActualLista < listaReproduccion.getPistas().size() ) {
+                    if (posicionActualLista < listaReproduccion.getPistas().size()) {
                         pistaListaReproduccionAdapterInterface(posicionActualLista++);
                     } else {
                         posicionActualLista = 0;
@@ -454,12 +462,12 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
     }
 
     public void agregarPistaReproducción(Track pista) {
-       if(listaReproduccion.getNombre() == null) {
-           Toast.makeText(this, getResources().getString(R.string.debe_crear_lista_rep), Toast.LENGTH_SHORT).show();
-       }else {
-           listaReproduccion.agregarPista(pista);
-           getPistaAlbumRecyclerView().notifyDataSetChanged();
-       }
+        if (listaReproduccion.getNombre() == null) {
+            Toast.makeText(this, getResources().getString(R.string.debe_crear_lista_rep), Toast.LENGTH_SHORT).show();
+        } else {
+            listaReproduccion.agregarPista(pista);
+            getPistaAlbumRecyclerView().notifyDataSetChanged();
+        }
     }
 
     @Override
@@ -489,7 +497,7 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
         }
     };
 
-   public class MenuItemSeleccionClickListener implements PopupMenu.OnMenuItemClickListener {
+    public class MenuItemSeleccionClickListener implements PopupMenu.OnMenuItemClickListener {
 
         public MenuItemSeleccionClickListener() {
         }
@@ -499,22 +507,26 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
             switch (menuItem.getItemId()) {
                 case R.id.cerrarSesion:
                     cerrarSesion();
-                    Toast.makeText(getApplicationContext(), "Chau chau", Toast.LENGTH_SHORT).show();
                     return true;
                 case R.id.abrirListaReprod:
-                    Toast.makeText(getApplicationContext(), "Dale open Wachín", Toast.LENGTH_SHORT).show();
-                    return true;
-                case R.id.CerrarListaReprod:
-                    Toast.makeText(getApplicationContext(), "Close de Lista", Toast.LENGTH_SHORT).show();
+                    abrirListaReproduccion();
                     return true;
                 default:
             }
             return false;
         }
+
     }
 
-    private void cerrarSesion(){
+    private void cerrarSesion() {
         FirebaseAuth.getInstance().signOut();
         LoginManager.getInstance().logOut();
+        cargarImagenHeaderNavigationView();
+    }
+
+    private void abrirListaReproduccion() {
+        bottomNavigation.setSelectedItemId(R.id.favoritoFragment);
+        drawerLayout.closeDrawers();
+        reemplazarFragment(new MisListasFragment());
     }
 }
