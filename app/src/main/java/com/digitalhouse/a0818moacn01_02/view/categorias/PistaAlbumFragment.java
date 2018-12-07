@@ -2,6 +2,7 @@ package com.digitalhouse.a0818moacn01_02.view.categorias;
 
 
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -17,6 +18,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -141,6 +143,7 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
         tracksController.getPistas(new ResultListener<List<Track>>() {
             @Override
             public void finish(final List<Track> pistas) {
+                setPistas(pistas);
                 cargarFavoritosAdapter(pistas);
             }
         }, getContext(), idPista);
@@ -212,8 +215,8 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
     }
 
     @Override
-    public void pistaViewPageListener(final Integer posicion, View itemViewSelected) {
-        /*parent.getBottomNavigation().setVisibility(View.GONE);
+    public void pistaViewPageListener(Integer posicion, View itemViewSelected) {
+        parent.getBottomNavigation().setVisibility(View.GONE);
         final Dialog dialog = new Dialog(getContext(), R.style.pistaViewPage);
         dialog.setContentView(R.layout.pista_view_page_content);
         progressBar = dialog.findViewById(R.id.progrerssBarPistaViewPage);
@@ -234,37 +237,17 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
                     textViewNombrePista.setText(pistaActual.getArtist().getName() + " - " + pistaActual.getTitle());
                     parent.visibilidadReproductor(true);
                     parent.getBottomNavigation().setVisibility(View.VISIBLE);
-                    reprducirAlbum = Boolean.FALSE;*/
-        ReproducirMp3 reproducirMp3 = new ReproducirMp3();
-        reproducirMp3.reproducirMp3(pistas.get(posicion).getPreview(), mediaPlayer, parent);
-        TextView textViewNombrePista = getActivity().findViewById(R.id.tvNombreReproductor);
-        textViewNombrePista.setSelected(true);
-        textViewNombrePista.setText(pistas.get(posicion).getArtist().getName() + " - " + pistas.get(posicion).getTitle());
-        ImageView imageView = getActivity().findViewById(R.id.btnActivityReproductor);
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent = new Intent(getActivity(), ReproductorActivity.class);
-
-                Integer posicionReproductor = mediaPlayer.getCurrentPosition();
-
-                Bundle bundle = new Bundle();
-                bundle.putSerializable(ReproductorActivity.KEY_OBJETO, (Serializable) pistas);
-                bundle.putInt(ReproductorActivity.KEY_POSICION, posicion);
-                bundle.putInt(ReproductorActivity.KEY_POSICION_REPRODUCTOR, posicionReproductor);
-
-                intent.putExtras(bundle);
-                startActivity(intent);
+                    reprducirAlbum = Boolean.FALSE;
+                    ReproducirMp3 reproducirMp3 = new ReproducirMp3();
+                    reproducirMp3.reproducirMp3(pistaActual.getPreview(), mediaPlayer, parent);
+                }
+                return true;
             }
         });
-        //return true;
-        //}
-        /*});
 
 
         dialog.show();
-        parent.visibilidadReproductor(false);*/
+        parent.visibilidadReproductor(false);
     }
 
 
@@ -481,4 +464,8 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
         }
     }
 
+
+    private void setPistas(List<Track> pistas){
+        this.pistas = pistas;
+    }
 }
