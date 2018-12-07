@@ -89,7 +89,16 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
         parent = (MainActivity) getActivity();
         favoritoFirebasePista = new FavoritoFirebase(FavoritoFirebase.KEY_TIPO_PISTA);
         favoritoFirebaseAlbum = new FavoritoFirebase(FavoritoFirebase.KEY_TIPO_ALBUM);
+
+
+        favoritoFirebasePista.getLista(new ResultListener<List<Favorito>>() {
+            @Override
+            public void finish(List<Favorito> Resultado) {
+
+            }
+        });
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -132,8 +141,9 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
         TrackListController trackListController = new TrackListController();
         trackListController.getTraksList(new ResultListener<List<Track>>() {
             @Override
-            public void finish(List<Track> resultado) {
-                cargarFavoritosAdapter(resultado);
+            public void finish(List<Track> pistas) {
+                setPistas(pistas);
+                cargarFavoritosAdapter(pistas);
             }
         }, getContext(), idPista);
     }
