@@ -44,7 +44,7 @@ public class AlbumFragment extends Fragment implements AlbumAdapterRecyclerView.
     private LinearLayout conatiner;
     private MainActivity parent;
     private Boolean favoritoArtista;
-    private FloatingActionButton btnFavorito;
+    private ImageView btnFavorito;
     private FavoritoFirebase favoritoFirebaseArtista;
     private String urlImagenCabecera;
 
@@ -66,8 +66,8 @@ public class AlbumFragment extends Fragment implements AlbumAdapterRecyclerView.
         conatiner = view.findViewById(R.id.categoriaAlbumContainer);
         pbAlbum = view.findViewById(R.id.pbAlbum);
 
-        btnFavorito = view.findViewById(R.id.btnFavoritoArtista);
-        btnFavorito.setOnClickListener(favoritoListener);
+       btnFavorito = view.findViewById(R.id.btnFavoritoArtista);
+       btnFavorito.setOnClickListener(favoritoListener);
         ImageView imagenArtista = view.findViewById(R.id.imagenArtista);
         Toolbar tvCabeceraArtista = view.findViewById(R.id.tvCabeceraArtista);
         view.findViewById(R.id.rvAlbum);
@@ -136,7 +136,7 @@ public class AlbumFragment extends Fragment implements AlbumAdapterRecyclerView.
 
 
 
-    private void inisializacionFavoritoArtista(final FloatingActionButton btnFavorito) {
+    private void inisializacionFavoritoArtista(final ImageView btnFavorito) {
         favoritoFirebaseArtista.getFavoritoPorId(new ResultListener<Favorito>() {
             @Override
             public void finish(Favorito favorito) {
