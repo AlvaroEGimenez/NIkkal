@@ -36,5 +36,6 @@
     <string name="campo_obligatorio">Complete el campo obligatorio</string>
     <string name="debe_crear_lista_rep">Debe crear abrir o crear una lista de reprodución</string>
     <string name="pista_gregada">Pista Agregada</string>
+    <string name="busqueda_vacia">With nothing to look for, nothing found :)</string>
 
 </resources>
