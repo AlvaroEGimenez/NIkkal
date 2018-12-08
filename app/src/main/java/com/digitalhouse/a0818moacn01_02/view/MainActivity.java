@@ -31,20 +31,17 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.digitalhouse.a0818moacn01_02.R;
+import com.digitalhouse.a0818moacn01_02.Utils.ListaReproduccionFirebase;
 import com.digitalhouse.a0818moacn01_02.Utils.ResultListener;
 import com.digitalhouse.a0818moacn01_02.Utils.Util;
-import com.digitalhouse.a0818moacn01_02.Utils.ListaReproduccionFirebase;
-import com.digitalhouse.a0818moacn01_02.model.RadioDeezer;
 import com.digitalhouse.a0818moacn01_02.model.Track;
 import com.digitalhouse.a0818moacn01_02.view.adapter.listaReproduccion.ItemTouchHelperCallback;
 import com.digitalhouse.a0818moacn01_02.view.adapter.listaReproduccion.PistaListaReproduccionAdapter;
-import com.digitalhouse.a0818moacn01_02.view.categorias.PistaAlbumFragment;
 import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Buscar.AdapatadorBusqueda;
 import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Buscar.BuscarFragment;
 import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Configuracion.ConfiguracionFragment;
@@ -65,7 +62,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements AdapatadorBusqueda.BusquedaInterface,
-        PistaListaReproduccionAdapter.PistaListaReproduccionAdapterInterface, MediaPlayer.OnCompletionListener, FavoritoFragment.interfacePasadorDeInformacion, MisAlbumsFragment.InterfaceNotificador, FavoritoFragment.InterfaceNotificadorAlbumFavoritos {
+        PistaListaReproduccionAdapter.PistaListaReproduccionAdapterInterface, MediaPlayer.OnCompletionListener {
 
 
     private CategoriaFragment categoriaFragment = new CategoriaFragment();
@@ -95,7 +92,8 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
     private MisCancionesFragment misCancionesFragment = new MisCancionesFragment();
     private MisListasFragment misListasFragment = new MisListasFragment();
     private TextView tvHeaderNombreListaReproduccion;
-    private  DrawerLayout drawerLayout;
+    private DrawerLayout drawerLayout;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,6 +109,10 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
         imageViewPlay = findViewById(R.id.btnRepoductorPlay);
         imageViewPause = findViewById(R.id.btnReproductorPause);
         linearLayoutReproductor = findViewById(R.id.layoutPlayer);
+
+
+
+
 
         reemplazarFragment(categoriaFragment);
 
@@ -158,7 +160,6 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
         getMenuInflater().inflate(R.menu.menu_favoritos, menu);
         return true;
     }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -302,11 +303,6 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
     }
 
 
-    @Override
-    public void recibirmensaje(RadioDeezer radioDeezer) {
-        Toast.makeText(this, "Acá viene lo bueno", Toast.LENGTH_SHORT).show();
-    }
-
     public Boolean estaLogeado(final Context context) {
         FirebaseUser currentUser = FirebaseAuth.getInstance()
                 .getCurrentUser();
@@ -381,6 +377,7 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
             }
         });
     }
+
     public void cargarListaReproduccion(String nombre) {
         listaReproduccion.setNombre(nombre);
         tvHeaderNombreListaReproduccion.setText(nombre);
@@ -468,18 +465,6 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
             listaReproduccion.agregarPista(pista);
             getPistaAlbumRecyclerView().notifyDataSetChanged();
         }
-    }
-
-    @Override
-    public void notificar(RadioDeezer radioDezeer) {
-
-    }
-
-
-    @Override
-    public void notificar(Fragment fragment) {
-        //reemplazarFragment(misAlbumsFragment);
-
     }
 
     public void setTvHeaderNombreListaReproduccion(String tvHeaderNombreListaReproduccion) {

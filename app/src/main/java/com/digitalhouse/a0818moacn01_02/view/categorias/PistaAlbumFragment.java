@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -17,6 +18,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,6 +43,8 @@ import com.digitalhouse.a0818moacn01_02.view.MainActivity;
 import com.digitalhouse.a0818moacn01_02.view.adapter.pista.PistaAdapterViewPage;
 import com.digitalhouse.a0818moacn01_02.view.adapter.pista.PistaAlbumRecyclerView;
 import com.digitalhouse.a0818moacn01_02.view.adapter.pista.RecyclerItemTouchHelper;
+import com.google.android.gms.appinvite.AppInviteInvitation;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -80,6 +84,7 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
     private FloatingActionButton btnFavorito;
     private FavoritoFirebase favoritoFirebasePista;
     private FavoritoFirebase favoritoFirebaseAlbum;
+    private String nombreCabeceraPistaAlbum;
 
     public PistaAlbumFragment() {
     }
@@ -117,7 +122,7 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
 
         Bundle bundle = getArguments();
         urlImagenCabecera = bundle.getString(KEY_IMAGEN_CABECERA_ALBUM_PISTA);
-        String nombreCabeceraPistaAlbum = bundle.getString(KEY_NOMBRE_CABECERA_ALBUM_PISTA);
+        nombreCabeceraPistaAlbum = bundle.getString(KEY_NOMBRE_CABECERA_ALBUM_PISTA);
         albumId = bundle.getInt(KEY_PISTA_ID_ALBUM_PISTA);
         favoritoAlbum = bundle.getBoolean(KEY_FAVORITO_ALBUM);
         String categoria = bundle.getString(KEY_CATEGORIA);
@@ -242,7 +247,7 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
     private void setFavoritoPista(Track pista, ImageView favoritoPista) {
         if (!pista.getFavorito()) {
             pista.setFavorito(true);
-            favoritoFirebasePista.agregar(pista.getId(), urlImagenCabecera);
+            favoritoFirebasePista.agregar(pista.getId(), urlImagenCabecera, nombreCabeceraPistaAlbum);
             cargarImagen(favoritoPista, R.drawable.ic_favorite_seleccionado);
         } else {
             pista.setFavorito(false);
@@ -267,7 +272,22 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
     @Override
     public void compartirListener(Track pista) {
         Toast.makeText(getContext(), "Compartir pista", Toast.LENGTH_SHORT).show();
+        //Creamos un share de tipo ACTION_SENT
+        Intent share = new Intent(android.content.Intent.ACTION_SEND);
+        //Indicamos que voy a compartir texto
+        share.setType("text/plain");
+        //Le agrego un título
+        share.putExtra(Intent.EXTRA_SUBJECT, R.string.compartir_redes_sociales);
+        //Le agrego el texto a compartir (Puede ser un link tambien)
+        share.putExtra(Intent.EXTRA_TEXT, pista.getLink());
+        //Hacemos un start para que comparta el contenido.
+        startActivity(Intent.createChooser(share,"HOLA"));
+
     }
+
+
+
+
 
     @Override
     public void pistaViewPageListener(Integer posicion, View itemViewSelected) {
@@ -483,7 +503,7 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
         } else {
             cargarImagen(R.drawable.ic_favorite_black_24dp);
             favoritoAlbum = Boolean.TRUE;
-            favoritoFirebaseAlbum.agregar(albumId, urlImagenCabecera);
+            favoritoFirebaseAlbum.agregar(albumId, urlImagenCabecera, nombreCabeceraPistaAlbum);
 
         }
     }

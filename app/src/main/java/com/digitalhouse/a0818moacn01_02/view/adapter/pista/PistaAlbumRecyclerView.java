@@ -95,6 +95,7 @@ public class PistaAlbumRecyclerView extends RecyclerView.Adapter implements  Rec
                 public void onClick(View view) {
                     Track pista = pistas.get(getAdapterPosition());
                     escuchador.favoritoListener(pista, favoritoPista);
+
                 }
             });
 
@@ -103,6 +104,8 @@ public class PistaAlbumRecyclerView extends RecyclerView.Adapter implements  Rec
                 public void onClick(View view) {
                     Track pista = pistas.get(getAdapterPosition());
                     escuchador.compartirListener(pista);
+
+
                 }
             });
 

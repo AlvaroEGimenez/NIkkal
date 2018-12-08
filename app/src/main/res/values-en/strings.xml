@@ -22,7 +22,6 @@
     <string name="tv_almbum_favoritos">My Albums</string>
     <string name="tv_mis_playlist">My Playlist</string>
     <string name="tv_titulo_favoritos">Favorites</string>
-    <string name="tv_escuchadas_recientemente">Recently Played</string>
     <string name="tv_titulo_escuchadas_recientemente">Tittle Recently Played</string>
     <string name="tv_subtitulo_escuchadas_recientemente">Subtittle Recently Played</string>
     <string name="facebook_app_id">207438126849071</string>
@@ -37,5 +36,9 @@
     <string name="debe_crear_lista_rep">Debe crear abrir o crear una lista de reprodución</string>
     <string name="pista_gregada">Pista Agregada</string>
     <string name="busqueda_vacia">With nothing to look for, nothing found :)</string>
+    <string name="compartir_redes_sociales">Share</string>
+    <string name="mensaje_compartir">This song is for you!</string>
+
+    <string name="album_favorito">Album Favorito</string>
 
 </resources>

@@ -22,7 +22,6 @@
     <string name="tv_almbum_favoritos">Mis Álbumes</string>
     <string name="tv_mis_playlist">Mis Listas</string>
     <string name="tv_titulo_favoritos">Favoritos</string>
-    <string name="tv_escuchadas_recientemente">Escuchadas Recientemente</string>
     <string name="tv_titulo_escuchadas_recientemente">Escuchadas Recientemente</string>
     <string name="tv_subtitulo_escuchadas_recientemente">Subtitulo Escuchadas Recientemente</string>
 
@@ -40,5 +39,10 @@
     <string name="debe_crear_lista_rep">Debe crear abrir o crear una lista de reprodución</string>
     <string name="pista_gregada">Pista Agregada</string>
     <string name="busqueda_vacia">Sin nada que buscar, nada encontramos :)</string>
+    <string name="compartir_redes_sociales">Compartir Redes Sociales</string>
+    <string name="mensaje_compartir">Esta canción es para ti!</string>
+
+
+    <string name="album_favorito">Album Favorito</string>
 
 </resources>
