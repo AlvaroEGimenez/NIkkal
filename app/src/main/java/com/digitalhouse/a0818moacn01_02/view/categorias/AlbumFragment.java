@@ -12,9 +12,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.digitalhouse.a0818moacn01_02.R;
@@ -34,7 +37,7 @@ public class AlbumFragment extends Fragment implements AlbumAdapterRecyclerView.
     public static final String KEY_NOMBRE_ARTISTA = "nombreArtista";
     public static final String KEY_ID_ARTISTA = "idArtista";
     public static final String KEY_FAVORITO_ARTISTA = "idFavoritoArtista";
-    private static final String KEY_PISTA_ALBUM = "pistaAlbum";
+
 
     private PistaAlbumFragment pistaAlbumFragment = new PistaAlbumFragment();
     private Integer idArtist;
@@ -129,7 +132,7 @@ public class AlbumFragment extends Fragment implements AlbumAdapterRecyclerView.
         bundle.putString(PistaAlbumFragment.KEY_IMAGEN_CABECERA_ALBUM_PISTA, album.getCoverMedium());
         bundle.putString(PistaAlbumFragment.KEY_NOMBRE_CABECERA_ALBUM_PISTA, album.getTitle());
         bundle.putInt(PistaAlbumFragment.KEY_PISTA_ID_ALBUM_PISTA, album.getId());
-        bundle.putString(PistaAlbumFragment.KEY_CATEGORIA, KEY_PISTA_ALBUM);
+        bundle.putString(PistaAlbumFragment.KEY_CATEGORIA, "pistaAlbum");
 
         pistaAlbumFragment.setArguments(bundle);
         mainActivity.reemplazarFragment(pistaAlbumFragment);
@@ -142,6 +145,7 @@ public class AlbumFragment extends Fragment implements AlbumAdapterRecyclerView.
             @Override
             public void finish(Favorito favorito) {
                 btnFavorito.setImageResource(R.drawable.ic_favorite_black_24dp);
+                favoritoArtista = Boolean.TRUE;
             }
         }, idArtist);
 
@@ -163,9 +167,15 @@ public class AlbumFragment extends Fragment implements AlbumAdapterRecyclerView.
             favoritoArtista = Boolean.FALSE;
             cargarImagen(R.drawable.ic_favorite_no_seleccion);
             favoritoFirebaseArtista.eliminar(idArtist);
+            Animation animation;
+            animation = AnimationUtils.loadAnimation(getContext(),R.anim.blink_limited);
+            btnFavorito.setAnimation(animation);
         } else {
             cargarImagen(R.drawable.ic_favorite_black_24dp);
             favoritoArtista = Boolean.TRUE;
+            Animation animation;
+            animation = AnimationUtils.loadAnimation(getContext(),R.anim.rotate);
+            btnFavorito.setAnimation(animation);
             favoritoFirebaseArtista.agregar(idArtist, urlImagenCabecera, nombreGenero);
 
         }

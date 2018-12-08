@@ -25,7 +25,6 @@
             android:layout_centerVertical="true"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="nombreeeeeeeeeeeeeeeeeeeeeeeeeeeedddeeeeeeeee"
             android:textColor="@color/album_titulo"
             android:textSize="16sp"
             android:layout_toStartOf="@+id/ivMasOpciones"
