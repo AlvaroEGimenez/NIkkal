@@ -19,9 +19,8 @@
         android:id="@+id/relative"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/viewpageSugerencia"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="120dp"
         android:layout_marginStart="0dp"
         android:layout_marginTop="40dp"
         android:orientation="horizontal">
@@ -30,8 +29,9 @@
             android:id="@+id/ivAnteriorReproductor"
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="35dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="17dp"
+            android:layout_marginEnd="34dp"
             android:layout_toStartOf="@+id/ivPausa_Reproductor"
             android:clickable="true"
             android:focusable="true"
@@ -58,7 +58,7 @@
             android:id="@+id/ivProximoReproductor"
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:layout_centerVertical="true"
+            android:layout_alignTop="@+id/ivAnteriorReproductor"
             android:layout_marginStart="35dp"
             android:layout_toEndOf="@+id/ivPausa_Reproductor"
             android:clickable="true"
@@ -66,15 +66,19 @@
             android:foreground="?attr/selectableItemBackground"
             android:src="@drawable/next" />
 
-        <ProgressBar
-            style="@android:style/Widget.Holo.Light.ProgressBar.Horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/ivPausa_Reproductor"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"/>
+
+
     </RelativeLayout>
+
+    <ProgressBar
+        style="@android:style/Widget.Holo.Light.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/relative"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="20dp"
+        android:max="100" />
 
 
 </RelativeLayout>

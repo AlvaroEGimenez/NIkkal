@@ -3,7 +3,6 @@ package com.digitalhouse.a0818moacn01_02.view.categorias;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -39,14 +38,11 @@ import com.digitalhouse.a0818moacn01_02.controller.TracksController;
 import com.digitalhouse.a0818moacn01_02.model.Favorito;
 import com.digitalhouse.a0818moacn01_02.model.Track;
 import com.digitalhouse.a0818moacn01_02.view.MainActivity;
-import com.digitalhouse.a0818moacn01_02.view.ReproductorActivity;
 import com.digitalhouse.a0818moacn01_02.view.adapter.pista.PistaAdapterViewPage;
 import com.digitalhouse.a0818moacn01_02.view.adapter.pista.PistaAlbumRecyclerView;
 import com.digitalhouse.a0818moacn01_02.view.adapter.pista.RecyclerItemTouchHelper;
-import com.google.firebase.auth.FirebaseAuth;
 
 import java.io.IOException;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -60,7 +56,11 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
     public static final String KEY_FAVORITO_ALBUM = "idFavoritoAlbum";
     public static final String KEY_CATEGORIA = "categoria";
 
+    private static final String KEY_SUGERENCIA = "sugerencia";
+    public static final String KEY_MAS_ESCUCHADOS = "mas_escuchados";
+
     private ImageView imgCabeceraAlbumPista;
+    private ImageView imageViewShare;
     private Toolbar toolbaarNombreCabeceraAlbumPista;
     private PistaAlbumRecyclerView pistaAlbumRecyclerView;
     private PistaAdapterViewPage pistaAdapterViewPage;
@@ -113,6 +113,8 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
         btnFavorito = view.findViewById(R.id.btnFavoritoAlbum);
         btnFavorito.setOnClickListener(favoritoAlbumListener);
 
+        imageViewShare = view.findViewById(R.id.share);
+
         Bundle bundle = getArguments();
         urlImagenCabecera = bundle.getString(KEY_IMAGEN_CABECERA_ALBUM_PISTA);
         String nombreCabeceraPistaAlbum = bundle.getString(KEY_NOMBRE_CABECERA_ALBUM_PISTA);
@@ -125,15 +127,57 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
         inisializacionFavoritoALbum(btnFavorito);
         crearAlbumRecyclerView(R.id.rvPistaAlbum);
 
-        if ("sugerencia".equals(categoria)) {
+        assert categoria != null;
+        switch (categoria) {
+            case KEY_SUGERENCIA:
+                cargarPistaSugerencia(albumId);
+                break;
+            case KEY_MAS_ESCUCHADOS:
+                cargarMasEscuchados(albumId);
+                break;
+            case KEY_PISTA_ID_ALBUM_PISTA:
+                cargarPista(albumId);
+                break;
+        }
+
+        /*if ("sugerencia".equals(categoria)) {
             cargarPistaSugerencia(albumId);
         } else if ("pistaAlbum".equals(categoria)) {
             cargarPista(albumId);
-        }
+        }*/
 
         mediaPlayer = parent.getMediaPlayer();
 
+
+        /*imageViewShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DynamicLink dynamicLink = FirebaseDynamicLinks.getInstance().createDynamicLink()
+                        .setLink(Uri.parse("https://www.example.com/"))
+                        .setDomainUriPrefix("https://example.page.link")
+                        // Open links with this app on Android
+                        .setAndroidParameters(new DynamicLink.AndroidParameters.Builder().build())
+                        // Open links with com.example.ios on iOS
+                        .setIosParameters(new DynamicLink.IosParameters.Builder("com.example.ios").build())
+                        .buildDynamicLink();
+
+                Uri dynamicLinkUri = dynamicLink.getUri();
+            }
+        });*/
+
         return view;
+    }
+
+    private void cargarMasEscuchados(Integer albumId) {
+        TracksController tracksController = new TracksController();
+        tracksController.getPistas(new ResultListener<List<Track>>() {
+            @Override
+            public void finish(List<Track> pistas) {
+                setPistas(pistas);
+                cargarFavoritosAdapter(pistas);
+
+            }
+        }, getContext(), albumId);
     }
 
 

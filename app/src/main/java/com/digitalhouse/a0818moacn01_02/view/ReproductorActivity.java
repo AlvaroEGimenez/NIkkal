@@ -1,12 +1,12 @@
 package com.digitalhouse.a0818moacn01_02.view;
 
 import android.content.Intent;
-import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.widget.TextView;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.digitalhouse.a0818moacn01_02.R;
@@ -14,7 +14,6 @@ import com.digitalhouse.a0818moacn01_02.Utils.ReproducirMp3;
 import com.digitalhouse.a0818moacn01_02.model.Track;
 import com.digitalhouse.a0818moacn01_02.view.adapter.SugerenciasViewPager;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +24,7 @@ public class ReproductorActivity extends AppCompatActivity {
 
     List<Track> trackList = new ArrayList<>();
     ViewPager viewPager;
+    Integer posicion;
 
 
     MediaPlayer mediaPlayer = new MediaPlayer();
@@ -39,52 +39,70 @@ public class ReproductorActivity extends AppCompatActivity {
         Bundle bundle = intent.getExtras();
 
 
-        if (bundle != null){
+        if (bundle != null) {
             trackList = (List<Track>) bundle.getSerializable(KEY_OBJETO);
-            Integer posicion = bundle.getInt(KEY_POSICION);
+            posicion = bundle.getInt(KEY_POSICION);
             Integer poscionReproductor = bundle.getInt(KEY_POSICION_REPRODUCTOR);
             viewPager = findViewById(R.id.viewpageSugerencia);
-            SugerenciasViewPager sugerenciasViewPager = new SugerenciasViewPager(getSupportFragmentManager(),trackList);
+            SugerenciasViewPager sugerenciasViewPager = new SugerenciasViewPager(getSupportFragmentManager(), trackList);
             viewPager.setAdapter(sugerenciasViewPager);
             viewPager.setCurrentItem(posicion);
             viewPager.setClipToPadding(false);
-            viewPager.setPadding(130,0,130,0);
+            viewPager.setPadding(130, 0, 130, 0);
             viewPager.setPageMargin(40);
 
 
-        }
-        else {
+        } else {
             Toast.makeText(this, "Sin Datos", Toast.LENGTH_SHORT).show();
         }
 
 
 
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
+        /*ImageView imageViewAnterior = findViewById(R.id.ivAnteriorReproductor);
+        final ImageView imageViewPause = findViewById(R.id.ivPausa_Reproductor);
+        final ImageView imageViewPlay = findViewById(R.id.ivPlayReproductor);
+        ImageView imageViewProximo = findViewById(R.id.ivProximoReproductor);
+
+
+        imageViewPause.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-
-
+            public void onClick(View v) {
+                imageViewPlay.setVisibility(View.VISIBLE);
+                imageViewPause.setVisibility(View.INVISIBLE);
             }
-
-            @Override
-            public void onPageSelected(int position) {
-                Toast.makeText(ReproductorActivity.this, trackList.get(position).getTitle(), Toast.LENGTH_SHORT).show();
-                String url = trackList.get(position).getPreview();
-
-               ReproducirMp3 reproducirMp3 = new ReproducirMp3();
-               reproducirMp3.ReproducirMp3Activity(url,mediaPlayer);
-
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-
-
         });
 
+        imageViewPlay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                imageViewPlay.setVisibility(View.INVISIBLE);
+                imageViewPause.setVisibility(View.VISIBLE);
+
+            }
+        });
+
+
+        imageViewAnterior.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                viewPager.setCurrentItem(posicion -1);
+                Toast.makeText(ReproductorActivity.this, "Anterior", Toast.LENGTH_SHORT).show();
+
+
+            }
+        });
+
+        imageViewProximo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                viewPager.setCurrentItem(posicion +1);
+                Toast.makeText(ReproductorActivity.this, "Proximo", Toast.LENGTH_SHORT).show();
+
+            }
+        });*/
+
     }
+
 
 }

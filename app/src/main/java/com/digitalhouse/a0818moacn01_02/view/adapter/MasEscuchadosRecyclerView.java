@@ -8,21 +8,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.digitalhouse.a0818moacn01_02.R;
 import com.digitalhouse.a0818moacn01_02.model.AlbumDeezer;
 import com.digitalhouse.a0818moacn01_02.model.ArtistDeezer;
+import com.digitalhouse.a0818moacn01_02.model.Track;
 
 import java.util.List;
 
 public class MasEscuchadosRecyclerView extends RecyclerView.Adapter {
 
-    List<AlbumDeezer> artistDeezerList;
-    Context context;
+    private List<AlbumDeezer> artistDeezerList;
+    private Context context;
+    private OnclickMasEscuchados onclickMasEscuchados;
 
-    public MasEscuchadosRecyclerView(List<AlbumDeezer> artistDeezerList) {
+    public MasEscuchadosRecyclerView(List<AlbumDeezer> artistDeezerList, OnclickMasEscuchados onclickMasEscuchados) {
         this.artistDeezerList = artistDeezerList;
+        this.onclickMasEscuchados = onclickMasEscuchados;
     }
 
     @NonNull
@@ -59,11 +63,23 @@ public class MasEscuchadosRecyclerView extends RecyclerView.Adapter {
             super(itemView);
             textViewMasEscuchados = itemView.findViewById(R.id.tituloMasEscuchados);
             imageViewMasEscuchados = itemView.findViewById(R.id.imagenMasEscuchados);
+
+            imageViewMasEscuchados.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onclickMasEscuchados.onClickmasescuchados(artistDeezerList.get(getAdapterPosition()));
+                }
+            });
+
         }
 
         public  void bind(AlbumDeezer albumDeezer){
             textViewMasEscuchados.setText(albumDeezer.getTitle());
             Glide.with(context).load(albumDeezer.getCoverMedium()).into(imageViewMasEscuchados);
         }
+    }
+
+    public interface OnclickMasEscuchados {
+        void onClickmasescuchados(AlbumDeezer albumDeezer);
     }
 }
