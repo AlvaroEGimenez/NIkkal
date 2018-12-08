@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -18,6 +19,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,6 +45,7 @@ import com.digitalhouse.a0818moacn01_02.view.ReproductorActivity;
 import com.digitalhouse.a0818moacn01_02.view.adapter.pista.PistaAdapterViewPage;
 import com.digitalhouse.a0818moacn01_02.view.adapter.pista.PistaAlbumRecyclerView;
 import com.digitalhouse.a0818moacn01_02.view.adapter.pista.RecyclerItemTouchHelper;
+import com.google.android.gms.appinvite.AppInviteInvitation;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.io.IOException;
@@ -223,7 +226,22 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
     @Override
     public void compartirListener(Track pista) {
         Toast.makeText(getContext(), "Compartir pista", Toast.LENGTH_SHORT).show();
+        //Creamos un share de tipo ACTION_SENT
+        Intent share = new Intent(android.content.Intent.ACTION_SEND);
+        //Indicamos que voy a compartir texto
+        share.setType("text/plain");
+        //Le agrego un título
+        share.putExtra(Intent.EXTRA_SUBJECT, R.string.compartir_redes_sociales);
+        //Le agrego el texto a compartir (Puede ser un link tambien)
+        share.putExtra(Intent.EXTRA_TEXT, pista.getLink());
+        //Hacemos un start para que comparta el contenido.
+        startActivity(Intent.createChooser(share,"HOLA"));
+
     }
+
+
+
+
 
     @Override
     public void pistaViewPageListener(Integer posicion, View itemViewSelected) {

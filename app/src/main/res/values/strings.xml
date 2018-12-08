@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name"> </string>
+    <string name="app_name">NIKKAL</string>
     <string name="app_name1">Radio Online</string>
 
     <!-- TODO: Remove or change this placeholder text -->
@@ -39,5 +39,9 @@
     <string name="campo_obligatorio">Complete el campo obligatorio</string>
     <string name="debe_crear_lista_rep">Debe crear abrir o crear una lista de reprodución</string>
     <string name="pista_gregada">Pista Agregada</string>
+    <string name="compartir_redes_sociales">Compartir Redes Sociales</string>
+    <string name="mensaje_compartir">Esta canción es para ti!</string>
+
+
 
 </resources>

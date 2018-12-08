@@ -12,6 +12,7 @@
         android:fitsSystemWindows="true"
         android:background="@drawable/background_bg"
         android:elevation="0dp"
+
         >
 
         <android.support.design.widget.CollapsingToolbarLayout
@@ -23,6 +24,7 @@
             app:expandedTitleMarginEnd="64dp"
             app:expandedTitleMarginStart="10dp"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:title=""
             >
 
 
@@ -163,6 +165,8 @@
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                app:title=""
+
                 />
 
 

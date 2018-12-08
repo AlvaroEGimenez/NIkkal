@@ -16,7 +16,7 @@ import com.digitalhouse.a0818moacn01_02.R;
 import com.digitalhouse.a0818moacn01_02.model.RadioDeezer;
 import com.digitalhouse.a0818moacn01_02.model.Track;
 import com.digitalhouse.a0818moacn01_02.view.MainActivity;
-import com.digitalhouse.a0818moacn01_02.view.categorias.SugerenciasFragment;
+//import com.digitalhouse.a0818moacn01_02.view.categorias.SugerenciasFragment;
 
 
 import java.util.List;

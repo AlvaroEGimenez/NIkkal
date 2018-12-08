@@ -128,6 +128,7 @@ public class FavoritoFragment extends Fragment implements AdaptadorFavoritos.Rad
         Toolbar toolbar = view.findViewById(R.id.toolbarFavoritos);
         //casteado
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        toolbar.setTitle("");
 
         //instancio adaptador
         adaptadorFavoritos = new AdaptadorFavoritos(new ArrayList<RadioDeezer>(), this);
