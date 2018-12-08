@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">NIKKAL</string>
+    <string name="app_name"> </string>
     <string name="app_name1">Radio Online</string>
 
     <!-- TODO: Remove or change this placeholder text -->
@@ -22,7 +22,6 @@
     <string name="tv_almbum_favoritos">Mis Álbumes</string>
     <string name="tv_mis_playlist">Mis Listas</string>
     <string name="tv_titulo_favoritos">Favoritos</string>
-    <string name="tv_escuchadas_recientemente">Escuchadas Recientemente</string>
     <string name="tv_titulo_escuchadas_recientemente">Escuchadas Recientemente</string>
     <string name="tv_subtitulo_escuchadas_recientemente">Subtitulo Escuchadas Recientemente</string>
 
@@ -44,5 +43,6 @@
     <string name="mensaje_compartir">Esta canción es para ti!</string>
 
 
+    <string name="album_favorito">Album Favorito</string>
 
 </resources>

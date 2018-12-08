@@ -84,6 +84,7 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
     private FloatingActionButton btnFavorito;
     private FavoritoFirebase favoritoFirebasePista;
     private FavoritoFirebase favoritoFirebaseAlbum;
+    private String nombreCabeceraPistaAlbum;
 
     public PistaAlbumFragment() {
     }
@@ -121,7 +122,7 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
 
         Bundle bundle = getArguments();
         urlImagenCabecera = bundle.getString(KEY_IMAGEN_CABECERA_ALBUM_PISTA);
-        String nombreCabeceraPistaAlbum = bundle.getString(KEY_NOMBRE_CABECERA_ALBUM_PISTA);
+        nombreCabeceraPistaAlbum = bundle.getString(KEY_NOMBRE_CABECERA_ALBUM_PISTA);
         albumId = bundle.getInt(KEY_PISTA_ID_ALBUM_PISTA);
         favoritoAlbum = bundle.getBoolean(KEY_FAVORITO_ALBUM);
         String categoria = bundle.getString(KEY_CATEGORIA);
@@ -246,7 +247,7 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
     private void setFavoritoPista(Track pista, ImageView favoritoPista) {
         if (!pista.getFavorito()) {
             pista.setFavorito(true);
-            favoritoFirebasePista.agregar(pista.getId(), urlImagenCabecera);
+            favoritoFirebasePista.agregar(pista.getId(), urlImagenCabecera, nombreCabeceraPistaAlbum);
             cargarImagen(favoritoPista, R.drawable.ic_favorite_seleccionado);
         } else {
             pista.setFavorito(false);
@@ -502,7 +503,7 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
         } else {
             cargarImagen(R.drawable.ic_favorite_black_24dp);
             favoritoAlbum = Boolean.TRUE;
-            favoritoFirebaseAlbum.agregar(albumId, urlImagenCabecera);
+            favoritoFirebaseAlbum.agregar(albumId, urlImagenCabecera, nombreCabeceraPistaAlbum);
 
         }
     }

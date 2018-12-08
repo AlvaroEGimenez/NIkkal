@@ -32,19 +32,6 @@
         android:paddingTop="6dp"
         android:paddingBottom="6dp"/>
 
-        <TextView
-            android:id="@+id/tvSubTituloEscuchadoRecientemente"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:text="@string/tv_subtitulo_escuchadas_recientemente"
-            android:layout_alignBottom="@id/ivEscuchadoRecientemente"
-            android:layout_toRightOf="@id/ivEscuchadoRecientemente"
-            android:textSize="15sp"
-            android:textColor="@color/album_titulo"
-            android:paddingTop="6dp"
-            android:paddingBottom="6dp"/>
-
-
     </RelativeLayout>
 
 
