@@ -47,6 +47,7 @@ public class AlbumFragment extends Fragment implements AlbumAdapterRecyclerView.
     private FloatingActionButton btnFavorito;
     private FavoritoFirebase favoritoFirebaseArtista;
     private String urlImagenCabecera;
+    private String nombreGenero;
 
     public AlbumFragment() {
     }
@@ -74,7 +75,7 @@ public class AlbumFragment extends Fragment implements AlbumAdapterRecyclerView.
 
         Bundle bundle = getArguments();
         urlImagenCabecera = bundle.getString(KEY_IMAGEN_ARTISTA);
-        String nombreGenero = bundle.getString(KEY_NOMBRE_ARTISTA);
+        nombreGenero = bundle.getString(KEY_NOMBRE_ARTISTA);
         idArtist = bundle.getInt(KEY_ID_ARTISTA);
 
         favoritoArtista = bundle.getBoolean(KEY_FAVORITO_ARTISTA);
@@ -135,12 +136,11 @@ public class AlbumFragment extends Fragment implements AlbumAdapterRecyclerView.
     }
 
 
-
     private void inisializacionFavoritoArtista(final FloatingActionButton btnFavorito) {
         favoritoFirebaseArtista.getFavoritoPorId(new ResultListener<Favorito>() {
             @Override
             public void finish(Favorito favorito) {
-                btnFavorito.setImageResource(R.drawable.ic_favorite_black_24dp );
+                btnFavorito.setImageResource(R.drawable.ic_favorite_black_24dp);
             }
         }, idArtist);
 
@@ -149,7 +149,7 @@ public class AlbumFragment extends Fragment implements AlbumAdapterRecyclerView.
     View.OnClickListener favoritoListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            if (parent.estaLogeado(getContext())){
+            if (parent.estaLogeado(getContext())) {
                 setFavoritoPista();
             }
 
@@ -165,7 +165,7 @@ public class AlbumFragment extends Fragment implements AlbumAdapterRecyclerView.
         } else {
             cargarImagen(R.drawable.ic_favorite_black_24dp);
             favoritoArtista = Boolean.TRUE;
-            favoritoFirebaseArtista.agregar(idArtist, urlImagenCabecera);
+            favoritoFirebaseArtista.agregar(idArtist, urlImagenCabecera, nombreGenero);
 
         }
     }

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -9,11 +8,9 @@
         android:id="@+id/appBarFavoritos"
         android:layout_width="match_parent"
         android:layout_height="250dp"
-        android:fitsSystemWindows="true"
         android:background="@drawable/background_bg"
         android:elevation="0dp"
-
-        >
+        android:fitsSystemWindows="true">
 
         <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/collapsingFavoritos"
@@ -23,140 +20,129 @@
             app:contentScrim="@color/album_background"
             app:expandedTitleMarginEnd="64dp"
             app:expandedTitleMarginStart="10dp"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            app:title=""
-            >
-
-
-
-        <RelativeLayout
-
-            android:id="@+id/rlayoutFavoritosContainer"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="16dp"
-            android:gravity="center_vertical"
-            >
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <RelativeLayout
-                android:id="@+id/celdaAlbumFavorito"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:clickable="true"
-                android:focusable="true">
+
+                android:id="@+id/rlayoutFavoritosContainer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="16dp"
+                android:gravity="center_vertical">
+
+                <RelativeLayout
+                    android:id="@+id/celdaAlbumFavorito"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:focusable="true">
 
 
                     <ImageView
                         android:id="@+id/ivIconoAlbumFavorito"
-                        android:src="@drawable/ic_album_24dp"
                         android:layout_width="35dp"
                         android:layout_height="35dp"
                         android:layout_margin="4dp"
-                        />
+                        android:src="@drawable/ic_album_24dp" />
+
                     <TextView
                         android:id="@+id/tvIconoAlbumFavorito"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/tv_almbum_favoritos"
                         android:layout_toEndOf="@id/ivIconoAlbumFavorito"
-                        android:textSize="18sp"
-                        android:textColor="@color/album_titulo"
                         android:paddingTop="10dp"
-                        android:paddingBottom="10dp"/>
+                        android:paddingBottom="10dp"
+                        android:text="@string/tv_almbum_favoritos"
+                        android:textColor="@color/album_titulo"
+                        android:textSize="18sp" />
 
-            </RelativeLayout>
+                </RelativeLayout>
 
-            <RelativeLayout
-                android:id="@+id/celdaPsitaFavorito"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/celdaAlbumFavorito"
-                android:clickable="true"
-                android:focusable="true">
+                <RelativeLayout
+                    android:id="@+id/celdaPsitaFavorito"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/celdaAlbumFavorito"
+                    android:clickable="true"
+                    android:focusable="true">
 
 
-            <ImageView
+                    <ImageView
                         android:id="@+id/ivIconoPitstaFavorita"
-                        android:src="@drawable/ic_pista"
                         android:layout_width="35dp"
                         android:layout_height="35dp"
                         android:layout_margin="4dp"
-                        />
+                        android:src="@drawable/ic_pista" />
+
                     <TextView
                         android:id="@+id/tvIconoPistaFavorita"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/tv_canciones_favoritas"
                         android:layout_toEndOf="@id/ivIconoPitstaFavorita"
-                        android:textSize="18sp"
-                        android:textColor="@color/album_titulo"
                         android:paddingTop="10dp"
-                        android:paddingBottom="10dp"/>
+                        android:paddingBottom="10dp"
+                        android:text="@string/tv_canciones_favoritas"
+                        android:textColor="@color/album_titulo"
+                        android:textSize="18sp" />
 
-            </RelativeLayout>
+                </RelativeLayout>
 
-            <RelativeLayout
-                android:id="@+id/celdaArtista"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/celdaPsitaFavorito"
-                android:clickable="true"
-                android:focusable="true">
+                <RelativeLayout
+                    android:id="@+id/celdaArtista"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/celdaPsitaFavorito"
+                    android:clickable="true"
+                    android:focusable="true">
 
                     <ImageView
                         android:id="@+id/ivIconoArtistaFavorito"
-                        android:src="@drawable/ic_artista"
                         android:layout_width="35dp"
                         android:layout_height="35dp"
                         android:layout_margin="4dp"
-                        />
+                        android:src="@drawable/ic_artista" />
+
                     <TextView
                         android:id="@+id/tvIconoArtistaFavorito"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/tv_artistas_favoritos"
                         android:layout_toEndOf="@id/ivIconoArtistaFavorito"
-                        android:textSize="18sp"
-                        android:textColor="@color/album_titulo"
                         android:paddingTop="10dp"
-                        android:paddingBottom="10dp"/>
-            </RelativeLayout>
+                        android:paddingBottom="10dp"
+                        android:text="@string/tv_artistas_favoritos"
+                        android:textColor="@color/album_titulo"
+                        android:textSize="18sp" />
+                </RelativeLayout>
 
-            <RelativeLayout
-                android:id="@+id/celdaListaDeReproduccion"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/celdaArtista"
-                android:clickable="true"
-                android:focusable="true">
+                <RelativeLayout
+                    android:id="@+id/celdaListaDeReproduccion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/celdaArtista"
+                    android:clickable="true"
+                    android:focusable="true">
 
-            <ImageView
+                    <ImageView
                         android:id="@+id/ivIconoListaDeReproduccion"
-                        android:src="@drawable/ic_listas_de_reproduccion"
                         android:layout_width="35dp"
                         android:layout_height="35dp"
                         android:layout_margin="4dp"
-                        />
+                        android:src="@drawable/ic_listas_de_reproduccion" />
+
                     <TextView
                         android:id="@+id/tvIconoListaDeReproduccion"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/tv_mis_playlist"
                         android:layout_toEndOf="@id/ivIconoListaDeReproduccion"
-                        android:textSize="18sp"
-                        android:textColor="@color/album_titulo"
                         android:paddingTop="10dp"
-                        android:paddingBottom="10dp"/>
+                        android:paddingBottom="10dp"
+                        android:text="@string/tv_mis_playlist"
+                        android:textColor="@color/album_titulo"
+                        android:textSize="18sp" />
+
+                </RelativeLayout>
 
             </RelativeLayout>
-
-
-
-
-
-
-        </RelativeLayout>
-
 
 
             <android.support.v7.widget.Toolbar
@@ -164,12 +150,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-                app:title=""
-
-                />
-
-
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
 
         </android.support.design.widget.CollapsingToolbarLayout>
@@ -181,27 +162,27 @@
         android:id="@+id/escuchadasRecientemente"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        >
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <TextView
-            android:id="@+id/tvEscuchadasRecientemente"
+            android:id="@+id/tvTiuloSeleccionFavorito"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
 
-            android:text="@string/tv_escuchadas_recientemente"
-            android:textColor="@color/colorAccent"
-            android:textSize="20sp"
             android:layout_margin="12dp"
             android:gravity="center_horizontal"
+            android:text="Selección"
+            android:textColor="@color/colorAccent"
+            android:textSize="20sp"
 
 
             />
+
         <android.support.v7.widget.RecyclerView
-            android:layout_below="@id/tvEscuchadasRecientemente"
             android:id="@+id/recyclerFavoritos"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_below="@id/tvTiuloSeleccionFavorito"
 
 
             >

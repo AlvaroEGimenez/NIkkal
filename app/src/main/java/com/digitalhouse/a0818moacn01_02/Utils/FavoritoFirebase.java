@@ -30,10 +30,10 @@ public class FavoritoFirebase {
         this.tipo = tipo;
     }
 
-    public void agregar(Integer id, String urlImagen) {
+    public void agregar(Integer id, String urlImagen, String titulo) {
         if (currentUser != null) {
             DatabaseReference uid = mReference.child(currentUser.getUid()).child(PATH_LIST_FAVORITO).child(tipo).push();
-            Favorito favorito = new Favorito(id, uid.getKey(), urlImagen);
+            Favorito favorito = new Favorito(id, uid.getKey(), urlImagen, titulo);
             uid.setValue(favorito,
                     FirebaseAuth.getInstance()
                             .getCurrentUser()

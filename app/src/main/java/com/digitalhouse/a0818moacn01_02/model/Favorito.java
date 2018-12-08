@@ -5,13 +5,16 @@ public class Favorito {
     private Integer id;
     private String uid;
     private String urlImagen;
+    private String titulo;
 
-    public  Favorito(){}
+    public Favorito() {
+    }
 
-    public Favorito(Integer id, String uid, String urlImagen) {
+    public Favorito(Integer id, String uid, String urlImagen, String titulo) {
         this.id = id;
         this.uid = uid;
         this.urlImagen = urlImagen;
+        this.titulo = titulo;
     }
 
     public Integer getId() {
@@ -36,5 +39,13 @@ public class Favorito {
 
     public void setUrlImagen(String urlImagen) {
         this.urlImagen = urlImagen;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
     }
 }
