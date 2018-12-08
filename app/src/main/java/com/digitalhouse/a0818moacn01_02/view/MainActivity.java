@@ -3,6 +3,7 @@ package com.digitalhouse.a0818moacn01_02.view;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -100,7 +101,7 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         Util.printHash(this);
 
@@ -149,7 +150,6 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
 
         listaReproduccion = new ListaReproduccionFirebase();
         crearListaReproduccionRecyclerView();
-        //  cargarListaReproduccion();
     }
 
     @Override

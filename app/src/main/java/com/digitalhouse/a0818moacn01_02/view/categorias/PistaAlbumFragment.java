@@ -43,6 +43,7 @@ import com.digitalhouse.a0818moacn01_02.view.ReproductorActivity;
 import com.digitalhouse.a0818moacn01_02.view.adapter.pista.PistaAdapterViewPage;
 import com.digitalhouse.a0818moacn01_02.view.adapter.pista.PistaAlbumRecyclerView;
 import com.digitalhouse.a0818moacn01_02.view.adapter.pista.RecyclerItemTouchHelper;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -369,6 +370,10 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
         Track pista = pistas.get(position);
         pista.setImagenAlbum(urlImagenCabecera);
 
+        if (!parent.estaLogeado(getContext())) {
+            return;
+        }
+
         if (ItemTouchHelper.LEFT == direction) {
             Toast.makeText(getContext(), getResources().getString(R.string.pista_gregada), Toast.LENGTH_SHORT).show();
             parent.agregarPistaReproducción(pistas.get(position));
@@ -475,7 +480,7 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
     }
 
 
-    private void setPistas(List<Track> pistas){
+    private void setPistas(List<Track> pistas) {
         this.pistas = pistas;
         pistaAlbumRecyclerView.setPistas(pistas);
     }
