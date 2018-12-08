@@ -50,12 +50,13 @@
 
     </LinearLayout>
 
+
     <RelativeLayout
         android:id="@+id/relativeLayoutBusqueda"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/lineallayoutBusqueda"
-        android:visibility="invisible">
+        android:visibility="visible">
 
 
         <android.support.v7.widget.RecyclerView
@@ -83,7 +84,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/textviewTracks"
-            android:layout_margin="10dp" />
+            android:layout_margin="10dp"
+            tools:listitem="@layout/modelo_busqueda"/>
 
 
     </RelativeLayout>
