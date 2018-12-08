@@ -19,6 +19,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.digitalhouse.a0818moacn01_02.R;
+import com.digitalhouse.a0818moacn01_02.Utils.ReproducirMp3;
+import com.digitalhouse.a0818moacn01_02.model.Radio;
 import com.digitalhouse.a0818moacn01_02.view.MainActivity;
 
 import java.io.IOException;
@@ -29,7 +31,7 @@ import java.util.ArrayList;
  */
 public class RadioFragment extends Fragment implements AdaptadorRadio.RadioInterface {
 
-    private AdaptadorRadio adaptadorRadio;
+    ReproducirMp3 reproducirMp3 = new ReproducirMp3();
     private MediaPlayer mediaPlayer;
     private TextView textViewNombrePista;
     private Animation animationBlink;
@@ -38,6 +40,8 @@ public class RadioFragment extends Fragment implements AdaptadorRadio.RadioInter
     private ProgressBar progressBar;
     private ImageView imageViewPlay;
     private ImageView imageViewPause;
+
+
 
     public RadioFragment() {
         // Required empty public constructor
@@ -95,120 +99,35 @@ public class RadioFragment extends Fragment implements AdaptadorRadio.RadioInter
         RecyclerView recyclerView = view.findViewById(R.id.recyclerRadio);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-        adaptadorRadio = new AdaptadorRadio(radios, this);
+        AdaptadorRadio adaptadorRadio = new AdaptadorRadio(radios, this);
         recyclerView.setAdapter(adaptadorRadio);
 
         MainActivity parent = (MainActivity)getActivity();
 
         mediaPlayer = parent.getMediaPlayer();
 
-        textViewNombrePista = getActivity().findViewById(R.id.tvNombreReproductor);
-        textViewNombrePista.setTextColor(Color.parseColor("#FD9701"));
-        textViewNombrePista.setSelected(true);
-
-
-        animationBlink = AnimationUtils.loadAnimation(getContext(), R.anim.blink);
-        animationNone = AnimationUtils.loadAnimation(getContext(), R.anim.none);
-
-        linearLayout = getActivity().findViewById(R.id.layoutPlayer);
 
 
 
-        imageViewPlay = getActivity().findViewById(R.id.btnRepoductorPlay);
-        imageViewPause = getActivity().findViewById(R.id.btnReproductorPause);
+
+
+
 
 
         return view;
+
     }
 
     @Override
     public void OnRadioClick(Radio radio) {
 
-        progressBar = new ProgressBar(getContext());
-        progressBar = getActivity().findViewById(R.id.progressBarRadio);
-        linearLayout.setVisibility(View.VISIBLE);
-        textViewNombrePista.setText("Cargando...");
-        textViewNombrePista.setAnimation(animationBlink);
-        progressBar.setVisibility(View.VISIBLE);
         String url = radio.getUrl();
-        reproducirMp3(url, mediaPlayer, radio);
+        reproducirMp3.reproducirRadio(url,mediaPlayer,radio,getActivity());
 
     }
 
 
-    private void reproducirMp3(final String url, final MediaPlayer mediaPlayer, final Radio radio) {
 
-        mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-
-        try {
-            if (!mediaPlayer.isPlaying()) {
-
-                mediaPlayer.setDataSource(url);
-                mediaPlayer.prepare();
-                textViewNombrePista.setAnimation(animationNone);
-                progressBar.setVisibility(View.INVISIBLE);
-                mediaPlayer.start();
-                textViewNombrePista.setText(radio.getNombre() + " - " + radio.getSintonia());
-                imageViewPause.setVisibility(View.VISIBLE);
-
-            } else {
-                mediaPlayer.stop();
-                mediaPlayer.reset();
-                mediaPlayer.setDataSource(url);
-                mediaPlayer.prepare();
-                mediaPlayer.start();
-            }
-
-            imageViewPause.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mediaPlayer.pause();
-                    imageViewPlay.setVisibility(View.VISIBLE);
-                    imageViewPause.setVisibility(View.INVISIBLE);
-                    progressBar.setVisibility(View.INVISIBLE);
-                    textViewNombrePista.setAnimation(animationNone);
-                    textViewNombrePista.setText("Pausa");
-                }
-            });
-
-
-            imageViewPlay.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    if (mediaPlayer != null && !mediaPlayer.isPlaying()) {
-                        mediaPlayer.start();
-                        imageViewPause.setVisibility(View.VISIBLE);
-                        imageViewPlay.setVisibility(View.INVISIBLE);
-                        textViewNombrePista.setText(radio.getNombre() + " - " + radio.getSintonia());
-                    }
-                }
-            });
-
-
-        } catch (
-                IOException e)
-
-        {
-
-            e.printStackTrace();
-        } catch (
-                IllegalArgumentException e)
-
-        {
-            e.printStackTrace();
-        } catch (
-                SecurityException e)
-
-        {
-            e.printStackTrace();
-        } catch (
-                IllegalStateException e)
-
-        {
-            e.printStackTrace();
-        }
-    }
 
 }
 
