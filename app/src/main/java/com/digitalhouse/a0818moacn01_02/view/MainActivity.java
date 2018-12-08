@@ -97,6 +97,7 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
     private TextView tvHeaderNombreListaReproduccion;
     private  DrawerLayout drawerLayout;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -111,6 +112,10 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
         imageViewPlay = findViewById(R.id.btnRepoductorPlay);
         imageViewPause = findViewById(R.id.btnReproductorPause);
         linearLayoutReproductor = findViewById(R.id.layoutPlayer);
+
+
+
+
 
         reemplazarFragment(categoriaFragment);
 
@@ -158,7 +163,6 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
         getMenuInflater().inflate(R.menu.menu_favoritos, menu);
         return true;
     }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

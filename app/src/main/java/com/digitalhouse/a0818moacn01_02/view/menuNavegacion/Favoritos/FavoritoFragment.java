@@ -7,10 +7,14 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
@@ -21,6 +25,7 @@ import com.digitalhouse.a0818moacn01_02.Utils.ResultListener;
 import com.digitalhouse.a0818moacn01_02.controller.RadioController;
 import com.digitalhouse.a0818moacn01_02.model.RadioDeezer;
 import com.digitalhouse.a0818moacn01_02.view.MainActivity;
+import com.digitalhouse.a0818moacn01_02.view.categorias.AlbumFragment;
 import com.digitalhouse.a0818moacn01_02.view.categorias.PistaAlbumFragment;
 
 import java.util.ArrayList;
@@ -47,6 +52,8 @@ public class FavoritoFragment extends Fragment implements AdaptadorFavoritos.Rad
     /*private InterfaceNotificadorArtistFavoritos notificadorArtistFavoritos;
     private InterfaceNotificadorCancionesFavoritos notificadorCancionesFavoritos;
     private InterfaceNotificadorListaFavoritos notificadorListaFavoritos;*/
+
+
 
 
     public FavoritoFragment() {
@@ -130,6 +137,8 @@ public class FavoritoFragment extends Fragment implements AdaptadorFavoritos.Rad
 
         //DATOS instanciamos un controller
         RadioController radioController = new RadioController();
+
+
 
 
         radioController.getRadios(new ResultListener<List<RadioDeezer>>() {
