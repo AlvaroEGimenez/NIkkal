@@ -272,7 +272,7 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
 
     @Override
     public void compartirListener(Track pista) {
-        Toast.makeText(getContext(), "Compartir pista", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getContext(), "Compartir pista", Toast.LENGTH_SHORT).show();
         //Creamos un share de tipo ACTION_SENT
         Intent share = new Intent(android.content.Intent.ACTION_SEND);
         //Indicamos que voy a compartir texto
@@ -282,7 +282,7 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
         //Le agrego el texto a compartir (Puede ser un link tambien)
         share.putExtra(Intent.EXTRA_TEXT, pista.getLink());
         //Hacemos un start para que comparta el contenido.
-        startActivity(Intent.createChooser(share,"HOLA"));
+        startActivity(Intent.createChooser(share,"Compartido desde Nikkal app"));
 
     }
 
