@@ -15,7 +15,6 @@
         android:src="@drawable/apu"
         />
 
-
     <TextView
         android:id="@+id/nombreArtistaCardView"
         android:layout_width="match_parent"

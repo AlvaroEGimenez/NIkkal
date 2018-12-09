@@ -5,13 +5,17 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.digitalhouse.a0818moacn01_02.R;
 import com.digitalhouse.a0818moacn01_02.model.ListaReproduccion;
 import com.digitalhouse.a0818moacn01_02.model.Track;
 import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Favoritos.OnMoveAndSwipedListenerFavorito;
+import com.github.abdularis.civ.CircleImageView;
 
+import java.net.Inet4Address;
 import java.util.List;
 
 public class ListaReproduccionAdapter extends RecyclerView.Adapter implements OnMoveAndSwipedListenerFavorito {
@@ -54,11 +58,12 @@ public class ListaReproduccionAdapter extends RecyclerView.Adapter implements On
 
     public class ListaReproduccionViewHolder extends RecyclerView.ViewHolder {
         private TextView nombreListaReproduccion;
+        private ImageView imgAlbumListaReproduccionFavorito;
 
         public ListaReproduccionViewHolder(@NonNull final View itemView) {
             super(itemView);
-
             nombreListaReproduccion = itemView.findViewById(R.id.nombreListaReproduccion);
+            imgAlbumListaReproduccionFavorito = itemView.findViewById(R.id.imgAlbumListaReproduccionFavorito);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -71,7 +76,22 @@ public class ListaReproduccionAdapter extends RecyclerView.Adapter implements On
 
         public void cargar(ListaReproduccion listaReproduccion) {
             nombreListaReproduccion.setText(listaReproduccion.getNombre());
+            Integer posicionRandom = getPosicionRandom(listaReproduccion.getPistas().size());
+
+            Track pista = listaReproduccion.getPistas().get(posicionRandom);
+            if (pista.getAlbum() != null && pista.getAlbum().getCoverMedium() != null) {
+                Glide.with(itemView.getContext()).load(pista.getAlbum().getCoverMedium()).into(imgAlbumListaReproduccionFavorito);
+            }else if(pista.getArtist() != null && pista.getArtist().getPictureMedium() != null){
+                Glide.with(itemView.getContext()).load(pista.getArtist().getPictureMedium()).into(imgAlbumListaReproduccionFavorito);
+            }else {
+                Glide.with(itemView.getContext()).load(pista.getImagenAlbum()).into(imgAlbumListaReproduccionFavorito);
+            }
         }
+    }
+
+
+    private Integer getPosicionRandom(Integer cantidad){
+        return  (int) (Math.random() * cantidad);
     }
 
     public void setListaReproduccionList(List<ListaReproduccion> listaReproduccionList) {

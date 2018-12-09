@@ -92,11 +92,9 @@ public class PistaListaReproduccionAdapter extends RecyclerView.Adapter implemen
                     escuchador.pistaListaReproduccionAdapterInterface(getAdapterPosition());
                 }
             });
-
         }
 
         public void cargar(Track pista) {
-
             tvNombreAlbumTemaPista.setText(pista.getTitle());
             tvNombreArtistaTemaPista.setText(pista.getArtist() != null ? pista.getArtist().getName() : "");
             if (pista.getAlbum() != null && pista.getAlbum().getCoverMedium() != null) {
@@ -106,10 +104,8 @@ public class PistaListaReproduccionAdapter extends RecyclerView.Adapter implemen
             }else {
                 Glide.with(itemView.getContext()).load(pista.getImagenAlbum()).into(imgAlbum);
             }
-
         }
     }
-
 
     public void setPistas(List<Track> pistas) {
         this.pistas = pistas;
