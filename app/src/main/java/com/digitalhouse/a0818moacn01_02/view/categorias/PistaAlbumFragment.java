@@ -247,7 +247,7 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
     private void setFavoritoPista(Track pista, ImageView favoritoPista) {
         if (!pista.getFavorito()) {
             pista.setFavorito(true);
-            favoritoFirebasePista.agregar(pista.getId(), urlImagenCabecera, nombreCabeceraPistaAlbum);
+            favoritoFirebasePista.agregar(pista.getId(), urlImagenCabecera, pista.getTitle());
             cargarImagen(favoritoPista, R.drawable.ic_favorite_seleccionado);
         } else {
             pista.setFavorito(false);

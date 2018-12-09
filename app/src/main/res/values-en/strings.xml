@@ -40,5 +40,9 @@
     <string name="mensaje_compartir">This song is for you!</string>
 
     <string name="album_favorito">Album Favorito</string>
+    <string name="album_Artista">Artista Album</string>
+    <string name="pistas">Pistas</string>
+    <string name="mensajeLoginFavorito">Acce,so Restringido, Necesitas acceder a través de facebock para poder visualizarlo</string>
+    <string name="bienvenido" />
 
 </resources>

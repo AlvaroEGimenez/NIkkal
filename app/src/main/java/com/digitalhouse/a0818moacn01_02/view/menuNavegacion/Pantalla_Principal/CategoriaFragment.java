@@ -247,7 +247,7 @@ MasEscuchadosRecyclerView.OnclickMasEscuchados{
         bundle.putInt(GeneroFragment.KEY_ID_GENERO, genre.getId());
 
         generoFragment.setArguments(bundle);
-        parent.reemplazarFragment(generoFragment);
+        parent.reemplazarFragment(generoFragment, R.id.genero_fragment);
 
         if (intent != null)
             startActivity(intent);
@@ -301,7 +301,7 @@ MasEscuchadosRecyclerView.OnclickMasEscuchados{
         bundle.putString(PistaAlbumFragment.KEY_CATEGORIA, "sugerencia");
 
         pistaAlbumFragment.setArguments(bundle);
-        parent.reemplazarFragment(pistaAlbumFragment);
+        parent.reemplazarFragment(pistaAlbumFragment, R.id.genero_fragment);
     }
 
     @Override
@@ -319,6 +319,6 @@ MasEscuchadosRecyclerView.OnclickMasEscuchados{
         bundle.putString(PistaAlbumFragment.KEY_CATEGORIA, "mas_escuchados");
         pistaAlbumFragment.setArguments(bundle);
 
-        parent.reemplazarFragment(pistaAlbumFragment);
+        parent.reemplazarFragment(pistaAlbumFragment, R.id.genero_fragment);
     }
 }

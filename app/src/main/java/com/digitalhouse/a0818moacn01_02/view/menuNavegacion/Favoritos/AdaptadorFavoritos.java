@@ -12,15 +12,12 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.digitalhouse.a0818moacn01_02.R;
 import com.digitalhouse.a0818moacn01_02.model.Favorito;
-import com.digitalhouse.a0818moacn01_02.model.RadioDeezer;
-import com.digitalhouse.a0818moacn01_02.model.Track;
-import com.digitalhouse.a0818moacn01_02.view.MainActivity;
 //import com.digitalhouse.a0818moacn01_02.view.categorias.SugerenciasFragment;
 
 
 import java.util.List;
 
-public class AdaptadorFavoritos extends RecyclerView.Adapter {
+public class AdaptadorFavoritos extends RecyclerView.Adapter implements OnMoveAndSwipedListenerFavorito {
     //atributos. no tomamos como Atributo una lista de favoritos ya que aún no manejamos base de datos donde almacenar el favorito del usuario
     private List<Favorito> favoritoList;
     private FavoritosAdapterInterface escuchador; //para pasar datos al fragment
@@ -35,10 +32,6 @@ public class AdaptadorFavoritos extends RecyclerView.Adapter {
     public void setFavorito(List<Favorito> favoritoList) {
         this.favoritoList = favoritoList;
         notifyDataSetChanged();
-    }
-
-    public void setEscuchador(FavoritosAdapterInterface escuchador) {
-        this.escuchador = escuchador;
     }
 
     @NonNull
@@ -59,12 +52,6 @@ public class AdaptadorFavoritos extends RecyclerView.Adapter {
         AdaptadorFavoritos.ViewHolderRadioFavorito viewHolderArtistaFavorito = (AdaptadorFavoritos.ViewHolderRadioFavorito) viewHolder;
         viewHolderArtistaFavorito.cargarTrackFavoritos(favorito);
 
-    }
-
-    @Override
-    public int getItemCount() {
-        //cantidad de elementos
-        return favoritoList.size();
     }
 
 
@@ -101,6 +88,23 @@ public class AdaptadorFavoritos extends RecyclerView.Adapter {
     public interface
     FavoritosAdapterInterface {
         void onClickFavorito(Favorito favorito);
+        void onItemDismiss(int position);
+    }
+
+    @Override
+    public int getItemCount() {
+        //cantidad de elementos
+        return favoritoList.size();
+    }
+
+    @Override
+    public boolean onItemMove(int fromPosition, int toPosition) {
+        return false;
+    }
+
+    @Override
+    public void onItemDismiss(int position) {
+        escuchador.onItemDismiss(position);
     }
 
 }

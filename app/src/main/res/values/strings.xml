@@ -31,7 +31,7 @@
 
     <string name="si">Sí</string>
     <string name="no">No</string>
-    <string name="cabeceraLogin">Necesitas logearte para poder acceder a mas funcionalidades</string>
+    <string name="cabeceraLogin">Necesitas logearte para poder acceder a más funcionalidades</string>
     <string name="hint_nombre_lista_reproduccion">Nombre Lista de Reproducción</string>
     <string name="btn_aceptar">Aceptar</string>
     <string name="btn_cancelar">Cancelar</string>
@@ -43,6 +43,11 @@
     <string name="mensaje_compartir">Esta canción es para ti!</string>
 
 
-    <string name="album_favorito">Album Favorito</string>
+    <string name="album_favorito">Mis Albunes</string>
+    <string name="album_Artista">Artista Album</string>
+    <string name="artistas">Mis Artistas</string>
+    <string name="pistas">Mis Canciones</string>
+    <string name="mensajeLoginFavorito">Acceso Restringido, Necesitas acceder a través de facebook para poder visualizarlo</string>
+    <string name="bienvenido">Bienvenido</string>
 
 </resources>

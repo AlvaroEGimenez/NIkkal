@@ -86,20 +86,20 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
     private Integer posicionActualLista;
     private Menu menuFavoritos;
     private ImageView menuHeaderListaReprod;
-    private FirebaseAuth mAuth;
     private MisAlbumsFragment misAlbumsFragment = new MisAlbumsFragment();
     private MisArtistasFragment misArtistasFragment = new MisArtistasFragment();
     private MisCancionesFragment misCancionesFragment = new MisCancionesFragment();
     private MisListasFragment misListasFragment = new MisListasFragment();
     private TextView tvHeaderNombreListaReproduccion;
     private DrawerLayout drawerLayout;
-
+    private Boolean reemplazarFragment = Boolean.TRUE;
+    private PopupMenu popup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         Util.printHash(this);
 
@@ -110,11 +110,7 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
         imageViewPause = findViewById(R.id.btnReproductorPause);
         linearLayoutReproductor = findViewById(R.id.layoutPlayer);
 
-
-
-
-
-        reemplazarFragment(categoriaFragment);
+        reemplazarFragment(categoriaFragment, R.id.albumFragment);
 
         mediaPlayer = new MediaPlayer();
         navigationView = findViewById(R.id.navigationMainActivity);
@@ -130,20 +126,24 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
         bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
+                if (!reemplazarFragment) {
+                    reemplazarFragment = Boolean.TRUE;
+                    return true;
+                }
                 switch (item.getItemId()) {
                     case R.id.albumFragment:
-                        reemplazarFragment(categoriaFragment);
+                        reemplazarFragment(categoriaFragment, R.id.albumFragment);
+
                         return true;
                     case R.id.buscarFragment:
-                        reemplazarFragment(buscarFragment);
+                        reemplazarFragment(buscarFragment, R.id.buscarFragment);
                         return true;
 
                     case R.id.favoritoFragment:
-                        reemplazarFragment(favoritoFragment);
+                        reemplazarFragment(favoritoFragment, R.id.favoritoFragment);
                         return true;
                     case R.id.radioFragment:
-                        reemplazarFragment(radioFragment);
+                        reemplazarFragment(radioFragment, R.id.radioFragment);
                         return true;
                 }
                 return false;
@@ -163,43 +163,15 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int res_id = item.getItemId();
-        if (res_id == R.id.itemAlbumFavorito) {
-            Toast.makeText(this, "Album favorito", Toast.LENGTH_SHORT).show();
-            reemplazarFragment(misAlbumsFragment);
-        }
-        if (res_id == R.id.itemArtistaFavorito) {
-            Toast.makeText(this, "Artista Favorito", Toast.LENGTH_SHORT).show();
-            reemplazarFragment(misArtistasFragment);
-        }
-        if (res_id == R.id.itemCancionFavorita) {
-            Toast.makeText(this, "Cancion Favorita", Toast.LENGTH_SHORT).show();
-            reemplazarFragment(misCancionesFragment);
-        }
-        if (res_id == R.id.itemListasFavoritas) {
-            Toast.makeText(this, "Lista Favorita", Toast.LENGTH_SHORT).show();
-            reemplazarFragment(misListasFragment);
-        }
-
-
-        return true;
+        return false;
     }
 
 
-    public void reemplazarFragment(Fragment fragment) {
+    public void reemplazarFragment(Fragment fragment, Integer idFragemnte) {
         FragmentManager fragmentManager = getSupportFragmentManager();
-        Fragment fragmentAnt = fragmentManager.findFragmentById(R.id.container);
-        if (!fragment.isRemoving()) {
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.container, fragment);
-            fragmentTransaction.addToBackStack(null).commit();
-        } else {
-            fragmentManager.beginTransaction().remove(fragment).commit();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.container, fragment);
-            fragmentTransaction.addToBackStack(null).commit();
-        }
-
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.container, fragment);
+        fragmentTransaction.addToBackStack(idFragemnte.toString()).commit();
     }
 
     @Override
@@ -348,9 +320,6 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
         return menuFavoritos;
     }
 
-    public void setMenuFavoritos(Menu menuFavoritos) {
-        this.menuFavoritos = menuFavoritos;
-    }
 
     public void cargarImagenHeaderNavigationView() {
         ImageView ivUSuario = headerView.findViewById(R.id.usuarioListaReproducion);
@@ -474,10 +443,20 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
     View.OnClickListener menuHeaderListaReprodListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            PopupMenu popup = new PopupMenu(getApplicationContext(), v);
+            popup = new PopupMenu(getApplicationContext(), v);
             MenuInflater inflater = popup.getMenuInflater();
             inflater.inflate(R.menu.menu_header_lista_reprod, popup.getMenu());
             popup.setOnMenuItemClickListener(new MenuItemSeleccionClickListener());
+            FirebaseAuth mAuth = FirebaseAuth.getInstance();
+            if (mAuth.getCurrentUser() == null) {
+                popup.getMenu().findItem(R.id.cerrarSesion).setEnabled(false);
+                popup.getMenu().findItem(R.id.abrirListaReprod).setEnabled(false);
+            } else {
+                popup.getMenu().findItem(R.id.cerrarSesion).setVisible(true);
+                popup.getMenu().findItem(R.id.abrirListaReprod).setEnabled(true);
+            }
+
+
             popup.show();
         }
     };
@@ -512,6 +491,44 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
     private void abrirListaReproduccion() {
         bottomNavigation.setSelectedItemId(R.id.favoritoFragment);
         drawerLayout.closeDrawers();
-        reemplazarFragment(new MisListasFragment());
+        reemplazarFragment(new MisListasFragment(), R.id.favorito_fragemnt);
     }
+
+    private String getCurrentFragment() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        if (fragmentManager.getBackStackEntryCount() == 0) {
+            finish();
+            return "-1";
+        }
+        String fragmentTag = fragmentManager.getBackStackEntryAt(fragmentManager.getBackStackEntryCount() - 1).getName();
+        return fragmentTag;
+    }
+
+    //2131230753
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        String fragmentBeforeBackPress = getCurrentFragment();
+        int idFragemnt = Integer.parseInt(fragmentBeforeBackPress);
+
+        switch (idFragemnt) {
+            case R.id.pista_fragment:
+                reemplazarFragment = Boolean.FALSE;
+                bottomNavigation.setSelectedItemId(R.id.albumFragment);
+                break;
+            case R.id.genero_fragment:
+                reemplazarFragment = Boolean.FALSE;
+                bottomNavigation.setSelectedItemId(R.id.albumFragment);
+                break;
+            case R.id.favorito_fragemnt:
+                reemplazarFragment = Boolean.FALSE;
+                bottomNavigation.setSelectedItemId(R.id.favoritoFragment);
+                break;
+
+            default:
+                bottomNavigation.setSelectedItemId(idFragemnt);
+        }
+
+    }
+
 }

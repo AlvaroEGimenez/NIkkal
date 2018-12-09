@@ -128,7 +128,7 @@ public class GeneroFragment extends Fragment implements ArtistaAdapterRecyclerVi
         bundle.putBoolean(AlbumFragment.KEY_FAVORITO_ARTISTA, artista.getFavorito());
 
         albumFragment.setArguments(bundle);
-        mainActivity.reemplazarFragment(albumFragment);
+        mainActivity.reemplazarFragment(albumFragment, R.id.genero_fragment);
     }
 
 }

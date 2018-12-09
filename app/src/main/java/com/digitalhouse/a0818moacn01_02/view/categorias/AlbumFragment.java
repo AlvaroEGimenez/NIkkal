@@ -135,7 +135,7 @@ public class AlbumFragment extends Fragment implements AlbumAdapterRecyclerView.
         bundle.putString(PistaAlbumFragment.KEY_CATEGORIA, "pistaAlbum");
 
         pistaAlbumFragment.setArguments(bundle);
-        mainActivity.reemplazarFragment(pistaAlbumFragment);
+        mainActivity.reemplazarFragment(pistaAlbumFragment, R.id.genero_fragment);
     }
 
 

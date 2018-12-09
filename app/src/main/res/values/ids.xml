@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="genero_fragment" type="id" />
+    <item name="pista_fragment" type="id" />
+    <item name="favorito_fragemnt" type="id" />
+</resources>
