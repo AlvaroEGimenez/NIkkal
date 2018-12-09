@@ -49,5 +49,6 @@
     <string name="pistas">Mis Canciones</string>
     <string name="mensajeLoginFavorito">Acceso Restringido, Necesitas acceder a través de facebook para poder visualizarlo</string>
     <string name="bienvenido">Bienvenido</string>
+    <string name="elemento_eliminado">Se ha removido de Favoritos</string>
 
 </resources>

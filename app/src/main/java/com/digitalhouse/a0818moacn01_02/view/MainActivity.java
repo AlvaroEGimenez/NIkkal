@@ -46,9 +46,6 @@ import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Buscar.AdapatadorBus
 import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Buscar.BuscarFragment;
 import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Configuracion.ConfiguracionFragment;
 import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Favoritos.FavoritoFragment;
-import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Favoritos.MisAlbumsFragment;
-import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Favoritos.MisArtistasFragment;
-import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Favoritos.MisCancionesFragment;
 import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Favoritos.MisListasFragment;
 import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Pantalla_Principal.CategoriaFragment;
 import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Radio_Online.RadioFragment;
@@ -86,10 +83,6 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
     private Integer posicionActualLista;
     private Menu menuFavoritos;
     private ImageView menuHeaderListaReprod;
-    private MisAlbumsFragment misAlbumsFragment = new MisAlbumsFragment();
-    private MisArtistasFragment misArtistasFragment = new MisArtistasFragment();
-    private MisCancionesFragment misCancionesFragment = new MisCancionesFragment();
-    private MisListasFragment misListasFragment = new MisListasFragment();
     private TextView tvHeaderNombreListaReproduccion;
     private DrawerLayout drawerLayout;
     private Boolean reemplazarFragment = Boolean.TRUE;
@@ -119,7 +112,7 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
         menuHeaderListaReprod = headerView.findViewById(R.id.menuHeaderListaReprod);
         menuHeaderListaReprod.setOnClickListener(menuHeaderListaReprodListener);
         btnListaReproduccion = findViewById(R.id.btnListaReproduccion);
-        btnListaReproduccion.setOnClickListener(listaReproducction);
+        btnListaReproduccion.setOnClickListener(listaReproducctionListener);
         drawerLayout = findViewById(R.id.drawerMainActivity);
         cargarImagenHeaderNavigationView();
 
@@ -166,7 +159,6 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
         return false;
     }
 
-
     public void reemplazarFragment(Fragment fragment, Integer idFragemnte) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -186,7 +178,6 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
     public void reproducirMp3(final String url, final MediaPlayer mediaPlayer) {
 
         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-
 
         try {
             if (!mediaPlayer.isPlaying()) {
@@ -373,10 +364,6 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
         return bottomNavigation;
     }
 
-    public List<Track> getPistasListaReproduccion() {
-        return listaReproduccion.getPistas();
-    }
-
     public Boolean nuevaListaReproduccion(String nombre) {
         // todo guardar lista anterior
         listaReproduccion.getPistas().clear();
@@ -393,7 +380,7 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
         return pistaAlbumRecyclerView;
     }
 
-    View.OnClickListener listaReproducction = new View.OnClickListener() {
+    View.OnClickListener listaReproducctionListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             posicionActualLista = 0;
@@ -416,9 +403,11 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
 
     @Override
     public void pistaListaReproduccionAdapterInterface(Integer posicion) {
-        mediaPlayer.reset();
-        Track pista = listaReproduccion.getPistas().get(posicion);
-        busquedaClick(pista, posicion);
+        if (listaReproduccion != null && !listaReproduccion.getPistas().isEmpty()) {
+            mediaPlayer.reset();
+            Track pista = listaReproduccion.getPistas().get(posicion);
+            busquedaClick(pista, posicion);
+        }
     }
 
     @Override
@@ -479,7 +468,6 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
             }
             return false;
         }
-
     }
 
     private void cerrarSesion() {
@@ -504,7 +492,6 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
         return fragmentTag;
     }
 
-    //2131230753
     @Override
     public void onBackPressed() {
         super.onBackPressed();

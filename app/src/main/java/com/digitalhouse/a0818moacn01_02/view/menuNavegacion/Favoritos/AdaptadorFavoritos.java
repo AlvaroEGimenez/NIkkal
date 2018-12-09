@@ -68,7 +68,7 @@ public class AdaptadorFavoritos extends RecyclerView.Adapter implements OnMoveAn
             imageViewHolderFavoritos = itemView.findViewById(R.id.ivEscuchadoRecientemente);
 
             //CLICK
-            itemView.setOnClickListener(new View.OnClickListener() {
+            imageViewHolderFavoritos.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Favorito favorito = favoritoList.get(getAdapterPosition());

@@ -62,7 +62,6 @@ public class AlbumAdapterRecyclerView extends RecyclerView.Adapter {
 
             imagenAlbumCardView = itemView.findViewById(R.id.imagenAlbum);
             tituloCardView = itemView.findViewById(R.id.tituloAlbum);
-            cantidadTracks = itemView.findViewById(R.id.cantidadTracks);
 
             imagenAlbumCardView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -75,7 +74,6 @@ public class AlbumAdapterRecyclerView extends RecyclerView.Adapter {
 
         public void cargar(AlbumDeezer album) {
             tituloCardView.setText(album.getTitle());
-            cantidadTracks.setText(String.valueOf(album.getRating()));
             cargarImagen(imagenAlbumCardView, album.getCoverMedium());
         }
     }

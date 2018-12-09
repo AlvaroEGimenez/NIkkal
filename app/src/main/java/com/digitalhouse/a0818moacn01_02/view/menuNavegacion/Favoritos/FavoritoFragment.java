@@ -15,8 +15,12 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.digitalhouse.a0818moacn01_02.R;
 import com.digitalhouse.a0818moacn01_02.Utils.FavoritoFirebase;
@@ -43,6 +47,9 @@ public class FavoritoFragment extends Fragment implements AdaptadorFavoritos.Fav
     private String tituloPista;
     private List<Favorito> favoritoList;
     private FavoritoFirebase favoritoFirebase;
+    private ProgressBar pbFavorito;
+    private RelativeLayout escuchadasRecientemente;
+    private  RecyclerView recyclerView;
 
     public FavoritoFragment() {
     }
@@ -54,6 +61,8 @@ public class FavoritoFragment extends Fragment implements AdaptadorFavoritos.Fav
         final View view = inflater.inflate(R.layout.fragment_favorito, container, false);
         parent = (MainActivity) getActivity();
         tvTiuloSeleccionFavorito = view.findViewById(R.id.tvTiuloSeleccionFavorito);
+        pbFavorito = view.findViewById(R.id.pbFavorito);
+        escuchadasRecientemente = view.findViewById(R.id.escuchadasRecientemente);
 
         RelativeLayout celdaAlbumFavorito = view.findViewById(R.id.celdaAlbumFavorito);
         RelativeLayout celdaCancionFavorita = view.findViewById(R.id.celdaPsitaFavorito);
@@ -70,7 +79,6 @@ public class FavoritoFragment extends Fragment implements AdaptadorFavoritos.Fav
             celdaAlbumFavorito.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //parent.reemplazarFragment(new MisAlbumsFragment());
                     clickAlbum();
                 }
             });
@@ -78,8 +86,6 @@ public class FavoritoFragment extends Fragment implements AdaptadorFavoritos.Fav
             celdaArtistaFavorito.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //    parent.reemplazarFragment(new MisArtistasFragment());
-                    //notificadorAlbumFavoritos.notificar(new MisArtistasFragment());
                     clickArtista();
                 }
             });
@@ -87,8 +93,6 @@ public class FavoritoFragment extends Fragment implements AdaptadorFavoritos.Fav
             celdaCancionFavorita.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //         parent.reemplazarFragment(new MisCancionesFragment());
-                    //notificadorAlbumFavoritos.notificar(new MisCancionesFragment());
                     clickPista();
                 }
             });
@@ -97,7 +101,6 @@ public class FavoritoFragment extends Fragment implements AdaptadorFavoritos.Fav
                 @Override
                 public void onClick(View v) {
                     clickListaReproduccion();
-                    //notificadorAlbumFavoritos.notificar(new MisListasFragment());
                 }
             });
 
@@ -124,18 +127,26 @@ public class FavoritoFragment extends Fragment implements AdaptadorFavoritos.Fav
     }
 
     private void clickPista() {
+        visibilidadRecyclerVew();
         tvTiuloSeleccionFavorito.setText(tituloPista);
         setDatosFirebase(FavoritoFirebase.KEY_TIPO_PISTA);
     }
 
     private void clickArtista() {
+        visibilidadRecyclerVew();
         tvTiuloSeleccionFavorito.setText(tituloArtista);
         setDatosFirebase(FavoritoFirebase.KEY_TIPO_ARTISTA);
     }
 
     private void clickAlbum() {
+        visibilidadRecyclerVew();
         tvTiuloSeleccionFavorito.setText(tituloAlbum);
         setDatosFirebase(FavoritoFirebase.KEY_TIPO_ALBUM);
+    }
+
+    private void visibilidadRecyclerVew(){
+        pbFavorito.setVisibility(View.VISIBLE);
+        escuchadasRecientemente.setVisibility(View.GONE);
     }
 
     private void cargarRecyclerView(View view) {
@@ -143,13 +154,13 @@ public class FavoritoFragment extends Fragment implements AdaptadorFavoritos.Fav
         adaptadorFavoritos = new AdaptadorFavoritos(new ArrayList<Favorito>(), this);
 
         // buscamos la View
-        RecyclerView recyclerView = view.findViewById(R.id.recyclerFavoritos);
+         recyclerView = view.findViewById(R.id.recyclerFavoritos);
 
         //DATOS instanciamos un controller
         RadioController radioController = new RadioController();
 
         //performance
-        recyclerView.setHasFixedSize(true);
+    //    recyclerView.setHasFixedSize(true);
 
         //layout manager
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this.getContext(), 2);
@@ -161,6 +172,10 @@ public class FavoritoFragment extends Fragment implements AdaptadorFavoritos.Fav
         mItemTouchHelper.attachToRecyclerView(recyclerView);
         recyclerView.setAdapter(adaptadorFavoritos);
 
+        int resId = R.anim.grid_layout_animation_from_bottom;
+        LayoutAnimationController animation = AnimationUtils.loadLayoutAnimation(getContext(), resId);
+        recyclerView.setLayoutAnimation(animation);
+
         recyclerView.setAdapter(adaptadorFavoritos);
     }
 
@@ -171,9 +186,19 @@ public class FavoritoFragment extends Fragment implements AdaptadorFavoritos.Fav
             public void finish(List<Favorito> resultado) {
                 favoritoList = resultado;
                 adaptadorFavoritos.setFavorito(resultado);
+                setAnimacion();
+                pbFavorito.setVisibility(View.GONE);
+                escuchadasRecientemente.setVisibility(View.VISIBLE);
             }
         });
 
+    }
+
+
+    private void setAnimacion(){
+        int resId = R.anim.grid_layout_animation_from_bottom;
+        LayoutAnimationController animation = AnimationUtils.loadLayoutAnimation(getContext(), resId);
+        recyclerView.setLayoutAnimation(animation);
     }
 
     @Override
@@ -193,6 +218,8 @@ public class FavoritoFragment extends Fragment implements AdaptadorFavoritos.Fav
         favoritoFirebase.eliminar(favorito.getId());
         favoritoList.remove(favorito);
         adaptadorFavoritos.notifyDataSetChanged();
+        String msj = getResources().getString(R.string.elemento_eliminado);
+        Toast.makeText(parent, favorito.getTitulo() + ": " + msj, Toast.LENGTH_SHORT).show();
     }
 
     private void irAlbums(Favorito favorito) {

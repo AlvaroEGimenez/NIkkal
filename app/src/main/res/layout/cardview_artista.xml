@@ -24,13 +24,5 @@
         android:gravity="center"
         android:theme="@style/nombreAlbum" />
 
-    <TextView
-        android:id="@+id/fanArtista"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="1210 Seguidores"
-        android:theme="@style/fanYduracionAlbum" />
-
 </LinearLayout>
 

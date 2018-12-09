@@ -44,5 +44,6 @@
     <string name="pistas">Pistas</string>
     <string name="mensajeLoginFavorito">Acce,so Restringido, Necesitas acceder a través de facebock para poder visualizarlo</string>
     <string name="bienvenido" />
+    <string name="elemento_eliminado">Se ha removido de Favoritos</string>
 
 </resources>

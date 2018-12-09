@@ -55,7 +55,6 @@ public class FavoritoFirebase {
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
-                        System.out.println("ssd");
                     }
                 });
             }

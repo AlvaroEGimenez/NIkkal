@@ -9,10 +9,12 @@ import android.widget.TextView;
 
 import com.digitalhouse.a0818moacn01_02.R;
 import com.digitalhouse.a0818moacn01_02.model.ListaReproduccion;
+import com.digitalhouse.a0818moacn01_02.model.Track;
+import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Favoritos.OnMoveAndSwipedListenerFavorito;
 
 import java.util.List;
 
-public class ListaReproduccionAdapter extends RecyclerView.Adapter {
+public class ListaReproduccionAdapter extends RecyclerView.Adapter implements OnMoveAndSwipedListenerFavorito {
 
     private List<ListaReproduccion> listaReproduccionList;
     private Integer resources;
@@ -46,6 +48,8 @@ public class ListaReproduccionAdapter extends RecyclerView.Adapter {
 
     public interface ListaReproduccionAdapterInterface {
         void seleccionLista(ListaReproduccion listaReproduccion);
+
+        void onItemDismiss(int position);
     }
 
     public class ListaReproduccionViewHolder extends RecyclerView.ViewHolder {
@@ -74,4 +78,22 @@ public class ListaReproduccionAdapter extends RecyclerView.Adapter {
         this.listaReproduccionList = listaReproduccionList;
         notifyDataSetChanged();
     }
+
+    public ListaReproduccion eliminarPista(Integer posicion) {
+        ListaReproduccion listaReproduccion = listaReproduccionList.get(posicion);
+        listaReproduccionList.remove(listaReproduccion);
+        notifyDataSetChanged();
+        return listaReproduccion;
+    }
+
+    @Override
+    public boolean onItemMove(int fromPosition, int toPosition) {
+        return false;
+    }
+
+    @Override
+    public void onItemDismiss(int position) {
+        escuchador.onItemDismiss(position);
+    }
+
 }

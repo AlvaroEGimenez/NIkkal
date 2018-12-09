@@ -21,17 +21,9 @@ public class ListaReproduccionFirebase {
     private FirebaseUser currentUser;
     private ListaReproduccion listaReproduccion;
 
-    public ListaReproduccionFirebase(String nombre) {
-        mReference = FirebaseDatabase.getInstance().getReference();
-        currentUser = FirebaseAuth.getInstance()
-                .getCurrentUser();
-        listaReproduccion = new ListaReproduccion(nombre);
-    }
-
     public ListaReproduccionFirebase() {
         mReference = FirebaseDatabase.getInstance().getReference();
-        currentUser = FirebaseAuth.getInstance()
-                .getCurrentUser();
+        currentUser = FirebaseAuth.getInstance().getCurrentUser();
         listaReproduccion = new ListaReproduccion();
     }
 
@@ -50,19 +42,6 @@ public class ListaReproduccionFirebase {
 
     }
 
-    public void eliminarPista(Track pista) {
-        mReference.child(currentUser.getUid()).child(PATH_LIST_REPRODUCCION).child(listaReproduccion.getNombre()).child(pista.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                dataSnapshot.getRef().removeValue();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
 
     public void getLista(final ResultListener<List<Track>> resultListener) {
         if (currentUser == null) {
@@ -92,7 +71,6 @@ public class ListaReproduccionFirebase {
             return;
         }
         final List<ListaReproduccion> listaReproduccionList = new ArrayList<>();
-        final List<String> nombreLista = new ArrayList<>();
         mReference.child(currentUser.getUid()).child(PATH_LIST_REPRODUCCION).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -112,6 +90,7 @@ public class ListaReproduccionFirebase {
                             listaReproduccion.setPistas(pistaList);
                             listaReproduccionList.add(listaReproduccion);
                             resultListener.finish(listaReproduccionList);
+                            mReference.child(currentUser.getUid()).child(PATH_LIST_REPRODUCCION).child(key).removeEventListener(this);
                         }
 
                         @Override
@@ -119,10 +98,42 @@ public class ListaReproduccionFirebase {
                         }
                     });
                 }
+
+                mReference.child(currentUser.getUid()).child(PATH_LIST_REPRODUCCION).removeEventListener(this);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+    }
+
+
+    public void eliminarPista(Track pista) {
+        mReference.child(currentUser.getUid()).child(PATH_LIST_REPRODUCCION).child(listaReproduccion.getNombre()).child(pista.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                dataSnapshot.getRef().removeValue();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+
+    public void eliminarLista(String listaReproduccionNombre) {
+        mReference.child(currentUser.getUid()).child(PATH_LIST_REPRODUCCION).child(listaReproduccionNombre).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                dataSnapshot.getRef().removeValue();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
             }
         });
     }

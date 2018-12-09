@@ -3,8 +3,6 @@ package com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Favoritos;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 
-import com.digitalhouse.a0818moacn01_02.view.adapter.listaReproduccion.OnMoveAndSwipedListener;
-
 public class FavoritoItemTouchHelperCallback extends ItemTouchHelper.Callback {
 
     private OnMoveAndSwipedListenerFavorito moveAndSwipedListener;
