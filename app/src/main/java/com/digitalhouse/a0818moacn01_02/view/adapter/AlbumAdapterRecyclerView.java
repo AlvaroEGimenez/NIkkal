@@ -21,7 +21,6 @@ public class AlbumAdapterRecyclerView extends RecyclerView.Adapter {
     private Activity activity;
     private AlbumAdapterInterface escuchador;
 
-
     public AlbumAdapterRecyclerView(List<AlbumDeezer> albunes, int resources, Activity activity, AlbumAdapterInterface escuchador) {
         this.albunDeezer = albunes;
         this.resources = resources;
@@ -55,7 +54,6 @@ public class AlbumAdapterRecyclerView extends RecyclerView.Adapter {
     public class AlbumViewHolder extends RecyclerView.ViewHolder {
         private ImageView imagenAlbumCardView;
         private TextView tituloCardView;
-        private TextView cantidadTracks;
 
         public AlbumViewHolder(@NonNull final View itemView) {
             super(itemView);

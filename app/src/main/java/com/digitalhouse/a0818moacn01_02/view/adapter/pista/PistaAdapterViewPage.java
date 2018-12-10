@@ -41,7 +41,6 @@ public class PistaAdapterViewPage extends PagerAdapter {
         return view == (View) o;
     }
 
-
     @Override
     public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
         container.removeView((View) object);
@@ -111,7 +110,6 @@ public class PistaAdapterViewPage extends PagerAdapter {
 
         return view;
     }
-
 
     public interface PistaViewPageInterface {
         void pistaAnterior(Integer position);

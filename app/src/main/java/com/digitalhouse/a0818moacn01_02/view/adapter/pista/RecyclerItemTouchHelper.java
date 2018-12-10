@@ -6,8 +6,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 
-import com.digitalhouse.a0818moacn01_02.view.adapter.pista.PistaAlbumRecyclerView;
-
 
 public class RecyclerItemTouchHelper extends ItemTouchHelper.SimpleCallback {
 
@@ -66,8 +64,6 @@ public class RecyclerItemTouchHelper extends ItemTouchHelper.SimpleCallback {
     public int convertToAbsoluteDirection(int flags, int layoutDirection) {
         return super.convertToAbsoluteDirection(flags, layoutDirection);
     }
-
-
 
     public interface RecyclerItemTouchHelperListener {
         boolean onItemMove(int fromPosition, int toPosition);

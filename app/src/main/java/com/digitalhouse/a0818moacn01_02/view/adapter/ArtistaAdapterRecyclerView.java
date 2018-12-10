@@ -29,7 +29,6 @@ public class ArtistaAdapterRecyclerView  extends RecyclerView.Adapter {
         this.escuchador = escuchador;
     }
 
-
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int posicion) {

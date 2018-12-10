@@ -1,39 +1,23 @@
 package com.digitalhouse.a0818moacn01_02.view;
 
 
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.RequestBuilder;
-import com.bumptech.glide.request.target.ViewTarget;
 import com.deezer.sdk.network.connect.DeezerConnect;
-import com.deezer.sdk.network.request.event.DeezerError;
-import com.deezer.sdk.player.Player;
-import com.deezer.sdk.player.TrackPlayer;
-import com.deezer.sdk.player.event.PlayerState;
-import com.deezer.sdk.player.exception.TooManyPlayersExceptions;
-import com.deezer.sdk.player.networkcheck.WifiAndMobileNetworkStateChecker;
 import com.digitalhouse.a0818moacn01_02.R;
 import com.digitalhouse.a0818moacn01_02.Utils.MediaPlayerNikkal;
 import com.digitalhouse.a0818moacn01_02.Utils.ReproducirMp3;
 import com.digitalhouse.a0818moacn01_02.model.Track;
-import com.jgabrielfreitas.core.BlurImageView;
 
 /**
  * A simple {@link Fragment} subclass.

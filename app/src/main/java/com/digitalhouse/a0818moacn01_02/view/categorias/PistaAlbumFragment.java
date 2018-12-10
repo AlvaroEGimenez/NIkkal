@@ -96,7 +96,6 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
         favoritoFirebasePista = new FavoritoFirebase(FavoritoFirebase.KEY_TIPO_PISTA);
         favoritoFirebaseAlbum = new FavoritoFirebase(FavoritoFirebase.KEY_TIPO_ALBUM);
 
-
         favoritoFirebasePista.getLista(new ResultListener<List<Favorito>>() {
             @Override
             public void finish(List<Favorito> Resultado) {

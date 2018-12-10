@@ -16,7 +16,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -59,7 +58,6 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements
         PistaListaReproduccionAdapter.PistaListaReproduccionAdapterInterface {
 
-
     private CategoriaFragment categoriaFragment = new CategoriaFragment();
     private BuscarFragment buscarFragment = new BuscarFragment();
     private FavoritoFragment favoritoFragment = new FavoritoFragment();
@@ -94,7 +92,6 @@ public class MainActivity extends AppCompatActivity implements
         Util.printHash(this);
 
         bottomNavigation = findViewById(R.id.navigationView);
-        ActionBar actionBar = getSupportActionBar();
         textViewNombrePista = findViewById(R.id.tvNombreReproductor);
         imageViewPlay = findViewById(R.id.btnRepoductorPlay);
         imageViewPause = findViewById(R.id.btnReproductorPause);
@@ -185,8 +182,7 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     public Boolean estaLogeado(final Context context) {
-        FirebaseUser currentUser = FirebaseAuth.getInstance()
-                .getCurrentUser();
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
         if (currentUser == null) {
             alertDialogInicionSesion(context);
@@ -229,7 +225,6 @@ public class MainActivity extends AppCompatActivity implements
         return menuFavoritos;
     }
 
-
     public void cargarImagenHeaderNavigationView() {
         ImageView ivUSuario = headerView.findViewById(R.id.usuarioListaReproducion);
 
@@ -242,7 +237,6 @@ public class MainActivity extends AppCompatActivity implements
         }
 
     }
-
 
     private void cargarListaReproduccion() {
         listaReproduccion.getLista(new ResultListener<List<Track>>() {
@@ -308,7 +302,6 @@ public class MainActivity extends AppCompatActivity implements
             mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                 @Override
                 public void onCompletion(MediaPlayer mp) {
-
                     if (posicionActualLista < listaReproduccion.getPistas().size()) {
                         pistaListaReproduccionAdapterInterface(posicionActualLista++);
                     } else {
@@ -356,7 +349,6 @@ public class MainActivity extends AppCompatActivity implements
                 popup.getMenu().findItem(R.id.cerrarSesion).setVisible(true);
                 popup.getMenu().findItem(R.id.abrirListaReprod).setEnabled(true);
             }
-
 
             popup.show();
         }
