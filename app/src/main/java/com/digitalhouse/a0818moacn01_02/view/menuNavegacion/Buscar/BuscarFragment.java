@@ -164,33 +164,17 @@ public class BuscarFragment extends Fragment implements AdapatadorBusqueda.Busqu
     public void busquedaClick(Track track, final Integer posicion) {
         LinearLayout linearLayout = getActivity().findViewById(R.id.layoutPlayer);
         TextView textViewNombrePista = getActivity().findViewById(R.id.tvNombreReproductor);
-        ImageView imageViewExpandir = getActivity().findViewById(R.id.btnActivityReproductor);
 
 
         linearLayout.setVisibility(View.VISIBLE);
         String url = track.getPreview();
+        MainActivity parent = (MainActivity) getActivity();
 
-        ReproducirMp3 reproducirMp3 = new ReproducirMp3();
-        reproducirMp3.reproducirMp3(url, mediaPlayer, getActivity());
+        ReproducirMp3 reproducirMp3 = parent.getReproducirMp3();
+        reproducirMp3.getMediaPlayer().stop();
+        reproducirMp3.reproducirMp3(trackListSeach, posicion, (MainActivity)getActivity());
 
-        textViewNombrePista.setText(track.getTitle() + " - " + track.getArtist().getName());
         textViewNombrePista.setSelected(true);
-
-        imageViewExpandir.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), ReproductorActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putInt(ReproductorActivity.KEY_POSICION, posicion);
-                bundle.putSerializable(ReproductorActivity.KEY_OBJETO, (Serializable) trackListSeach);
-                intent.putExtras(bundle);
-                startActivity(intent);
-
-
-            }
-        });
-
-
     }
 
 

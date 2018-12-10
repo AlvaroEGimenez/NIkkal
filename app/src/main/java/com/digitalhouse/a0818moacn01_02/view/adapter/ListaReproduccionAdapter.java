@@ -79,8 +79,8 @@ public class ListaReproduccionAdapter extends RecyclerView.Adapter implements On
             Integer posicionRandom = getPosicionRandom(listaReproduccion.getPistas().size());
 
             Track pista = listaReproduccion.getPistas().get(posicionRandom);
-            if (pista.getAlbum() != null && pista.getAlbum().getCoverMedium() != null) {
-                Glide.with(itemView.getContext()).load(pista.getAlbum().getCoverMedium()).into(imgAlbumListaReproduccionFavorito);
+            if (pista.getAlbum() != null && pista.getAlbum().getCover() != null) {
+                Glide.with(itemView.getContext()).load(pista.getAlbum().getCover()).into(imgAlbumListaReproduccionFavorito);
             }else if(pista.getArtist() != null && pista.getArtist().getPictureMedium() != null){
                 Glide.with(itemView.getContext()).load(pista.getArtist().getPictureMedium()).into(imgAlbumListaReproduccionFavorito);
             }else {

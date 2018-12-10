@@ -97,8 +97,8 @@ public class PistaListaReproduccionAdapter extends RecyclerView.Adapter implemen
         public void cargar(Track pista) {
             tvNombreAlbumTemaPista.setText(pista.getTitle());
             tvNombreArtistaTemaPista.setText(pista.getArtist() != null ? pista.getArtist().getName() : "");
-            if (pista.getAlbum() != null && pista.getAlbum().getCoverMedium() != null) {
-                Glide.with(itemView.getContext()).load(pista.getAlbum().getCoverMedium()).into(imgAlbum);
+            if (pista.getAlbum() != null && pista.getAlbum().getCover() != null) {
+                Glide.with(itemView.getContext()).load(pista.getAlbum().getCover()).into(imgAlbum);
             }else if(pista.getArtist() != null && pista.getArtist().getPictureMedium() != null){
                 Glide.with(itemView.getContext()).load(pista.getArtist().getPictureMedium()).into(imgAlbum);
             }else {

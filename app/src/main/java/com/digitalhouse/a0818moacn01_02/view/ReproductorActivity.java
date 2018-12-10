@@ -3,6 +3,7 @@ package com.digitalhouse.a0818moacn01_02.view;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.digitalhouse.a0818moacn01_02.R;
+import com.digitalhouse.a0818moacn01_02.Utils.MediaPlayerNikkal;
 import com.digitalhouse.a0818moacn01_02.Utils.ReproducirMp3;
 import com.digitalhouse.a0818moacn01_02.model.Track;
 import com.digitalhouse.a0818moacn01_02.view.adapter.SugerenciasViewPager;
@@ -25,15 +27,13 @@ public class ReproductorActivity extends AppCompatActivity {
     List<Track> trackList = new ArrayList<>();
     ViewPager viewPager;
     Integer posicion;
-
-
-    MediaPlayer mediaPlayer = new MediaPlayer();
+    private MediaPlayer mediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reproductor);
-
+        mediaPlayer = MediaPlayerNikkal.getInstance().getMediaPlayer();
 
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
@@ -56,10 +56,7 @@ public class ReproductorActivity extends AppCompatActivity {
             Toast.makeText(this, "Sin Datos", Toast.LENGTH_SHORT).show();
         }
 
-
-
-
-        /*ImageView imageViewAnterior = findViewById(R.id.ivAnteriorReproductor);
+        ImageView imageViewAnterior = findViewById(R.id.ivAnteriorReproductor);
         final ImageView imageViewPause = findViewById(R.id.ivPausa_Reproductor);
         final ImageView imageViewPlay = findViewById(R.id.ivPlayReproductor);
         ImageView imageViewProximo = findViewById(R.id.ivProximoReproductor);
@@ -100,7 +97,7 @@ public class ReproductorActivity extends AppCompatActivity {
                 Toast.makeText(ReproductorActivity.this, "Proximo", Toast.LENGTH_SHORT).show();
 
             }
-        });*/
+        });
 
     }
 

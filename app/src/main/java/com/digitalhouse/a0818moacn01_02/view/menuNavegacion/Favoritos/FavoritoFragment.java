@@ -24,10 +24,12 @@ import android.widget.Toast;
 
 import com.digitalhouse.a0818moacn01_02.R;
 import com.digitalhouse.a0818moacn01_02.Utils.FavoritoFirebase;
+import com.digitalhouse.a0818moacn01_02.Utils.MediaPlayerNikkal;
 import com.digitalhouse.a0818moacn01_02.Utils.ResultListener;
 import com.digitalhouse.a0818moacn01_02.controller.RadioController;
 import com.digitalhouse.a0818moacn01_02.controller.TracksController;
 import com.digitalhouse.a0818moacn01_02.model.Favorito;
+import com.digitalhouse.a0818moacn01_02.model.Pista;
 import com.digitalhouse.a0818moacn01_02.model.Track;
 import com.digitalhouse.a0818moacn01_02.view.MainActivity;
 import com.digitalhouse.a0818moacn01_02.view.categorias.AlbumFragment;
@@ -254,7 +256,9 @@ public class FavoritoFragment extends Fragment implements AdaptadorFavoritos.Fav
                 TextView textViewNombrePista = parent.findViewById(R.id.tvNombreReproductor);
                 textViewNombrePista.setSelected(true);
                 textViewNombrePista.setText(pista.getArtist().getName() + " - " + pista.getTitle());
-                parent.reproducirMp3(pista.getPreview(), parent.getMediaPlayer());
+                List<Track> pistas = new ArrayList<>();
+                pistas.add(pista);
+                parent.getReproducirMp3().reproducirMp3(pistas, 0,  (MainActivity)getActivity());
                 parent.visibilidadReproductor(true);
             }
         }, getContext(), favorito.getId());

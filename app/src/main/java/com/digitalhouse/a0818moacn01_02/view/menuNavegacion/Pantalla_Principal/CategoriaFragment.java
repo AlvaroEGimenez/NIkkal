@@ -257,33 +257,10 @@ MasEscuchadosRecyclerView.OnclickMasEscuchados{
     public void onClickTopChartDeezer(Track topChartLocalDeezer, final Integer position) {
         TextView textViewNombrePista = getActivity().findViewById(R.id.tvNombreReproductor);
         textViewNombrePista.setSelected(true);
+        parent.getReproducirMp3().reproducirMp3(topChartDeezerList, position,  parent);
 
-
-        ReproducirMp3 reproducirMp3 = new ReproducirMp3();
-        reproducirMp3.reproducirMp3(topChartLocalDeezer.getPreview(), mediaPlayer, parent);
         textViewNombrePista.setText(topChartLocalDeezer.getTitle() + " - " + topChartLocalDeezer.getArtist().getName());
         textViewNombrePista.setTextColor(Color.parseColor("#FD9701"));
-
-        ImageView imageView = getActivity().findViewById(R.id.btnActivityReproductor);
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                List<Track> trackListReproductor = topChartDeezerList;
-                Intent intent = new Intent(getActivity(), ReproductorActivity.class);
-
-                Integer posicionReproductor = mediaPlayer.getCurrentPosition();
-
-                Bundle bundle = new Bundle();
-                bundle.putSerializable(ReproductorActivity.KEY_OBJETO, (Serializable) trackListReproductor);
-                bundle.putInt(ReproductorActivity.KEY_POSICION, position);
-                bundle.putInt(ReproductorActivity.KEY_POSICION_REPRODUCTOR, posicionReproductor);
-
-                intent.putExtras(bundle);
-                startActivity(intent);
-                mediaPlayer.stop();
-            }
-        });
     }
 
 

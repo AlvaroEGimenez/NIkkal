@@ -55,7 +55,7 @@ public class AdaptadorTopChartDeezer extends BaseAdapter {
             TextView nombre = rootView.findViewById(R.id.labelTopChart);
             ImageView imagen = rootView.findViewById(R.id.imagenTopChart);
 
-            Glide.with(context).load(topChartList.get(position).getAlbum().getCoverMedium()).into(imagen);
+            Glide.with(context).load(topChartList.get(position).getAlbum().getCover()).into(imagen);
 
             nombre.setText(topChartList.get(position).getArtist().getName());
 

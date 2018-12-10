@@ -5,7 +5,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
-import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -37,14 +36,14 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.digitalhouse.a0818moacn01_02.R;
 import com.digitalhouse.a0818moacn01_02.Utils.ListaReproduccionFirebase;
+import com.digitalhouse.a0818moacn01_02.Utils.MediaPlayerNikkal;
+import com.digitalhouse.a0818moacn01_02.Utils.ReproducirMp3;
 import com.digitalhouse.a0818moacn01_02.Utils.ResultListener;
 import com.digitalhouse.a0818moacn01_02.Utils.Util;
 import com.digitalhouse.a0818moacn01_02.model.Track;
 import com.digitalhouse.a0818moacn01_02.view.adapter.listaReproduccion.ItemTouchHelperCallback;
 import com.digitalhouse.a0818moacn01_02.view.adapter.listaReproduccion.PistaListaReproduccionAdapter;
-import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Buscar.AdapatadorBusqueda;
 import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Buscar.BuscarFragment;
-import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Configuracion.ConfiguracionFragment;
 import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Favoritos.FavoritoFragment;
 import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Favoritos.MisListasFragment;
 import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Pantalla_Principal.CategoriaFragment;
@@ -54,25 +53,22 @@ import com.facebook.login.LoginManager;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements AdapatadorBusqueda.BusquedaInterface,
-        PistaListaReproduccionAdapter.PistaListaReproduccionAdapterInterface, MediaPlayer.OnCompletionListener {
+public class MainActivity extends AppCompatActivity implements
+        PistaListaReproduccionAdapter.PistaListaReproduccionAdapterInterface {
 
 
     private CategoriaFragment categoriaFragment = new CategoriaFragment();
     private BuscarFragment buscarFragment = new BuscarFragment();
     private FavoritoFragment favoritoFragment = new FavoritoFragment();
     private RadioFragment radioFragment = new RadioFragment();
-    private ConfiguracionFragment configuracionFragment = new ConfiguracionFragment();
     private TextView textViewNombrePista;
     private ImageView imageViewPlay;
     private ImageView imageViewPause;
     private LinearLayout linearLayoutReproductor;
     private MediaPlayer mediaPlayer;
-    private Fragment mContent;
     private BottomNavigationView bottomNavigation;
     private DrawerLayout drawer;
     private NavigationView navigationView;
@@ -87,6 +83,7 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
     private DrawerLayout drawerLayout;
     private Boolean reemplazarFragment = Boolean.TRUE;
     private PopupMenu popup;
+    private ReproducirMp3 reproducirMp3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,7 +102,7 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
 
         reemplazarFragment(categoriaFragment, R.id.albumFragment);
 
-        mediaPlayer = new MediaPlayer();
+        mediaPlayer = MediaPlayerNikkal.getInstance().getMediaPlayer();
         navigationView = findViewById(R.id.navigationMainActivity);
         headerView = navigationView.inflateHeaderView(R.layout.header_navigation_view);
         tvHeaderNombreListaReproduccion = headerView.findViewById(R.id.tvHeaderNombreListaReproduccion);
@@ -115,6 +112,7 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
         btnListaReproduccion.setOnClickListener(listaReproducctionListener);
         drawerLayout = findViewById(R.id.drawerMainActivity);
         cargarImagenHeaderNavigationView();
+        reproducirMp3 = new ReproducirMp3();
 
         bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -166,85 +164,6 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
         fragmentTransaction.addToBackStack(idFragemnte.toString()).commit();
     }
 
-    @Override
-    public void busquedaClick(Track track, Integer posicion) {
-        linearLayoutReproductor.setVisibility(View.VISIBLE);
-        textViewNombrePista.setText(track.getTitle() + " - " + track.getArtist().getName());
-        String urlMp3 = track.getPreview();
-        reproducirMp3(urlMp3, mediaPlayer);
-        textViewNombrePista.setSelected(true);
-    }
-
-    public void reproducirMp3(final String url, final MediaPlayer mediaPlayer) {
-
-        mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-
-        try {
-            if (!mediaPlayer.isPlaying()) {
-
-                mediaPlayer.setDataSource(url);
-                mediaPlayer.prepare();
-                mediaPlayer.start();
-                imageViewPause.setVisibility(View.VISIBLE);
-
-
-            } else {
-                mediaPlayer.stop();
-                mediaPlayer.reset();
-                mediaPlayer.setDataSource(url);
-                mediaPlayer.prepare();
-                mediaPlayer.start();
-            }
-
-
-            imageViewPause.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mediaPlayer.pause();
-                    imageViewPlay.setVisibility(View.VISIBLE);
-                    imageViewPause.setVisibility(View.INVISIBLE);
-                }
-            });
-
-
-            imageViewPlay.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    if (mediaPlayer != null) {
-
-                        mediaPlayer.start();
-                        imageViewPause.setVisibility(View.VISIBLE);
-                        imageViewPlay.setVisibility(View.INVISIBLE);
-                    }
-                }
-            });
-
-
-        } catch (
-                IOException e)
-
-        {
-
-            e.printStackTrace();
-        } catch (
-                IllegalArgumentException e)
-
-        {
-            e.printStackTrace();
-        } catch (
-                SecurityException e)
-
-        {
-            e.printStackTrace();
-        } catch (
-                IllegalStateException e)
-
-        {
-            e.printStackTrace();
-        }
-    }
-
     public MediaPlayer getMediaPlayer() {
         return mediaPlayer;
     }
@@ -264,7 +183,6 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
             linearLayoutReproductor.setVisibility(View.GONE);
         }
     }
-
 
     public Boolean estaLogeado(final Context context) {
         FirebaseUser currentUser = FirebaseAuth.getInstance()
@@ -384,6 +302,7 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
         @Override
         public void onClick(View v) {
             posicionActualLista = 0;
+            drawerLayout.closeDrawers();
             pistaListaReproduccionAdapterInterface(posicionActualLista++);
 
             mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
@@ -404,16 +323,9 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
     @Override
     public void pistaListaReproduccionAdapterInterface(Integer posicion) {
         if (listaReproduccion != null && !listaReproduccion.getPistas().isEmpty()) {
-            mediaPlayer.reset();
-            Track pista = listaReproduccion.getPistas().get(posicion);
-            busquedaClick(pista, posicion);
+            textViewNombrePista.setText(listaReproduccion.getPistas().get(posicion).getTitle() + " - " + listaReproduccion.getPistas().get(posicion).getArtist().getName());
+            reproducirMp3.reproducirMp3(listaReproduccion.getPistas(), posicion, this);
         }
-    }
-
-    @Override
-    public void onCompletion(MediaPlayer mp) {
-        Track pista = listaReproduccion.getPistas().get(5);
-        busquedaClick(pista, 5);
     }
 
     public void agregarPistaReproducción(Track pista) {
@@ -515,7 +427,9 @@ public class MainActivity extends AppCompatActivity implements AdapatadorBusqued
             default:
                 bottomNavigation.setSelectedItemId(idFragemnt);
         }
-
     }
 
+    public ReproducirMp3 getReproducirMp3() {
+        return reproducirMp3;
+    }
 }

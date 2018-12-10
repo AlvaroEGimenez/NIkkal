@@ -287,7 +287,7 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
 
 
     @Override
-    public void pistaViewPageListener(Integer posicion, View itemViewSelected) {
+    public void pistaViewPageListener(final Integer posicion, View itemViewSelected) {
         parent.getBottomNavigation().setVisibility(View.GONE);
         final Dialog dialog = new Dialog(getContext(), R.style.pistaViewPage);
         dialog.setContentView(R.layout.pista_view_page_content);
@@ -310,8 +310,8 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
                     parent.visibilidadReproductor(true);
                     parent.getBottomNavigation().setVisibility(View.VISIBLE);
                     reprducirAlbum = Boolean.FALSE;
-                    ReproducirMp3 reproducirMp3 = new ReproducirMp3();
-                    reproducirMp3.reproducirMp3(pistaActual.getPreview(), mediaPlayer, parent);
+                    ReproducirMp3 reproducirMp3 = parent.getReproducirMp3();
+                    reproducirMp3.reproducirMp3(pistas, posicion, parent);
                 }
                 return true;
             }

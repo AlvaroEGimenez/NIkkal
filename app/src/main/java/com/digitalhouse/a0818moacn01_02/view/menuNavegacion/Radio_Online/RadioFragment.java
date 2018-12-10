@@ -31,7 +31,7 @@ import java.util.ArrayList;
  */
 public class RadioFragment extends Fragment implements AdaptadorRadio.RadioInterface {
 
-    ReproducirMp3 reproducirMp3 = new ReproducirMp3();
+    ReproducirMp3 reproducirMp3;
     private MediaPlayer mediaPlayer;
     private TextView textViewNombrePista;
     private Animation animationBlink;
@@ -56,7 +56,8 @@ public class RadioFragment extends Fragment implements AdaptadorRadio.RadioInter
         View view = inflater.inflate(R.layout.fragment_radio, container, false);
 
         final ArrayList<Radio> radios = new ArrayList<>();
-
+        MainActivity parent = (MainActivity) getActivity();
+        reproducirMp3 = parent.getReproducirMp3();
 
         Radio laTribu = new Radio("La Tribu", "88.7 FM", "http://vivo.fmlatribu.com:8000/latribu.mp3");
         Radio Malena = new Radio("Malena", "89.1 FM", "http://vivo.radioam750.com.ar/vivofm.mp3");
@@ -102,17 +103,7 @@ public class RadioFragment extends Fragment implements AdaptadorRadio.RadioInter
         AdaptadorRadio adaptadorRadio = new AdaptadorRadio(radios, this);
         recyclerView.setAdapter(adaptadorRadio);
 
-        MainActivity parent = (MainActivity)getActivity();
-
         mediaPlayer = parent.getMediaPlayer();
-
-
-
-
-
-
-
-
 
         return view;
 
@@ -120,9 +111,8 @@ public class RadioFragment extends Fragment implements AdaptadorRadio.RadioInter
 
     @Override
     public void OnRadioClick(Radio radio) {
-
         String url = radio.getUrl();
-        reproducirMp3.reproducirRadio(url,mediaPlayer,radio,getActivity());
+        reproducirMp3.reproducirRadio(url,mediaPlayer,radio,(MainActivity)getActivity());
 
     }
 

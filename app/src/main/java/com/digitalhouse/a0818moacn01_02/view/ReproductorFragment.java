@@ -30,6 +30,7 @@ import com.deezer.sdk.player.event.PlayerState;
 import com.deezer.sdk.player.exception.TooManyPlayersExceptions;
 import com.deezer.sdk.player.networkcheck.WifiAndMobileNetworkStateChecker;
 import com.digitalhouse.a0818moacn01_02.R;
+import com.digitalhouse.a0818moacn01_02.Utils.MediaPlayerNikkal;
 import com.digitalhouse.a0818moacn01_02.Utils.ReproducirMp3;
 import com.digitalhouse.a0818moacn01_02.model.Track;
 import com.jgabrielfreitas.core.BlurImageView;
@@ -59,19 +60,30 @@ public class ReproductorFragment extends Fragment {
     private Long posicionActual;
     private ViewPager viewPager;
     private Track trackActual;
-    private MediaPlayer mediaPlayer = new MediaPlayer();
-    private ReproducirMp3 reproducirMp3 = new ReproducirMp3();
+    private MediaPlayer mediaPlayer;
+    private ReproducirMp3 reproducirMp3;
 
     public static ReproductorFragment factory(Track track) {
         ReproductorFragment reproductorFragment = new ReproductorFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable(KEY_TRACK_ACTUAL,track);
-        bundle.putString(KEY_IMAGEN_TRACK, track.getAlbum().getCoverMedium());
+
+
+        if (track.getAlbum() != null && track.getAlbum().getCoverMedium() != null) {
+            bundle.putString(KEY_IMAGEN_TRACK, track.getAlbum().getCoverMedium());
+        }else if(track.getArtist() != null && track.getArtist().getPictureMedium() != null){
+            bundle.putString(KEY_IMAGEN_TRACK, track.getArtist().getPictureMedium());
+        }else if(track.getImagenAlbum() != null){
+            bundle.putString(KEY_IMAGEN_TRACK, track.getImagenAlbum());
+        }
+
+
         bundle.putString(KEY_NOMBRE_TRACK, track.getTitle());
         bundle.putString(KEY_NOMBRE_ARTISTA, track.getArtist().getName());
         bundle.putInt(KEY_DURACION_TRACK, track.getDuration());
         bundle.putInt(KEY_ID_TRACK, track.getId());
         reproductorFragment.setArguments(bundle);
+
 
         return reproductorFragment;
     }
@@ -101,13 +113,18 @@ public class ReproductorFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_reproductor, container, false);
-
+        mediaPlayer = MediaPlayerNikkal.getInstance().getMediaPlayer();
         leerBundle(getArguments());
+        this.reproducirMp3 = new ReproducirMp3();
 
         viewPager = getActivity().findViewById(R.id.viewpageSugerencia);
         ImageView imageViewImagenTrack = view.findViewById(R.id.blurimageview);
-        Glide.with(getContext()).load(urlImagen).into(imageViewImagenTrack);
 
+        if(urlImagen == null){
+            Glide.with(getContext()).load(getResources().getDrawable(R.drawable.icononikkal)).into(imageViewImagenTrack);
+        }else {
+            Glide.with(getContext()).load(urlImagen).into(imageViewImagenTrack);
+        }
         TextView textViewNombredelTrack = view.findViewById(R.id.tvNombretrackReproductor);
         TextView textViewNombredelArtista = view.findViewById(R.id.tvNombreArtistaReproductor);
         textViewNombredelTrack.setText(nombreTrack);
@@ -171,11 +188,10 @@ public class ReproductorFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 mediaPlayer.stop();
-                mediaPlayer.release();
                 viewPager.setCurrentItem(viewPager.getCurrentItem()-1);
                 Toast.makeText(getActivity(), "Anterior", Toast.LENGTH_SHORT).show();
                 String url = trackActual.getPreview();
-                reproducirMp3.ReproducirMp3Activity(url, mediaPlayer);
+                reproducirMp3.ReproducirMp3Activity(url);
 
             }
         });
@@ -184,11 +200,10 @@ public class ReproductorFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 mediaPlayer.stop();
-                mediaPlayer.release();
                 viewPager.setCurrentItem(viewPager.getCurrentItem()+1);
                 Toast.makeText(getActivity(), "Proximo", Toast.LENGTH_SHORT).show();
                 String url = trackActual.getPreview();
-                reproducirMp3.ReproducirMp3Activity(url, mediaPlayer);
+                reproducirMp3.ReproducirMp3Activity(url);
             }
         });
 

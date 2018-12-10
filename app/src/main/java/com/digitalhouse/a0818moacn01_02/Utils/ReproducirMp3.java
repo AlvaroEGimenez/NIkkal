@@ -1,9 +1,12 @@
 package com.digitalhouse.a0818moacn01_02.Utils;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -14,36 +17,59 @@ import android.widget.TextView;
 
 import com.digitalhouse.a0818moacn01_02.R;
 import com.digitalhouse.a0818moacn01_02.model.Radio;
+import com.digitalhouse.a0818moacn01_02.model.Track;
+import com.digitalhouse.a0818moacn01_02.view.MainActivity;
+import com.digitalhouse.a0818moacn01_02.view.ReproductorActivity;
 
 import java.io.IOException;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class ReproducirMp3 {
+    private MediaPlayer mediaPlayer;
+    private List<Track> listaReproduccion;
+    private Integer posicion;
+    private AppCompatActivity activity;
 
-    public void reproducirMp3(final String url, final MediaPlayer mediaPlayer, Activity activity) {
+    public void reproducirMp3(final List<Track> listaReproduccion, final Integer posicion, final AppCompatActivity activity) {
+        this.listaReproduccion = listaReproduccion;
+        Track pista = listaReproduccion.get(posicion);
+        this.posicion = posicion;
+        this.activity = activity;
+
         final ImageView imageViewPlay = activity.findViewById(R.id.btnRepoductorPlay);
         final ImageView imageViewPause = activity.findViewById(R.id.btnReproductorPause);
         final LinearLayout linearLayout = activity.findViewById(R.id.layoutPlayer);
+        mediaPlayer = MediaPlayerNikkal.getInstance().getMediaPlayer();
 
+        ImageView imageViewExpandir = activity.findViewById(R.id.btnActivityReproductor);
+
+        imageViewExpandir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(activity, ReproductorActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putInt(ReproductorActivity.KEY_POSICION, 0);
+                bundle.putSerializable(ReproductorActivity.KEY_OBJETO, (Serializable) listaReproduccion);
+                intent.putExtras(bundle);
+                activity.startActivity(intent);
+            }
+        });
 
         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
 
 
         try {
             if (!mediaPlayer.isPlaying()) {
-
-                mediaPlayer.setDataSource(url);
+                mediaPlayer.reset();
+                mediaPlayer.setDataSource(pista.getPreview());
                 mediaPlayer.prepare();
                 mediaPlayer.start();
                 linearLayout.setVisibility(View.VISIBLE);
                 imageViewPause.setVisibility(View.VISIBLE);
                 imageViewPlay.setVisibility(View.INVISIBLE);
-
-            } else {
-                mediaPlayer.stop();
-                mediaPlayer.reset();
-                mediaPlayer.setDataSource(url);
-                mediaPlayer.prepare();
-                mediaPlayer.start();
             }
 
             imageViewPause.setOnClickListener(new View.OnClickListener() {
@@ -59,9 +85,7 @@ public class ReproducirMp3 {
             imageViewPlay.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
                     if (mediaPlayer != null && !mediaPlayer.isPlaying()) {
-
                         mediaPlayer.start();
                         imageViewPause.setVisibility(View.VISIBLE);
                         imageViewPlay.setVisibility(View.INVISIBLE);
@@ -69,6 +93,16 @@ public class ReproducirMp3 {
                 }
             });
 
+
+            mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+                    if( posicion < listaReproduccion.size() -1){
+                        reproducirMp3(listaReproduccion, posicion +1, activity);
+                    }
+
+                }
+            });
 
         } catch (
                 IOException e)
@@ -94,20 +128,12 @@ public class ReproducirMp3 {
         }
     }
 
-    public void ReproducirMp3Activity(String url, MediaPlayer mediaPlayer){
+    public void ReproducirMp3Activity(String url) {
+        mediaPlayer = MediaPlayerNikkal.getInstance().getMediaPlayer();
         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-
 
         try {
             if (!mediaPlayer.isPlaying()) {
-
-                mediaPlayer.setDataSource(url);
-                mediaPlayer.prepare();
-                mediaPlayer.start();
-
-
-            } else {
-                mediaPlayer.stop();
                 mediaPlayer.reset();
                 mediaPlayer.setDataSource(url);
                 mediaPlayer.prepare();
@@ -138,13 +164,14 @@ public class ReproducirMp3 {
         }
     }
 
-    public void reproducirRadio(final String url, final MediaPlayer mediaPlayer, final Radio radio, Activity activity) {
+
+
+    public void reproducirRadio(final String url, final MediaPlayer mediaPlayer, final Radio radio, final AppCompatActivity activity) {
 
         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
 
         final ImageView imageViewPlay = activity.findViewById(R.id.btnRepoductorPlay);
         final ImageView imageViewPause = activity.findViewById(R.id.btnReproductorPause);
-
         final TextView textViewNombrePista = activity.findViewById(R.id.tvNombreReproductor);
         textViewNombrePista.setTextColor(Color.parseColor("#FD9701"));
         textViewNombrePista.setSelected(true);
@@ -184,8 +211,8 @@ public class ReproducirMp3 {
             imageViewPause.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (progressBar.getVisibility() == View.VISIBLE){
-                        
+                    if (progressBar.getVisibility() == View.VISIBLE) {
+
                     }
                     mediaPlayer.pause();
                     imageViewPlay.setVisibility(View.VISIBLE);
@@ -234,4 +261,17 @@ public class ReproducirMp3 {
             e.printStackTrace();
         }
     }
+
+    public MediaPlayer getMediaPlayer() {
+        return mediaPlayer;
+    }
+
+    public List<Track> getListaReproduccion() {
+        return listaReproduccion;
+    }
+
+    public void setListaReproduccion(List<Track> listaReproduccion) {
+        this.listaReproduccion = listaReproduccion;
+    }
+
 }
