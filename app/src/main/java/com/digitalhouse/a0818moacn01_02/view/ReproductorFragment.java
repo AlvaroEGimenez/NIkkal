@@ -17,6 +17,7 @@ import com.deezer.sdk.network.connect.DeezerConnect;
 import com.digitalhouse.a0818moacn01_02.R;
 import com.digitalhouse.a0818moacn01_02.Utils.MediaPlayerNikkal;
 import com.digitalhouse.a0818moacn01_02.Utils.ReproducirMp3;
+import com.digitalhouse.a0818moacn01_02.Utils.ResultListener;
 import com.digitalhouse.a0818moacn01_02.model.Track;
 
 /**
@@ -50,14 +51,14 @@ public class ReproductorFragment extends Fragment {
     public static ReproductorFragment factory(Track track) {
         ReproductorFragment reproductorFragment = new ReproductorFragment();
         Bundle bundle = new Bundle();
-        bundle.putSerializable(KEY_TRACK_ACTUAL,track);
+        bundle.putSerializable(KEY_TRACK_ACTUAL, track);
 
 
         if (track.getAlbum() != null && track.getAlbum().getCoverMedium() != null) {
             bundle.putString(KEY_IMAGEN_TRACK, track.getAlbum().getCoverMedium());
-        }else if(track.getArtist() != null && track.getArtist().getPictureMedium() != null){
+        } else if (track.getArtist() != null && track.getArtist().getPictureMedium() != null) {
             bundle.putString(KEY_IMAGEN_TRACK, track.getArtist().getPictureMedium());
-        }else if(track.getImagenAlbum() != null){
+        } else if (track.getImagenAlbum() != null) {
             bundle.putString(KEY_IMAGEN_TRACK, track.getImagenAlbum());
         }
 
@@ -104,9 +105,9 @@ public class ReproductorFragment extends Fragment {
         viewPager = getActivity().findViewById(R.id.viewpageSugerencia);
         ImageView imageViewImagenTrack = view.findViewById(R.id.blurimageview);
 
-        if(urlImagen == null){
+        if (urlImagen == null) {
             Glide.with(getContext()).load(getResources().getDrawable(R.drawable.icononikkal)).into(imageViewImagenTrack);
-        }else {
+        } else {
             Glide.with(getContext()).load(urlImagen).into(imageViewImagenTrack);
         }
         TextView textViewNombredelTrack = view.findViewById(R.id.tvNombretrackReproductor);
@@ -122,8 +123,6 @@ public class ReproductorFragment extends Fragment {
         ImageView imageViewProximo = getActivity().findViewById(R.id.ivProximoReproductor);
 
 
-
-
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -134,7 +133,6 @@ public class ReproductorFragment extends Fragment {
 
             @Override
             public void onPageSelected(int position) {
-
 
 
             }
@@ -172,10 +170,14 @@ public class ReproductorFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 mediaPlayer.stop();
-                viewPager.setCurrentItem(viewPager.getCurrentItem()-1);
-                Toast.makeText(getActivity(), "Anterior", Toast.LENGTH_SHORT).show();
-                String url = trackActual.getPreview();
-                reproducirMp3.ReproducirMp3Activity(url);
+                Integer posicion = viewPager.getCurrentItem() - 1;
+                viewPager.setCurrentItem(posicion);
+                reproducirMp3.ReproducirMp3Activity(posicion, new ResultListener<Integer>() {
+                    @Override
+                    public void finish(Integer posicion) {
+                        viewPager.setCurrentItem(posicion);
+                    }
+                });
 
             }
         });
@@ -184,10 +186,14 @@ public class ReproductorFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 mediaPlayer.stop();
-                viewPager.setCurrentItem(viewPager.getCurrentItem()+1);
-                Toast.makeText(getActivity(), "Proximo", Toast.LENGTH_SHORT).show();
-                String url = trackActual.getPreview();
-                reproducirMp3.ReproducirMp3Activity(url);
+                Integer posicion = viewPager.getCurrentItem() + 1;
+                viewPager.setCurrentItem(posicion);
+                reproducirMp3.ReproducirMp3Activity(posicion, new ResultListener<Integer>() {
+                    @Override
+                    public void finish(Integer posicion) {
+                        viewPager.setCurrentItem(posicion);
+                    }
+                });
             }
         });
 

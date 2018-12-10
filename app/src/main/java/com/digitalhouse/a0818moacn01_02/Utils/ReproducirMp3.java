@@ -1,6 +1,5 @@
 package com.digitalhouse.a0818moacn01_02.Utils;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.media.AudioManager;
@@ -18,12 +17,10 @@ import android.widget.TextView;
 import com.digitalhouse.a0818moacn01_02.R;
 import com.digitalhouse.a0818moacn01_02.model.Radio;
 import com.digitalhouse.a0818moacn01_02.model.Track;
-import com.digitalhouse.a0818moacn01_02.view.MainActivity;
 import com.digitalhouse.a0818moacn01_02.view.ReproductorActivity;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -97,8 +94,8 @@ public class ReproducirMp3 {
             mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                 @Override
                 public void onCompletion(MediaPlayer mp) {
-                    if( posicion < listaReproduccion.size() -1){
-                        reproducirMp3(listaReproduccion, posicion +1, activity);
+                    if (posicion < listaReproduccion.size() - 1) {
+                        reproducirMp3(listaReproduccion, posicion + 1, activity);
                     }
 
                 }
@@ -128,17 +125,27 @@ public class ReproducirMp3 {
         }
     }
 
-    public void ReproducirMp3Activity(String url) {
+    public void ReproducirMp3Activity(final Integer posicion, final ResultListener<Integer> posicionResulset) {
         mediaPlayer = MediaPlayerNikkal.getInstance().getMediaPlayer();
         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
 
+        Track track = this.listaReproduccion.get(posicion);
         try {
             if (!mediaPlayer.isPlaying()) {
                 mediaPlayer.reset();
-                mediaPlayer.setDataSource(url);
+                mediaPlayer.setDataSource(track.getPreview());
                 mediaPlayer.prepare();
                 mediaPlayer.start();
             }
+
+
+            mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+                    posicionResulset.finish(posicion+1);
+
+                }
+            });
 
         } catch (
                 IOException e)
@@ -163,7 +170,6 @@ public class ReproducirMp3 {
             e.printStackTrace();
         }
     }
-
 
 
     public void reproducirRadio(final String url, final MediaPlayer mediaPlayer, final Radio radio, final AppCompatActivity activity) {
