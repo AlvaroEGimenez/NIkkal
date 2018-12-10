@@ -99,5 +99,7 @@ public class ReproductorActivity extends AppCompatActivity {
 
     }
 
-
+    public Integer getPosicion() {
+        return posicion;
+    }
 }

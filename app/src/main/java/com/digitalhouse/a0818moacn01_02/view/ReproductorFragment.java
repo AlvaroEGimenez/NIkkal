@@ -122,6 +122,15 @@ public class ReproductorFragment extends Fragment {
         final ImageView imageViewPlay = getActivity().findViewById(R.id.ivPlayReproductor);
         ImageView imageViewProximo = getActivity().findViewById(R.id.ivProximoReproductor);
 
+        ReproductorActivity activity = (ReproductorActivity) getActivity();
+
+        reproducirMp3.pistaSiguiente(activity.getPosicion(), new ResultListener<Integer>() {
+            @Override
+            public void finish(Integer posicion) {
+                viewPager.setCurrentItem(posicion);
+            }
+        });
+
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -172,12 +181,7 @@ public class ReproductorFragment extends Fragment {
                 mediaPlayer.stop();
                 Integer posicion = viewPager.getCurrentItem() - 1;
                 viewPager.setCurrentItem(posicion);
-                reproducirMp3.ReproducirMp3Activity(posicion, new ResultListener<Integer>() {
-                    @Override
-                    public void finish(Integer posicion) {
-                        viewPager.setCurrentItem(posicion);
-                    }
-                });
+                reproducirMp3.ReproducirMp3Activity(posicion);
 
             }
         });
@@ -188,12 +192,7 @@ public class ReproductorFragment extends Fragment {
                 mediaPlayer.stop();
                 Integer posicion = viewPager.getCurrentItem() + 1;
                 viewPager.setCurrentItem(posicion);
-                reproducirMp3.ReproducirMp3Activity(posicion, new ResultListener<Integer>() {
-                    @Override
-                    public void finish(Integer posicion) {
-                        viewPager.setCurrentItem(posicion);
-                    }
-                });
+                reproducirMp3.ReproducirMp3Activity(posicion);
             }
         });
 

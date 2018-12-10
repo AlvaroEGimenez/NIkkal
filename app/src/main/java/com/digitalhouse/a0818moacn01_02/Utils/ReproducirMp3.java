@@ -125,7 +125,19 @@ public class ReproducirMp3 {
         }
     }
 
-    public void ReproducirMp3Activity(final Integer posicion, final ResultListener<Integer> posicionResulset) {
+
+    public void pistaSiguiente(final Integer posicion, final ResultListener<Integer> posicionResulset){
+        mediaPlayer = MediaPlayerNikkal.getInstance().getMediaPlayer();
+        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                posicionResulset.finish(posicion+1);
+
+            }
+        });
+    }
+
+    public void ReproducirMp3Activity(final Integer posicion) {
         mediaPlayer = MediaPlayerNikkal.getInstance().getMediaPlayer();
         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
 
@@ -138,14 +150,6 @@ public class ReproducirMp3 {
                 mediaPlayer.start();
             }
 
-
-            mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                @Override
-                public void onCompletion(MediaPlayer mp) {
-                    posicionResulset.finish(posicion+1);
-
-                }
-            });
 
         } catch (
                 IOException e)
