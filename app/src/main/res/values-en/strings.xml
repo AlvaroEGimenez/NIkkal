@@ -29,21 +29,23 @@
     <string name="si">Si</string>
     <string name="no">No</string>
     <string name="cabeceraLogin">You need to log in to access more features.</string>
-    <string name="hint_nombre_lista_reproduccion">Nombre Lista de Reproducción</string>
-    <string name="btn_aceptar">Aceptar</string>
-    <string name="btn_cancelar">Cancelar</string>
-    <string name="campo_obligatorio">Complete el campo obligatorio</string>
-    <string name="debe_crear_lista_rep">Debe crear abrir o crear una lista de reprodución</string>
-    <string name="pista_gregada">Pista Agregada</string>
+    <string name="hint_nombre_lista_reproduccion">Name play List</string>
+    <string name="btn_aceptar">Accept</string>
+    <string name="btn_cancelar">Cancel</string>
+    <string name="campo_obligatorio">Complete the required field</string>
+    <string name="debe_crear_lista_rep">You must open or create a playlist</string>
+    <string name="pista_gregada">Track Added</string>
     <string name="busqueda_vacia">With nothing to look for, nothing found :)</string>
     <string name="compartir_redes_sociales">Share</string>
     <string name="mensaje_compartir">This song is for you!</string>
 
-    <string name="album_favorito">Album Favorito</string>
-    <string name="album_Artista">Artista Album</string>
-    <string name="pistas">Pistas</string>
-    <string name="mensajeLoginFavorito">Acce,so Restringido, Necesitas acceder a través de facebock para poder visualizarlo</string>
-    <string name="bienvenido" />
-    <string name="elemento_eliminado">Se ha removido de Favoritos</string>
+    <string name="album_favorito">Album Favorite</string>
+    <string name="album_Artista">Artist Album</string>
+    <string name="pistas">Tracks</string>
+    <string name="mensajeLoginFavorito">Restricted access, You need to access through facebook to can see it</string>
+    <string name="bienvenido">Welcome</string>
+    <string name="elemento_eliminado">Removed from Favorites</string>
+    <string name="pista_anterior">Previous</string>
+    <string name="pista_siguiente">Next</string>
 
 </resources>
