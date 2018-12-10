@@ -145,30 +145,7 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
                 break;
         }
 
-        /*if ("sugerencia".equals(categoria)) {
-            cargarPistaSugerencia(albumId);
-        } else if ("pistaAlbum".equals(categoria)) {
-            cargarPista(albumId);
-        }*/
-
         mediaPlayer = parent.getMediaPlayer();
-
-
-        /*imageViewShare.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DynamicLink dynamicLink = FirebaseDynamicLinks.getInstance().createDynamicLink()
-                        .setLink(Uri.parse("https://www.example.com/"))
-                        .setDomainUriPrefix("https://example.page.link")
-                        // Open links with this app on Android
-                        .setAndroidParameters(new DynamicLink.AndroidParameters.Builder().build())
-                        // Open links with com.example.ios on iOS
-                        .setIosParameters(new DynamicLink.IosParameters.Builder("com.example.ios").build())
-                        .buildDynamicLink();
-
-                Uri dynamicLinkUri = dynamicLink.getUri();
-            }
-        });*/
 
         return view;
     }
@@ -235,7 +212,7 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
-        pistaAlbumRecyclerView = new PistaAlbumRecyclerView(new ArrayList<Track>(), R.layout.cardview_pista_album, getActivity(), this);
+        pistaAlbumRecyclerView = new PistaAlbumRecyclerView(new ArrayList<Track>(), R.layout.cardview_pista_album, getActivity(), urlImagenCabecera, this);
 
         ItemTouchHelper.SimpleCallback itemTouchHelperCallback = new RecyclerItemTouchHelper(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT, this);
         new ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(recyclerView);

@@ -18,18 +18,20 @@ import com.digitalhouse.a0818moacn01_02.model.Track;
 import java.util.Collections;
 import java.util.List;
 
-public class PistaAlbumRecyclerView extends RecyclerView.Adapter implements  RecyclerItemTouchHelper.RecyclerItemTouchHelperListener{
+public class PistaAlbumRecyclerView extends RecyclerView.Adapter implements RecyclerItemTouchHelper.RecyclerItemTouchHelperListener {
     private List<Track> pistas;
     private Integer resources;
     private Activity activity;
+    private String urlImagenAlbum;
 
     private PistaAdapterInterface escuchador;
 
-    public PistaAlbumRecyclerView(List<Track> pistas, int resources, Activity activity, PistaAdapterInterface escuchador) {
+    public PistaAlbumRecyclerView(List<Track> pistas, int resources, Activity activity, String urlImagenAlbum, PistaAdapterInterface escuchador) {
         this.pistas = pistas;
         this.resources = resources;
         this.activity = activity;
         this.escuchador = escuchador;
+        this.urlImagenAlbum = urlImagenAlbum;
     }
 
     @NonNull
@@ -43,7 +45,7 @@ public class PistaAlbumRecyclerView extends RecyclerView.Adapter implements  Rec
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int posicion) {
         Track pista = pistas.get(posicion);
         PistaViewHolder pistaViewHolder = (PistaViewHolder) holder;
-        pistaViewHolder.cargar(pista);
+        pistaViewHolder.cargar(pista, this.urlImagenAlbum);
     }
 
     @Override
@@ -67,8 +69,11 @@ public class PistaAlbumRecyclerView extends RecyclerView.Adapter implements  Rec
 
     public interface PistaAdapterInterface {
         void favoritoListener(Track pista, ImageView favoritoPista);
+
         void playListListener(Track pista);
+
         void compartirListener(Track pista);
+
         void pistaViewPageListener(Integer posicion, View itemView);
     }
 
@@ -118,9 +123,12 @@ public class PistaAlbumRecyclerView extends RecyclerView.Adapter implements  Rec
 
         }
 
-        public void cargar(Track pista) {
+        public void cargar(Track pista, String urlImagenAlbum) {
             tvNombreAlbumTemaPista.setText(pista.getTitle());
             tvNombreArtistaTemaPista.setText(pista.getArtist().getName());
+            if(pista.getAlbum() == null || pista.getAlbum().getCoverMedium() == null){
+                pista.setImagenAlbum(urlImagenAlbum);
+            }
             favoritoPista.setImageResource(pista.getFavorito() ? R.drawable.ic_favorite_seleccionado : R.drawable.ic_favorite_no_seleccion);
 
         }
