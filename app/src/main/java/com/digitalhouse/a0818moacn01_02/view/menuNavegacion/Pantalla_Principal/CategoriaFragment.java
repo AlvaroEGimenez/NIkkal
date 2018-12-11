@@ -13,17 +13,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextSwitcher;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
 import com.digitalhouse.a0818moacn01_02.DAO.DAOLocal;
 import com.digitalhouse.a0818moacn01_02.R;
-import com.digitalhouse.a0818moacn01_02.Utils.ReproducirMp3;
 import com.digitalhouse.a0818moacn01_02.Utils.ResultListener;
 import com.digitalhouse.a0818moacn01_02.controller.GenreController;
 import com.digitalhouse.a0818moacn01_02.controller.RadioController;
@@ -35,7 +32,6 @@ import com.digitalhouse.a0818moacn01_02.model.RadioDeezer;
 import com.digitalhouse.a0818moacn01_02.model.TopChartLocal;
 import com.digitalhouse.a0818moacn01_02.model.Track;
 import com.digitalhouse.a0818moacn01_02.view.MainActivity;
-import com.digitalhouse.a0818moacn01_02.view.ReproductorActivity;
 import com.digitalhouse.a0818moacn01_02.view.adapter.AdaptadorLocalTopChart;
 import com.digitalhouse.a0818moacn01_02.view.adapter.AdaptadorTopChartDeezer;
 import com.digitalhouse.a0818moacn01_02.view.adapter.CategoriaAdapterRecyclerView;
@@ -44,7 +40,6 @@ import com.digitalhouse.a0818moacn01_02.view.adapter.RadioAdapterRecyclerView;
 import com.digitalhouse.a0818moacn01_02.view.categorias.GeneroFragment;
 import com.digitalhouse.a0818moacn01_02.view.categorias.PistaAlbumFragment;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -257,6 +252,7 @@ MasEscuchadosRecyclerView.OnclickMasEscuchados{
     public void onClickTopChartDeezer(Track topChartLocalDeezer, final Integer position) {
         TextView textViewNombrePista = getActivity().findViewById(R.id.tvNombreReproductor);
         textViewNombrePista.setSelected(true);
+        mediaPlayer.stop();
         parent.getReproducirMp3().reproducirMp3(topChartDeezerList, position,  parent);
 
         textViewNombrePista.setText(topChartLocalDeezer.getTitle() + " - " + topChartLocalDeezer.getArtist().getName());

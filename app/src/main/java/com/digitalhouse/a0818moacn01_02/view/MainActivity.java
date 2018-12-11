@@ -109,7 +109,7 @@ public class MainActivity extends AppCompatActivity implements
         btnListaReproduccion.setOnClickListener(listaReproducctionListener);
         drawerLayout = findViewById(R.id.drawerMainActivity);
         cargarImagenHeaderNavigationView();
-        reproducirMp3 = new ReproducirMp3();
+        reproducirMp3 = new ReproducirMp3(true);
 
         bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override

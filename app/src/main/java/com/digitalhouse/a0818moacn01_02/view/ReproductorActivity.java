@@ -32,15 +32,12 @@ public class ReproductorActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reproductor);
         mediaPlayer = MediaPlayerNikkal.getInstance().getMediaPlayer();
-
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-
 
         if (bundle != null) {
             trackList = (List<Track>) bundle.getSerializable(KEY_OBJETO);
             posicion = bundle.getInt(KEY_POSICION);
-            Integer poscionReproductor = bundle.getInt(KEY_POSICION_REPRODUCTOR);
             viewPager = findViewById(R.id.viewpageSugerencia);
             SugerenciasViewPager sugerenciasViewPager = new SugerenciasViewPager(getSupportFragmentManager(), trackList);
             viewPager.setAdapter(sugerenciasViewPager);
@@ -77,26 +74,23 @@ public class ReproductorActivity extends AppCompatActivity {
             }
         });
 
-
         imageViewAnterior.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                viewPager.setCurrentItem(posicion -1);
-                Toast.makeText(ReproductorActivity.this, "Anterior", Toast.LENGTH_SHORT).show();
-
-
+                viewPager.setCurrentItem(posicion - 1);
             }
         });
 
         imageViewProximo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                viewPager.setCurrentItem(posicion +1);
-                Toast.makeText(ReproductorActivity.this, "Proximo", Toast.LENGTH_SHORT).show();
-
+                viewPager.setCurrentItem(posicion + 1);
             }
         });
+    }
 
+    public List<Track> getTrackList() {
+        return trackList;
     }
 
     public Integer getPosicion() {

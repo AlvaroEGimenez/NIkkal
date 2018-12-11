@@ -2,7 +2,6 @@ package com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Buscar;
 
 
 import android.content.Context;
-import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -16,22 +15,20 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.digitalhouse.a0818moacn01_02.R;
+import com.digitalhouse.a0818moacn01_02.Utils.MediaPlayerNikkal;
 import com.digitalhouse.a0818moacn01_02.Utils.ReproducirMp3;
 import com.digitalhouse.a0818moacn01_02.Utils.ResultListener;
 import com.digitalhouse.a0818moacn01_02.controller.SearchControlller;
 import com.digitalhouse.a0818moacn01_02.model.ArtistDeezer;
 import com.digitalhouse.a0818moacn01_02.model.Track;
 import com.digitalhouse.a0818moacn01_02.view.MainActivity;
-import com.digitalhouse.a0818moacn01_02.view.ReproductorActivity;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -165,14 +162,16 @@ public class BuscarFragment extends Fragment implements AdapatadorBusqueda.Busqu
         LinearLayout linearLayout = getActivity().findViewById(R.id.layoutPlayer);
         TextView textViewNombrePista = getActivity().findViewById(R.id.tvNombreReproductor);
 
-
         linearLayout.setVisibility(View.VISIBLE);
         String url = track.getPreview();
         MainActivity parent = (MainActivity) getActivity();
-
+        textViewNombrePista.setSelected(true);
+        textViewNombrePista.setText(track.getArtist().getName() + " - " + track.getTitle());
+        parent.visibilidadReproductor(true);
+        parent.getBottomNavigation().setVisibility(View.VISIBLE);
         ReproducirMp3 reproducirMp3 = parent.getReproducirMp3();
-        reproducirMp3.getMediaPlayer().stop();
-        reproducirMp3.reproducirMp3(trackListSeach, posicion, (MainActivity)getActivity());
+        MediaPlayerNikkal.getInstance().getMediaPlayer().stop();
+        reproducirMp3.reproducirMp3(trackListSeach, posicion, parent);
 
         textViewNombrePista.setSelected(true);
     }

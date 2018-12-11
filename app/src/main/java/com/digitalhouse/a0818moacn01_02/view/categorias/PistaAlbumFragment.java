@@ -34,6 +34,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.digitalhouse.a0818moacn01_02.R;
 import com.digitalhouse.a0818moacn01_02.Utils.FavoritoFirebase;
+import com.digitalhouse.a0818moacn01_02.Utils.MediaPlayerNikkal;
 import com.digitalhouse.a0818moacn01_02.Utils.ReproducirMp3;
 import com.digitalhouse.a0818moacn01_02.Utils.ResultListener;
 import com.digitalhouse.a0818moacn01_02.controller.TrackListController;
@@ -272,7 +273,7 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
         autoScrollViewPager = dialog.findViewById(R.id.pistaViewPagerScroll);
         autoScrollViewPager.setAdapter(pistaAdapterViewPage);
         autoScrollViewPager.setCurrentItem(posicion);
-
+        MediaPlayerNikkal.getInstance().getMediaPlayer().stop();
         dialog.setOnKeyListener(new Dialog.OnKeyListener() {
 
             @Override

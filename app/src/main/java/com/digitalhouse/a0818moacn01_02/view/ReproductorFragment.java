@@ -47,6 +47,7 @@ public class ReproductorFragment extends Fragment {
     private Track trackActual;
     private MediaPlayer mediaPlayer;
     private ReproducirMp3 reproducirMp3;
+    ReproductorActivity activity;
 
     public static ReproductorFragment factory(Track track) {
         ReproductorFragment reproductorFragment = new ReproductorFragment();
@@ -73,7 +74,6 @@ public class ReproductorFragment extends Fragment {
         return reproductorFragment;
     }
 
-
     private void leerBundle(Bundle bundle) {
         if (bundle != null) {
             urlImagen = bundle.getString(KEY_IMAGEN_TRACK);
@@ -87,9 +87,7 @@ public class ReproductorFragment extends Fragment {
         }
     }
 
-
     public ReproductorFragment() {
-        // Required empty public constructor
     }
 
 
@@ -100,7 +98,7 @@ public class ReproductorFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_reproductor, container, false);
         mediaPlayer = MediaPlayerNikkal.getInstance().getMediaPlayer();
         leerBundle(getArguments());
-        this.reproducirMp3 = new ReproducirMp3();
+        this.reproducirMp3 = new ReproducirMp3(false);
 
         viewPager = getActivity().findViewById(R.id.viewpageSugerencia);
         ImageView imageViewImagenTrack = view.findViewById(R.id.blurimageview);
@@ -116,44 +114,13 @@ public class ReproductorFragment extends Fragment {
         textViewNombredelArtista.setText(nombreArtista);
         textViewNombredelTrack.setSelected(true);
 
-
         ImageView imageViewAnterior = getActivity().findViewById(R.id.ivAnteriorReproductor);
         final ImageView imageViewPause = getActivity().findViewById(R.id.ivPausa_Reproductor);
         final ImageView imageViewPlay = getActivity().findViewById(R.id.ivPlayReproductor);
         ImageView imageViewProximo = getActivity().findViewById(R.id.ivProximoReproductor);
 
-        ReproductorActivity activity = (ReproductorActivity) getActivity();
-
-        reproducirMp3.pistaSiguiente(activity.getPosicion(), new ResultListener<Integer>() {
-            @Override
-            public void finish(Integer posicion) {
-                viewPager.setCurrentItem(posicion);
-            }
-        });
-
-
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-                //String url = trackActual.getPreview();
-                //reproducirMp3.ReproducirMp3Activity(url, mediaPlayer);
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-
-
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-
-
-        });
-
+        activity = (ReproductorActivity) getActivity();
+        reproducirMp3.reproducirMp3(activity.getTrackList(), activity.getPosicion(), activity);
 
         imageViewPause.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -180,8 +147,10 @@ public class ReproductorFragment extends Fragment {
             public void onClick(View v) {
                 mediaPlayer.stop();
                 Integer posicion = viewPager.getCurrentItem() - 1;
-                viewPager.setCurrentItem(posicion);
-                reproducirMp3.ReproducirMp3Activity(posicion);
+                if (posicion < 0) {
+                    reproducirMp3.ReproducirMp3Activity(posicion);
+                    viewPager.setCurrentItem(posicion);
+                }
 
             }
         });
@@ -191,8 +160,10 @@ public class ReproductorFragment extends Fragment {
             public void onClick(View v) {
                 mediaPlayer.stop();
                 Integer posicion = viewPager.getCurrentItem() + 1;
-                viewPager.setCurrentItem(posicion);
-                reproducirMp3.ReproducirMp3Activity(posicion);
+                if (posicion < activity.getTrackList().size()) {
+                    reproducirMp3.ReproducirMp3Activity(posicion);
+                    viewPager.setCurrentItem(posicion);
+                }
             }
         });
 

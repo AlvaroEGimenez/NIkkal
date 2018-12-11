@@ -29,6 +29,11 @@ public class ReproducirMp3 {
     private List<Track> listaReproduccion;
     private Integer posicion;
     private AppCompatActivity activity;
+    private Boolean isMainActivity;
+
+    public ReproducirMp3(Boolean isMainActivity) {
+        this.isMainActivity = isMainActivity;
+    }
 
     public void reproducirMp3(final List<Track> listaReproduccion, final Integer posicion, final AppCompatActivity activity) {
         this.listaReproduccion = listaReproduccion;
@@ -43,31 +48,18 @@ public class ReproducirMp3 {
 
         ImageView imageViewExpandir = activity.findViewById(R.id.btnActivityReproductor);
 
-        imageViewExpandir.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(activity, ReproductorActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putInt(ReproductorActivity.KEY_POSICION, 0);
-                bundle.putSerializable(ReproductorActivity.KEY_OBJETO, (Serializable) listaReproduccion);
-                intent.putExtras(bundle);
-                activity.startActivity(intent);
-            }
-        });
-
-        mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-
-
-        try {
-            if (!mediaPlayer.isPlaying()) {
-                mediaPlayer.reset();
-                mediaPlayer.setDataSource(pista.getPreview());
-                mediaPlayer.prepare();
-                mediaPlayer.start();
-                linearLayout.setVisibility(View.VISIBLE);
-                imageViewPause.setVisibility(View.VISIBLE);
-                imageViewPlay.setVisibility(View.INVISIBLE);
-            }
+        if (imageViewExpandir != null) {
+            imageViewExpandir.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(activity, ReproductorActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putInt(ReproductorActivity.KEY_POSICION, posicion);
+                    bundle.putSerializable(ReproductorActivity.KEY_OBJETO, (Serializable) listaReproduccion);
+                    intent.putExtras(bundle);
+                    activity.startActivity(intent);
+                }
+            });
 
             imageViewPause.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -90,21 +82,36 @@ public class ReproducirMp3 {
                 }
             });
 
+        }
+        mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
 
-            mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                @Override
-                public void onCompletion(MediaPlayer mp) {
-                    if (posicion < listaReproduccion.size() - 1) {
-                        reproducirMp3(listaReproduccion, posicion + 1, activity);
-                    }
 
+        try {
+            if (!mediaPlayer.isPlaying()) {
+                mediaPlayer.reset();
+                mediaPlayer.setDataSource(pista.getPreview());
+                mediaPlayer.prepare();
+                mediaPlayer.start();
+                if (imageViewExpandir != null) {
+                    linearLayout.setVisibility(View.VISIBLE);
+                    imageViewPause.setVisibility(View.VISIBLE);
+                    imageViewPlay.setVisibility(View.INVISIBLE);
                 }
-            });
+            }
+            if (!isMainActivity) {
+                mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                    @Override
+                    public void onCompletion(MediaPlayer mp) {
+                        if (posicion < listaReproduccion.size() - 1) {
+                            reproducirMp3(listaReproduccion, posicion + 1, activity);
+                        }
+
+                    }
+                });
+            }
 
         } catch (
-                IOException e)
-
-        {
+                IOException e) {
 
             e.printStackTrace();
         } catch (
@@ -123,18 +130,6 @@ public class ReproducirMp3 {
         {
             e.printStackTrace();
         }
-    }
-
-
-    public void pistaSiguiente(final Integer posicion, final ResultListener<Integer> posicionResulset){
-        mediaPlayer = MediaPlayerNikkal.getInstance().getMediaPlayer();
-        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-            @Override
-            public void onCompletion(MediaPlayer mp) {
-                posicionResulset.finish(posicion+1);
-
-            }
-        });
     }
 
     public void ReproducirMp3Activity(final Integer posicion) {
@@ -274,14 +269,6 @@ public class ReproducirMp3 {
 
     public MediaPlayer getMediaPlayer() {
         return mediaPlayer;
-    }
-
-    public List<Track> getListaReproduccion() {
-        return listaReproduccion;
-    }
-
-    public void setListaReproduccion(List<Track> listaReproduccion) {
-        this.listaReproduccion = listaReproduccion;
     }
 
 }
