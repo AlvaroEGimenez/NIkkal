@@ -258,7 +258,7 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
         //Le agrego el texto a compartir (Puede ser un link tambien)
         share.putExtra(Intent.EXTRA_TEXT, pista.getLink());
         //Hacemos un start para que comparta el contenido.
-        startActivity(Intent.createChooser(share,"Compartido desde Nikkal app"));
+        startActivity(Intent.createChooser(share, "Compartido desde Nikkal app"));
 
     }
 
@@ -273,7 +273,7 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
         autoScrollViewPager = dialog.findViewById(R.id.pistaViewPagerScroll);
         autoScrollViewPager.setAdapter(pistaAdapterViewPage);
         autoScrollViewPager.setCurrentItem(posicion);
-        MediaPlayerNikkal.getInstance().getMediaPlayer().stop();
+
         dialog.setOnKeyListener(new Dialog.OnKeyListener() {
 
             @Override
@@ -287,8 +287,11 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
                     parent.visibilidadReproductor(true);
                     parent.getBottomNavigation().setVisibility(View.VISIBLE);
                     reprducirAlbum = Boolean.FALSE;
-                    ReproducirMp3 reproducirMp3 = parent.getReproducirMp3();
-                    reproducirMp3.reproducirMp3(pistas, posicion, parent);
+
+                    if (MediaPlayerNikkal.getInstance().getMediaPlayer().isPlaying()) {
+                        ReproducirMp3 reproducirMp3 = parent.getReproducirMp3();
+                        reproducirMp3.reproducirMp3(pistas, posicion, parent);
+                    }
                 }
                 return true;
             }
