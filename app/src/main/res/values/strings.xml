@@ -14,7 +14,6 @@
     <string name="btnbar_favorito">Favoritos</string>
     <string name="btnbar_radio">Radio</string>
     <string name="btnbar_ajuste">Ajuste</string>
-
     <string name="tv_busqueda_reciente">Busquedas recientes</string>
     <string name="hint_buscar">Buscar…</string>
     <string name="tv_canciones_favoritas">Mis Canciones</string>
@@ -24,11 +23,8 @@
     <string name="tv_titulo_favoritos">Favoritos</string>
     <string name="tv_titulo_escuchadas_recientemente">Escuchadas Recientemente</string>
     <string name="tv_subtitulo_escuchadas_recientemente">Subtitulo Escuchadas Recientemente</string>
-
     <string name="facebook_app_id">207438126849071</string>
     <string name="fb_login_protocol_scheme">fb207438126849071</string>
-
-
     <string name="si">Sí</string>
     <string name="no">No</string>
     <string name="cabeceraLogin">Necesitas logearte para poder acceder a más funcionalidades</string>
@@ -41,8 +37,6 @@
     <string name="busqueda_vacia">Sin nada que buscar, nada encontramos :)</string>
     <string name="compartir_redes_sociales">Compartir Redes Sociales</string>
     <string name="mensaje_compartir">Esta canción es para ti!</string>
-
-
     <string name="album_favorito">Mis Albunes</string>
     <string name="album_Artista">Artista Album</string>
     <string name="artistas">Mis Artistas</string>
@@ -52,7 +46,8 @@
     <string name="elemento_eliminado">Se ha removido de Favoritos</string>
     <string name="pista_anterior">Anterior</string>
     <string name="pista_siguiente">Próximo</string>
-    <string name="sin_conexion_reproducir">No se puede reproducir sin conección</string>
+    <string name="sin_conexion_reproducir">No se puede reproducir sin conexión</string>
+    <string name="modo_sin_coneccion">Modo sin conexión, solo puedes visualizar tus favoritos</string>
 
 
 </resources>

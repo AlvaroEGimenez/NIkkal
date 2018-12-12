@@ -22,6 +22,7 @@ import android.widget.ViewSwitcher;
 import com.digitalhouse.a0818moacn01_02.DAO.DAOLocal;
 import com.digitalhouse.a0818moacn01_02.R;
 import com.digitalhouse.a0818moacn01_02.Utils.ResultListener;
+import com.digitalhouse.a0818moacn01_02.Utils.Util;
 import com.digitalhouse.a0818moacn01_02.controller.GenreController;
 import com.digitalhouse.a0818moacn01_02.controller.RadioController;
 import com.digitalhouse.a0818moacn01_02.controller.TopChartAlbumsController;
@@ -149,15 +150,16 @@ public class CategoriaFragment extends Fragment implements CategoriaAdapterRecyc
     }
 
     private void setCategotia() {
-
         TextView tvGeneros = view.findViewById(R.id.tvGeneroRecyclerView);
-        tvGeneros.setText(R.string.tv_genero);
-
         TextView tvSugerencia = view.findViewById(R.id.tvSugerenciaRecyclerView);
-        tvSugerencia.setText(R.string.tv_sugerencia);
-
         TextView tvMasEscuchado = view.findViewById(R.id.tvMasEscuchadoRecyclerView);
-        tvMasEscuchado.setText(R.string.tv_mas_escuchado);
+        if(Util.hayInternet(getContext())) {
+            tvGeneros.setText(R.string.tv_genero);
+            tvSugerencia.setText(R.string.tv_sugerencia);
+            tvMasEscuchado.setText(R.string.tv_mas_escuchado);
+        }else{
+            tvGeneros.setText(getResources().getString(R.string.modo_sin_coneccion));
+        }
 
     }
 

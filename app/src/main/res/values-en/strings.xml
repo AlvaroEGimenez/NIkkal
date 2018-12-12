@@ -14,7 +14,6 @@
     <string name="btnbar_favorito">Favorites</string>
     <string name="btnbar_radio">Radios</string>
     <string name="btnbar_ajuste">Setting</string>
-
     <string name="tv_busqueda_reciente">Recent searches</string>
     <string name="hint_buscar">Search</string>
     <string name="tv_canciones_favoritas">My Songs</string>
@@ -38,7 +37,6 @@
     <string name="busqueda_vacia">With nothing to look for, nothing found :)</string>
     <string name="compartir_redes_sociales">Share</string>
     <string name="mensaje_compartir">This song is for you!</string>
-
     <string name="album_favorito">Album Favorite</string>
     <string name="album_Artista">Artist Album</string>
     <string name="pistas">Tracks</string>
@@ -48,5 +46,6 @@
     <string name="pista_anterior">Previous</string>
     <string name="pista_siguiente">Next</string>
     <string name="sin_conexion_reproducir">It can not be played without connection</string>
+    <string name="modo_sin_coneccion">Mode without connection, you can only view your favorites</string>
 
 </resources>
