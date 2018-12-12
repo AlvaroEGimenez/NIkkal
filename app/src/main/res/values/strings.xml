@@ -52,6 +52,7 @@
     <string name="elemento_eliminado">Se ha removido de Favoritos</string>
     <string name="pista_anterior">Anterior</string>
     <string name="pista_siguiente">Próximo</string>
+    <string name="sin_conexion_reproducir">No se puede reproducir sin conección</string>
 
 
 </resources>

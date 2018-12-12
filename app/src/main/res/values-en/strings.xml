@@ -47,5 +47,6 @@
     <string name="elemento_eliminado">Removed from Favorites</string>
     <string name="pista_anterior">Previous</string>
     <string name="pista_siguiente">Next</string>
+    <string name="sin_conexion_reproducir">It can not be played without connection</string>
 
 </resources>

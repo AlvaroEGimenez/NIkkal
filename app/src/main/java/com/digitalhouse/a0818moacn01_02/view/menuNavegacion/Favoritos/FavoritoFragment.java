@@ -23,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.digitalhouse.a0818moacn01_02.R;
+import com.digitalhouse.a0818moacn01_02.Utils.Util;
 import com.digitalhouse.a0818moacn01_02.controller.FavoritoController;
 import com.digitalhouse.a0818moacn01_02.Utils.MediaPlayerNikkal;
 import com.digitalhouse.a0818moacn01_02.Utils.ResultListener;
@@ -248,6 +249,9 @@ public class FavoritoFragment extends Fragment implements AdaptadorFavoritos.Fav
     }
 
     private void reproducirPista(Favorito favorito) {
+        if(!Util.hayInternet(getContext())){
+            Toast.makeText(parent, getResources().getString(R.string.sin_conexion_reproducir), Toast.LENGTH_SHORT).show();
+        }
         TracksController tracksController = new TracksController();
         tracksController.getPista(new ResultListener<Track>() {
             @Override
