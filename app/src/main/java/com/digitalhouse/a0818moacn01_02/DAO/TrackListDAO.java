@@ -31,9 +31,7 @@ public class TrackListDAO extends DaoHelper {
 
             @Override
             public void onFailure(Call<ContenedorTrackList> call, Throwable t) {
-
             }
         });
-
     }
 }

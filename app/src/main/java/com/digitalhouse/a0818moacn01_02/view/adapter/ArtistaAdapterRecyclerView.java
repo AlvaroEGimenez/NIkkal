@@ -16,7 +16,6 @@ import com.digitalhouse.a0818moacn01_02.model.ArtistDeezer;
 import java.util.List;
 
 public class ArtistaAdapterRecyclerView  extends RecyclerView.Adapter {
-
     private List<ArtistDeezer> artistas;
     private Integer resources;
     private Activity activity;
@@ -51,7 +50,6 @@ public class ArtistaAdapterRecyclerView  extends RecyclerView.Adapter {
     public interface ArtistaAdapterInterface {
         void cambiarDeActividad(ArtistDeezer artista);
     }
-
 
     public class ArtistaViewHolder extends RecyclerView.ViewHolder {
         private ImageView imagenArtistaCardView;

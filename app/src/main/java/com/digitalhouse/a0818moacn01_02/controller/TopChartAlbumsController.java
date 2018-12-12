@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TopChartAlbumsController {
+
     public void getTopChartAlbums(final ResultListener<List<AlbumDeezer>> listenerView, Context context) {
         if (Util.hayInternet(context)) {
             TopChartAlbumsDAO topChartAlbumsDAO = new TopChartAlbumsDAO();
@@ -20,7 +21,7 @@ public class TopChartAlbumsController {
                     listenerView.finish(resultado);
                 }
             });
-        }else{
+        } else {
             listenerView.finish(new ArrayList<AlbumDeezer>());
         }
     }

@@ -1,7 +1,6 @@
 package com.digitalhouse.a0818moacn01_02.DAO;
 
 
-
 import android.util.Log;
 
 import com.digitalhouse.a0818moacn01_02.Utils.ResultListener;
@@ -23,7 +22,7 @@ public class RadioDAO extends DaoHelper {
         serviceRadio = retrofit.create(ServiceRadio.class);
     }
 
-    public void  getRadios(final ResultListener<List<RadioDeezer>> listenerDelController){
+    public void getRadios(final ResultListener<List<RadioDeezer>> listenerDelController) {
         Call<ContenedorRadio> call = serviceRadio.getRadioList();
 
         call.enqueue(new Callback<ContenedorRadio>() {
@@ -40,5 +39,4 @@ public class RadioDAO extends DaoHelper {
             }
         });
     }
-
 }

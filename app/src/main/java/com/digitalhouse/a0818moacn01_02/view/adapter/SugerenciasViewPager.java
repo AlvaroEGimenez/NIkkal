@@ -11,15 +11,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SugerenciasViewPager extends FragmentPagerAdapter {
-
     List<Track> trackList;
     List<ReproductorFragment> reproductorFragments = new ArrayList<>();
-
 
     public SugerenciasViewPager(FragmentManager fm, List<Track> trackList) {
         super(fm);
         this.trackList = trackList;
-
 
         for (Track track : trackList) {
             reproductorFragments.add(ReproductorFragment.factory(track));

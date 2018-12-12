@@ -48,7 +48,7 @@ public class FavoritoController {
                     resultListener.finish(resultado);
                 }
             }, tipo);
-        }else{
+        } else {
             // Room
         }
     }
@@ -61,7 +61,7 @@ public class FavoritoController {
                     listener.finish(resultado);
                 }
             }, id, tipo);
-        }else{
+        } else {
             // Room
         }
     }

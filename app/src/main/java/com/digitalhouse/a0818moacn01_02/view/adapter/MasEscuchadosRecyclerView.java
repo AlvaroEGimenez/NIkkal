@@ -16,7 +16,6 @@ import com.digitalhouse.a0818moacn01_02.model.AlbumDeezer;
 import java.util.List;
 
 public class MasEscuchadosRecyclerView extends RecyclerView.Adapter {
-
     private List<AlbumDeezer> artistDeezerList;
     private Context context;
     private OnclickMasEscuchados onclickMasEscuchados;
@@ -31,7 +30,7 @@ public class MasEscuchadosRecyclerView extends RecyclerView.Adapter {
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         context = parent.getContext();
         LayoutInflater layoutInflater = LayoutInflater.from(context);
-        View view = layoutInflater.inflate(R.layout.cardview_mas_escuchados,parent,false);
+        View view = layoutInflater.inflate(R.layout.cardview_mas_escuchados, parent, false);
         TopChartAlbumsViewHolder topChartAlbumsViewHolder = new TopChartAlbumsViewHolder(view);
         return topChartAlbumsViewHolder;
     }
@@ -41,8 +40,6 @@ public class MasEscuchadosRecyclerView extends RecyclerView.Adapter {
         AlbumDeezer albumDeezer = artistDeezerList.get(position);
         TopChartAlbumsViewHolder topChartAlbumsViewHolder = (TopChartAlbumsViewHolder) holder;
         topChartAlbumsViewHolder.bind(albumDeezer);
-
-
     }
 
     @Override
@@ -55,7 +52,6 @@ public class MasEscuchadosRecyclerView extends RecyclerView.Adapter {
         TextView textViewMasEscuchados;
         ImageView imageViewMasEscuchados;
 
-
         public TopChartAlbumsViewHolder(View itemView) {
             super(itemView);
             textViewMasEscuchados = itemView.findViewById(R.id.tituloMasEscuchados);
@@ -67,10 +63,9 @@ public class MasEscuchadosRecyclerView extends RecyclerView.Adapter {
                     onclickMasEscuchados.onClickmasescuchados(artistDeezerList.get(getAdapterPosition()));
                 }
             });
-
         }
 
-        public  void bind(AlbumDeezer albumDeezer){
+        public void bind(AlbumDeezer albumDeezer) {
             textViewMasEscuchados.setText(albumDeezer.getTitle());
             Glide.with(context).load(albumDeezer.getCoverMedium()).into(imageViewMasEscuchados);
         }

@@ -21,7 +21,7 @@ public class ArtistController {
                     listenerView.finish(resultado);
                 }
             }, genreId);
-        }else{
+        } else {
             listenerView.finish(new ArrayList<ArtistDeezer>());
         }
     }

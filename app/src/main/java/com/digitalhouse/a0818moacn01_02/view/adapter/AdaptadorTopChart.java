@@ -64,9 +64,7 @@ public class AdaptadorTopChart extends BaseAdapter {
                     onItemClickTopChart.onClickTopChart(topChartList.get(position));
                 }
             });
-
         }
-
         return rootView;
     }
 

@@ -19,9 +19,9 @@ import android.widget.ProgressBar;
 
 import com.bumptech.glide.Glide;
 import com.digitalhouse.a0818moacn01_02.R;
-import com.digitalhouse.a0818moacn01_02.controller.FavoritoController;
 import com.digitalhouse.a0818moacn01_02.Utils.ResultListener;
 import com.digitalhouse.a0818moacn01_02.controller.ArtistAlbumController;
+import com.digitalhouse.a0818moacn01_02.controller.FavoritoController;
 import com.digitalhouse.a0818moacn01_02.model.AlbumDeezer;
 import com.digitalhouse.a0818moacn01_02.model.Favorito;
 import com.digitalhouse.a0818moacn01_02.view.MainActivity;
@@ -35,7 +35,6 @@ public class AlbumFragment extends Fragment implements AlbumAdapterRecyclerView.
     public static final String KEY_NOMBRE_ARTISTA = "nombreArtista";
     public static final String KEY_ID_ARTISTA = "idArtista";
     public static final String KEY_FAVORITO_ARTISTA = "idFavoritoArtista";
-
 
     private PistaAlbumFragment pistaAlbumFragment = new PistaAlbumFragment();
     private Integer idArtist;
@@ -68,8 +67,8 @@ public class AlbumFragment extends Fragment implements AlbumAdapterRecyclerView.
         conatiner = view.findViewById(R.id.categoriaAlbumContainer);
         pbAlbum = view.findViewById(R.id.pbAlbum);
 
-       btnFavorito = view.findViewById(R.id.btnFavoritoArtista);
-       btnFavorito.setOnClickListener(favoritoListener);
+        btnFavorito = view.findViewById(R.id.btnFavoritoArtista);
+        btnFavorito.setOnClickListener(favoritoListener);
         ImageView imagenArtista = view.findViewById(R.id.imagenArtista);
         Toolbar tvCabeceraArtista = view.findViewById(R.id.tvCabeceraArtista);
         view.findViewById(R.id.rvAlbum);
@@ -103,7 +102,6 @@ public class AlbumFragment extends Fragment implements AlbumAdapterRecyclerView.
         }, getContext(), idArtist);
     }
 
-
     private void cargarImagen(ImageView imageView, String url) {
         Glide.with(getContext()).load(url).into(imageView);
     }
@@ -136,8 +134,6 @@ public class AlbumFragment extends Fragment implements AlbumAdapterRecyclerView.
         mainActivity.reemplazarFragment(pistaAlbumFragment, R.id.genero_fragment);
     }
 
-
-
     private void inisializacionFavoritoArtista(final ImageView btnFavorito) {
         favoritoControllerArtista.getFavoritoPorId(new ResultListener<Favorito>() {
             @Override
@@ -160,25 +156,23 @@ public class AlbumFragment extends Fragment implements AlbumAdapterRecyclerView.
     };
 
     private void setFavoritoPista() {
-
         if (favoritoArtista) {
             favoritoArtista = Boolean.FALSE;
             cargarImagen(R.drawable.ic_favorite_no_seleccion);
             favoritoControllerArtista.eliminar(idArtist);
             Animation animation;
-            animation = AnimationUtils.loadAnimation(getContext(),R.anim.blink_limited);
+            animation = AnimationUtils.loadAnimation(getContext(), R.anim.blink_limited);
             btnFavorito.setAnimation(animation);
         } else {
             cargarImagen(R.drawable.ic_favorite_black_24dp);
             favoritoArtista = Boolean.TRUE;
             Animation animation;
-            animation = AnimationUtils.loadAnimation(getContext(),R.anim.rotate);
+            animation = AnimationUtils.loadAnimation(getContext(), R.anim.rotate);
             btnFavorito.setAnimation(animation);
             favoritoControllerArtista.agregar(idArtist, urlImagenCabecera, nombreGenero);
 
         }
     }
-
 
     private void cargarImagen(Integer idDrawable) {
         Glide.with(getContext()).load(idDrawable).into(btnFavorito);

@@ -12,8 +12,8 @@ import java.util.List;
 
 public class RadioController {
 
-    public void getRadios(final ResultListener <List<RadioDeezer>> listenerDelController, Context context){
-        if (Util.hayInternet(context)){
+    public void getRadios(final ResultListener<List<RadioDeezer>> listenerDelController, Context context) {
+        if (Util.hayInternet(context)) {
             RadioDAO radioDAO = new RadioDAO();
             radioDAO.getRadios(new ResultListener<List<RadioDeezer>>() {
                 @Override
@@ -21,7 +21,7 @@ public class RadioController {
                     listenerDelController.finish(resultado);
                 }
             });
-        }else{
+        } else {
             listenerDelController.finish(new ArrayList<RadioDeezer>());
         }
     }

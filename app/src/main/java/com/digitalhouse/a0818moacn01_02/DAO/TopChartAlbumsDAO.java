@@ -30,7 +30,6 @@ public class TopChartAlbumsDAO extends DaoHelper {
                 ContenedorAlbum contenedorTracks = response.body();
                 List<AlbumDeezer> albumDeezerList = contenedorTracks.getAlbumDeezerList();
                 listenerDelController.finish(albumDeezerList);
-
             }
 
             @Override

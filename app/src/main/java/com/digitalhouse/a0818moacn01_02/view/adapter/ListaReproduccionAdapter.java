@@ -13,13 +13,10 @@ import com.digitalhouse.a0818moacn01_02.R;
 import com.digitalhouse.a0818moacn01_02.model.ListaReproduccion;
 import com.digitalhouse.a0818moacn01_02.model.Track;
 import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Favoritos.OnMoveAndSwipedListenerFavorito;
-import com.github.abdularis.civ.CircleImageView;
 
-import java.net.Inet4Address;
 import java.util.List;
 
 public class ListaReproduccionAdapter extends RecyclerView.Adapter implements OnMoveAndSwipedListenerFavorito {
-
     private List<ListaReproduccion> listaReproduccionList;
     private Integer resources;
     private ListaReproduccionAdapterInterface escuchador;
@@ -29,7 +26,6 @@ public class ListaReproduccionAdapter extends RecyclerView.Adapter implements On
         this.resources = resources;
         this.escuchador = escuchador;
     }
-
 
     @NonNull
     @Override
@@ -52,7 +48,6 @@ public class ListaReproduccionAdapter extends RecyclerView.Adapter implements On
 
     public interface ListaReproduccionAdapterInterface {
         void seleccionLista(ListaReproduccion listaReproduccion);
-
         void onItemDismiss(int position);
     }
 
@@ -81,17 +76,17 @@ public class ListaReproduccionAdapter extends RecyclerView.Adapter implements On
             Track pista = listaReproduccion.getPistas().get(posicionRandom);
             if (pista.getAlbum() != null && pista.getAlbum().getCover() != null) {
                 Glide.with(itemView.getContext()).load(pista.getAlbum().getCover()).into(imgAlbumListaReproduccionFavorito);
-            }else if(pista.getArtist() != null && pista.getArtist().getPictureMedium() != null){
+            } else if (pista.getArtist() != null && pista.getArtist().getPictureMedium() != null) {
                 Glide.with(itemView.getContext()).load(pista.getArtist().getPictureMedium()).into(imgAlbumListaReproduccionFavorito);
-            }else {
+            } else {
                 Glide.with(itemView.getContext()).load(pista.getImagenAlbum()).into(imgAlbumListaReproduccionFavorito);
             }
         }
     }
 
 
-    private Integer getPosicionRandom(Integer cantidad){
-        return  (int) (Math.random() * cantidad);
+    private Integer getPosicionRandom(Integer cantidad) {
+        return (int) (Math.random() * cantidad);
     }
 
     public void setListaReproduccionList(List<ListaReproduccion> listaReproduccionList) {

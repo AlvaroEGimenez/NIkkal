@@ -20,7 +20,6 @@ import com.digitalhouse.a0818moacn01_02.R;
 
 public class InicioActivity extends AppCompatActivity {
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,7 +61,6 @@ public class InicioActivity extends AppCompatActivity {
     }
 
     private boolean verificarConexion() {
-
         ConnectivityManager connectivityManager = (ConnectivityManager)
                 getSystemService(Context.CONNECTIVITY_SERVICE);
 

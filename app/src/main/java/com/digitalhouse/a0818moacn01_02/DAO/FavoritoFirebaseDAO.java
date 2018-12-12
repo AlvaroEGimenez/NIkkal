@@ -23,7 +23,6 @@ public class FavoritoFirebaseDAO {
     public FavoritoFirebaseDAO() {
         mReference = FirebaseDatabase.getInstance().getReference();
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
-
     }
 
     public void agregar(Integer id, String urlImagen, String titulo, String tipo) {

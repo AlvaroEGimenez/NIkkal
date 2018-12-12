@@ -22,7 +22,7 @@ public class ArtistAlbumController {
 
                 }
             }, artistId);
-        }else{
+        } else {
             listenerView.finish(new ArrayList<AlbumDeezer>());
         }
     }

@@ -20,8 +20,8 @@ public class SearchControlller {
                 public void finish(List<Track> resultado) {
                     listenerView.finish(resultado);
                 }
-            },search);
-        }else{
+            }, search);
+        } else {
             listenerView.finish(new ArrayList<Track>());
         }
     }

@@ -57,7 +57,6 @@ public class ReproductorFragment extends Fragment {
             bundle.putString(KEY_IMAGEN_TRACK, track.getImagenAlbum());
         }
 
-
         bundle.putString(KEY_NOMBRE_TRACK, track.getTitle());
         bundle.putString(KEY_NOMBRE_ARTISTA, track.getArtist().getName());
         bundle.putInt(KEY_DURACION_TRACK, track.getDuration());
@@ -73,11 +72,6 @@ public class ReproductorFragment extends Fragment {
             urlImagen = bundle.getString(KEY_IMAGEN_TRACK);
             nombreTrack = bundle.getString(KEY_NOMBRE_TRACK);
             nombreArtista = bundle.getString(KEY_NOMBRE_ARTISTA);
-            Integer duracionTrack = bundle.getInt(KEY_DURACION_TRACK);
-            Long posicionActual = bundle.getLong(KEY_POSICION_ACTUAL);
-            Integer idTrack = bundle.getInt(KEY_ID_TRACK);
-            Track trackActual = (Track) bundle.getSerializable(KEY_TRACK_ACTUAL);
-
         }
     }
 
@@ -88,8 +82,8 @@ public class ReproductorFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_reproductor, container, false);
+
         mediaPlayer = MediaPlayerNikkal.getInstance().getMediaPlayer();
         leerBundle(getArguments());
         this.reproducirMp3 = new ReproducirMp3(false);
@@ -148,7 +142,6 @@ public class ReproductorFragment extends Fragment {
             }
         });
 
-
         imageViewAnterior.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -177,7 +170,6 @@ public class ReproductorFragment extends Fragment {
                 }
             }
         });
-
 
         mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override

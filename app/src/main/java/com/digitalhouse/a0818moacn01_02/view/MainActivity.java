@@ -52,6 +52,7 @@ import com.facebook.login.LoginManager;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -140,7 +141,15 @@ public class MainActivity extends AppCompatActivity implements
 
         listaReproduccion = new ListaReproduccionFirebase();
         crearListaReproduccionRecyclerView();
-      //  automatizacionMediaPLayer();
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+
+        Integer posicion = bundle.getInt(ReproductorActivity.KEY_POSICION);
+        Serializable listaPistaSerializable = bundle.getSerializable(ReproductorActivity.KEY_OBJETO);
+        if (listaPistaSerializable != null) {
+            Track pistaReproductorActivity = ((List<Track>) listaPistaSerializable).get(posicion);
+            textViewNombrePista.setText(pistaReproductorActivity.getArtist().getName() + " - " + pistaReproductorActivity.getTitle());
+        }
     }
 
     @Override
@@ -425,17 +434,6 @@ public class MainActivity extends AppCompatActivity implements
                 bottomNavigation.setSelectedItemId(idFragemnt);
         }
     }
-
- /*   public void automatizacionMediaPLayer() {
-        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-            @Override
-            public void onCompletion(MediaPlayer mp) {
-                Track track = getReproducirMp3().getListaReproduccion().get(getReproducirMp3().getPosicion());
-                textViewNombrePista.setText(track.getArtist().getName() + " - " + track.getTitle());
-
-            }
-        });
-    }*/
 
     public ReproducirMp3 getReproducirMp3() {
         return reproducirMp3;

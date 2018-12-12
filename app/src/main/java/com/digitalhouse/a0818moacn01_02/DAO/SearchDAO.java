@@ -4,10 +4,8 @@ import android.util.Log;
 
 import com.digitalhouse.a0818moacn01_02.Utils.ResultListener;
 import com.digitalhouse.a0818moacn01_02.model.Container.ContenedorSearch;
-import com.digitalhouse.a0818moacn01_02.model.Container.ContenedorTracks;
 import com.digitalhouse.a0818moacn01_02.model.Track;
 import com.digitalhouse.a0818moacn01_02.service.ServiceSearch;
-import com.digitalhouse.a0818moacn01_02.service.ServiceTopChart;
 
 import java.util.List;
 
@@ -23,8 +21,7 @@ public class SearchDAO extends DaoHelper {
         serviceSearch = retrofit.create(ServiceSearch.class);
     }
 
-
-    public void getSearch (final ResultListener<List<Track>> listenerDelController, String search ){
+    public void getSearch(final ResultListener<List<Track>> listenerDelController, String search) {
         Call<ContenedorSearch> call = serviceSearch.getSearch(search);
         call.enqueue(new Callback<ContenedorSearch>() {
             @Override
@@ -39,7 +36,7 @@ public class SearchDAO extends DaoHelper {
 
             @Override
             public void onFailure(Call<ContenedorSearch> call, Throwable t) {
-                Log.e("ERROR",t.toString());
+                Log.e("ERROR", t.toString());
 
             }
         });

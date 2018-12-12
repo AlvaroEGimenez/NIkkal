@@ -26,8 +26,8 @@ import java.util.List;
 
 public class ReproducirMp3 {
     private MediaPlayer mediaPlayer;
-    private List<Track> listaReproduccion;
-    private Integer posicion;
+    private static List<Track> listaReproduccion;
+    private static Integer posicion;
     private AppCompatActivity activity;
     private Boolean isMainActivity;
 
@@ -85,7 +85,6 @@ public class ReproducirMp3 {
         }
         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
 
-
         try {
             if (!mediaPlayer.isPlaying()) {
                 mediaPlayer.reset();
@@ -135,7 +134,7 @@ public class ReproducirMp3 {
     public void ReproducirMp3Activity(final Integer posicion) {
         mediaPlayer = MediaPlayerNikkal.getInstance().getMediaPlayer();
         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-
+        this.posicion = posicion;
 
         Track track = this.listaReproduccion.get(posicion);
         try {
@@ -145,7 +144,6 @@ public class ReproducirMp3 {
                 mediaPlayer.prepare();
                 mediaPlayer.start();
             }
-
 
         } catch (
                 IOException e)
@@ -181,7 +179,6 @@ public class ReproducirMp3 {
         final TextView textViewNombrePista = activity.findViewById(R.id.tvNombreReproductor);
         textViewNombrePista.setTextColor(Color.parseColor("#FD9701"));
         textViewNombrePista.setSelected(true);
-
 
         Animation animationBlink = AnimationUtils.loadAnimation(activity.getApplication(), R.anim.blink);
         final Animation animationNone = AnimationUtils.loadAnimation(activity.getApplication(), R.anim.none);
@@ -268,14 +265,11 @@ public class ReproducirMp3 {
         }
     }
 
-
     public Integer getPosicion() {
         return posicion;
     }
 
     public List<Track> getListaReproduccion() {
         return listaReproduccion;
-
-
     }
 }

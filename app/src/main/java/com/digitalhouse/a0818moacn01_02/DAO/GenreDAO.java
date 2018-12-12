@@ -21,7 +21,6 @@ public class GenreDAO extends DaoHelper {
         serviceGenre = retrofit.create(ServiceGenre.class);
     }
 
-
     public void getGenre(final ResultListener<List<Genre>> listenerDelController) {
 
         Call<ContenedorGenre> call = serviceGenre.getTopChart();
@@ -43,6 +42,4 @@ public class GenreDAO extends DaoHelper {
             }
         });
     }
-
-
 }

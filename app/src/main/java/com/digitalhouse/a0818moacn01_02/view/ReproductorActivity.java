@@ -33,7 +33,7 @@ public class ReproductorActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reproductor);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        
+
         mediaPlayer = MediaPlayerNikkal.getInstance().getMediaPlayer();
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
@@ -48,8 +48,6 @@ public class ReproductorActivity extends AppCompatActivity {
             viewPager.setClipToPadding(false);
             viewPager.setPadding(130, 0, 130, 0);
             viewPager.setPageMargin(40);
-
-
         } else {
             Toast.makeText(this, "Sin Datos", Toast.LENGTH_SHORT).show();
         }
@@ -95,7 +93,6 @@ public class ReproductorActivity extends AppCompatActivity {
     public List<Track> getTrackList() {
         return trackList;
     }
-
     public Integer getPosicion() {
         return posicion;
     }

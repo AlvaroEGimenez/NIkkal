@@ -21,7 +21,7 @@ public class GenreController {
                     listenerView.finish(resultado);
                 }
             });
-        }else{
+        } else {
             listenerView.finish(new ArrayList<Genre>());
         }
     }

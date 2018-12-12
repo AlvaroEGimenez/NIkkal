@@ -63,7 +63,6 @@ public class AdaptadorLocalTopChart extends BaseAdapter {
                     onItemClickTopChart.onClickTopChartDeezer(topChartList.get(position));
                 }
             });
-
         }
 
         return rootView;

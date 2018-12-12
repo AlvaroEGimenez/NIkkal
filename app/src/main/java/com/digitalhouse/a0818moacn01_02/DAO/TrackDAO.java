@@ -21,7 +21,6 @@ public class TrackDAO extends DaoHelper {
         trackService = retrofit.create(TrackService.class);
     }
 
-
     public void getTracks(final ResultListener<List<Track>> listenerDelController, Integer trackId) {
 
         Call<Tracks> call = trackService.getTracks(trackId);
@@ -63,7 +62,6 @@ public class TrackDAO extends DaoHelper {
             }
         });
     }
-
 
 }
 

@@ -1,6 +1,7 @@
 package com.digitalhouse.a0818moacn01_02.controller;
 
 import android.content.Context;
+
 import com.digitalhouse.a0818moacn01_02.DAO.TrackDAO;
 import com.digitalhouse.a0818moacn01_02.Utils.ResultListener;
 import com.digitalhouse.a0818moacn01_02.Utils.Util;
@@ -19,7 +20,7 @@ public class TracksController {
                     listenerView.finish(resultado);
                 }
             }, trackId);
-        }else{
+        } else {
             listenerView.finish(new ArrayList<Track>());
         }
     }
@@ -34,7 +35,7 @@ public class TracksController {
                 }
             }, trackId);
 
-        }else{
+        } else {
             listenerView.finish(new Track());
         }
     }
