@@ -182,9 +182,11 @@ public class ReproductorFragment extends Fragment {
         mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
-                Integer posicion = viewPager.getCurrentItem() + 1;
-                reproducirMp3.ReproducirMp3Activity(posicion);
-                viewPager.setCurrentItem(posicion);
+                if (viewPager.getCurrentItem() + 1 < activity.getTrackList().size()) {
+                    Integer posicion = viewPager.getCurrentItem() + 1;
+                    reproducirMp3.ReproducirMp3Activity(posicion);
+                    viewPager.setCurrentItem(posicion);
+                }
             }
         });
 

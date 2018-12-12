@@ -136,6 +136,7 @@ public class ReproducirMp3 {
         mediaPlayer = MediaPlayerNikkal.getInstance().getMediaPlayer();
         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
 
+
         Track track = this.listaReproduccion.get(posicion);
         try {
             if (!mediaPlayer.isPlaying()) {
