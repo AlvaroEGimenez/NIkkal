@@ -3,21 +3,21 @@ package com.digitalhouse.a0818moacn01_02.view;
 
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.deezer.sdk.network.connect.DeezerConnect;
 import com.digitalhouse.a0818moacn01_02.R;
 import com.digitalhouse.a0818moacn01_02.Utils.MediaPlayerNikkal;
 import com.digitalhouse.a0818moacn01_02.Utils.ReproducirMp3;
-import com.digitalhouse.a0818moacn01_02.Utils.ResultListener;
 import com.digitalhouse.a0818moacn01_02.model.Track;
 
 /**
@@ -36,15 +36,10 @@ public class ReproductorFragment extends Fragment {
     public static final String KEY_POSICION_ACTUAL = "posicion";
     public static final String KEY_TRACK_ACTUAL = "track_actual";
 
-
     private String urlImagen;
     private String nombreTrack;
     private String nombreArtista;
-    private Integer duracionTrack;
-    private Integer idTrack;
-    private Long posicionActual;
     private ViewPager viewPager;
-    private Track trackActual;
     private MediaPlayer mediaPlayer;
     private ReproducirMp3 reproducirMp3;
     ReproductorActivity activity;
@@ -53,7 +48,6 @@ public class ReproductorFragment extends Fragment {
         ReproductorFragment reproductorFragment = new ReproductorFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable(KEY_TRACK_ACTUAL, track);
-
 
         if (track.getAlbum() != null && track.getAlbum().getCoverMedium() != null) {
             bundle.putString(KEY_IMAGEN_TRACK, track.getAlbum().getCoverMedium());
@@ -79,10 +73,10 @@ public class ReproductorFragment extends Fragment {
             urlImagen = bundle.getString(KEY_IMAGEN_TRACK);
             nombreTrack = bundle.getString(KEY_NOMBRE_TRACK);
             nombreArtista = bundle.getString(KEY_NOMBRE_ARTISTA);
-            duracionTrack = bundle.getInt(KEY_DURACION_TRACK);
-            posicionActual = bundle.getLong(KEY_POSICION_ACTUAL);
-            idTrack = bundle.getInt(KEY_ID_TRACK);
-            trackActual = (Track) bundle.getSerializable(KEY_TRACK_ACTUAL);
+            Integer duracionTrack = bundle.getInt(KEY_DURACION_TRACK);
+            Long posicionActual = bundle.getLong(KEY_POSICION_ACTUAL);
+            Integer idTrack = bundle.getInt(KEY_ID_TRACK);
+            Track trackActual = (Track) bundle.getSerializable(KEY_TRACK_ACTUAL);
 
         }
     }
@@ -99,7 +93,7 @@ public class ReproductorFragment extends Fragment {
         mediaPlayer = MediaPlayerNikkal.getInstance().getMediaPlayer();
         leerBundle(getArguments());
         this.reproducirMp3 = new ReproducirMp3(false);
-
+        final ProgressBar progressBar = getActivity().findViewById(R.id.pbReproductorActivity);
         viewPager = getActivity().findViewById(R.id.viewpageSugerencia);
         ImageView imageViewImagenTrack = view.findViewById(R.id.blurimageview);
 
@@ -119,9 +113,23 @@ public class ReproductorFragment extends Fragment {
         final ImageView imageViewPlay = getActivity().findViewById(R.id.ivPlayReproductor);
         ImageView imageViewProximo = getActivity().findViewById(R.id.ivProximoReproductor);
 
+
         activity = (ReproductorActivity) getActivity();
         reproducirMp3.reproducirMp3(activity.getTrackList(), activity.getPosicion(), activity);
 
+
+        final Handler mSeekbarUpdateHandler = new Handler();
+        final Runnable mUpdateSeekbar = new Runnable() {
+            @Override
+            public void run() {
+                progressBar.setProgress(mediaPlayer.getCurrentPosition());
+                mSeekbarUpdateHandler.postDelayed(this, 50);
+
+            }
+        };
+
+        progressBar.setMax(mediaPlayer.getDuration());
+        mSeekbarUpdateHandler.postDelayed(mUpdateSeekbar, 0);
         imageViewPause.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -137,7 +145,6 @@ public class ReproductorFragment extends Fragment {
                 imageViewPlay.setVisibility(View.INVISIBLE);
                 imageViewPause.setVisibility(View.VISIBLE);
                 mediaPlayer.start();
-
             }
         });
 
@@ -145,11 +152,13 @@ public class ReproductorFragment extends Fragment {
         imageViewAnterior.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mediaPlayer.stop();
                 Integer posicion = viewPager.getCurrentItem() - 1;
-                if (posicion < 0) {
+                if (posicion >= 0) {
+                    mediaPlayer.stop();
                     reproducirMp3.ReproducirMp3Activity(posicion);
                     viewPager.setCurrentItem(posicion);
+                    imageViewPlay.setVisibility(View.INVISIBLE);
+                    imageViewPause.setVisibility(View.VISIBLE);
                 }
 
             }
@@ -158,12 +167,24 @@ public class ReproductorFragment extends Fragment {
         imageViewProximo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mediaPlayer.stop();
                 Integer posicion = viewPager.getCurrentItem() + 1;
                 if (posicion < activity.getTrackList().size()) {
+                    mediaPlayer.stop();
                     reproducirMp3.ReproducirMp3Activity(posicion);
                     viewPager.setCurrentItem(posicion);
+                    imageViewPlay.setVisibility(View.INVISIBLE);
+                    imageViewPause.setVisibility(View.VISIBLE);
                 }
+            }
+        });
+
+
+        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                Integer posicion = viewPager.getCurrentItem() + 1;
+                reproducirMp3.ReproducirMp3Activity(posicion);
+                viewPager.setCurrentItem(posicion);
             }
         });
 

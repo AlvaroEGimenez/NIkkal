@@ -113,7 +113,7 @@ public class BuscarFragment extends Fragment implements AdapatadorBusqueda.Busqu
         editTextBusqueda.onEditorAction(EditorInfo.IME_ACTION_DONE);
         String busqueda = editTextBusqueda.getText().toString();
 
-        if (!busqueda.isEmpty()) {
+        if (busqueda.trim().length() > 0) {
             ocultarTeclado();
             artistDeezerList.clear();
             SearchControlller searchControlller = new SearchControlller();

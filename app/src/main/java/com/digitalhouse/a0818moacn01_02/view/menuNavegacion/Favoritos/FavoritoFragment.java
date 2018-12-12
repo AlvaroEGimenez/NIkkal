@@ -258,6 +258,7 @@ public class FavoritoFragment extends Fragment implements AdaptadorFavoritos.Fav
                 textViewNombrePista.setText(pista.getArtist().getName() + " - " + pista.getTitle());
                 List<Track> pistas = new ArrayList<>();
                 pistas.add(pista);
+                MediaPlayerNikkal.getInstance().getMediaPlayer().stop();
                 parent.getReproducirMp3().reproducirMp3(pistas, 0,  (MainActivity)getActivity());
                 parent.visibilidadReproductor(true);
             }

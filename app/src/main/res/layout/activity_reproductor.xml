@@ -43,16 +43,16 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_centerHorizontal="true"
-            android:src="@drawable/play_button"
-            android:visibility="invisible" />
+            android:src="@drawable/pause"
+            android:visibility="visible" />
 
         <ImageView
             android:id="@+id/ivPlayReproductor"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_centerHorizontal="true"
-            android:src="@drawable/pause"
-            android:visibility="visible" />
+            android:src="@drawable/play_button"
+            android:visibility="invisible" />
 
         <ImageView
             android:id="@+id/ivProximoReproductor"
@@ -71,6 +71,7 @@
     </RelativeLayout>
 
     <ProgressBar
+        android:id="@+id/pbReproductorActivity"
         style="@android:style/Widget.Holo.Light.ProgressBar.Horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

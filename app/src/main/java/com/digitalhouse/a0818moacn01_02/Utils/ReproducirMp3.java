@@ -267,8 +267,14 @@ public class ReproducirMp3 {
         }
     }
 
-    public MediaPlayer getMediaPlayer() {
-        return mediaPlayer;
+
+    public Integer getPosicion() {
+        return posicion;
     }
 
+    public List<Track> getListaReproduccion() {
+        return listaReproduccion;
+
+
+    }
 }

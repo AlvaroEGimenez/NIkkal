@@ -1,6 +1,7 @@
 package com.digitalhouse.a0818moacn01_02.view;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
@@ -31,6 +32,8 @@ public class ReproductorActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reproductor);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        
         mediaPlayer = MediaPlayerNikkal.getInstance().getMediaPlayer();
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();

@@ -140,6 +140,7 @@ public class MainActivity extends AppCompatActivity implements
 
         listaReproduccion = new ListaReproduccionFirebase();
         crearListaReproduccionRecyclerView();
+        automatizacionMediaPLayer();
     }
 
     @Override
@@ -419,6 +420,17 @@ public class MainActivity extends AppCompatActivity implements
             default:
                 bottomNavigation.setSelectedItemId(idFragemnt);
         }
+    }
+
+    public void automatizacionMediaPLayer() {
+        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                Track track = getReproducirMp3().getListaReproduccion().get(getReproducirMp3().getPosicion());
+                textViewNombrePista.setText(track.getArtist().getName() + " - " + track.getTitle());
+
+            }
+        });
     }
 
     public ReproducirMp3 getReproducirMp3() {
