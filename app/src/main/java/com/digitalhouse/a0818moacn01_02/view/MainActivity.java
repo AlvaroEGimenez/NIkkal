@@ -379,6 +379,10 @@ public class MainActivity extends AppCompatActivity implements
         FirebaseAuth.getInstance().signOut();
         LoginManager.getInstance().logOut();
         cargarImagenHeaderNavigationView();
+        pistaAlbumRecyclerView.setPistas(new ArrayList<Track>());
+        this.tvHeaderNombreListaReproduccion.setText("");
+        bottomNavigation.setSelectedItemId(R.id.albumFragment);
+        drawerLayout.closeDrawers();
     }
 
     private void abrirListaReproduccion() {
