@@ -21,7 +21,7 @@ import com.bumptech.glide.Glide;
 import com.digitalhouse.a0818moacn01_02.R;
 import com.digitalhouse.a0818moacn01_02.controller.FavoritoController;
 import com.digitalhouse.a0818moacn01_02.Utils.ResultListener;
-import com.digitalhouse.a0818moacn01_02.controller.ArtistAlbumControler;
+import com.digitalhouse.a0818moacn01_02.controller.ArtistAlbumController;
 import com.digitalhouse.a0818moacn01_02.model.AlbumDeezer;
 import com.digitalhouse.a0818moacn01_02.model.Favorito;
 import com.digitalhouse.a0818moacn01_02.view.MainActivity;
@@ -90,8 +90,8 @@ public class AlbumFragment extends Fragment implements AlbumAdapterRecyclerView.
     }
 
     private void cargarArtistAlbum() {
-        ArtistAlbumControler artistAlbumControler = new ArtistAlbumControler();
-        artistAlbumControler.getArtistAlbum(new ResultListener<List<AlbumDeezer>>() {
+        ArtistAlbumController artistAlbumController = new ArtistAlbumController();
+        artistAlbumController.getArtistAlbum(new ResultListener<List<AlbumDeezer>>() {
             @Override
             public void finish(List<AlbumDeezer> resultado) {
                 albumDeezerList = resultado;

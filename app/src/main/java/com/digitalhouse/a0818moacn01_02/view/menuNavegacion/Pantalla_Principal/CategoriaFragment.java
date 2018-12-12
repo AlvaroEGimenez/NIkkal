@@ -46,8 +46,7 @@ import java.util.List;
 import it.moondroid.coverflow.components.ui.containers.FeatureCoverFlow;
 
 public class CategoriaFragment extends Fragment implements CategoriaAdapterRecyclerView.AdapterInterface, AdaptadorTopChartDeezer.onItemClickTopChartDeezer, RadioAdapterRecyclerView.AdapterInterface,
-MasEscuchadosRecyclerView.OnclickMasEscuchados{
-
+        MasEscuchadosRecyclerView.OnclickMasEscuchados {
 
 
     private GeneroFragment generoFragment = new GeneroFragment();
@@ -87,7 +86,7 @@ MasEscuchadosRecyclerView.OnclickMasEscuchados{
         daoLocal.ObtenerTopChar(topChartLocal);
 
         AdaptadorLocalTopChart adaptadorLocalTopChart = new AdaptadorLocalTopChart(topChartLocal, getContext());
-        featureCoverFlow.setAdapter(adaptadorLocalTopChart);
+       featureCoverFlow.setAdapter(adaptadorLocalTopChart);
 
         setCategotia();
         cargarGenre();
@@ -121,9 +120,8 @@ MasEscuchadosRecyclerView.OnclickMasEscuchados{
                 featureCoverFlow.setOnScrollPositionListener(new FeatureCoverFlow.OnScrollPositionListener() {
                     @Override
                     public void onScrolledToPosition(int position) {
-
+                        if(resultado.get(position).getTitle() != null && resultado.get(position).getArtist() != null)
                         mTitle.setText(resultado.get(position).getTitle() + " - " + resultado.get(position).getArtist().getName());
-
                     }
 
                     @Override
@@ -170,12 +168,14 @@ MasEscuchadosRecyclerView.OnclickMasEscuchados{
             @Override
             public void finish(List<Genre> resultado) {
                 genreList = resultado;
-                genreList.remove(0);
+                if (!resultado.isEmpty()) {
+                    genreList.remove(0);
+                }
                 crearRecyclerViewGenre(R.id.rvGeneroRecyclerView);
                 pbCategoria.setVisibility(View.GONE);
                 conatiner.setVisibility(View.VISIBLE);
-
             }
+
         }, getContext());
 
     }
@@ -213,7 +213,7 @@ MasEscuchadosRecyclerView.OnclickMasEscuchados{
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
 
         recyclerViewMasEscuchados.setLayoutManager(linearLayoutManager);
-        MasEscuchadosRecyclerView masEscuchadosRecyclerView = new MasEscuchadosRecyclerView(albumDeezerList,this);
+        MasEscuchadosRecyclerView masEscuchadosRecyclerView = new MasEscuchadosRecyclerView(albumDeezerList, this);
         recyclerViewMasEscuchados.setHasFixedSize(true);
         recyclerViewMasEscuchados.setAdapter(masEscuchadosRecyclerView);
 
@@ -253,7 +253,7 @@ MasEscuchadosRecyclerView.OnclickMasEscuchados{
         TextView textViewNombrePista = getActivity().findViewById(R.id.tvNombreReproductor);
         textViewNombrePista.setSelected(true);
         mediaPlayer.stop();
-        parent.getReproducirMp3().reproducirMp3(topChartDeezerList, position,  parent);
+        parent.getReproducirMp3().reproducirMp3(topChartDeezerList, position, parent);
 
         textViewNombrePista.setText(topChartLocalDeezer.getTitle() + " - " + topChartLocalDeezer.getArtist().getName());
         textViewNombrePista.setTextColor(Color.parseColor("#FD9701"));
@@ -269,7 +269,7 @@ MasEscuchadosRecyclerView.OnclickMasEscuchados{
     public void cambiarDeActividadRadio(RadioDeezer radioDeezer) {
         Bundle bundle = new Bundle();
         bundle.putString(PistaAlbumFragment.KEY_IMAGEN_CABECERA_ALBUM_PISTA, radioDeezer.getPictureBig());
-        bundle.putString(PistaAlbumFragment.KEY_NOMBRE_CABECERA_ALBUM_PISTA,radioDeezer.getTitle());
+        bundle.putString(PistaAlbumFragment.KEY_NOMBRE_CABECERA_ALBUM_PISTA, radioDeezer.getTitle());
         bundle.putInt(PistaAlbumFragment.KEY_PISTA_ID_ALBUM_PISTA, Integer.parseInt(radioDeezer.getId()));
         bundle.putString(PistaAlbumFragment.KEY_CATEGORIA, "sugerencia");
 
@@ -287,7 +287,7 @@ MasEscuchadosRecyclerView.OnclickMasEscuchados{
     private void cambiarDeActividadMasEscuchados(AlbumDeezer albumDeezer) {
         Bundle bundle = new Bundle();
         bundle.putString(PistaAlbumFragment.KEY_IMAGEN_CABECERA_ALBUM_PISTA, albumDeezer.getCoverMedium());
-        bundle.putString(PistaAlbumFragment.KEY_NOMBRE_CABECERA_ALBUM_PISTA,albumDeezer.getTitle());
+        bundle.putString(PistaAlbumFragment.KEY_NOMBRE_CABECERA_ALBUM_PISTA, albumDeezer.getTitle());
         bundle.putInt(PistaAlbumFragment.KEY_PISTA_ID_ALBUM_PISTA, albumDeezer.getId());
         bundle.putString(PistaAlbumFragment.KEY_CATEGORIA, "mas_escuchados");
         pistaAlbumFragment.setArguments(bundle);

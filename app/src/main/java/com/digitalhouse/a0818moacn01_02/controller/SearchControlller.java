@@ -7,6 +7,7 @@ import com.digitalhouse.a0818moacn01_02.Utils.ResultListener;
 import com.digitalhouse.a0818moacn01_02.Utils.Util;
 import com.digitalhouse.a0818moacn01_02.model.Track;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SearchControlller {
@@ -20,6 +21,8 @@ public class SearchControlller {
                     listenerView.finish(resultado);
                 }
             },search);
+        }else{
+            listenerView.finish(new ArrayList<Track>());
         }
     }
 }

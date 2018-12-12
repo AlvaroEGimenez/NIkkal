@@ -7,6 +7,7 @@ import com.digitalhouse.a0818moacn01_02.Utils.ResultListener;
 import com.digitalhouse.a0818moacn01_02.Utils.Util;
 import com.digitalhouse.a0818moacn01_02.model.ArtistDeezer;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ArtistController {
@@ -20,7 +21,8 @@ public class ArtistController {
                     listenerView.finish(resultado);
                 }
             }, genreId);
-
+        }else{
+            listenerView.finish(new ArrayList<ArtistDeezer>());
         }
     }
 }

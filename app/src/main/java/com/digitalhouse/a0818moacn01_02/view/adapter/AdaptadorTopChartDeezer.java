@@ -48,20 +48,24 @@ public class AdaptadorTopChartDeezer extends BaseAdapter {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         View rootView = convertView;
-        if (rootView == null){
-            rootView = LayoutInflater.from(context).inflate(R.layout.layout_item,null);
+        if (rootView == null) {
+            rootView = LayoutInflater.from(context).inflate(R.layout.layout_item, null);
 
             TextView nombre = rootView.findViewById(R.id.labelTopChart);
             ImageView imagen = rootView.findViewById(R.id.imagenTopChart);
 
-            Glide.with(context).load(topChartList.get(position).getAlbum().getCover()).into(imagen);
+            if (topChartList.get(position).getAlbum() != null) {
+                Glide.with(context).load(topChartList.get(position).getAlbum().getCover()).into(imagen);
+            }
 
-            nombre.setText(topChartList.get(position).getArtist().getName());
+            if (topChartList.get(position).getArtist() != null) {
+                nombre.setText(topChartList.get(position).getArtist().getName());
+            }
 
             imagen.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    onItemClickTopChart.onClickTopChartDeezer(topChartList.get(position),position);
+                    onItemClickTopChart.onClickTopChartDeezer(topChartList.get(position), position);
                 }
             });
 
@@ -70,7 +74,7 @@ public class AdaptadorTopChartDeezer extends BaseAdapter {
         return rootView;
     }
 
-    public interface onItemClickTopChartDeezer{
+    public interface onItemClickTopChartDeezer {
         void onClickTopChartDeezer(Track topChartLocalDeezer, Integer posicion);
     }
 }

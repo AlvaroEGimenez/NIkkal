@@ -7,6 +7,7 @@ import com.digitalhouse.a0818moacn01_02.DAO.TopChartDAO;
 import com.digitalhouse.a0818moacn01_02.Utils.ResultListener;
 import com.digitalhouse.a0818moacn01_02.model.Track;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TopChartController {
@@ -20,6 +21,10 @@ public class TopChartController {
                     listenerView.finish(resultado);
                 }
             });
+        }else{
+            ArrayList<Track> pistas = new ArrayList<>();
+            pistas.add(new Track());
+            listenerView.finish(pistas);
         }
     }
 

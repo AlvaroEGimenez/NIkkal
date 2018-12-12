@@ -7,6 +7,7 @@ import com.digitalhouse.a0818moacn01_02.Utils.ResultListener;
 import com.digitalhouse.a0818moacn01_02.Utils.Util;
 import com.digitalhouse.a0818moacn01_02.model.Genre;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class GenreController {
@@ -20,6 +21,8 @@ public class GenreController {
                     listenerView.finish(resultado);
                 }
             });
+        }else{
+            listenerView.finish(new ArrayList<Genre>());
         }
     }
 }

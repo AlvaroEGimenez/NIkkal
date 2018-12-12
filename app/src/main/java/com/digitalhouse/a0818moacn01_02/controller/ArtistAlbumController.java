@@ -7,9 +7,10 @@ import com.digitalhouse.a0818moacn01_02.Utils.ResultListener;
 import com.digitalhouse.a0818moacn01_02.Utils.Util;
 import com.digitalhouse.a0818moacn01_02.model.AlbumDeezer;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class ArtistAlbumControler {
+public class ArtistAlbumController {
 
     public void getArtistAlbum(final ResultListener<List<AlbumDeezer>> listenerView, Context context, Integer artistId) {
         if (Util.hayInternet(context)) {
@@ -21,8 +22,8 @@ public class ArtistAlbumControler {
 
                 }
             }, artistId);
-
-
+        }else{
+            listenerView.finish(new ArrayList<AlbumDeezer>());
         }
     }
 }

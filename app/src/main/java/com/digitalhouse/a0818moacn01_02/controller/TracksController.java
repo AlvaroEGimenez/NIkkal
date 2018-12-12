@@ -6,6 +6,7 @@ import com.digitalhouse.a0818moacn01_02.Utils.ResultListener;
 import com.digitalhouse.a0818moacn01_02.Utils.Util;
 import com.digitalhouse.a0818moacn01_02.model.Track;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TracksController {
@@ -18,7 +19,8 @@ public class TracksController {
                     listenerView.finish(resultado);
                 }
             }, trackId);
-
+        }else{
+            listenerView.finish(new ArrayList<Track>());
         }
     }
 
@@ -32,6 +34,8 @@ public class TracksController {
                 }
             }, trackId);
 
+        }else{
+            listenerView.finish(new Track());
         }
     }
 }

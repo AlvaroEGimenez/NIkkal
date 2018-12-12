@@ -41,21 +41,28 @@ public class FavoritoController {
     }
 
     public void getLista(final ResultListener<List<Favorito>> resultListener) {
-        daoFavorito.getLista(new ResultListener<List<Favorito>>() {
-            @Override
-            public void finish(List<Favorito> resultado) {
-                resultListener.finish(resultado);
-            }
-        }, tipo);
+        if (Util.hayInternet(context)) {
+            daoFavorito.getLista(new ResultListener<List<Favorito>>() {
+                @Override
+                public void finish(List<Favorito> resultado) {
+                    resultListener.finish(resultado);
+                }
+            }, tipo);
+        }else{
+            // Room
+        }
     }
 
     public void getFavoritoPorId(final ResultListener<Favorito> listener, final Integer id) {
-        daoFavorito.getFavoritoPorId(new ResultListener<Favorito>() {
-            @Override
-            public void finish(Favorito Resultado) {
-
-            }
-        }, id, tipo);
-
+        if (Util.hayInternet(context)) {
+            daoFavorito.getFavoritoPorId(new ResultListener<Favorito>() {
+                @Override
+                public void finish(Favorito resultado) {
+                    listener.finish(resultado);
+                }
+            }, id, tipo);
+        }else{
+            // Room
+        }
     }
 }
