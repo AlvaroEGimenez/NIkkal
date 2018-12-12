@@ -23,13 +23,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.digitalhouse.a0818moacn01_02.R;
-import com.digitalhouse.a0818moacn01_02.Utils.FavoritoFirebase;
+import com.digitalhouse.a0818moacn01_02.controller.FavoritoController;
 import com.digitalhouse.a0818moacn01_02.Utils.MediaPlayerNikkal;
 import com.digitalhouse.a0818moacn01_02.Utils.ResultListener;
 import com.digitalhouse.a0818moacn01_02.controller.RadioController;
 import com.digitalhouse.a0818moacn01_02.controller.TracksController;
 import com.digitalhouse.a0818moacn01_02.model.Favorito;
-import com.digitalhouse.a0818moacn01_02.model.Pista;
 import com.digitalhouse.a0818moacn01_02.model.Track;
 import com.digitalhouse.a0818moacn01_02.view.MainActivity;
 import com.digitalhouse.a0818moacn01_02.view.categorias.AlbumFragment;
@@ -48,7 +47,7 @@ public class FavoritoFragment extends Fragment implements AdaptadorFavoritos.Fav
     private String tituloAlbum;
     private String tituloPista;
     private List<Favorito> favoritoList;
-    private FavoritoFirebase favoritoFirebase;
+    private FavoritoController favoritoController;
     private ProgressBar pbFavorito;
     private RelativeLayout escuchadasRecientemente;
     private  RecyclerView recyclerView;
@@ -131,19 +130,19 @@ public class FavoritoFragment extends Fragment implements AdaptadorFavoritos.Fav
     private void clickPista() {
         visibilidadRecyclerVew();
         tvTiuloSeleccionFavorito.setText(tituloPista);
-        setDatosFirebase(FavoritoFirebase.KEY_TIPO_PISTA);
+        setDatosFirebase(FavoritoController.KEY_TIPO_PISTA);
     }
 
     private void clickArtista() {
         visibilidadRecyclerVew();
         tvTiuloSeleccionFavorito.setText(tituloArtista);
-        setDatosFirebase(FavoritoFirebase.KEY_TIPO_ARTISTA);
+        setDatosFirebase(FavoritoController.KEY_TIPO_ARTISTA);
     }
 
     private void clickAlbum() {
         visibilidadRecyclerVew();
         tvTiuloSeleccionFavorito.setText(tituloAlbum);
-        setDatosFirebase(FavoritoFirebase.KEY_TIPO_ALBUM);
+        setDatosFirebase(FavoritoController.KEY_TIPO_ALBUM);
     }
 
     private void visibilidadRecyclerVew(){
@@ -182,8 +181,8 @@ public class FavoritoFragment extends Fragment implements AdaptadorFavoritos.Fav
     }
 
     private void setDatosFirebase(String categoriaSeleccionada) {
-        favoritoFirebase = new FavoritoFirebase(categoriaSeleccionada);
-        favoritoFirebase.getLista(new ResultListener<List<Favorito>>() {
+        favoritoController = new FavoritoController(categoriaSeleccionada, getContext());
+        favoritoController.getLista(new ResultListener<List<Favorito>>() {
             @Override
             public void finish(List<Favorito> resultado) {
                 favoritoList = resultado;
@@ -217,7 +216,7 @@ public class FavoritoFragment extends Fragment implements AdaptadorFavoritos.Fav
     @Override
     public void onItemDismiss(int position) {
         Favorito favorito = favoritoList.get(position);
-        favoritoFirebase.eliminar(favorito.getId());
+        favoritoController.eliminar(favorito.getId());
         favoritoList.remove(favorito);
         adaptadorFavoritos.notifyDataSetChanged();
         String msj = getResources().getString(R.string.elemento_eliminado);

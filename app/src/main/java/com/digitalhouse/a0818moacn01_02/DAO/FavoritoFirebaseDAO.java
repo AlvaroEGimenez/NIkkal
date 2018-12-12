@@ -1,7 +1,9 @@
-package com.digitalhouse.a0818moacn01_02.Utils;
+package com.digitalhouse.a0818moacn01_02.DAO;
 
 import android.support.annotation.NonNull;
 
+import com.digitalhouse.a0818moacn01_02.Utils.ResultListener;
+import com.digitalhouse.a0818moacn01_02.controller.FavoritoController;
 import com.digitalhouse.a0818moacn01_02.model.Favorito;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -14,25 +16,19 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FavoritoFirebase {
-    public static final String PATH_LIST_FAVORITO = "favorito";
-    public static final String KEY_TIPO_PISTA = "pista";
-    public static final String KEY_TIPO_ALBUM = "album";
-    public static final String KEY_TIPO_ARTISTA = "artista";
-
+public class FavoritoFirebaseDAO {
     private DatabaseReference mReference;
     private FirebaseUser currentUser;
-    private String tipo;
 
-    public FavoritoFirebase(String tipo) {
+    public FavoritoFirebaseDAO() {
         mReference = FirebaseDatabase.getInstance().getReference();
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        this.tipo = tipo;
+
     }
 
-    public void agregar(Integer id, String urlImagen, String titulo) {
+    public void agregar(Integer id, String urlImagen, String titulo, String tipo) {
         if (currentUser != null) {
-            DatabaseReference uid = mReference.child(currentUser.getUid()).child(PATH_LIST_FAVORITO).child(tipo).push();
+            DatabaseReference uid = mReference.child(currentUser.getUid()).child(FavoritoController.PATH_LIST_FAVORITO).child(tipo).push();
             Favorito favorito = new Favorito(id, uid.getKey(), urlImagen, titulo);
             uid.setValue(favorito,
                     FirebaseAuth.getInstance()
@@ -43,11 +39,12 @@ public class FavoritoFirebase {
 
     }
 
-    public void eliminar(final Integer id) {
+    public void eliminar(final Integer id, final String tipo) {
         getFavoritoPorId(new ResultListener<Favorito>() {
             @Override
             public void finish(Favorito favorito) {
-                mReference.child(currentUser.getUid()).child(PATH_LIST_FAVORITO).child(tipo).child(favorito.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                mReference.child(currentUser.getUid()).child(FavoritoController.PATH_LIST_FAVORITO)
+                        .child(tipo).child(favorito.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         dataSnapshot.getRef().removeValue();
@@ -58,15 +55,16 @@ public class FavoritoFirebase {
                     }
                 });
             }
-        }, id);
+        }, id, tipo);
     }
 
-    public void getLista(final ResultListener<List<Favorito>> resultListener) {
+    public void getLista(final ResultListener<List<Favorito>> resultListener, final String tipo) {
         if (currentUser == null) {
             return;
         }
+
         final List<Favorito> favoritosList = new ArrayList<>();
-        mReference.child(currentUser.getUid()).child(PATH_LIST_FAVORITO).child(tipo).addValueEventListener(new ValueEventListener() {
+        mReference.child(currentUser.getUid()).child(FavoritoController.PATH_LIST_FAVORITO).child(tipo).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 favoritosList.clear();
@@ -75,7 +73,7 @@ public class FavoritoFirebase {
                     favoritosList.add(favorito);
                 }
                 resultListener.finish(favoritosList);
-                mReference.child(currentUser.getUid()).child(PATH_LIST_FAVORITO).child(tipo).removeEventListener(this);
+                mReference.child(currentUser.getUid()).child(FavoritoController.PATH_LIST_FAVORITO).child(tipo).removeEventListener(this);
             }
 
             @Override
@@ -84,7 +82,7 @@ public class FavoritoFirebase {
         });
     }
 
-    public void getFavoritoPorId(final ResultListener<Favorito> listener, final Integer id) {
+    public void getFavoritoPorId(final ResultListener<Favorito> listener, final Integer id, String tipo) {
         getLista(new ResultListener<List<Favorito>>() {
             @Override
             public void finish(List<Favorito> favoritos) {
@@ -94,7 +92,8 @@ public class FavoritoFirebase {
                     }
                 }
             }
-        });
+        }, tipo);
 
     }
+
 }

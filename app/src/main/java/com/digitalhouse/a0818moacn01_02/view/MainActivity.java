@@ -140,7 +140,7 @@ public class MainActivity extends AppCompatActivity implements
 
         listaReproduccion = new ListaReproduccionFirebase();
         crearListaReproduccionRecyclerView();
-        automatizacionMediaPLayer();
+      //  automatizacionMediaPLayer();
     }
 
     @Override
@@ -426,7 +426,7 @@ public class MainActivity extends AppCompatActivity implements
         }
     }
 
-    public void automatizacionMediaPLayer() {
+ /*   public void automatizacionMediaPLayer() {
         mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
@@ -435,7 +435,7 @@ public class MainActivity extends AppCompatActivity implements
 
             }
         });
-    }
+    }*/
 
     public ReproducirMp3 getReproducirMp3() {
         return reproducirMp3;

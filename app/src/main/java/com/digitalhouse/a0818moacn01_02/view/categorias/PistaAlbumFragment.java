@@ -33,7 +33,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.digitalhouse.a0818moacn01_02.R;
-import com.digitalhouse.a0818moacn01_02.Utils.FavoritoFirebase;
+import com.digitalhouse.a0818moacn01_02.controller.FavoritoController;
 import com.digitalhouse.a0818moacn01_02.Utils.MediaPlayerNikkal;
 import com.digitalhouse.a0818moacn01_02.Utils.ReproducirMp3;
 import com.digitalhouse.a0818moacn01_02.Utils.ResultListener;
@@ -83,8 +83,8 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
     private Integer albumId;
     private Boolean favoritoAlbum;
     private ImageView btnFavorito;
-    private FavoritoFirebase favoritoFirebasePista;
-    private FavoritoFirebase favoritoFirebaseAlbum;
+    private FavoritoController favoritoControllerPista;
+    private FavoritoController favoritoControllerAlbum;
     private String nombreCabeceraPistaAlbum;
 
     public PistaAlbumFragment() {
@@ -94,10 +94,10 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         parent = (MainActivity) getActivity();
-        favoritoFirebasePista = new FavoritoFirebase(FavoritoFirebase.KEY_TIPO_PISTA);
-        favoritoFirebaseAlbum = new FavoritoFirebase(FavoritoFirebase.KEY_TIPO_ALBUM);
+        favoritoControllerPista = new FavoritoController(FavoritoController.KEY_TIPO_PISTA, getContext());
+        favoritoControllerAlbum = new FavoritoController(FavoritoController.KEY_TIPO_ALBUM, getContext());
 
-        favoritoFirebasePista.getLista(new ResultListener<List<Favorito>>() {
+        favoritoControllerPista.getLista(new ResultListener<List<Favorito>>() {
             @Override
             public void finish(List<Favorito> Resultado) {
 
@@ -187,7 +187,7 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
     }
 
     public void cargarFavoritosAdapter(final List<Track> pistas) {
-        favoritoFirebasePista.getLista(new ResultListener<List<Favorito>>() {
+        favoritoControllerPista.getLista(new ResultListener<List<Favorito>>() {
             @Override
             public void finish(List<Favorito> favoritos) {
                 for (Track pista : pistas) {
@@ -224,11 +224,11 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
     private void setFavoritoPista(Track pista, ImageView favoritoPista) {
         if (!pista.getFavorito()) {
             pista.setFavorito(true);
-            favoritoFirebasePista.agregar(pista.getId(), urlImagenCabecera, pista.getTitle());
+            favoritoControllerPista.agregar(pista.getId(), urlImagenCabecera, pista.getTitle());
             cargarImagen(favoritoPista, R.drawable.ic_favorite_seleccionado);
         } else {
             pista.setFavorito(false);
-            favoritoFirebasePista.eliminar(pista.getId());
+            favoritoControllerPista.eliminar(pista.getId());
             cargarImagen(favoritoPista, R.drawable.ic_favorite_no_seleccion);
         }
     }
@@ -476,12 +476,12 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
         if (favoritoAlbum) {
             favoritoAlbum = Boolean.FALSE;
             cargarImagen(R.drawable.ic_favorite_no_seleccion);
-            favoritoFirebaseAlbum.eliminar(albumId);
+            favoritoControllerAlbum.eliminar(albumId);
             Animation animation;
             animation = AnimationUtils.loadAnimation(getContext(), R.anim.blink_limited);
             btnFavorito.setAnimation(animation);
         } else {
-            favoritoFirebaseAlbum.agregar(albumId, urlImagenCabecera, nombreCabeceraPistaAlbum);
+            favoritoControllerAlbum.agregar(albumId, urlImagenCabecera, nombreCabeceraPistaAlbum);
             cargarImagen(R.drawable.ic_favorite_black_24dp);
             favoritoAlbum = Boolean.TRUE;
 
@@ -504,7 +504,7 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
     };
 
     private void inisializacionFavoritoALbum(final ImageView btnFavorito) {
-        favoritoFirebaseAlbum.getFavoritoPorId(new ResultListener<Favorito>() {
+        favoritoControllerAlbum.getFavoritoPorId(new ResultListener<Favorito>() {
             @Override
             public void finish(Favorito favorito) {
                 btnFavorito.setImageResource(R.drawable.ic_favorite_black_24dp);

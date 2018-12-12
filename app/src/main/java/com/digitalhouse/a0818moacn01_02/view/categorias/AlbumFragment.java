@@ -19,7 +19,7 @@ import android.widget.ProgressBar;
 
 import com.bumptech.glide.Glide;
 import com.digitalhouse.a0818moacn01_02.R;
-import com.digitalhouse.a0818moacn01_02.Utils.FavoritoFirebase;
+import com.digitalhouse.a0818moacn01_02.controller.FavoritoController;
 import com.digitalhouse.a0818moacn01_02.Utils.ResultListener;
 import com.digitalhouse.a0818moacn01_02.controller.ArtistAlbumControler;
 import com.digitalhouse.a0818moacn01_02.model.AlbumDeezer;
@@ -46,7 +46,7 @@ public class AlbumFragment extends Fragment implements AlbumAdapterRecyclerView.
     private MainActivity parent;
     private Boolean favoritoArtista;
     private ImageView btnFavorito;
-    private FavoritoFirebase favoritoFirebaseArtista;
+    private FavoritoController favoritoControllerArtista;
     private String urlImagenCabecera;
     private String nombreGenero;
 
@@ -57,7 +57,7 @@ public class AlbumFragment extends Fragment implements AlbumAdapterRecyclerView.
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         parent = (MainActivity) getActivity();
-        favoritoFirebaseArtista = new FavoritoFirebase(FavoritoFirebase.KEY_TIPO_ARTISTA);
+        favoritoControllerArtista = new FavoritoController(FavoritoController.KEY_TIPO_ARTISTA, getContext());
     }
 
     @Override
@@ -139,7 +139,7 @@ public class AlbumFragment extends Fragment implements AlbumAdapterRecyclerView.
 
 
     private void inisializacionFavoritoArtista(final ImageView btnFavorito) {
-        favoritoFirebaseArtista.getFavoritoPorId(new ResultListener<Favorito>() {
+        favoritoControllerArtista.getFavoritoPorId(new ResultListener<Favorito>() {
             @Override
             public void finish(Favorito favorito) {
                 btnFavorito.setImageResource(R.drawable.ic_favorite_black_24dp);
@@ -164,7 +164,7 @@ public class AlbumFragment extends Fragment implements AlbumAdapterRecyclerView.
         if (favoritoArtista) {
             favoritoArtista = Boolean.FALSE;
             cargarImagen(R.drawable.ic_favorite_no_seleccion);
-            favoritoFirebaseArtista.eliminar(idArtist);
+            favoritoControllerArtista.eliminar(idArtist);
             Animation animation;
             animation = AnimationUtils.loadAnimation(getContext(),R.anim.blink_limited);
             btnFavorito.setAnimation(animation);
@@ -174,7 +174,7 @@ public class AlbumFragment extends Fragment implements AlbumAdapterRecyclerView.
             Animation animation;
             animation = AnimationUtils.loadAnimation(getContext(),R.anim.rotate);
             btnFavorito.setAnimation(animation);
-            favoritoFirebaseArtista.agregar(idArtist, urlImagenCabecera, nombreGenero);
+            favoritoControllerArtista.agregar(idArtist, urlImagenCabecera, nombreGenero);
 
         }
     }
