@@ -84,6 +84,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:scaleType="fitCenter"
+                android:visibility="invisible"
                 android:src="@drawable/ic_play_icon" />
 
             <ImageButton
@@ -98,7 +99,7 @@
                 android:focusable="true"
                 android:scaleType="fitCenter"
                 android:src="@drawable/ic_pausa_pista"
-                android:visibility="gone" />
+                />
 
             <ImageButton
                 android:id="@+id/ic_play_siguiente_pista"

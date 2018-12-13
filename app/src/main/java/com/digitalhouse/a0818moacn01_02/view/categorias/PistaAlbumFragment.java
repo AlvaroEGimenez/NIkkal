@@ -441,7 +441,6 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
                         parent.agregarPistaReproducción(pistas.get(position));
                         dialog.dismiss();
                     } else {
-                        // mostrar error
                     }
 
 
