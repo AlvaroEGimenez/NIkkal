@@ -251,6 +251,7 @@ public class FavoritoFragment extends Fragment implements AdaptadorFavoritos.Fav
     private void reproducirPista(Favorito favorito) {
         if(!Util.hayInternet(getContext())){
             Toast.makeText(parent, getResources().getString(R.string.sin_conexion_reproducir), Toast.LENGTH_SHORT).show();
+            return;
         }
         TracksController tracksController = new TracksController();
         tracksController.getPista(new ResultListener<Track>() {

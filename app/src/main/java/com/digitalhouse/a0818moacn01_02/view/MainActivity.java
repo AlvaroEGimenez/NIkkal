@@ -306,6 +306,7 @@ public class MainActivity extends AppCompatActivity implements
         @Override
         public void onClick(View v) {
             posicionActualLista = 0;
+            getMediaPlayer().stop();
             drawerLayout.closeDrawers();
             pistaListaReproduccionAdapterInterface(posicionActualLista++);
 
