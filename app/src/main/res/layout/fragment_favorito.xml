@@ -169,6 +169,25 @@
         android:layout_gravity="center_horizontal"
         android:visibility="gone" />
 
+        <TextView
+            android:id="@+id/tvNombrePerfil"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="25sp"
+            android:textColor="@color/album_titulo"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/bienvenido"
+            android:layout_margin="10dp"/>
+
+        <ImageView
+            android:layout_marginTop="45dp"
+            android:id="@+id/imageViewPhotoPerfil"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/nikkalnuevo4"
+            />
+
     <RelativeLayout
         android:id="@+id/escuchadasRecientemente"
         android:layout_width="match_parent"
@@ -187,12 +206,28 @@
             android:textColor="@color/colorAccent"
             android:textSize="20sp" />
 
+
+
+
+
+
         <com.digitalhouse.a0818moacn01_02.Utils.GridRecyclerView
             android:id="@+id/recyclerFavoritos"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layoutAnimation="@anim/grid_layout_animation_from_bottom"
-            android:layout_below="@id/tvTiuloSeleccionFavorito"></com.digitalhouse.a0818moacn01_02.Utils.GridRecyclerView>
+            android:layout_below="@id/tvTiuloSeleccionFavorito">
+
+
+
+
+
+
+        </com.digitalhouse.a0818moacn01_02.Utils.GridRecyclerView>
+
+
+
+
 
     </RelativeLayout>
     </FrameLayout>

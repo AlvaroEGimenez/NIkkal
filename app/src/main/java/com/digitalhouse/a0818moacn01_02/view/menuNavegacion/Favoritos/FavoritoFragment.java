@@ -1,6 +1,7 @@
 package com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Favoritos;
 
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -17,11 +18,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.digitalhouse.a0818moacn01_02.R;
 import com.digitalhouse.a0818moacn01_02.Utils.Util;
 import com.digitalhouse.a0818moacn01_02.controller.FavoritoController;
@@ -34,6 +37,8 @@ import com.digitalhouse.a0818moacn01_02.model.Track;
 import com.digitalhouse.a0818moacn01_02.view.MainActivity;
 import com.digitalhouse.a0818moacn01_02.view.categorias.AlbumFragment;
 import com.digitalhouse.a0818moacn01_02.view.categorias.PistaAlbumFragment;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,6 +57,9 @@ public class FavoritoFragment extends Fragment implements AdaptadorFavoritos.Fav
     private ProgressBar pbFavorito;
     private RelativeLayout escuchadasRecientemente;
     private  RecyclerView recyclerView;
+    private ImageView imageviewFavoritos;
+    private TextView textViewUsuario;
+
 
     public FavoritoFragment() {
     }
@@ -77,6 +85,15 @@ public class FavoritoFragment extends Fragment implements AdaptadorFavoritos.Fav
 
         if (parent.estaLogeado(getContext())) {
             tvTiuloSeleccionFavorito.setText(R.string.bienvenido);
+            imageviewFavoritos = view.findViewById(R.id.imageViewPhotoPerfil);
+            textViewUsuario = view.findViewById(R.id.tvNombrePerfil);
+            FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+
+            String name = currentUser.getDisplayName();
+            textViewUsuario.setText(name);
+            Uri uri = currentUser.getPhotoUrl();
+            Glide.with(this).load(uri).into(imageviewFavoritos);
+
 
             celdaAlbumFavorito.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -132,18 +149,25 @@ public class FavoritoFragment extends Fragment implements AdaptadorFavoritos.Fav
         visibilidadRecyclerVew();
         tvTiuloSeleccionFavorito.setText(tituloPista);
         setDatosFirebase(FavoritoController.KEY_TIPO_PISTA);
+        textViewUsuario.setVisibility(View.GONE);
+        imageviewFavoritos.setVisibility(View.GONE);
     }
 
     private void clickArtista() {
         visibilidadRecyclerVew();
         tvTiuloSeleccionFavorito.setText(tituloArtista);
         setDatosFirebase(FavoritoController.KEY_TIPO_ARTISTA);
+        textViewUsuario.setVisibility(View.GONE);
+        imageviewFavoritos.setVisibility(View.GONE);
+
     }
 
     private void clickAlbum() {
         visibilidadRecyclerVew();
         tvTiuloSeleccionFavorito.setText(tituloAlbum);
         setDatosFirebase(FavoritoController.KEY_TIPO_ALBUM);
+        textViewUsuario.setVisibility(View.GONE);
+        imageviewFavoritos.setVisibility(View.GONE);
     }
 
     private void visibilidadRecyclerVew(){
@@ -234,6 +258,8 @@ public class FavoritoFragment extends Fragment implements AdaptadorFavoritos.Fav
 
         albumFragment.setArguments(bundle);
         parent.reemplazarFragment(albumFragment, R.id.genero_fragment);
+        //textViewUsuario.setVisibility(View.GONE);
+        //imageviewFavoritos.setVisibility(View.GONE);
     }
 
     private void irPistasAlbum(Favorito favorito) {
@@ -246,6 +272,7 @@ public class FavoritoFragment extends Fragment implements AdaptadorFavoritos.Fav
 
         pistaAlbumFragment.setArguments(bundle);
         parent.reemplazarFragment(pistaAlbumFragment, R.id.genero_fragment);
+
     }
 
     private void reproducirPista(Favorito favorito) {
