@@ -43,6 +43,7 @@ public class ReproductorFragment extends Fragment {
     private MediaPlayer mediaPlayer;
     private ReproducirMp3 reproducirMp3;
     ReproductorActivity activity;
+    private static Integer posicionAnterior = null;
 
     public static ReproductorFragment factory(Track track) {
         ReproductorFragment reproductorFragment = new ReproductorFragment();
@@ -62,7 +63,6 @@ public class ReproductorFragment extends Fragment {
         bundle.putInt(KEY_DURACION_TRACK, track.getDuration());
         bundle.putInt(KEY_ID_TRACK, track.getId());
         reproductorFragment.setArguments(bundle);
-
 
         return reproductorFragment;
     }
@@ -110,7 +110,9 @@ public class ReproductorFragment extends Fragment {
 
         activity = (ReproductorActivity) getActivity();
         reproducirMp3.reproducirMp3(activity.getTrackList(), activity.getPosicion(), activity);
-
+        if (posicionAnterior == null) {
+            posicionAnterior = activity.getPosicion();
+        }
 
         final Handler mSeekbarUpdateHandler = new Handler();
         final Runnable mUpdateSeekbar = new Runnable() {
@@ -145,6 +147,7 @@ public class ReproductorFragment extends Fragment {
         imageViewAnterior.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                posicionAnterior = viewPager.getCurrentItem();
                 Integer posicion = viewPager.getCurrentItem() - 1;
                 if (posicion >= 0) {
                     mediaPlayer.stop();
@@ -160,6 +163,7 @@ public class ReproductorFragment extends Fragment {
         imageViewProximo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                posicionAnterior = viewPager.getCurrentItem();
                 Integer posicion = viewPager.getCurrentItem() + 1;
                 if (posicion < activity.getTrackList().size()) {
                     mediaPlayer.stop();
@@ -174,10 +178,15 @@ public class ReproductorFragment extends Fragment {
         mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
-                if (viewPager.getCurrentItem() + 1 < activity.getTrackList().size()) {
-                    Integer posicion = viewPager.getCurrentItem() + 1;
-                    reproducirMp3.ReproducirMp3Activity(posicion);
-                    viewPager.setCurrentItem(posicion);
+                if (posicionAnterior == viewPager.getCurrentItem()) {
+                    posicionAnterior = (viewPager.getCurrentItem() + 1);
+                } else {
+                    posicionAnterior = viewPager.getCurrentItem();
+                }
+
+                if (posicionAnterior < activity.getTrackList().size()) {
+                    reproducirMp3.ReproducirMp3Activity(posicionAnterior);
+                    viewPager.setCurrentItem(posicionAnterior);
                 }
             }
         });
