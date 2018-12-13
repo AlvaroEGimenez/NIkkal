@@ -147,8 +147,8 @@ public class ReproductorFragment extends Fragment {
         imageViewAnterior.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                posicionAnterior = viewPager.getCurrentItem();
                 Integer posicion = viewPager.getCurrentItem() - 1;
+                posicionAnterior = posicion;
                 if (posicion >= 0) {
                     mediaPlayer.stop();
                     reproducirMp3.ReproducirMp3Activity(posicion);
@@ -163,8 +163,8 @@ public class ReproductorFragment extends Fragment {
         imageViewProximo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                posicionAnterior = viewPager.getCurrentItem();
                 Integer posicion = viewPager.getCurrentItem() + 1;
+                posicionAnterior = posicion;
                 if (posicion < activity.getTrackList().size()) {
                     mediaPlayer.stop();
                     reproducirMp3.ReproducirMp3Activity(posicion);
