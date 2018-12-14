@@ -25,10 +25,10 @@ public class FavoritoFirebaseDAO {
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
     }
 
-    public Favorito agregar(Integer id, String urlImagen, String titulo, String tipo) {
+    public Favorito agregar(Integer id, String urlImagen, String titulo, String tipo, String tipoAlbum) {
         if (currentUser != null) {
             DatabaseReference uid = mReference.child(currentUser.getUid()).child(FavoritoController.PATH_LIST_FAVORITO).child(tipo).push();
-            Favorito favorito = new Favorito(id, uid.getKey(), urlImagen, titulo,  currentUser.getUid(), tipo);
+            Favorito favorito = new Favorito(id, uid.getKey(), urlImagen, titulo,  currentUser.getUid(), tipo, tipoAlbum);
             uid.setValue(favorito,
                     FirebaseAuth.getInstance()
                             .getCurrentUser()

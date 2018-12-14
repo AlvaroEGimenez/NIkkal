@@ -268,7 +268,7 @@ public class FavoritoFragment extends Fragment implements AdaptadorFavoritos.Fav
         bundle.putString(PistaAlbumFragment.KEY_IMAGEN_CABECERA_ALBUM_PISTA, favorito.getUrlImagen());
         bundle.putString(PistaAlbumFragment.KEY_NOMBRE_CABECERA_ALBUM_PISTA, favorito.getTitulo());
         bundle.putInt(PistaAlbumFragment.KEY_PISTA_ID_ALBUM_PISTA, favorito.getId());
-        bundle.putString(PistaAlbumFragment.KEY_CATEGORIA, "pistaAlbum");
+        bundle.putString(PistaAlbumFragment.KEY_CATEGORIA, favorito.getTipoAlbum());
 
         pistaAlbumFragment.setArguments(bundle);
         parent.reemplazarFragment(pistaAlbumFragment, R.id.genero_fragment);

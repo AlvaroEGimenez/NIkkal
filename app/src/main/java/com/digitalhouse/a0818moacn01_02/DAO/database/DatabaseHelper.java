@@ -10,7 +10,9 @@ public class DatabaseHelper {
     public static MyDatabaseRoom getInstance(Context applicationContext) {
         if (db == null) {
             db = Room.databaseBuilder(applicationContext,
-                    MyDatabaseRoom.class, DB_NAME).allowMainThreadQueries().build();
+                    MyDatabaseRoom.class, DB_NAME).allowMainThreadQueries()
+                      .fallbackToDestructiveMigration().build();
+
         }
         return db;
     }

@@ -169,7 +169,7 @@ public class AlbumFragment extends Fragment implements AlbumAdapterRecyclerView.
             Animation animation;
             animation = AnimationUtils.loadAnimation(getContext(), R.anim.rotate);
             btnFavorito.setAnimation(animation);
-            favoritoControllerArtista.agregar(idArtist, urlImagenCabecera, nombreGenero);
+            favoritoControllerArtista.agregar(idArtist, urlImagenCabecera, nombreGenero, "");
 
         }
     }

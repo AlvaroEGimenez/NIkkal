@@ -35,9 +35,9 @@ public class FavoritoController {
 
     FavoritoFirebaseDAO daoFavorito = new FavoritoFirebaseDAO();
 
-    public void agregar(Integer id, String urlImagen, String titulo) {
+    public void agregar(Integer id, String urlImagen, String titulo, String tipoAlbum) {
         if (Util.hayInternet(context)) {
-            Favorito favorito = daoFavorito.agregar(id, urlImagen, titulo, tipo);
+            Favorito favorito = daoFavorito.agregar(id, urlImagen, titulo, tipo, tipoAlbum);
             if (favorito != null) {
                 daoRoom.agregar(favorito);
             }

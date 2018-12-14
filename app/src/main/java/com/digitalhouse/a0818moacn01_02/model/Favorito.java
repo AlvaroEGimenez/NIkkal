@@ -16,16 +16,19 @@ public class Favorito {
     @NonNull
     private String tipo;
 
+    private String tipoAlbum;
+
     public Favorito() {
     }
 
-    public Favorito(Integer id, String uid, String urlImagen, String titulo, String uidUsuario, String tipo) {
+    public Favorito(Integer id, String uid, String urlImagen, String titulo, String uidUsuario, String tipo, String tipoAlbum) {
         this.id = id;
         this.uid = uid;
         this.urlImagen = urlImagen;
         this.titulo = titulo;
         this.uidUsuario = uidUsuario;
         this.tipo = tipo;
+        this.tipoAlbum = tipoAlbum;
     }
 
     public Favorito(Integer id, String uid, String urlImagen, String titulo) {
@@ -81,5 +84,13 @@ public class Favorito {
 
     public void setTipo(String tipo) {
         this.tipo = tipo;
+    }
+
+    public String getTipoAlbum() {
+        return tipoAlbum;
+    }
+
+    public void setTipoAlbum(String tipoAlbum) {
+        this.tipoAlbum = tipoAlbum;
     }
 }

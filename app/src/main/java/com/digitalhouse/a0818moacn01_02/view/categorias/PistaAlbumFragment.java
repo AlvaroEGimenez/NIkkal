@@ -86,6 +86,7 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
     private FavoritoController favoritoControllerPista;
     private FavoritoController favoritoControllerAlbum;
     private String nombreCabeceraPistaAlbum;
+    private String categoria;
 
     public PistaAlbumFragment() {
     }
@@ -125,7 +126,7 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
         nombreCabeceraPistaAlbum = bundle.getString(KEY_NOMBRE_CABECERA_ALBUM_PISTA);
         albumId = bundle.getInt(KEY_PISTA_ID_ALBUM_PISTA);
         favoritoAlbum = bundle.getBoolean(KEY_FAVORITO_ALBUM);
-        String categoria = bundle.getString(KEY_CATEGORIA);
+        categoria = bundle.getString(KEY_CATEGORIA);
 
         cargarImagen(imgCabeceraAlbumPista, urlImagenCabecera);
         toolbaarNombreCabeceraAlbumPista.setTitle(nombreCabeceraPistaAlbum);
@@ -224,7 +225,7 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
     private void setFavoritoPista(Track pista, ImageView favoritoPista) {
         if (!pista.getFavorito()) {
             pista.setFavorito(true);
-            favoritoControllerPista.agregar(pista.getId(), urlImagenCabecera, pista.getTitle());
+            favoritoControllerPista.agregar(pista.getId(), urlImagenCabecera, pista.getTitle(), "");
             cargarImagen(favoritoPista, R.drawable.ic_favorite_seleccionado);
         } else {
             pista.setFavorito(false);
@@ -480,7 +481,7 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
             animation = AnimationUtils.loadAnimation(getContext(), R.anim.blink_limited);
             btnFavorito.setAnimation(animation);
         } else {
-            favoritoControllerAlbum.agregar(albumId, urlImagenCabecera, nombreCabeceraPistaAlbum);
+            favoritoControllerAlbum.agregar(albumId, urlImagenCabecera, nombreCabeceraPistaAlbum, categoria);
             cargarImagen(R.drawable.ic_favorite_black_24dp);
             favoritoAlbum = Boolean.TRUE;
 
