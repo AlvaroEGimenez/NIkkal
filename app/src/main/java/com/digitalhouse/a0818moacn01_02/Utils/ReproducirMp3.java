@@ -190,26 +190,12 @@ public class ReproducirMp3 {
         linearLayout.setVisibility(View.VISIBLE);
         textViewNombrePista.setText("Cargando...");
         textViewNombrePista.setAnimation(animationBlink);
-        progressBar.setVisibility(View.VISIBLE);
 
         try {
-            if (!mediaPlayer.isPlaying()) {
-
-                mediaPlayer.setDataSource(url);
-                mediaPlayer.prepareAsync();
-                textViewNombrePista.setAnimation(animationNone);
-                progressBar.setVisibility(View.INVISIBLE);
-                mediaPlayer.start();
-                textViewNombrePista.setText(radio.getNombre() + " - " + radio.getSintonia());
-                imageViewPause.setVisibility(View.VISIBLE);
-
-            } else {
                 mediaPlayer.stop();
-                mediaPlayer.reset();
                 mediaPlayer.setDataSource(url);
                 mediaPlayer.prepareAsync();
                 mediaPlayer.start();
-            }
 
             imageViewPause.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -226,7 +212,6 @@ public class ReproducirMp3 {
                 }
             });
 
-
             imageViewPlay.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -239,7 +224,6 @@ public class ReproducirMp3 {
                     }
                 }
             });
-
 
         } catch (
                 IOException e)
