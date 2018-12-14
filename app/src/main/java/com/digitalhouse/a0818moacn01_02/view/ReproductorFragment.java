@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -87,7 +88,7 @@ public class ReproductorFragment extends Fragment {
         mediaPlayer = MediaPlayerNikkal.getInstance().getMediaPlayer();
         leerBundle(getArguments());
         this.reproducirMp3 = new ReproducirMp3(false);
-        final ProgressBar progressBar = getActivity().findViewById(R.id.pbReproductorActivity);
+        final SeekBar progressBar = getActivity().findViewById(R.id.pbReproductorActivity);
         viewPager = getActivity().findViewById(R.id.viewpageSugerencia);
         ImageView imageViewImagenTrack = view.findViewById(R.id.blurimageview);
 
@@ -114,6 +115,22 @@ public class ReproductorFragment extends Fragment {
             posicionAnterior = activity.getPosicion();
         }
 
+        progressBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                seekBar.setProgress(i);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                mediaPlayer.seekTo(seekBar.getProgress());
+            }
+        });
         final Handler mSeekbarUpdateHandler = new Handler();
         final Runnable mUpdateSeekbar = new Runnable() {
             @Override

@@ -60,9 +60,9 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
     public static final String KEY_FAVORITO_ALBUM = "idFavoritoAlbum";
     public static final String KEY_CATEGORIA = "categoria";
 
-    private static final String KEY_SUGERENCIA = "sugerencia";
+    public static final String KEY_SUGERENCIA = "sugerencia";
     public static final String KEY_MAS_ESCUCHADOS = "mas_escuchados";
-    private static final String KEY_PISTA_ALBUM = "pistaAlbum";
+    public static final String KEY_PISTA_ALBUM = "pistaAlbum";
 
     private ImageView imgCabeceraAlbumPista;
     private ImageView imageViewShare;
@@ -225,7 +225,7 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
     private void setFavoritoPista(Track pista, ImageView favoritoPista) {
         if (!pista.getFavorito()) {
             pista.setFavorito(true);
-            favoritoControllerPista.agregar(pista.getId(), urlImagenCabecera, pista.getTitle(), "");
+            favoritoControllerPista.agregar(pista.getId(), urlImagenCabecera, pista.getTitle(), categoria);
             cargarImagen(favoritoPista, R.drawable.ic_favorite_seleccionado);
         } else {
             pista.setFavorito(false);
