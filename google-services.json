@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "383644859552",
+    "firebase_url": "https://nikkalapp-3d205.firebaseio.com",
+    "project_id": "nikkalapp-3d205",
+    "storage_bucket": "nikkalapp-3d205.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:383644859552:android:e2b8178f05148ada",
+        "android_client_info": {
+          "package_name": "com.digitalhouse.a0818moacn01_02"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "383644859552-0q80geobgcgurc0q1sikm3i2baqduovg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.digitalhouse.a0818moacn01_02",
+            "certificate_hash": "b3c79c23bca258e448c1e236f84e62c3e641b067"
+          }
+        },
+        {
+          "client_id": "383644859552-9c7ie431j38tl551a55hgi61udc1lo56.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.digitalhouse.a0818moacn01_02",
+            "certificate_hash": "0842fc260fa6c8460f427a10bdfe075a683414eb"
+          }
+        },
+        {
+          "client_id": "383644859552-g01k1nhhq7eoqnivgk3jhbijulhag34i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDBV5q6t0Wjg_AZKIs3oN572-yXRoo4hP8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "383644859552-g01k1nhhq7eoqnivgk3jhbijulhag34i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
