@@ -1,7 +1,9 @@
 package com.digitalhouse.a0818moacn01_02.DAO.database;
 
-import android.arch.persistence.room.Room;
+
 import android.content.Context;
+
+import androidx.room.Room;
 
 public class DatabaseHelper {
     private static final String DB_NAME = "database-nikkal.db";

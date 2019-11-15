@@ -4,11 +4,13 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
+
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
 
 import com.digitalhouse.a0818moacn01_02.R;
 import com.digitalhouse.a0818moacn01_02.Utils.MediaPlayerNikkal;

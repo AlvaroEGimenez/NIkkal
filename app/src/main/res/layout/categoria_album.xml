@@ -83,13 +83,13 @@
             android:theme="@style/albumRecyclerView"
             />
 
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvGeneroRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             >
 
-        </android.support.v7.widget.RecyclerView>
+        </androidx.recyclerview.widget.RecyclerView>
 
         <TextView
             android:id="@+id/tvSugerenciaRecyclerView"
@@ -99,12 +99,12 @@
             android:fontFamily="sans-serif"
             android:theme="@style/albumRecyclerView" />
 
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvSugerenciaRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-        </android.support.v7.widget.RecyclerView>
+        </androidx.recyclerview.widget.RecyclerView>
 
 
         <TextView
@@ -114,12 +114,12 @@
             android:layout_gravity="center_vertical"
             android:theme="@style/albumRecyclerView" />
 
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvMasEscuchadoRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-        </android.support.v7.widget.RecyclerView>
+        </androidx.recyclerview.widget.RecyclerView>
 
 
         <TextView
@@ -129,12 +129,12 @@
             android:layout_gravity="center_vertical"
             android:theme="@style/albumRecyclerView" />
 
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvFavoritoRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-        </android.support.v7.widget.RecyclerView>
+        </androidx.recyclerview.widget.RecyclerView>
     </LinearLayout>
 
     </RelativeLayout>

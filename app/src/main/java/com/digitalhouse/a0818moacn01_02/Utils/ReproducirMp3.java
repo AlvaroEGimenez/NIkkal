@@ -5,7 +5,7 @@ import android.graphics.Color;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -13,6 +13,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.digitalhouse.a0818moacn01_02.R;
 import com.digitalhouse.a0818moacn01_02.model.Radio;
@@ -191,69 +193,58 @@ public class ReproducirMp3 {
         textViewNombrePista.setText("Cargando...");
         textViewNombrePista.setAnimation(animationBlink);
 
+
+        mediaPlayer.stop();
         try {
-                mediaPlayer.stop();
-                mediaPlayer.setDataSource(url);
-                mediaPlayer.prepareAsync();
-                mediaPlayer.start();
-
-            imageViewPause.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (progressBar.getVisibility() == View.VISIBLE) {
-
-                    }
-                    mediaPlayer.pause();
-                    imageViewPlay.setVisibility(View.VISIBLE);
-                    imageViewPause.setVisibility(View.INVISIBLE);
-                    progressBar.setVisibility(View.INVISIBLE);
-                    textViewNombrePista.setAnimation(animationNone);
-                    textViewNombrePista.setText("Pausa");
-                }
-            });
-
-            imageViewPlay.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    if (mediaPlayer != null && !mediaPlayer.isPlaying()) {
-                        mediaPlayer.start();
-                        imageViewPause.setVisibility(View.VISIBLE);
-                        imageViewPlay.setVisibility(View.INVISIBLE);
-                        textViewNombrePista.setText(radio.getNombre() + " - " + radio.getSintonia());
-                    }
-                }
-            });
-
-        } catch (
-                IOException e)
-
-        {
-
-            e.printStackTrace();
-        } catch (
-                IllegalArgumentException e)
-
-        {
-            e.printStackTrace();
-        } catch (
-                SecurityException e)
-
-        {
-            e.printStackTrace();
-        } catch (
-                IllegalStateException e)
-
-        {
+            mediaPlayer.setDataSource(url);
+        } catch (IOException e) {
             e.printStackTrace();
         }
-    }
 
-    public Integer getPosicion() {
-        return posicion;
-    }
+        mediaPlayer.prepareAsync();
+        mediaPlayer.start();
 
-    public List<Track> getListaReproduccion() {
-        return listaReproduccion;
+        imageViewPause.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (progressBar.getVisibility() == View.VISIBLE) {
+
+                    if (progressBar.getVisibility() == View.VISIBLE) {
+
+                    } else {
+                        mediaPlayer.pause();
+                        imageViewPlay.setVisibility(View.VISIBLE);
+                        imageViewPause.setVisibility(View.INVISIBLE);
+                        progressBar.setVisibility(View.INVISIBLE);
+                        textViewNombrePista.setAnimation(animationNone);
+                        textViewNombrePista.setText("Pausa");
+                    }
+
+                }
+            }
+        });
+
+
+        imageViewPlay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (mediaPlayer != null && !mediaPlayer.isPlaying()) {
+                    mediaPlayer.start();
+                    imageViewPause.setVisibility(View.VISIBLE);
+                    imageViewPlay.setVisibility(View.INVISIBLE);
+                    textViewNombrePista.setText(radio.getNombre() + " - " + radio.getSintonia());
+                }
+            }
+        });
+
+
+        /*public Integer getPosicion () {
+            return posicion;
+        }
+
+        public List<Track> getListaReproduccion () {
+            return listaReproduccion;
+        }*/
     }
 }

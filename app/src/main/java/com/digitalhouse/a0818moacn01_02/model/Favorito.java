@@ -1,7 +1,9 @@
 package com.digitalhouse.a0818moacn01_02.model;
 
-import android.arch.persistence.room.Entity;
-import android.support.annotation.NonNull;
+
+
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
 
 
 @Entity(tableName = "Favoritos", primaryKeys = {"id", "uidUsuario", "tipo"})

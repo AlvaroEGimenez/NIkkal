@@ -59,14 +59,14 @@
         android:visibility="visible">
 
 
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvArtistaBusqueda"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             >
 
-        </android.support.v7.widget.RecyclerView>
+        </androidx.recyclerview.widget.RecyclerView>
 
 
         <TextView
@@ -79,7 +79,7 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Small"
             android:textColor="@color/album_titulo" />
 
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvBusquedaTracks"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

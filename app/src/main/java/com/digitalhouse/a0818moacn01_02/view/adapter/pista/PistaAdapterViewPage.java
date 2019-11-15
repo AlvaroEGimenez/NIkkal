@@ -2,14 +2,16 @@ package com.digitalhouse.a0818moacn01_02.view.adapter.pista;
 
 import android.app.Activity;
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.v4.view.PagerAdapter;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.viewpager.widget.PagerAdapter;
 
 import com.digitalhouse.a0818moacn01_02.R;
 import com.digitalhouse.a0818moacn01_02.model.Track;
@@ -38,7 +40,7 @@ public class PistaAdapterViewPage extends PagerAdapter {
 
     @Override
     public boolean isViewFromObject(@NonNull View view, @NonNull Object o) {
-        return view == (View) o;
+        return view == o;
     }
 
     @Override

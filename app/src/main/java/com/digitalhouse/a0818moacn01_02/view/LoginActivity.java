@@ -2,9 +2,11 @@ package com.digitalhouse.a0818moacn01_02.view;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
+
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.digitalhouse.a0818moacn01_02.R;
 import com.facebook.AccessToken;

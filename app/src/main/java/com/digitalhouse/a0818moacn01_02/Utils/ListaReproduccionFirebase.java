@@ -1,6 +1,8 @@
 package com.digitalhouse.a0818moacn01_02.Utils;
 
-import android.support.annotation.NonNull;
+
+
+import androidx.annotation.NonNull;
 
 import com.digitalhouse.a0818moacn01_02.model.ListaReproduccion;
 import com.digitalhouse.a0818moacn01_02.model.Track;
@@ -21,11 +23,11 @@ public class ListaReproduccionFirebase {
     private FirebaseUser currentUser;
     private ListaReproduccion listaReproduccion;
 
-    public ListaReproduccionFirebase() {
+    /*public ListaReproduccionFirebase() {
         mReference = FirebaseDatabase.getInstance().getReference();
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
         listaReproduccion = new ListaReproduccion();
-    }
+    }*/
 
     public void agregarPista(Track pista) {
         this.getPistas().add(pista);

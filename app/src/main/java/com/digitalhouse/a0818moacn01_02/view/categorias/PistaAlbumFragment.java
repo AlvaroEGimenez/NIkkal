@@ -6,17 +6,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.TextInputLayout;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.support.v7.widget.helper.ItemTouchHelper;
+
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -30,6 +23,15 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.digitalhouse.a0818moacn01_02.R;
@@ -45,6 +47,8 @@ import com.digitalhouse.a0818moacn01_02.view.MainActivity;
 import com.digitalhouse.a0818moacn01_02.view.adapter.pista.PistaAdapterViewPage;
 import com.digitalhouse.a0818moacn01_02.view.adapter.pista.PistaAlbumRecyclerView;
 import com.digitalhouse.a0818moacn01_02.view.adapter.pista.RecyclerItemTouchHelper;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -107,6 +111,7 @@ public class PistaAlbumFragment extends Fragment implements PistaAlbumRecyclerVi
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

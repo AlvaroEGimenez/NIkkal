@@ -1,8 +1,9 @@
 package com.digitalhouse.a0818moacn01_02.view.adapter;
 
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.digitalhouse.a0818moacn01_02.model.Track;
 import com.digitalhouse.a0818moacn01_02.view.ReproductorFragment;

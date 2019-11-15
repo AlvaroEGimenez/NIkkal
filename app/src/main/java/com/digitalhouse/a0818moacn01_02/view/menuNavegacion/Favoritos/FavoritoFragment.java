@@ -2,16 +2,9 @@ package com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Favoritos;
 
 
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.support.v7.widget.helper.ItemTouchHelper;
+
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,6 +16,14 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.digitalhouse.a0818moacn01_02.R;
@@ -37,6 +38,8 @@ import com.digitalhouse.a0818moacn01_02.model.Track;
 import com.digitalhouse.a0818moacn01_02.view.MainActivity;
 import com.digitalhouse.a0818moacn01_02.view.categorias.AlbumFragment;
 import com.digitalhouse.a0818moacn01_02.view.categorias.PistaAlbumFragment;
+import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -56,7 +59,7 @@ public class FavoritoFragment extends Fragment implements AdaptadorFavoritos.Fav
     private FavoritoController favoritoController;
     private ProgressBar pbFavorito;
     private RelativeLayout escuchadasRecientemente;
-    private  RecyclerView recyclerView;
+    private RecyclerView recyclerView;
     private ImageView imageviewFavoritos;
     private TextView textViewUsuario;
 
@@ -64,6 +67,7 @@ public class FavoritoFragment extends Fragment implements AdaptadorFavoritos.Fav
     public FavoritoFragment() {
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -126,7 +130,7 @@ public class FavoritoFragment extends Fragment implements AdaptadorFavoritos.Fav
             Toolbar toolbar = view.findViewById(R.id.toolbarFavoritos);
             toolbar.setTitle("");
             //casteado
-            ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+       // getActivity().setActionBar(toolbar);
 
             //traigo la actividad que contiene este fragment
             collapsingToolbarLayout = view.findViewById(R.id.collapsingFavoritos);

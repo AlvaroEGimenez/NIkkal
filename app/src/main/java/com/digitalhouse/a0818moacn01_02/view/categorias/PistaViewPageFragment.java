@@ -2,14 +2,16 @@ package com.digitalhouse.a0818moacn01_02.view.categorias;
 
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.fragment.app.Fragment;
+
 import com.digitalhouse.a0818moacn01_02.R;
 
-public class PistaViewPageFragment extends Fragment  {
+public class PistaViewPageFragment extends Fragment {
 
     public PistaViewPageFragment() {
     }

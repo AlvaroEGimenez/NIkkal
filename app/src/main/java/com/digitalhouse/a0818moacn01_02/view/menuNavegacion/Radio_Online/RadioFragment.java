@@ -1,29 +1,27 @@
 package com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Radio_Online;
 
 
-import android.graphics.Color;
-import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.digitalhouse.a0818moacn01_02.R;
 import com.digitalhouse.a0818moacn01_02.Utils.ReproducirMp3;
 import com.digitalhouse.a0818moacn01_02.model.Radio;
 import com.digitalhouse.a0818moacn01_02.view.MainActivity;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 /**

@@ -1,5 +1,6 @@
 package com.digitalhouse.a0818moacn01_02.view;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -8,19 +9,7 @@ import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.NavigationView;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
+
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -31,6 +20,17 @@ import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.digitalhouse.a0818moacn01_02.R;
@@ -49,6 +49,10 @@ import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Pantalla_Principal.C
 import com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Radio_Online.RadioFragment;
 import com.facebook.Profile;
 import com.facebook.login.LoginManager;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -87,10 +91,12 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FirebaseApp.initializeApp(this);
         setContentView(R.layout.activity_main);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         Util.printHash(this);
+
 
         bottomNavigation = findViewById(R.id.navigationView);
         textViewNombrePista = findViewById(R.id.tvNombreReproductor);
@@ -324,6 +330,7 @@ public class MainActivity extends AppCompatActivity implements
         }
     };
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void pistaListaReproduccionAdapterInterface(Integer posicion) {
         if (listaReproduccion != null && !listaReproduccion.getPistas().isEmpty()) {
@@ -439,4 +446,6 @@ public class MainActivity extends AppCompatActivity implements
     public ReproducirMp3 getReproducirMp3() {
         return reproducirMp3;
     }
+
+
 }

@@ -4,8 +4,7 @@ package com.digitalhouse.a0818moacn01_02.view;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +12,9 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
+
+import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
 import com.deezer.sdk.network.connect.DeezerConnect;

@@ -1,22 +1,20 @@
 package com.digitalhouse.a0818moacn01_02.view.menuNavegacion.Favoritos;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.digitalhouse.a0818moacn01_02.R;
 import com.digitalhouse.a0818moacn01_02.Utils.ListaReproduccionFirebase;
 import com.digitalhouse.a0818moacn01_02.Utils.ResultListener;
 import com.digitalhouse.a0818moacn01_02.model.ListaReproduccion;
-import com.digitalhouse.a0818moacn01_02.model.Track;
 import com.digitalhouse.a0818moacn01_02.view.MainActivity;
-import com.digitalhouse.a0818moacn01_02.view.adapter.AlbumAdapterRecyclerView;
 import com.digitalhouse.a0818moacn01_02.view.adapter.ListaReproduccionAdapter;
 
 import java.util.ArrayList;
@@ -37,7 +35,7 @@ public class MisListasFragment extends Fragment implements ListaReproduccionAdap
 
 
         listaReproduccionFirebase = new ListaReproduccionFirebase();
-        parent = (MainActivity)getActivity();
+        parent = (MainActivity) getActivity();
         crearRecyclerView(view);
         listaReproduccionFirebase.getMisLista(new ResultListener<List<ListaReproduccion>>() {
             @Override

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.design.widget.AppBarLayout
+    <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarFavoritos"
         android:layout_width="match_parent"
         android:layout_height="250dp"
@@ -12,7 +12,7 @@
         android:elevation="0dp"
         android:fitsSystemWindows="true">
 
-        <android.support.design.widget.CollapsingToolbarLayout
+        <com.google.android.material.appbar.CollapsingToolbarLayout
             android:id="@+id/collapsingFavoritos"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -145,7 +145,7 @@
             </RelativeLayout>
 
 
-            <android.support.v7.widget.Toolbar
+            <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbarFavoritos"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
@@ -153,85 +153,71 @@
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
 
-        </android.support.design.widget.CollapsingToolbarLayout>
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
 
-    </android.support.design.widget.AppBarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <ProgressBar
-        android:id="@+id/pbFavorito"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:visibility="gone" />
+        <ProgressBar
+            android:id="@+id/pbFavorito"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/tvNombrePerfil"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="25sp"
-            android:textColor="@color/album_titulo"
             android:layout_gravity="center_horizontal"
+            android:layout_margin="10dp"
             android:text="@string/bienvenido"
-            android:layout_margin="10dp"/>
+            android:textColor="@color/album_titulo"
+            android:textSize="25sp" />
 
         <ImageView
-            android:layout_marginTop="45dp"
             android:id="@+id/imageViewPhotoPerfil"
             android:layout_width="200dp"
             android:layout_height="200dp"
             android:layout_gravity="center_horizontal"
-            android:src="@drawable/nikkalnuevo4"
-            />
+            android:layout_marginTop="45dp"
+            android:src="@drawable/nikkalnuevo4" />
 
-    <RelativeLayout
-        android:id="@+id/escuchadasRecientemente"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-        <TextView
-            android:id="@+id/tvTiuloSeleccionFavorito"
+        <RelativeLayout
+            android:id="@+id/escuchadasRecientemente"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            android:layout_margin="12dp"
-            android:gravity="center_horizontal"
-            android:text="@string/mensajeLoginFavorito"
-            android:textColor="@color/colorAccent"
-            android:textSize="20sp" />
+            <TextView
+                android:id="@+id/tvTiuloSeleccionFavorito"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
 
-
-
-
-
-
-        <com.digitalhouse.a0818moacn01_02.Utils.GridRecyclerView
-            android:id="@+id/recyclerFavoritos"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layoutAnimation="@anim/grid_layout_animation_from_bottom"
-            android:layout_below="@id/tvTiuloSeleccionFavorito">
+                android:layout_margin="12dp"
+                android:gravity="center_horizontal"
+                android:text="@string/mensajeLoginFavorito"
+                android:textColor="@color/colorAccent"
+                android:textSize="20sp" />
 
 
+            <com.digitalhouse.a0818moacn01_02.Utils.GridRecyclerView
+                android:id="@+id/recyclerFavoritos"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/tvTiuloSeleccionFavorito"
+                android:layoutAnimation="@anim/grid_layout_animation_from_bottom">
+
+            </com.digitalhouse.a0818moacn01_02.Utils.GridRecyclerView>
 
 
-
-
-        </com.digitalhouse.a0818moacn01_02.Utils.GridRecyclerView>
-
-
-
-
-
-    </RelativeLayout>
+        </RelativeLayout>
     </FrameLayout>
 
-    <!-- TODO: Update blank fragment layout -->
 
-</android.support.design.widget.CoordinatorLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

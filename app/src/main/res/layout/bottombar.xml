@@ -8,4 +8,4 @@
     app:bb_activeTabColor="@color/bottomBarIcon"
     app:bb_inActiveTabColor="@android:color/white"
     app:bb_tabXmlResource="@xml/bottombar_tab"
-    android:layout_marginTop="15dp"/>
+   />
